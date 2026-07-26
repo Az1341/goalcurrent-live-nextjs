@@ -7,6 +7,10 @@ import {
   checkRateLimitAsync,
   clientIpFromRequest,
 } from "@/lib/rate-limit";
+import {
+  PREVIEW_X_ROBOTS_TAG,
+  shouldNoIndexDeploy,
+} from "@/lib/seo/deploy-robots";
 
 const LEGACY_GROUP_PATH = /^\/worldcup2026\/groups\/group-([a-l])$/i;
 const LOCALE_PREFIX = /^\/(en|fa|ar|fr|de|nl|es|pt|it)(\/|$)/;
@@ -81,6 +85,9 @@ const SITE_REDIRECTS: Array<{ source: RegExp; destination: (match: RegExpMatchAr
 
 function applySecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set("Content-Security-Policy", CONTENT_SECURITY_POLICY);
+  if (shouldNoIndexDeploy()) {
+    response.headers.set("X-Robots-Tag", PREVIEW_X_ROBOTS_TAG);
+  }
   return response;
 }
 

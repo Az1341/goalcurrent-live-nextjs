@@ -26,7 +26,7 @@ GoalCurrent moved from documentation-only recovery baseline toward demonstrated 
 ## 4. Ending branch and SHA
 
 - Branch: recovery/gc-exec-batch-005
-- Ending HEAD: 8d6aeb836252ba6ea56dcaf972e14099c76a51ed
+- Ending HEAD: c9ca69dfa730924f8da4be133b66d372eb77e352
 - Docs evidence commit may follow; final SHA after docs commit recorded in git log.
 
 ## 5. origin/main SHA before and after

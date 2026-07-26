@@ -149,7 +149,12 @@ export async function proxy(request: NextRequest) {
   if (pathname === "/robots.txt") {
     const url = request.nextUrl.clone();
     url.pathname = "/api/robots";
-    return NextResponse.rewrite(url);
+    const response = NextResponse.rewrite(url);
+    // robots rewrite skips the HTML security-header path — still attach noindex on preview.
+    if (shouldNoIndexDeploy()) {
+      response.headers.set("X-Robots-Tag", PREVIEW_X_ROBOTS_TAG);
+    }
+    return response;
   }
 
   // Client navigations sometimes request /{locale}/_next/* — rewrite to /_next/*

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import JsonLdScript from "@/components/seo/JsonLdScript";
 import ApiFootballStatusBanner from "@/components/system/ApiFootballStatusBanner";
+import Wc26ResultsSync from "@/components/wc26/Wc26ResultsSync";
 import { useLiveScores } from "@/lib/client/useLiveScores";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
 import { isLiveMatchStatus, resolveFixtureParticipantLabel } from "@/lib/wc26-live";
@@ -46,6 +47,7 @@ export default function LivePageClient() {
 
   return (
     <>
+      <Wc26ResultsSync />
       <JsonLdScript data={jsonLd} />
       {liveScores ? (
         <ApiFootballStatusBanner

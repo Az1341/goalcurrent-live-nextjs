@@ -1,28 +1,25 @@
 "use client";
 
 import { useMemo } from "react";
-import useSWR from "swr";
 import { Link } from "@/i18n/navigation";
-import { fetcher, LIVE_SWR_OPTIONS } from "@/lib/client/fetcher";
 import {
   isLiveMatchStatus,
   partitionFixturesForLiveCentre,
 } from "@/lib/wc26-live";
 import type { EffectiveFixture } from "@/lib/wc26-fixture-overlay";
-import type { PlFixturesApiResponse } from "@/lib/pl/types";
+import type { PlFixtureRow } from "@/lib/pl/types";
 import { isLocalToday } from "@/lib/date-utils";
 import styles from "../home-v5.module.css";
 
 type HomeTeamsLeaguesProps = {
   fixtures: readonly EffectiveFixture[];
+  plFixtures?: readonly PlFixtureRow[];
 };
 
-export default function HomeTeamsLeagues({ fixtures }: HomeTeamsLeaguesProps) {
-  const { data: plData } = useSWR<PlFixturesApiResponse>(
-    "/api/pl/fixtures",
-    fetcher,
-    LIVE_SWR_OPTIONS,
-  );
+export default function HomeTeamsLeagues({
+  fixtures,
+  plFixtures = [],
+}: HomeTeamsLeaguesProps) {
 
   const wc26TodayCount = useMemo(() => {
     const buckets = partitionFixturesForLiveCentre(fixtures);
@@ -36,9 +33,8 @@ export default function HomeTeamsLeagues({ fixtures }: HomeTeamsLeaguesProps) {
   }, [fixtures]);
 
   const plTodayCount = useMemo(() => {
-    return (plData?.fixtures ?? []).filter((f) => isLocalToday(f.kickoffUtc))
-      .length;
-  }, [plData]);
+    return plFixtures.filter((f) => isLocalToday(f.kickoffUtc)).length;
+  }, [plFixtures]);
 
   return (
     <section className={styles.section} aria-labelledby="home-leagues-heading">

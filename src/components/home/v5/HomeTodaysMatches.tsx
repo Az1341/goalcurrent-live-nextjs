@@ -1,29 +1,26 @@
 "use client";
 
 import { useMemo } from "react";
-import useSWR from "swr";
-import { fetcher, LIVE_SWR_OPTIONS } from "@/lib/client/fetcher";
 import {
   buildHomepageMatchView,
   partitionFixturesForLiveCentre,
   type HomepageMatchView,
 } from "@/lib/wc26-live";
 import type { EffectiveFixture } from "@/lib/wc26-fixture-overlay";
-import type { PlFixtureRow, PlFixturesApiResponse } from "@/lib/pl/types";
+import type { PlFixtureRow } from "@/lib/pl/types";
 import { isLocalToday } from "@/lib/date-utils";
 import { Wc26MatchCard, PlMatchCard } from "./HomeLiveMatchCards";
 import styles from "../home-v5.module.css";
 
 type HomeTodaysMatchesProps = {
   fixtures: readonly EffectiveFixture[];
+  plFixtures?: readonly PlFixtureRow[];
 };
 
-export default function HomeTodaysMatches({ fixtures }: HomeTodaysMatchesProps) {
-  const { data: plData } = useSWR<PlFixturesApiResponse>(
-    "/api/pl/fixtures",
-    fetcher,
-    LIVE_SWR_OPTIONS,
-  );
+export default function HomeTodaysMatches({
+  fixtures,
+  plFixtures = [],
+}: HomeTodaysMatchesProps) {
 
   const wc26Today = useMemo(() => {
     const buckets = partitionFixturesForLiveCentre(fixtures);
@@ -43,15 +40,14 @@ export default function HomeTodaysMatches({ fixtures }: HomeTodaysMatchesProps) 
   }, [fixtures]);
 
   const plToday = useMemo(() => {
-    const all = plData?.fixtures ?? [];
-    return all
+    return plFixtures
       .filter((f) => isLocalToday(f.kickoffUtc))
       .sort(
         (a, b) =>
           new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime(),
       )
       .slice(0, 6);
-  }, [plData]);
+  }, [plFixtures]);
 
   if (!wc26Today.length && !plToday.length) {
     return null;

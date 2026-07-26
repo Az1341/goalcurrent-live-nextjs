@@ -74,10 +74,10 @@ export default function HomeClient() {
           wc26Views={heroWc26Views}
           plFixtures={plFixtures}
         />
-        <HomeTodaysMatches fixtures={fixtures} />
+        <HomeTodaysMatches fixtures={fixtures} plFixtures={plFixtures} />
         <HomeLatestNews />
         <HomeTrendingClips />
-        <HomeTeamsLeagues fixtures={fixtures} />
+        <HomeTeamsLeagues fixtures={fixtures} plFixtures={plFixtures} />
       </main>
     </div>
   );

@@ -67,9 +67,6 @@ function staticChangeFrequency(path: string): ChangeFrequency {
   return "daily";
 }
 
-function wc26HubMatchHref(fixtureId: string): string {
-  return `/worldcup2026/match/${encodeURIComponent(fixtureId)}`;
-}
 
 function dedupeByUrl(entries: SitemapEntry[]): SitemapEntry[] {
   const byUrl = new Map<string, SitemapEntry>();
@@ -112,14 +109,9 @@ export function collectSitemapPathSpecs(fallback: Date): SitemapPathSpec[] {
   }
 
   for (const fixture of WC26_FIXTURES) {
+    // Canonical match URLs only — hub /worldcup2026/match/* redirects and must not be sitemapped.
     specs.push({
       path: matchHref(fixture.id),
-      lastModified: new Date(fixture.kickoffUtc),
-      priority: 0.8,
-      changeFrequency: "daily",
-    });
-    specs.push({
-      path: wc26HubMatchHref(fixture.id),
       lastModified: new Date(fixture.kickoffUtc),
       priority: 0.8,
       changeFrequency: "daily",

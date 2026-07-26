@@ -1,0 +1,155 @@
+﻿vuln {"info":0,"low":0,"moderate":7,"high":8,"critical":0,"total":15}
+[
+  {
+    "name": "@google-cloud/storage",
+    "severity": "moderate",
+    "via": [
+      "retry-request",
+      "teeny-request"
+    ],
+    "range": "2.2.0 - 2.5.0 || >=5.19.0",
+    "fixAvailable": true
+  },
+  {
+    "name": "firebase-admin",
+    "severity": "moderate",
+    "via": [
+      "@google-cloud/storage"
+    ],
+    "range": "7.0.0 - 8.2.0 || >=11.0.0",
+    "fixAvailable": true
+  },
+  {
+    "name": "gaxios",
+    "severity": "moderate",
+    "via": [
+      "uuid"
+    ],
+    "range": "6.4.0 - 6.7.1",
+    "fixAvailable": true
+  },
+  {
+    "name": "protobufjs",
+    "severity": "moderate",
+    "via": [
+      "protobufjs: Denial of Service via infinite loop in .proto option parsing"
+    ],
+    "range": "7.5.0 - 7.6.4",
+    "fixAvailable": true
+  },
+  {
+    "name": "retry-request",
+    "severity": "moderate",
+    "via": [
+      "teeny-request"
+    ],
+    "range": "7.0.0 - 7.0.2",
+    "fixAvailable": true
+  },
+  {
+    "name": "teeny-request",
+    "severity": "moderate",
+    "via": [
+      "uuid"
+    ],
+    "range": "3.9.1 - 9.0.0",
+    "fixAvailable": true
+  },
+  {
+    "name": "uuid",
+    "severity": "moderate",
+    "via": [
+      "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided"
+    ],
+    "range": "<11.1.1",
+    "fixAvailable": true
+  },
+  {
+    "name": "@tailwindcss/postcss",
+    "severity": "high",
+    "via": [
+      "postcss"
+    ],
+    "range": "<=0.0.0-insiders.efae52c || 4.3.1",
+    "fixAvailable": true
+  },
+  {
+    "name": "brace-expansion",
+    "severity": "high",
+    "via": [
+      "brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups",
+      "brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups",
+      "brace-expansion: DoS via exponential-time expansion of consecutive non-expanding {} groups",
+      "brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash"
+    ],
+    "range": "<=5.0.7",
+    "fixAvailable": true
+  },
+  {
+    "name": "fast-uri",
+    "severity": "high",
+    "via": [
+      "fast-uri vulnerable to host confusion via literal backslash authority delimiter",
+      "fast-uri vulnerable to host confusion via failed IDN canonicalization"
+    ],
+    "range": "3.0.0 - 3.1.3",
+    "fixAvailable": true
+  },
+  {
+    "name": "fast-xml-parser",
+    "severity": "high",
+    "via": [
+      "fast-xml-parser: Repeated DOCTYPE declarations reset entity expansion limits"
+    ],
+    "range": "5.9.3 - 5.10.0",
+    "fixAvailable": true
+  },
+  {
+    "name": "js-yaml",
+    "severity": "high",
+    "via": [
+      "js-yaml: YAML merge-key chains can force quadratic CPU consumption"
+    ],
+    "range": "4.0.0 - 4.2.0",
+    "fixAvailable": true
+  },
+  {
+    "name": "next",
+    "severity": "high",
+    "via": [
+      "Next.js: Middleware / Proxy bypass in App Router applications using Turbopack and single locale",
+      "Next.js: Denial of Service in App Router using Server Actions",
+      "Next.js: Server-Side Request Forgery in Server Actions on custom servers",
+      "Next.js: Cache confusion of response bodies for requests with bodies",
+      "Next.js: Cache confusion of response bodies for requests with bodies containing invalid UTF-8 byte sequences",
+      "Next.js: Unbounded Server Action payload in Edge runtime",
+      "Next.js: Server-Side Request Forgery in rewrites via attacker-controlled destination hostname",
+      "Next.js: Denial of Service in the Image Optimization API using SVGs",
+      "Next.js: Unauthenticated disclosure of internal Server Function endpoints",
+      "postcss",
+      "sharp"
+    ],
+    "range": "9.3.4-canary.0 - 16.3.0-preview.7",
+    "fixAvailable": true
+  },
+  {
+    "name": "postcss",
+    "severity": "high",
+    "via": [
+      "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
+      "PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments",
+      "PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure"
+    ],
+    "range": "<=8.5.17",
+    "fixAvailable": true
+  },
+  {
+    "name": "sharp",
+    "severity": "high",
+    "via": [
+      "sharp inherited vulnerabilities in libvips: CVE-2026-33327, CVE-2026-33328, CVE-2026-35590, CVE-2026-35591"
+    ],
+    "range": "<0.35.0",
+    "fixAvailable": true
+  }
+]

@@ -1,0 +1,731 @@
+node.exe : npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm warn Unknow...config options.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+> goalcurrent.live@0.1.0 prebuild
+> node scripts/sync-wc26-flags.mjs
+
+Synced 48 flags, 0 failed ÔåÆ public/flags/4x3/
+
+> goalcurrent.live@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.2.9 (Turbopack)
+- Environments: .env.local
+- Experiments (use with caution):
+  ┬À clientTraceMetadata
+
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 20.4s
+  Running next.config.js provided runAfterProductionCompile ...
+Ô£ô Completed runAfterProductionCompile in 454ms
+  Running TypeScript ...
+  Finished TypeScript in 19.1s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/2487) ...
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'pl',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[YouTube] fetchYouTubeVideos called {
+  category: 'wc',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+  Generating static pages using 7 workers (621/2487) 
+  Generating static pages using 7 workers (1243/2487) 
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+[ingest] ingestAllContent start { hasCachedNews: true, youtubeKeyPresent: false }
+[ingest] fetchYouTubeForIngest start { maxResults: 12, youtubeKeyPresent: false }
+[YouTube] fetchYouTubeVideos called {
+  category: 'all',
+  maxResults: 12,
+  apiKeyPresent: false,
+  apiKeyLength: 0
+}
+[YouTube] YOUTUBE_API_KEY missing or empty after trim
+[ingest] fetchYouTubeForIngest done { count: 0, error: 'YOUTUBE_API_KEY not configured' }
+[ingest] ingestAllContent assembled { newsCount: 30, youtubeCount: 0, scoreBatCount: 0, rssVideoCount: 0 }
+  Generating static pages using 7 workers (1865/2487) 
+Ô£ô Generating static pages using 7 workers (2487/2487) in 26.4s
+  Finalizing page optimization ...
+
+Route (app)                                                                     Revalidate  Expire
+Ôöî Ôùï /_not-found
+Ôö£ ÔùÅ /[locale]                                                                          30s      1y
+Ôöé Ôö£ /en                                                                                30s      1y
+Ôöé Ôö£ /fa                                                                                30s      1y
+Ôöé Ôö£ /ar                                                                                30s      1y
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/about
+Ôöé Ôö£ /en/about
+Ôöé Ôö£ /fa/about
+Ôöé Ôö£ /ar/about
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/affiliate-disclosure
+Ôöé Ôö£ /en/affiliate-disclosure
+Ôöé Ôö£ /fa/affiliate-disclosure
+Ôöé Ôö£ /ar/affiliate-disclosure
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/articles
+Ôö£ ÔùÅ /[locale]/articles/[slug]
+Ôöé Ôö£ /en/articles/world-cup-2026-complete-guide
+Ôöé Ôö£ /en/articles/premier-league-2025-26-season-review
+Ôöé Ôö£ /en/articles/psg-vs-arsenal-ucl-final-2026
+Ôöé Ôöö [+96 more paths]
+Ôö£ ãÆ /[locale]/articles/alireza-beiranvand-iran-world-cup-hero
+Ôö£ ÔùÅ /[locale]/articles/champions-league-new-rules
+Ôöé Ôö£ /en/articles/champions-league-new-rules
+Ôöé Ôö£ /fa/articles/champions-league-new-rules
+Ôöé Ôö£ /ar/articles/champions-league-new-rules
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/england-6-4-france-third-place-recap
+Ôöé Ôö£ /en/articles/england-6-4-france-third-place-recap
+Ôöé Ôö£ /fa/articles/england-6-4-france-third-place-recap
+Ôöé Ôö£ /ar/articles/england-6-4-france-third-place-recap
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/england-advance-to-face-mexico-round-of-16
+Ôöé Ôö£ /en/articles/england-advance-to-face-mexico-round-of-16
+Ôöé Ôö£ /fa/articles/england-advance-to-face-mexico-round-of-16
+Ôöé Ôö£ /ar/articles/england-advance-to-face-mexico-round-of-16
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/england-argentina-world-cup-semifinal-analysis
+Ôöé Ôö£ /en/articles/england-argentina-world-cup-semifinal-analysis
+Ôöé Ôö£ /fa/articles/england-argentina-world-cup-semifinal-analysis
+Ôöé Ôö£ /ar/articles/england-argentina-world-cup-semifinal-analysis
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/england-france-third-place-preview
+Ôöé Ôö£ /en/articles/england-france-third-place-preview
+Ôöé Ôö£ /fa/articles/england-france-third-place-preview
+Ôöé Ôö£ /ar/articles/england-france-third-place-preview
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/articles/fifa-world-cup-2026-head-to-head-rule-early-elimination
+Ôö£ ÔùÅ /[locale]/articles/football-and-peace
+Ôöé Ôö£ /en/articles/football-and-peace
+Ôöé Ôö£ /fa/articles/football-and-peace
+Ôöé Ôö£ /ar/articles/football-and-peace
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/football-as-an-industry
+Ôöé Ôö£ /en/articles/football-as-an-industry
+Ôöé Ôö£ /fa/articles/football-as-an-industry
+Ôöé Ôö£ /ar/articles/football-as-an-industry
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/football-in-developing-countries
+Ôöé Ôö£ /en/articles/football-in-developing-countries
+Ôöé Ôö£ /fa/articles/football-in-developing-countries
+Ôöé Ôö£ /ar/articles/football-in-developing-countries
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/football-inspiring-canadas-next-generation
+Ôöé Ôö£ /en/articles/football-inspiring-canadas-next-generation
+Ôöé Ôö£ /fa/articles/football-inspiring-canadas-next-generation
+Ôöé Ôö£ /ar/articles/football-inspiring-canadas-next-generation
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/premier-league-2026-27-august-countdown
+Ôöé Ôö£ /en/articles/premier-league-2026-27-august-countdown
+Ôöé Ôö£ /fa/articles/premier-league-2026-27-august-countdown
+Ôöé Ôö£ /ar/articles/premier-league-2026-27-august-countdown
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/premier-league-2026-27-new-season
+Ôöé Ôö£ /en/articles/premier-league-2026-27-new-season
+Ôöé Ôö£ /fa/articles/premier-league-2026-27-new-season
+Ôöé Ôö£ /ar/articles/premier-league-2026-27-new-season
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/spain-world-cup-2026-champion-masterclass
+Ôöé Ôö£ /en/articles/spain-world-cup-2026-champion-masterclass
+Ôöé Ôö£ /fa/articles/spain-world-cup-2026-champion-masterclass
+Ôöé Ôö£ /ar/articles/spain-world-cup-2026-champion-masterclass
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-july-1-recap
+Ôöé Ôö£ /en/articles/world-cup-2026-july-1-recap
+Ôöé Ôö£ /fa/articles/world-cup-2026-july-1-recap
+Ôöé Ôö£ /ar/articles/world-cup-2026-july-1-recap
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-july-3-recap
+Ôöé Ôö£ /en/articles/world-cup-2026-july-3-recap
+Ôöé Ôö£ /fa/articles/world-cup-2026-july-3-recap
+Ôöé Ôö£ /ar/articles/world-cup-2026-july-3-recap
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-june-22-recap
+Ôöé Ôö£ /en/articles/world-cup-2026-june-22-recap
+Ôöé Ôö£ /fa/articles/world-cup-2026-june-22-recap
+Ôöé Ôö£ /ar/articles/world-cup-2026-june-22-recap
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-june-23-recap
+Ôöé Ôö£ /en/articles/world-cup-2026-june-23-recap
+Ôöé Ôö£ /fa/articles/world-cup-2026-june-23-recap
+Ôöé Ôö£ /ar/articles/world-cup-2026-june-23-recap
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-june-27-group-stage-finale
+Ôöé Ôö£ /en/articles/world-cup-2026-june-27-group-stage-finale
+Ôöé Ôö£ /fa/articles/world-cup-2026-june-27-group-stage-finale
+Ôöé Ôö£ /ar/articles/world-cup-2026-june-27-group-stage-finale
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-june-27-recap
+Ôöé Ôö£ /en/articles/world-cup-2026-june-27-recap
+Ôöé Ôö£ /fa/articles/world-cup-2026-june-27-recap
+Ôöé Ôö£ /ar/articles/world-cup-2026-june-27-recap
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-june-30-recap
+Ôöé Ôö£ /en/articles/world-cup-2026-june-30-recap
+Ôöé Ôö£ /fa/articles/world-cup-2026-june-30-recap
+Ôöé Ôö£ /ar/articles/world-cup-2026-june-30-recap
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/articles/world-cup-2026-teams-already-out
+Ôöé Ôö£ /en/articles/world-cup-2026-teams-already-out
+Ôöé Ôö£ /fa/articles/world-cup-2026-teams-already-out
+Ôöé Ôö£ /ar/articles/world-cup-2026-teams-already-out
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/contact
+Ôö£ ÔùÅ /[locale]/cookies
+Ôöé Ôö£ /en/cookies
+Ôöé Ôö£ /fa/cookies
+Ôöé Ôö£ /ar/cookies
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/favourites
+Ôöé Ôö£ /en/favourites
+Ôöé Ôö£ /fa/favourites
+Ôöé Ôö£ /ar/favourites
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/favourites/clubs
+Ôöé Ôö£ /en/favourites/clubs
+Ôöé Ôö£ /fa/favourites/clubs
+Ôöé Ôö£ /ar/favourites/clubs
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/favourites/players
+Ôöé Ôö£ /en/favourites/players
+Ôöé Ôö£ /fa/favourites/players
+Ôöé Ôö£ /ar/favourites/players
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/live
+Ôö£ ÔùÅ /[locale]/match/[fixtureId]
+Ôöé Ôö£ /en/match/fixture-001
+Ôöé Ôö£ /en/match/fixture-002
+Ôöé Ôö£ /en/match/fixture-003
+Ôöé Ôöö [+933 more paths]
+Ôö£ ãÆ /[locale]/news
+Ôö£ ÔùÅ /[locale]/news/alireza-beiranvand-iran-world-cup-hero
+Ôöé Ôö£ /en/news/alireza-beiranvand-iran-world-cup-hero
+Ôöé Ôö£ /fa/news/alireza-beiranvand-iran-world-cup-hero
+Ôöé Ôö£ /ar/news/alireza-beiranvand-iran-world-cup-hero
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/news/articles
+Ôöé Ôö£ /en/news/articles
+Ôöé Ôö£ /fa/news/articles
+Ôöé Ôö£ /ar/news/articles
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/news/articles/[slug]
+Ôö£ ÔùÅ /[locale]/news/articles/football-inspiring-canadas-next-generation
+Ôöé Ôö£ /en/news/articles/football-inspiring-canadas-next-generation
+Ôöé Ôö£ /fa/news/articles/football-inspiring-canadas-next-generation
+Ôöé Ôö£ /ar/news/articles/football-inspiring-canadas-next-generation
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/news/premier-league                                                       1h      1y
+Ôöé Ôö£ /en/news/premier-league                                                             1h      1y
+Ôöé Ôö£ /fa/news/premier-league                                                             1h      1y
+Ôöé Ôö£ /ar/news/premier-league                                                             1h      1y
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/news/transfers
+Ôöé Ôö£ /en/news/transfers
+Ôöé Ôö£ /fa/news/transfers
+Ôöé Ôö£ /ar/news/transfers
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/news/world-cup
+Ôö£ ÔùÅ /[locale]/premier-league
+Ôöé Ôö£ /en/premier-league
+Ôöé Ôö£ /fa/premier-league
+Ôöé Ôö£ /ar/premier-league
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/2025-26/table
+Ôöé Ôö£ /en/premier-league/2025-26/table
+Ôöé Ôö£ /fa/premier-league/2025-26/table
+Ôöé Ôö£ /ar/premier-league/2025-26/table
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/clubs
+Ôöé Ôö£ /en/premier-league/clubs
+Ôöé Ôö£ /fa/premier-league/clubs
+Ôöé Ôö£ /ar/premier-league/clubs
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/clubs/[club]
+Ôöé Ôö£ /en/premier-league/clubs/arsenal
+Ôöé Ôö£ /en/premier-league/clubs/manchester-city
+Ôöé Ôö£ /en/premier-league/clubs/liverpool
+Ôöé Ôöö [+177 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/fixtures
+Ôöé Ôö£ /en/premier-league/fixtures
+Ôöé Ôö£ /fa/premier-league/fixtures
+Ôöé Ôö£ /ar/premier-league/fixtures
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/live
+Ôöé Ôö£ /en/premier-league/live
+Ôöé Ôö£ /fa/premier-league/live
+Ôöé Ôö£ /ar/premier-league/live
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/premier-league/match/[fixtureId]
+Ôö£ ÔùÅ /[locale]/premier-league/players
+Ôöé Ôö£ /en/premier-league/players
+Ôöé Ôö£ /fa/premier-league/players
+Ôöé Ôö£ /ar/premier-league/players
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/statistics
+Ôöé Ôö£ /en/premier-league/statistics
+Ôöé Ôö£ /fa/premier-league/statistics
+Ôöé Ôö£ /ar/premier-league/statistics
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/table
+Ôöé Ôö£ /en/premier-league/table
+Ôöé Ôö£ /fa/premier-league/table
+Ôöé Ôö£ /ar/premier-league/table
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/premier-league/transfers
+Ôöé Ôö£ /en/premier-league/transfers
+Ôöé Ôö£ /fa/premier-league/transfers
+Ôöé Ôö£ /ar/premier-league/transfers
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/privacy
+Ôöé Ôö£ /en/privacy
+Ôöé Ôö£ /fa/privacy
+Ôöé Ôö£ /ar/privacy
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/assists
+Ôöé Ôö£ /en/statistics/assists
+Ôöé Ôö£ /fa/statistics/assists
+Ôöé Ôö£ /ar/statistics/assists
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/clean-sheets
+Ôöé Ôö£ /en/statistics/clean-sheets
+Ôöé Ôö£ /fa/statistics/clean-sheets
+Ôöé Ôö£ /ar/statistics/clean-sheets
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/disciplinary
+Ôöé Ôö£ /en/statistics/disciplinary
+Ôöé Ôö£ /fa/statistics/disciplinary
+Ôöé Ôö£ /ar/statistics/disciplinary
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/live
+Ôöé Ôö£ /en/statistics/live
+Ôöé Ôö£ /fa/statistics/live
+Ôöé Ôö£ /ar/statistics/live
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/player-rankings
+Ôöé Ôö£ /en/statistics/player-rankings
+Ôöé Ôö£ /fa/statistics/player-rankings
+Ôöé Ôö£ /ar/statistics/player-rankings
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/players
+Ôöé Ôö£ /en/statistics/players
+Ôöé Ôö£ /fa/statistics/players
+Ôöé Ôö£ /ar/statistics/players
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/teams
+Ôöé Ôö£ /en/statistics/teams
+Ôöé Ôö£ /fa/statistics/teams
+Ôöé Ôö£ /ar/statistics/teams
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/statistics/top-scorers
+Ôöé Ôö£ /en/statistics/top-scorers
+Ôöé Ôö£ /fa/statistics/top-scorers
+Ôöé Ôö£ /ar/statistics/top-scorers
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/terms
+Ôöé Ôö£ /en/terms
+Ôöé Ôö£ /fa/terms
+Ôöé Ôö£ /ar/terms
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/transfers
+Ôöé Ôö£ /en/transfers
+Ôöé Ôö£ /fa/transfers
+Ôöé Ôö£ /ar/transfers
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/transfers/completed
+Ôöé Ôö£ /en/transfers/completed
+Ôöé Ôö£ /fa/transfers/completed
+Ôöé Ôö£ /ar/transfers/completed
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/transfers/free-agents
+Ôöé Ôö£ /en/transfers/free-agents
+Ôöé Ôö£ /fa/transfers/free-agents
+Ôöé Ôö£ /ar/transfers/free-agents
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/transfers/rumours
+Ôöé Ôö£ /en/transfers/rumours
+Ôöé Ôö£ /fa/transfers/rumours
+Ôöé Ôö£ /ar/transfers/rumours
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/video
+Ôöé Ôö£ /en/video
+Ôöé Ôö£ /fa/video
+Ôöé Ôö£ /ar/video
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/video/highlights
+Ôöé Ôö£ /en/video/highlights
+Ôöé Ôö£ /fa/video/highlights
+Ôöé Ôö£ /ar/video/highlights
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/video/podcasts
+Ôöé Ôö£ /en/video/podcasts
+Ôöé Ôö£ /fa/video/podcasts
+Ôöé Ôö£ /ar/video/podcasts
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/video/premier-league
+Ôöé Ôö£ /en/video/premier-league
+Ôöé Ôö£ /fa/video/premier-league
+Ôöé Ôö£ /ar/video/premier-league
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/video/press-conferences
+Ôöé Ôö£ /en/video/press-conferences
+Ôöé Ôö£ /fa/video/press-conferences
+Ôöé Ôö£ /ar/video/press-conferences
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/video/world-cup
+Ôöé Ôö£ /en/video/world-cup
+Ôöé Ôö£ /fa/video/world-cup
+Ôöé Ôö£ /ar/video/world-cup
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/video/youtube
+Ôöé Ôö£ /en/video/youtube
+Ôöé Ôö£ /fa/video/youtube
+Ôöé Ôö£ /ar/video/youtube
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/videos                                                                    1d      1y
+Ôöé Ôö£ /en/videos                                                                          1d      1y
+Ôöé Ôö£ /fa/videos                                                                          1d      1y
+Ôöé Ôö£ /ar/videos                                                                          1d      1y
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/videos/premier-league                                                     1h      1y
+Ôöé Ôö£ /en/videos/premier-league                                                           1h      1y
+Ôöé Ôö£ /fa/videos/premier-league                                                           1h      1y
+Ôöé Ôö£ /ar/videos/premier-league                                                           1h      1y
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/videos/world-cup                                                          1h      1y
+Ôöé Ôö£ /en/videos/world-cup                                                                1h      1y
+Ôöé Ôö£ /fa/videos/world-cup                                                                1h      1y
+Ôöé Ôö£ /ar/videos/world-cup                                                                1h      1y
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/worldcup2026
+Ôöé Ôö£ /en/worldcup2026
+Ôöé Ôö£ /fa/worldcup2026
+Ôöé Ôö£ /ar/worldcup2026
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /[locale]/worldcup2026/bracket
+Ôö£ ÔùÅ /[locale]/worldcup2026/fixtures
+Ôöé Ôö£ /en/worldcup2026/fixtures
+Ôöé Ôö£ /fa/worldcup2026/fixtures
+Ôöé Ôö£ /ar/worldcup2026/fixtures
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/worldcup2026/groups
+Ôöé Ôö£ /en/worldcup2026/groups
+Ôöé Ôö£ /fa/worldcup2026/groups
+Ôöé Ôö£ /ar/worldcup2026/groups
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/worldcup2026/groups/[group]
+Ôöé Ôö£ /en/worldcup2026/groups/a
+Ôöé Ôö£ /en/worldcup2026/groups/b
+Ôöé Ôö£ /en/worldcup2026/groups/c
+Ôöé Ôöö [+105 more paths]
+Ôö£ ãÆ /[locale]/worldcup2026/match/[fixtureId]
+Ôö£ ãÆ /[locale]/worldcup2026/news/morocco-knock-out-netherlands-on-penalties
+Ôö£ ÔùÅ /[locale]/worldcup2026/players
+Ôöé Ôö£ /en/worldcup2026/players
+Ôöé Ôö£ /fa/worldcup2026/players
+Ôöé Ôö£ /ar/worldcup2026/players
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/worldcup2026/standings
+Ôöé Ôö£ /en/worldcup2026/standings
+Ôöé Ôö£ /fa/worldcup2026/standings
+Ôöé Ôö£ /ar/worldcup2026/standings
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/worldcup2026/teams
+Ôöé Ôö£ /en/worldcup2026/teams
+Ôöé Ôö£ /fa/worldcup2026/teams
+Ôöé Ôö£ /ar/worldcup2026/teams
+Ôöé Ôöö [+6 more paths]
+Ôö£ ÔùÅ /[locale]/worldcup2026/teams/[teamId]
+Ôöé Ôö£ /en/worldcup2026/teams/mex
+Ôöé Ôö£ /en/worldcup2026/teams/rsa
+Ôöé Ôö£ /en/worldcup2026/teams/kor
+Ôöé Ôöö [+429 more paths]
+Ôö£ ÔùÅ /[locale]/worldcup2026/venues
+Ôöé Ôö£ /en/worldcup2026/venues
+Ôöé Ôö£ /fa/worldcup2026/venues
+Ôöé Ôö£ /ar/worldcup2026/venues
+Ôöé Ôöö [+6 more paths]
+Ôö£ ãÆ /api/articles
+Ôö£ ãÆ /api/cron/refresh-content
+Ôö£ ãÆ /api/debug/api-football
+Ôö£ ãÆ /api/debug/wc26
+Ôö£ ãÆ /api/firebase/fcm-token
+Ôö£ ãÆ /api/news
+Ôö£ ãÆ /api/pl/assists
+Ôö£ ãÆ /api/pl/clean-sheets
+Ôö£ ãÆ /api/pl/disciplinary
+Ôö£ ãÆ /api/pl/fixtures
+Ôö£ ãÆ /api/pl/live
+Ôö£ ãÆ /api/pl/match/[fixtureId]
+Ôö£ ãÆ /api/pl/players
+Ôö£ ãÆ /api/pl/standings
+Ôö£ ãÆ /api/pl/statistics
+Ôö£ ãÆ /api/pl/teams
+Ôö£ ãÆ /api/pl/top-scorers
+Ôö£ ãÆ /api/pl/transfers
+Ôö£ ãÆ /api/robots
+Ôö£ ãÆ /api/scores
+Ôö£ ãÆ /api/sitemap
+Ôö£ ãÆ /api/sitemap-news
+Ôö£ ãÆ /api/videos
+Ôö£ ãÆ /api/wc26/fixtures
+Ôö£ ãÆ /api/wc26/knockout-fixtures
+Ôö£ ãÆ /api/wc26/match/[fixtureId]
+Ôö£ ãÆ /api/wc26/scores
+Ôö£ ãÆ /api/wc26/top-scorers
+Ôö£ ãÆ /api/well-known/assetlinks
+Ôöö ãÆ /firebase-messaging-sw.js
+
+
+ãÆ Proxy (Middleware)
+
+Ôùï  (Static)   prerendered as static content
+ÔùÅ  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ãÆ  (Dynamic)  server-rendered on demand
+

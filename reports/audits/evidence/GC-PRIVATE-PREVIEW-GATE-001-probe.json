@@ -1,0 +1,47 @@
+﻿{
+  "task_id": "GC-PRIVATE-PREVIEW-GATE-001",
+  "captured_at_bst": "2026-07-26T14:51:00+01:00",
+  "method": "curl.exe --ssl-no-revoke --max-redirs 0 with no cookies/auth headers; browser confirmation for login wall and production homepage",
+  "notes": [
+    "Preview hosts and SSO nonces redacted in report; deployment id retained.",
+    "app_content_exposed requires __NEXT_DATA__ or match UI markers in response body; hostname substrings alone are not app content.",
+    "Unauthenticated 302 bodies were literal 'Redirecting...' (15 bytes) with Location to /sso-api."
+  ],
+  "preview_deployment": {
+    "deployment_id": "dpl_6JnLrvxvnjgCYaF1KE8v4Ds2sVeB",
+    "branch": "recovery/gc-exec-batch-005",
+    "commit_sha": "e4873659836b007f26ee78b01c6e4355a584663f",
+    "ready_state": "READY",
+    "environment": "preview",
+    "url_redacted": "https://[REDACTED-PREVIEW-DEPLOYMENT].vercel.app",
+    "branch_alias_redacted": "https://[REDACTED-BRANCH-ALIAS].vercel.app"
+  },
+  "unauthenticated_results": [
+    { "path": "/", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/robots.txt", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/sitemap.xml", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/api/robots", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/en", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/api/videos?limit=1", "expected": "deny app/API data", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/favicon.ico", "expected": "deny or protect", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/logo.svg", "expected": "deny or protect", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/ (branch alias)", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/robots.txt (branch alias)", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/en (branch alias)", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" }
+  ],
+  "production_results": [
+    { "path": "https://goalcurrent.live/", "http_status": 200, "app_content_exposed": true, "result": "PASS_PUBLIC" },
+    { "path": "https://goalcurrent.live/robots.txt", "http_status": 200, "app_content_exposed": true, "result": "PASS_PUBLIC" },
+    { "path": "https://goalcurrent.live/en", "http_status": 307, "location": "/", "result": "PASS_PUBLIC" },
+    { "path": "https://goalcurrent.live/about", "http_status": 200, "app_content_exposed": true, "result": "PASS_PUBLIC" },
+    { "path": "production vercel.app deployment alias (non-custom-domain)", "http_status": 302, "redirect_type": "vercel_/sso-api", "note": "Consistent with ssoProtection=all_except_custom_domains; custom domain remains public", "result": "INFORMATIONAL" }
+  ],
+  "authorised_founder_access": {
+    "tested": false,
+    "reason": "No authenticated Vercel browser/MCP session available for team az-team-1 in this agent environment",
+    "browser_observed": "Unauthenticated browser navigated to Vercel Login page (not GoalCurrent app HTML)",
+    "mcp_vercel_plugin": "Authenticated to team ahmad-zafarani-s-projects only; 403 for az-team-1/goalcurrent.live",
+    "cli_identity": "azafarani4-5274 has read access to project metadata under az-team-1 (not used as app-load proof)",
+    "result": "BLOCKED"
+  }
+}

@@ -32,7 +32,7 @@ test("upcoming countdown only before kick-off", () => {
   );
 });
 
-test("live card when status is live or kick-off passed", () => {
+test("live card only for true in-play status (not kick-off alone)", () => {
   assert.equal(shouldShowLiveMatchCard(baseFixture), false);
   assert.equal(
     shouldShowLiveMatchCard({ ...baseFixture, status: "2h", elapsed: 67 }),
@@ -43,7 +43,7 @@ test("live card when status is live or kick-off passed", () => {
       ...baseFixture,
       kickoffUtc: "2020-01-01T20:00:00.000Z",
     }),
-    true,
+    false,
   );
   assert.equal(
     shouldShowLiveMatchCard({ ...baseFixture, status: "FT", homeScore: 1, awayScore: 0 }),
@@ -51,7 +51,7 @@ test("live card when status is live or kick-off passed", () => {
   );
 });
 
-test("kickoff passed scheduled knockout shows as live in match header", async () => {
+test("kickoff passed scheduled knockout is upcoming until provider marks live", async () => {
   const { buildHomepageMatchView } = await import(
     pathToFileURL(join(root, "src/lib/wc26-live.ts")).href
   );
@@ -67,6 +67,6 @@ test("kickoff passed scheduled knockout shows as live in match header", async ()
     matchNumber: 103,
   });
 
-  assert.equal(view.matchClass, "live");
-  assert.equal(view.statusLabel, "Live");
+  assert.equal(view.matchClass, "upcoming");
+  assert.notEqual(view.statusLabel.toLowerCase(), "live");
 });

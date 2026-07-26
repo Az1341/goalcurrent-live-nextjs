@@ -329,7 +329,8 @@ export function findFixtureIdByMatchNumber(
 /** Map api-football short status codes to overlay status strings. */
 export function mapApiStatusShort(short: string): string | null {
   const normalized = short.trim().toUpperCase();
-  if (normalized === "NS" || normalized === "TBD" || normalized === "PST") {
+  // Not started / TBD — keep static schedule; do not overlay.
+  if (normalized === "NS" || normalized === "TBD") {
     return null;
   }
 
@@ -345,6 +346,11 @@ export function mapApiStatusShort(short: string): string | null {
     P: "penalties",
     INT: "live",
     LIVE: "live",
+    PST: "postponed",
+    CANC: "cancelled",
+    ABD: "cancelled",
+    AWD: "cancelled",
+    WO: "cancelled",
   };
 
   return mapped[normalized] ?? normalized.toLowerCase();

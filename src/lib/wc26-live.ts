@@ -72,12 +72,12 @@ export function shouldShowUpcomingCountdown(fixture: EffectiveFixture): boolean 
   return !isFixtureKickoffPassed(fixture);
 }
 
-/** Compact live row when a match is in progress or kick-off has passed. */
+/** Compact live row only when status is a true in-progress state. */
 export function shouldShowLiveMatchCard(fixture: EffectiveFixture): boolean {
   if (isEffectiveFixtureCompleted(fixture)) {
     return false;
   }
-  return isLiveMatchStatus(fixture.status) || isFixtureKickoffPassed(fixture);
+  return isLiveMatchStatus(fixture.status);
 }
 
 export type LiveFixtureBuckets = {
@@ -124,15 +124,8 @@ export function partitionFixturesForLiveCentre(
       continue;
     }
 
-    if (isFixtureKickoffPassed(fixture, now.getTime())) {
-      live.push(fixture);
-      const kickoffKey = localDateKey(fixture.kickoffUtc);
-      if (kickoffKey === todayKey) {
-        today.push(fixture);
-      }
-      continue;
-    }
-
+    // Kickoff-passed without a live/completed status stays in today/upcoming
+    // buckets — never treat schedule lag as LIVE.
     const kickoffAt = new Date(fixture.kickoffUtc);
     const kickoffKey = localDateKey(fixture.kickoffUtc);
     if (kickoffKey === todayKey) {
@@ -225,8 +218,58 @@ export function formatFixtureStatusLabel(status: FixtureStatus | string): string
       return "Extra Time";
     case "penalties":
       return "Penalties";
+    case "canc":
+    case "abd":
+      return "Cancelled";
+    case "pst":
+      return "Postponed";
     default:
       return String(status).toUpperCase();
+  }
+}
+
+/** Compact ticker/pill labels — FT, AET, PEN, LIVE, PST, CANC. */
+export function formatCompactFixtureStatusLabel(
+  status: FixtureStatus | string,
+): string {
+  const normalized = normalizeStatus(String(status));
+  switch (normalized) {
+    case "aet":
+      return "AET";
+    case "pen":
+    case "penalties":
+      return "PEN";
+    case "ft":
+    case "finished":
+    case "full-time":
+    case "completed":
+      return "FT";
+    case "postponed":
+    case "pst":
+      return "PST";
+    case "cancelled":
+    case "canc":
+    case "abd":
+      return "CANC";
+    case "scheduled":
+      return "SCHED";
+    case "1h":
+      return "1H";
+    case "2h":
+      return "2H";
+    case "ht":
+    case "halftime":
+    case "half-time":
+      return "HT";
+    case "et":
+    case "extra time":
+      return "ET";
+    case "live":
+    case "in play":
+    case "in-play":
+      return "LIVE";
+    default:
+      return formatFixtureStatusLabel(status);
   }
 }
 
@@ -258,21 +301,15 @@ function classifyHomepageMatch(
   if (isEffectiveFixtureCompleted(fixture, now)) {
     return "ft";
   }
-  if (isFixtureKickoffPassed(fixture, now.getTime())) {
-    return "live";
-  }
   return "upcoming";
 }
 
 function homepageStatusLabel(fixture: EffectiveFixture, matchClass: HomepageMatchClass): string {
   if (matchClass === "live") {
-    if (isLiveMatchStatus(fixture.status)) {
-      return formatFixtureStatusLabel(fixture.status);
-    }
-    return "Live";
+    return formatFixtureStatusLabel(fixture.status);
   }
   if (matchClass === "ft") {
-    return formatFixtureStatusLabel(fixture.status);
+    return formatCompactFixtureStatusLabel(fixture.status);
   }
   return formatKickoffLocalTime(fixture.kickoffUtc);
 }

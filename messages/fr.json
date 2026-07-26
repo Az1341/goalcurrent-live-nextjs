@@ -109,7 +109,9 @@
       "worldCup2026": "WORLD CUP 2026",
       "liveNow": "LIVE NOW",
       "latestResults": "LATEST RESULTS",
-      "emptyMessage": "Calendrier local — résultats lorsque la synchronisation API est active",
+      "archive": "ARCHIVE",
+      "emptyMessage": "Aucun match en direct pour le moment",
+      "emptyArchiveMessage": "La Coupe du monde 2026 est terminee — consulter les archives",
       "liveMatchesAria": "Matchs en direct",
       "latestResultsAria": "Derniers résultats",
       "moreMatches": "+{count} matchs supplémentaires",
@@ -366,18 +368,22 @@
   },
   "live": {
     "pageTitle": "Scores en direct — {competition}",
+    "archivePageTitle": "Archive — {competition}",
     "competition": "Coupe du monde 2026",
     "pageIntro": "Scores Coupe du monde 2026 — resultats confirmes et sync API en direct.",
+    "archivePageIntro": "La Coupe du monde 2026 est terminee. Scores d'archive / finaux ci-dessous — pas en direct.",
     "syncPending": "Synchronisation…",
     "syncDegraded": "Derniers scores connus — fournisseur live limite.",
     "sections": {
       "liveNow": "En direct",
+      "archiveLive": "En direct",
       "today": "Aujourd hui",
       "upcoming": "Prochains matchs",
       "completed": "Termines"
     },
     "empty": {
-      "liveNow": "Aucun match en direct.",
+      "liveNow": "Aucun match en direct pour le moment",
+      "archiveLiveNow": "Aucun match en direct — Coupe du monde 2026 terminee (Archive). Voir les matchs termines ci-dessous.",
       "today": "Aucun match aujourd hui.",
       "completed": "Aucun match termine."
     },

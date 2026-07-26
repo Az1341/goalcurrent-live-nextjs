@@ -13,6 +13,7 @@ import {
   useLocalizedKickoffTime,
 } from "@/lib/client/use-local-kickoff";
 import {
+  formatCompactFixtureStatusLabel,
   formatFixtureStatusLabel,
   isLiveMatchStatus,
   resolveFixtureParticipant,
@@ -38,7 +39,17 @@ function statusColumnLabel(
     return formatFixtureStatusLabel(fixture.status);
   }
   if (isCompleted) {
-    return "FT";
+    return formatCompactFixtureStatusLabel(fixture.status);
+  }
+  const normalized = String(fixture.status).trim().toLowerCase();
+  if (
+    normalized === "postponed" ||
+    normalized === "pst" ||
+    normalized === "cancelled" ||
+    normalized === "canc" ||
+    normalized === "abd"
+  ) {
+    return formatCompactFixtureStatusLabel(fixture.status);
   }
   return undefined;
 }

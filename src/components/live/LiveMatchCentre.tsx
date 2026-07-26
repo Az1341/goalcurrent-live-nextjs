@@ -7,17 +7,14 @@ import LiveMatchCard from "@/components/live/LiveMatchCard";
 import UpcomingMatchCountdown from "@/components/live/UpcomingMatchCountdown";
 import { groupLabel } from "@/data/wc26";
 import type { EffectiveFixture } from "@/lib/wc26-fixture-overlay";
-import { isEffectiveFixtureCompleted } from "@/lib/wc26-fixture-overlay";
 import { formatStageLabel } from "@/lib/wc26-fixtures-page";
-import { partitionFixturesForLiveCentre, isLiveMatchStatus, resolveFixtureParticipant, findNextUpcomingMatch } from "@/lib/wc26-live";
+import { partitionFixturesForLiveCentre, isLiveMatchStatus, resolveFixtureParticipant, findNextUpcomingMatch, shouldShowUpcomingCountdown } from "@/lib/wc26-live";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
 import { useWc26SyncStatus } from "@/lib/use-wc26-sync-status";
+import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import MatchLineupPitchSection from "@/components/match/MatchLineupPitchSection";
 import { matchHref } from "@/lib/wc26-match";
 import styles from "./live.module.css";
-
-/** Must stay in sync with UpcomingMatchCountdown's MATCH_WINDOW_MS */
-const MATCH_WINDOW_MS = 130 * 60 * 1_000;
 
 type LiveSectionProps = {
   id: string;
@@ -138,50 +135,45 @@ export default function LiveMatchCentre() {
     return () => clearInterval(id);
   }, []);
 
-  /** The single hero fixture shown in the "Live now" empty slot.
-   *  Priority order:
-   *    1. A match that kicked off within MATCH_WINDOW_MS but the API has not
-   *       yet confirmed it as live → show the LIVE NOW hero card.
-   *    2. The next future upcoming match → show the countdown card.
-   *    (When buckets.live has entries the API is driving the section; no hero needed.) */
+  const archiveComplete = isWc26TournamentComplete();
+
+  /** Next future kickoff only — never invent a LIVE hero from kickoff time alone. */
   const featuredFixture = useMemo<EffectiveFixture | undefined>(() => {
-    if (buckets.live.length > 0) return undefined;
+    if (archiveComplete || buckets.live.length > 0) return undefined;
+    const next = findNextUpcomingMatch(fixtures, new Date(clockMs));
+    if (!next || !shouldShowUpcomingCountdown(next)) return undefined;
+    return next;
+  }, [archiveComplete, buckets.live.length, fixtures, clockMs]);
 
-    // 1. Just-kicked-off match (API lag scenario)
-    const justKickedOff = fixtures
-      .filter((f) => {
-        if (isLiveMatchStatus(f.status)) return false;
-        if (isEffectiveFixtureCompleted(f)) return false;
-        const elapsed = clockMs - new Date(f.kickoffUtc).getTime();
-        return elapsed >= 0 && elapsed < MATCH_WINDOW_MS;
-      })
-      .sort(
-        (a, b) =>
-          new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime(),
-      )[0];
-
-    if (justKickedOff) return justKickedOff;
-
-    // 2. Next scheduled upcoming match
-    return findNextUpcomingMatch(fixtures, new Date(clockMs));
-  }, [buckets.live.length, fixtures, clockMs]);
+  // Never leave "Syncing live data…" up when there is nothing live to wait for.
+  // Only show briefly on cold start before any results/live rows exist.
+  const showSyncPending =
+    syncStatus === "pending" &&
+    !archiveComplete &&
+    buckets.live.length === 0 &&
+    buckets.completed.length === 0;
+  const showSyncDegraded = syncStatus === "degraded" && !archiveComplete;
 
   return (
     <main className={styles.content}>
       <h1 className={styles.pageTitle}>
-        {t("pageTitle", { competition: t("competition") })}
+        {archiveComplete
+          ? t("archivePageTitle", { competition: t("competition") })
+          : t("pageTitle", { competition: t("competition") })}
       </h1>
-      <p className={styles.pageIntro}>{t("pageIntro")}</p>
+      <p className={styles.pageIntro}>
+        {archiveComplete ? t("archivePageIntro") : t("pageIntro")}
+      </p>
 
-      {syncStatus === "pending" || syncStatus === "degraded" ? (
+      {showSyncPending || showSyncDegraded ? (
         <div className={styles.syncStatusSlot}>
-          {syncStatus === "pending" ? (
+          {showSyncPending ? (
             <p className={styles.syncStatus} role="status" aria-live="polite">
               <span className={styles.syncStatusDot} aria-hidden="true" />
               {t("syncPending")}
             </p>
           ) : null}
-          {syncStatus === "degraded" ? (
+          {showSyncDegraded ? (
             <p className={styles.syncStatusDegraded} role="status" aria-live="polite">
               {t("syncDegraded")}
             </p>
@@ -191,16 +183,18 @@ export default function LiveMatchCentre() {
 
       <LiveSection
         id="live-now-heading"
-        title={t("sections.liveNow")}
+        title={archiveComplete ? t("sections.archiveLive") : t("sections.liveNow")}
         fixtures={buckets.live}
         allFixtures={fixtures}
-        emptyMessage={t("empty.liveNow")}
+        emptyMessage={
+          archiveComplete ? t("empty.archiveLiveNow") : t("empty.liveNow")
+        }
         emptyContent={
           featuredFixture ? (
             <UpcomingMatchCountdown fixture={featuredFixture} />
           ) : undefined
         }
-        showLiveIndicator
+        showLiveIndicator={!archiveComplete}
         tone="live"
       />
 

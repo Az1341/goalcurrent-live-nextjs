@@ -109,7 +109,9 @@
       "worldCup2026": "WORLD CUP 2026",
       "liveNow": "LIVE NOW",
       "latestResults": "LATEST RESULTS",
-      "emptyMessage": "Lokaal programma — uitslagen wanneer API-sync actief is",
+      "archive": "ARCHIEF",
+      "emptyMessage": "Geen live wedstrijden nu",
+      "emptyArchiveMessage": "WK 2026 is afgelopen — bekijk archiefuitslagen",
       "liveMatchesAria": "Live wedstrijden",
       "latestResultsAria": "Laatste uitslagen",
       "moreMatches": "+{count} meer wedstrijden",
@@ -366,18 +368,22 @@
   },
   "live": {
     "pageTitle": "Live uitslagen — {competition}",
+    "archivePageTitle": "Archief — {competition}",
     "competition": "WK 2026",
     "pageIntro": "WK 2026-uitslagen uit bevestigde resultaten en live API.",
+    "archivePageIntro": "WK 2026 is afgelopen. Hieronder archief / eindstanden — niet live.",
     "syncPending": "Synchroniseren…",
     "syncDegraded": "Laatst bekende uitslagen — provider beperkt.",
     "sections": {
       "liveNow": "Nu live",
+      "archiveLive": "Nu live",
       "today": "Vandaag",
       "upcoming": "Komende WK-wedstrijden",
       "completed": "Afgerond"
     },
     "empty": {
-      "liveNow": "Geen live wedstrijden.",
+      "liveNow": "Geen live wedstrijden nu",
+      "archiveLiveNow": "Geen live wedstrijden — WK 2026 is afgelopen (Archief). Zie afgeronde wedstrijden hieronder.",
       "today": "Geen WK-wedstrijden vandaag.",
       "completed": "Nog geen afgeronde wedstrijden."
     },

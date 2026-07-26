@@ -109,7 +109,9 @@
       "worldCup2026": "WORLD CUP 2026",
       "liveNow": "LIVE NOW",
       "latestResults": "LATEST RESULTS",
-      "emptyMessage": "Calendario local — resultados cuando la sincronización API esté activa",
+      "archive": "ARCHIVO",
+      "emptyMessage": "No hay partidos en vivo ahora",
+      "emptyArchiveMessage": "El Mundial 2026 ha terminado — consulta el archivo",
       "liveMatchesAria": "Partidos en directo",
       "latestResultsAria": "Últimos resultados",
       "moreMatches": "+{count} partidos más",
@@ -366,18 +368,22 @@
   },
   "live": {
     "pageTitle": "Resultados en vivo — {competition}",
+    "archivePageTitle": "Archivo — {competition}",
     "competition": "Mundial 2026",
     "pageIntro": "Resultados del Mundial 2026 desde datos confirmados y API en vivo.",
+    "archivePageIntro": "El Mundial 2026 ha terminado. Los resultados son de archivo / finalizados — no en vivo.",
     "syncPending": "Sincronizando…",
     "syncDegraded": "Ultimos resultados — proveedor limitado.",
     "sections": {
       "liveNow": "En vivo",
+      "archiveLive": "En vivo",
       "today": "Hoy",
       "upcoming": "Proximos partidos",
       "completed": "Finalizados"
     },
     "empty": {
-      "liveNow": "No hay partidos en vivo.",
+      "liveNow": "No hay partidos en vivo ahora",
+      "archiveLiveNow": "No hay partidos en vivo — el Mundial 2026 ha terminado (Archivo). Ver finalizados abajo.",
       "today": "No hay partidos hoy.",
       "completed": "Aun no hay partidos finalizados."
     },

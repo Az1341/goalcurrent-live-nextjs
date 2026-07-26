@@ -109,7 +109,9 @@
       "worldCup2026": "WORLD CUP 2026",
       "liveNow": "LIVE NOW",
       "latestResults": "LATEST RESULTS",
-      "emptyMessage": "Spielplan lokal — Ergebnisse bei aktiver API-Synchronisation",
+      "archive": "ARCHIV",
+      "emptyMessage": "Keine Live-Spiele gerade",
+      "emptyArchiveMessage": "WM 2026 ist beendet — Archiv-Ergebnisse ansehen",
       "liveMatchesAria": "Live-Spiele",
       "latestResultsAria": "Neueste Ergebnisse",
       "moreMatches": "+{count} weitere Spiele",
@@ -366,18 +368,22 @@
   },
   "live": {
     "pageTitle": "Live-Ergebnisse — {competition}",
+    "archivePageTitle": "Archiv — {competition}",
     "competition": "WM 2026",
     "pageIntro": "WM-2026-Ergebnisse aus bestaetigten Resultaten und Live-API.",
+    "archivePageIntro": "Die WM 2026 ist beendet. Unten sind Archiv- / Endstaende — nicht live.",
     "syncPending": "Synchronisiere…",
     "syncDegraded": "Letzte bekannte Ergebnisse — Live-Anbieter eingeschraenkt.",
     "sections": {
       "liveNow": "Jetzt live",
+      "archiveLive": "Jetzt live",
       "today": "Heute",
       "upcoming": "Kommende WM-Spiele",
       "completed": "Beendet"
     },
     "empty": {
-      "liveNow": "Keine Live-Spiele.",
+      "liveNow": "Keine Live-Spiele gerade",
+      "archiveLiveNow": "Keine Live-Spiele — WM 2026 ist beendet (Archiv). Siehe beendete Spiele unten.",
       "today": "Heute keine WM-Spiele.",
       "completed": "Noch keine beendeten Spiele."
     },

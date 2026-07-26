@@ -109,7 +109,9 @@
       "worldCup2026": "WORLD CUP 2026",
       "liveNow": "LIVE NOW",
       "latestResults": "LATEST RESULTS",
-      "emptyMessage": "Fixtures from local schedule — scores when API sync is active",
+      "archive": "ARCHIVE",
+      "emptyMessage": "No live matches right now",
+      "emptyArchiveMessage": "World Cup 2026 is finished — browse archive results",
       "liveMatchesAria": "Live matches",
       "latestResultsAria": "Latest results",
       "moreMatches": "+{count} More Matches",
@@ -342,18 +344,22 @@
   },
   "live": {
     "pageTitle": "Live Scores — {competition}",
+    "archivePageTitle": "Archive — {competition}",
     "competition": "World Cup 2026",
     "pageIntro": "World Cup 2026 scores from confirmed results and live API sync. Finished group and knockout matches show full-time scores; live matches update every 10 seconds when the provider is active.",
+    "archivePageIntro": "World Cup 2026 is finished. Scores below are archive / full-time results — not live.",
     "syncPending": "Syncing live data…",
     "syncDegraded": "Showing last known scores — live provider is temporarily limited.",
     "sections": {
       "liveNow": "Live now",
+      "archiveLive": "Live now",
       "today": "Today",
       "upcoming": "Upcoming World Cup fixtures",
       "completed": "Completed"
     },
     "empty": {
-      "liveNow": "No live matches right now. Live scores appear here when the tournament is underway and API sync is active.",
+      "liveNow": "No live matches right now",
+      "archiveLiveNow": "No live matches — World Cup 2026 is finished (Archive). See completed results below.",
       "today": "No World Cup matches scheduled for today in the local schedule.",
       "completed": "No completed matches yet. Full-time results appear when matches finish."
     },

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useMemo } from "react";
 import NewsCard, { FeaturedArticle } from "@/components/news/NewsCard";
 import type { NewsApiResponse, NewsArticle } from "@/types/news";

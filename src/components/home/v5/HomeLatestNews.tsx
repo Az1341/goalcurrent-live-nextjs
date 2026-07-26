@@ -1,9 +1,8 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { useMemo } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { formatNewsRelativeTime } from "@/lib/news-format";
 import { mergeHomepageNewsFeed } from "@/lib/editorial-news";

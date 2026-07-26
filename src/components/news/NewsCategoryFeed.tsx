@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { NewsArticle } from "@/types/news";
 import NewsArticleCard from "@/components/news/NewsArticleCard";
 import styles from "./news.module.css";

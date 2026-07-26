@@ -1,124 +1,58 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import useSWR from "swr";
+import { fetcher, visibilityAwareRefreshInterval } from "@/lib/client/fetcher";
 import type { NewsApiResponse, NewsArticle } from "@/types/news";
 
-const REFRESH_MS = 3_600_000;
+/** Canonical client news path — single SWR ownership (FE-009). */
+export const NEWS_API_PATH = "/api/news";
 
-type NewsSnapshot = {
+const NEWS_REFRESH_MS = 3_600_000;
+const NEWS_DEDUP_MS = 60_000;
+
+export type NewsFeedSnapshot = {
   readonly articles: readonly NewsArticle[];
+  readonly sources: readonly string[];
+  readonly fetched: string | undefined;
   readonly loading: boolean;
   readonly error: boolean;
+  readonly data: NewsApiResponse | undefined;
 };
 
-const serverSnapshot: NewsSnapshot = {
-  articles: [],
-  loading: true,
-  error: false,
+type UseNewsFeedOptions = {
+  /** SSR/hydration seed for the news hub route. */
+  fallbackData?: NewsApiResponse;
 };
 
-let clientSnapshot: NewsSnapshot = {
-  articles: [],
-  loading: true,
-  error: false,
-};
+/**
+ * Single client owner for `/api/news`.
+ * All route surfaces (home, profile, group, /news) must use this hook.
+ */
+export function useNewsFeed(options?: UseNewsFeedOptions): NewsFeedSnapshot {
+  const { data, error: swrError, isLoading } = useSWR<NewsApiResponse>(
+    NEWS_API_PATH,
+    fetcher,
+    {
+      fallbackData: options?.fallbackData,
+      refreshInterval: () => visibilityAwareRefreshInterval(NEWS_REFRESH_MS),
+      dedupingInterval: NEWS_DEDUP_MS,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+    },
+  );
 
-const listeners = new Set<() => void>();
-let subscriberCount = 0;
-let abortController: AbortController | null = null;
-let fetchInFlight = false;
-let pollTimer: ReturnType<typeof setInterval> | null = null;
+  const articles = data?.articles ?? [];
+  const hasArticles = articles.length > 0;
+  const emptyPayload = Boolean(data && !hasArticles);
+  const loading = Boolean(isLoading && !hasArticles);
+  const error = Boolean((swrError || emptyPayload || data?.error) && !hasArticles);
 
-function emit(): void {
-  for (const listener of listeners) {
-    listener();
-  }
-}
-
-function setSnapshot(next: NewsSnapshot): void {
-  clientSnapshot = next;
-  emit();
-}
-
-async function fetchNews(): Promise<void> {
-  if (fetchInFlight) {
-    return;
-  }
-
-  fetchInFlight = true;
-  abortController?.abort();
-  abortController = new AbortController();
-
-  try {
-    const response = await fetch("/api/news", {
-      cache: "no-store",
-      signal: abortController.signal,
-    });
-
-    if (!response.ok) {
-      throw new Error(`News API ${response.status}`);
-    }
-
-    const data = (await response.json()) as NewsApiResponse;
-    const articles = data.articles ?? [];
-    if (!articles.length) {
-      throw new Error("No articles");
-    }
-
-    setSnapshot({
-      articles,
-      loading: false,
-      error: false,
-    });
-  } catch (error) {
-    if (error instanceof DOMException && error.name === "AbortError") {
-      return;
-    }
-
-    setSnapshot({
-      articles: [],
-      loading: false,
-      error: true,
-    });
-  } finally {
-    fetchInFlight = false;
-  }
-}
-
-function subscribe(listener: () => void): () => void {
-  listeners.add(listener);
-  subscriberCount += 1;
-
-  if (subscriberCount === 1) {
-    void fetchNews();
-    pollTimer = setInterval(() => {
-      void fetchNews();
-    }, REFRESH_MS);
-  }
-
-  return () => {
-    listeners.delete(listener);
-    subscriberCount = Math.max(0, subscriberCount - 1);
-
-    if (subscriberCount === 0) {
-      abortController?.abort();
-      abortController = null;
-      if (pollTimer) {
-        clearInterval(pollTimer);
-        pollTimer = null;
-      }
-    }
+  return {
+    articles,
+    sources: data?.sources ?? [],
+    fetched: data?.fetched,
+    loading,
+    error,
+    data,
   };
-}
-
-function getClientSnapshot(): NewsSnapshot {
-  return clientSnapshot;
-}
-
-function getServerSnapshot(): NewsSnapshot {
-  return serverSnapshot;
-}
-
-export function useNewsFeed(): NewsSnapshot {
-  return useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
 }

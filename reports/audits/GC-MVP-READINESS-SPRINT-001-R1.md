@@ -174,3 +174,15 @@ Confirmed: no merge to main; no production deployment; no public release; no PR 
 ---
 
 **GC-MVP-READINESS-SPRINT-001-R1 status:** COMPLETE
+
+## POST-HOC SHA RECONCILIATION (Sprint 002 TASK 02)
+
+This section corrects an audit ambiguity. It does not change Sprint 001 code.
+
+- **Implementation/test HEAD (last functional Sprint 001 commit):** `e7c5219b4ff31c3e41c48da48474d713742abffe`
+- **Evidence pack commit:** `8d6aeb836252ba6ea56dcaf972e14099c76a51ed`
+- **Ending HEAD previously claimed in section 4:** `c9ca69dfa730924f8da4be133b66d372eb77e352` (docs-only finalize)
+- **Branch HEAD immediately after further docs-only finalize:** `4674dea3da6ecc0d3ce9b26b69d74ab99d408739`
+- A report body must not be assumed to contain its own commit SHA.
+
+See `reports/audits/evidence/GC-MVP-READINESS-002-S001-RECON.md`.

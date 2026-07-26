@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import TeamFlag from "@/components/TeamFlag";
 import { getTeamById } from "@/data/wc26";
 import { LIVE_API_PATHS, useLiveApi } from "@/lib/client/live-data";
+import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import { LIVE_POLL_MATCH_MS } from "@/lib/client/fetcher";
 import { matchHref } from "@/lib/wc26-match";
 import {
@@ -97,11 +98,14 @@ function bannerHiddenKey(resultKey: string): string {
 }
 
 export default function FinalWinnerCelebration() {
-  const { data: liveData } = useLiveApi<Wc26ScoresApiResponse>(LIVE_API_PATHS.wc26LiveScores, {
+  const archiveComplete = isWc26TournamentComplete();
+  const livePath = archiveComplete ? null : LIVE_API_PATHS.wc26LiveScores;
+  const resultsPath = archiveComplete ? null : LIVE_API_PATHS.wc26Results;
+  const { data: liveData } = useLiveApi<Wc26ScoresApiResponse>(livePath, {
     fresh: true,
     refreshInterval: LIVE_POLL_MATCH_MS,
   });
-  const { data: resultsData } = useLiveApi<Wc26ScoresApiResponse>(LIVE_API_PATHS.wc26Results, {
+  const { data: resultsData } = useLiveApi<Wc26ScoresApiResponse>(resultsPath, {
     fresh: true,
     refreshInterval: LIVE_POLL_MATCH_MS,
   });

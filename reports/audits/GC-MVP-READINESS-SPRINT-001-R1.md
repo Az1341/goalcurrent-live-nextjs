@@ -26,7 +26,7 @@ GoalCurrent moved from documentation-only recovery baseline toward demonstrated 
 ## 4. Ending branch and SHA
 
 - Branch: recovery/gc-exec-batch-005
-- Ending HEAD at report authoring: e7c5219b4ff31c3e41c48da48474d713742abffe
+- Ending HEAD: 8d6aeb836252ba6ea56dcaf972e14099c76a51ed
 - Docs evidence commit may follow; final SHA after docs commit recorded in git log.
 
 ## 5. origin/main SHA before and after
@@ -127,7 +127,7 @@ Sitemap redirect URLs removed. Remaining: preview noindex code gap; 404 lacks ro
 | 32bb53049cb967607e487b7f9e0ff1909ef63682 | fix(seo): drop redirect hub match URLs from sitemap | src/lib/seo/sitemap-entries.ts, tests/lib/sitemap-canonical.test.mjs |
 | 9c05aebe7c7a76c4a8f342afdb4fce2fa913b72e | fix(perf): stop WC26 score polling after archive complete | Wc26ResultsSync, FinalWinnerCelebration, tests/wc26/archive-polling.test.mjs |
 | e7c5219b4ff31c3e41c48da48474d713742abffe | test(e2e): add mobile critical football journey coverage | tests/e2e/mobile-critical-journey.spec.ts |
-| (docs SHA) | docs(audit): GC-MVP-READINESS-SPRINT-001 evidence pack | reports/audits/GC-MVP-READINESS-SPRINT-001-R1.md + evidence/* |
+| 8d6aeb836252ba6ea56dcaf972e14099c76a51ed | docs(audit): GC-MVP-READINESS-SPRINT-001 evidence pack | reports/audits/GC-MVP-READINESS-SPRINT-001-R1.md + evidence/* |
 
 Sprint commits since baseline:
 - e7c5219b4ff31c3e41c48da48474d713742abffe test(e2e): add mobile critical football journey coverage

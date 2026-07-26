@@ -1,0 +1,121 @@
+page_count 89
+src/app/[locale]/about/page.tsx -> /about
+src/app/[locale]/affiliate-disclosure/page.tsx -> /affiliate-disclosure
+src/app/[locale]/articles/[slug]/page.tsx -> /articles/[slug]
+src/app/[locale]/articles/alireza-beiranvand-iran-world-cup-hero/page.tsx -> /articles/alireza-beiranvand-iran-world-cup-hero
+src/app/[locale]/articles/champions-league-new-rules/page.tsx -> /articles/champions-league-new-rules
+src/app/[locale]/articles/england-6-4-france-third-place-recap/page.tsx -> /articles/england-6-4-france-third-place-recap
+src/app/[locale]/articles/england-advance-to-face-mexico-round-of-16/page.tsx -> /articles/england-advance-to-face-mexico-round-of-16
+src/app/[locale]/articles/england-argentina-world-cup-semifinal-analysis/page.tsx -> /articles/england-argentina-world-cup-semifinal-analysis
+src/app/[locale]/articles/england-france-third-place-preview/page.tsx -> /articles/england-france-third-place-preview
+src/app/[locale]/articles/fifa-world-cup-2026-head-to-head-rule-early-elimination/page.tsx -> /articles/fifa-world-cup-2026-head-to-head-rule-early-elimination
+src/app/[locale]/articles/football-and-peace/page.tsx -> /articles/football-and-peace
+src/app/[locale]/articles/football-as-an-industry/page.tsx -> /articles/football-as-an-industry
+src/app/[locale]/articles/football-in-developing-countries/page.tsx -> /articles/football-in-developing-countries
+src/app/[locale]/articles/football-inspiring-canadas-next-generation/page.tsx -> /articles/football-inspiring-canadas-next-generation
+src/app/[locale]/articles/page.tsx -> /articles
+src/app/[locale]/articles/premier-league-2026-27-august-countdown/page.tsx -> /articles/premier-league-2026-27-august-countdown
+src/app/[locale]/articles/premier-league-2026-27-new-season/page.tsx -> /articles/premier-league-2026-27-new-season
+src/app/[locale]/articles/spain-world-cup-2026-champion-masterclass/page.tsx -> /articles/spain-world-cup-2026-champion-masterclass
+src/app/[locale]/articles/world-cup-2026-july-1-recap/page.tsx -> /articles/world-cup-2026-july-1-recap
+src/app/[locale]/articles/world-cup-2026-july-3-recap/page.tsx -> /articles/world-cup-2026-july-3-recap
+src/app/[locale]/articles/world-cup-2026-june-22-recap/page.tsx -> /articles/world-cup-2026-june-22-recap
+src/app/[locale]/articles/world-cup-2026-june-23-recap/page.tsx -> /articles/world-cup-2026-june-23-recap
+src/app/[locale]/articles/world-cup-2026-june-27-group-stage-finale/page.tsx -> /articles/world-cup-2026-june-27-group-stage-finale
+src/app/[locale]/articles/world-cup-2026-june-27-recap/page.tsx -> /articles/world-cup-2026-june-27-recap
+src/app/[locale]/articles/world-cup-2026-june-30-recap/page.tsx -> /articles/world-cup-2026-june-30-recap
+src/app/[locale]/articles/world-cup-2026-teams-already-out/page.tsx -> /articles/world-cup-2026-teams-already-out
+src/app/[locale]/contact/page.tsx -> /contact
+src/app/[locale]/cookies/page.tsx -> /cookies
+src/app/[locale]/favourites/clubs/page.tsx -> /favourites/clubs
+src/app/[locale]/favourites/page.tsx -> /favourites
+src/app/[locale]/favourites/players/page.tsx -> /favourites/players
+src/app/[locale]/live/page.tsx -> /live
+src/app/[locale]/match/[fixtureId]/page.tsx -> /match/[fixtureId]
+src/app/[locale]/news/alireza-beiranvand-iran-world-cup-hero/page.tsx -> /news/alireza-beiranvand-iran-world-cup-hero
+src/app/[locale]/news/articles/[slug]/page.tsx -> /news/articles/[slug]
+src/app/[locale]/news/articles/football-inspiring-canadas-next-generation/page.tsx -> /news/articles/football-inspiring-canadas-next-generation
+src/app/[locale]/news/articles/page.tsx -> /news/articles
+src/app/[locale]/news/page.tsx -> /news
+src/app/[locale]/news/premier-league/page.tsx -> /news/premier-league
+src/app/[locale]/news/transfers/page.tsx -> /news/transfers
+src/app/[locale]/news/world-cup/page.tsx -> /news/world-cup
+src/app/[locale]/page.tsx -> /
+src/app/[locale]/premier-league/2025-26/table/page.tsx -> /premier-league/2025-26/table
+src/app/[locale]/premier-league/clubs/[club]/page.tsx -> /premier-league/clubs/[club]
+src/app/[locale]/premier-league/clubs/page.tsx -> /premier-league/clubs
+src/app/[locale]/premier-league/fixtures/page.tsx -> /premier-league/fixtures
+src/app/[locale]/premier-league/live/page.tsx -> /premier-league/live
+src/app/[locale]/premier-league/match/[fixtureId]/page.tsx -> /premier-league/match/[fixtureId]
+src/app/[locale]/premier-league/page.tsx -> /premier-league
+src/app/[locale]/premier-league/players/page.tsx -> /premier-league/players
+src/app/[locale]/premier-league/statistics/page.tsx -> /premier-league/statistics
+src/app/[locale]/premier-league/table/page.tsx -> /premier-league/table
+src/app/[locale]/premier-league/transfers/page.tsx -> /premier-league/transfers
+src/app/[locale]/privacy/page.tsx -> /privacy
+src/app/[locale]/statistics/assists/page.tsx -> /statistics/assists
+src/app/[locale]/statistics/clean-sheets/page.tsx -> /statistics/clean-sheets
+src/app/[locale]/statistics/disciplinary/page.tsx -> /statistics/disciplinary
+src/app/[locale]/statistics/live/page.tsx -> /statistics/live
+src/app/[locale]/statistics/player-rankings/page.tsx -> /statistics/player-rankings
+src/app/[locale]/statistics/players/page.tsx -> /statistics/players
+src/app/[locale]/statistics/teams/page.tsx -> /statistics/teams
+src/app/[locale]/statistics/top-scorers/page.tsx -> /statistics/top-scorers
+src/app/[locale]/terms/page.tsx -> /terms
+src/app/[locale]/transfers/completed/page.tsx -> /transfers/completed
+src/app/[locale]/transfers/free-agents/page.tsx -> /transfers/free-agents
+src/app/[locale]/transfers/page.tsx -> /transfers
+src/app/[locale]/transfers/rumours/page.tsx -> /transfers/rumours
+src/app/[locale]/video/highlights/page.tsx -> /video/highlights
+src/app/[locale]/video/page.tsx -> /video
+src/app/[locale]/video/podcasts/page.tsx -> /video/podcasts
+src/app/[locale]/video/premier-league/page.tsx -> /video/premier-league
+src/app/[locale]/video/press-conferences/page.tsx -> /video/press-conferences
+src/app/[locale]/video/world-cup/page.tsx -> /video/world-cup
+src/app/[locale]/video/youtube/page.tsx -> /video/youtube
+src/app/[locale]/videos/page.tsx -> /videos
+src/app/[locale]/videos/premier-league/page.tsx -> /videos/premier-league
+src/app/[locale]/videos/world-cup/page.tsx -> /videos/world-cup
+src/app/[locale]/worldcup2026/bracket/page.tsx -> /worldcup2026/bracket
+src/app/[locale]/worldcup2026/fixtures/page.tsx -> /worldcup2026/fixtures
+src/app/[locale]/worldcup2026/groups/[group]/page.tsx -> /worldcup2026/groups/[group]
+src/app/[locale]/worldcup2026/groups/page.tsx -> /worldcup2026/groups
+src/app/[locale]/worldcup2026/match/[fixtureId]/page.tsx -> /worldcup2026/match/[fixtureId]
+src/app/[locale]/worldcup2026/news/morocco-knock-out-netherlands-on-penalties/page.tsx -> /worldcup2026/news/morocco-knock-out-netherlands-on-penalties
+src/app/[locale]/worldcup2026/page.tsx -> /worldcup2026
+src/app/[locale]/worldcup2026/players/page.tsx -> /worldcup2026/players
+src/app/[locale]/worldcup2026/standings/page.tsx -> /worldcup2026/standings
+src/app/[locale]/worldcup2026/teams/[teamId]/page.tsx -> /worldcup2026/teams/[teamId]
+src/app/[locale]/worldcup2026/teams/page.tsx -> /worldcup2026/teams
+src/app/[locale]/worldcup2026/venues/page.tsx -> /worldcup2026/venues
+
+api_count 29
+src/app/api/articles/route.ts
+src/app/api/cron/refresh-content/route.ts
+src/app/api/debug/api-football/route.ts
+src/app/api/debug/wc26/route.ts
+src/app/api/firebase/fcm-token/route.ts
+src/app/api/news/route.ts
+src/app/api/pl/assists/route.ts
+src/app/api/pl/clean-sheets/route.ts
+src/app/api/pl/disciplinary/route.ts
+src/app/api/pl/fixtures/route.ts
+src/app/api/pl/live/route.ts
+src/app/api/pl/match/[fixtureId]/route.ts
+src/app/api/pl/players/route.ts
+src/app/api/pl/standings/route.ts
+src/app/api/pl/statistics/route.ts
+src/app/api/pl/teams/route.ts
+src/app/api/pl/top-scorers/route.ts
+src/app/api/pl/transfers/route.ts
+src/app/api/robots/route.ts
+src/app/api/scores/route.ts
+src/app/api/sitemap-news/route.ts
+src/app/api/sitemap/route.ts
+src/app/api/videos/route.ts
+src/app/api/wc26/fixtures/route.ts
+src/app/api/wc26/knockout-fixtures/route.ts
+src/app/api/wc26/match/[fixtureId]/route.ts
+src/app/api/wc26/scores/route.ts
+src/app/api/wc26/top-scorers/route.ts
+src/app/api/well-known/assetlinks/route.ts

@@ -189,21 +189,15 @@ export function getFixtureScore(
   return null;
 }
 
-/** True when overlay status or synced scores indicate a finished match. */
+/**
+ * True when the fixture status is an authoritative completed match status.
+ * Scores, apiFixtureId, elapsed, or kickoff time alone must never invent completion
+ * (live knockout / stoppage / ET / pens remain in-play until the provider finishes).
+ */
 export function isEffectiveFixtureCompleted(
   fixture: EffectiveFixture,
   now: Date = new Date(),
 ): boolean {
-  if (isCompletedMatchStatus(fixture.status)) {
-    return true;
-  }
-  const score = getFixtureScore(fixture);
-  if (score === null) {
-    return false;
-  }
-  // Knockout with API scores — static FIFA kickoff may be a later slot than the real match.
-  if (fixture.apiFixtureId != null && fixture.stage !== "group") {
-    return true;
-  }
-  return new Date(fixture.kickoffUtc).getTime() <= now.getTime();
+  void now;
+  return isCompletedMatchStatus(fixture.status);
 }

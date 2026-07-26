@@ -1,18 +1,14 @@
-/** Normalize api-football / overlay status (e.g. 2H at 90'+ -> FT). */
+/**
+ * Normalize api-football / overlay status for WC26 surfaces.
+ *
+ * Provider in-play shorts (1H / 2H) must be preserved even when elapsed is 90+
+ * during stoppage time. Only finished provider statuses (e.g. FT, AET, PEN)
+ * should be treated as completed elsewhere — never invent FT from elapsed alone.
+ */
 export function normalizeWc26MatchStatus(
   status: string,
-  elapsed: number | null | undefined,
+  elapsed?: number | null,
 ): string {
-  const normalized = status.trim().toLowerCase();
-  if (
-    elapsed != null &&
-    elapsed >= 90 &&
-    (normalized === "2h" ||
-      normalized === "2nd half" ||
-      normalized === "1h" ||
-      normalized === "1st half")
-  ) {
-    return "ft";
-  }
+  void elapsed;
   return status;
 }

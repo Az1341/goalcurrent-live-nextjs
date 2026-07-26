@@ -71,9 +71,14 @@ test("fixture date/time conversion keeps kickoffUtc ISO for views", () => {
   assert.equal(view.kickoffUtc, kickoffUtc);
 });
 
-test("match-status normalisation promotes late 2H elapsed to FT", () => {
-  assert.equal(normalizeWc26MatchStatus("2H", 90), "ft");
+test("match-status keeps stoppage 1H/2H live and does not invent FT from elapsed", () => {
+  assert.equal(normalizeWc26MatchStatus("2H", 90), "2H");
+  assert.equal(normalizeWc26MatchStatus("2H", 95), "2H");
+  assert.equal(normalizeWc26MatchStatus("2nd half", 90), "2nd half");
   assert.equal(normalizeWc26MatchStatus("1H", 45), "1H");
+  assert.equal(normalizeWc26MatchStatus("1H", 90), "1H");
+  assert.equal(normalizeWc26MatchStatus("FT", 90), "FT");
+  assert.equal(normalizeWc26MatchStatus("ft", null), "ft");
 });
 
 test("postponed cancelled and abandoned map from API shorts", () => {

@@ -71,6 +71,14 @@ test("provider contract: live and finished and penalty-finished", () => {
   assert.equal(isLiveMatchStatus("2h"), true);
   assert.equal(shouldShowLiveMatchCard(fx({ status: "2h", elapsed: 70 })), true);
   assert.equal(
+    shouldShowLiveMatchCard(fx({ status: "2h", elapsed: 90 })),
+    true,
+  );
+  assert.equal(
+    shouldShowLiveMatchCard(fx({ status: "2h", elapsed: 95 })),
+    true,
+  );
+  assert.equal(
     shouldShowLiveMatchCard(fx({ status: "ft", homeScore: 1, awayScore: 0 })),
     false,
   );

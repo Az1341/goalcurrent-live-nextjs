@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import styles from "@/components/ui/trust-pages.module.css";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function NotFound() {
   const t = useTranslations("errors.notFound");

@@ -17,7 +17,8 @@ test("homepage PL fixtures are fetched once in HomeClient and passed to children
     "utf8",
   );
 
-  assert.match(home, /useSWR<PlFixturesApiResponse>\(\s*"\/api\/pl\/fixtures"/);
+  assert.match(home, /useLiveFixtures/);
+  assert.doesNotMatch(home, /useSWR<PlFixturesApiResponse>|["']\/api\/pl\/fixtures["']/);
   assert.match(home, /plFixtures=\{plFixtures\}/);
   assert.doesNotMatch(today, /useSWR/);
   assert.doesNotMatch(leagues, /useSWR/);

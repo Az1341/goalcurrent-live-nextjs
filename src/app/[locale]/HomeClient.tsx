@@ -1,6 +1,5 @@
 "use client";
 
-import useSWR from "swr";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
@@ -9,8 +8,7 @@ import {
   selectFeaturedFixtures,
   selectHomepageFixtures,
 } from "@/lib/wc26-live";
-import { fetcher, LIVE_SWR_OPTIONS } from "@/lib/client/fetcher";
-import type { PlFixturesApiResponse } from "@/lib/pl/types";
+import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
 import LiveRibbon from "@/components/layout/LiveRibbon";
 import HomeHero from "@/components/home/v5/HomeHero";
 import HomeChampionSnippet from "@/components/home/v5/HomeChampionSnippet";
@@ -47,11 +45,7 @@ export default function HomeClient() {
     ? buildHomepageMatchView(featuredSelection.fixtures[0], fixtures)
     : undefined;
 
-  const { data: plData } = useSWR<PlFixturesApiResponse>(
-    "/api/pl/fixtures",
-    fetcher,
-    LIVE_SWR_OPTIONS,
-  );
+  const { data: plData } = useLiveFixtures();
 
   const archiveComplete = isWc26TournamentComplete();
   const heroWc26Views = useMemo(

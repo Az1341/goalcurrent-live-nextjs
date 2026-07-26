@@ -23,6 +23,7 @@ import {
 } from "@/lib/pl/pl-broadcasters";
 import { PL_SECTION_NAV } from "@/lib/nav";
 import { SITE_NAME } from "@/lib/site-url";
+import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
 import { fetcher, LIVE_SWR_OPTIONS } from "@/lib/client/fetcher";
 import styles from "./PlData.module.css";
 import tableStyles from "./PlTable.module.css";
@@ -32,8 +33,6 @@ import {
   PlLoadingPanel,
   PlTeamBadge,
 } from "./PlShared";
-
-type ViewState = "loading" | "error" | "ready";
 
 const HUB_LINKS = PL_SECTION_NAV;
 
@@ -94,13 +93,21 @@ function HubStandingRow({ row }: { row: PlStandingRow }) {
 export default function PlHubClient() {
   const t = useTranslations("nav");
 
-  const { data: fixturesData, error: fixturesError, isLoading: fixturesLoading } =
-    useSWR<PlFixturesApiResponse>("/api/pl/fixtures", (url) =>
-      fetch(url).then((res) => res.json()).then(withVisitorBroadcasters),
-      LIVE_SWR_OPTIONS,
-    );
+  const {
+    data: rawFixturesData,
+    error: fixturesError,
+    isLoading: fixturesLoading,
+  } = useLiveFixtures();
 
-  const { data: teamsData, error: teamsError } = useSWR<PlTeamsApiResponse>(
+  // View-layer transform only — must not register a divergent SWR fetcher on the
+  // shared /api/pl/fixtures key (FE-010 mount-order cache pollution).
+  const fixturesData = useMemo(
+    () =>
+      rawFixturesData ? withVisitorBroadcasters(rawFixturesData) : undefined,
+    [rawFixturesData],
+  );
+
+  const { data: teamsData } = useSWR<PlTeamsApiResponse>(
     "/api/pl/teams",
     fetcher,
     LIVE_SWR_OPTIONS,
@@ -169,7 +176,7 @@ export default function PlHubClient() {
       fixturesData?.fixtures.length
         ? findNextFixture(fixturesData.fixtures)
         : null,
-    [fixturesData?.fixtures],
+    [fixturesData],
   );
 
   const latestResult = useMemo(
@@ -177,13 +184,13 @@ export default function PlHubClient() {
       fixturesData?.fixtures.length
         ? findLatestResult(fixturesData.fixtures)
         : null,
-    [fixturesData?.fixtures],
+    [fixturesData],
   );
 
   const tableSnapshot = useMemo(() => {
     if (!processedStandingsData?.standings.length) return [];
     return resolveDisplayStandings(processedStandingsData.standings).slice(0, 6);
-  }, [processedStandingsData?.standings]);
+  }, [processedStandingsData]);
 
   const updatedAtLabel = useMemo(() => {
     const iso = fixturesData?.fetchedAt ?? processedStandingsData?.fetchedAt;
@@ -192,7 +199,7 @@ export default function PlHubClient() {
       dateStyle: "medium",
       timeStyle: "short",
     });
-  }, [fixturesData?.fetchedAt, processedStandingsData?.fetchedAt]);
+  }, [fixturesData, processedStandingsData]);
 
   const preseasonTable =
     tableSnapshot.length > 0 && isPreseasonStandings(tableSnapshot);

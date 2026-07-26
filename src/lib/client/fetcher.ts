@@ -20,6 +20,21 @@ export function visibilityAwareRefreshInterval(intervalMs: number): number {
   return document.hidden ? 0 : intervalMs;
 }
 
+/**
+ * Visibility policy for live SWR caches.
+ * - Hidden: do nothing (refreshInterval already pauses); never wipe cache.
+ * - Visible: revalidate matching keys without clearing cached data.
+ */
+export function onLivePollingVisibilityChange(
+  isHidden: boolean,
+  revalidateMatching: (filter: (key: unknown) => boolean) => void,
+): void {
+  if (isHidden) {
+    return;
+  }
+  revalidateMatching(() => true);
+}
+
 function buildLiveSwrOptions(pollMs: number) {
   return {
     refreshInterval: () => visibilityAwareRefreshInterval(pollMs),
@@ -51,7 +66,9 @@ function registerVisibilityPollingControl(): void {
     return;
   }
   document.addEventListener("visibilitychange", () => {
-    void mutate(() => true, undefined, { revalidate: false });
+    onLivePollingVisibilityChange(document.hidden, (filter) => {
+      void mutate(filter);
+    });
   });
 }
 

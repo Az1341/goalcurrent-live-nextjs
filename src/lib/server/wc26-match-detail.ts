@@ -3,7 +3,12 @@ import { apiFootballFetch } from "@/lib/api-football/client";
 import {
   resolveApiFixtureIdForLocal,
   kickoffDateRange,
+  classifyKnownWc26ApiFixtureId,
+  isWc26ApiFixtureOwnershipBound,
+  WC26_API_LEAGUE_ID,
+  WC26_API_SEASON,
   type ApiFixtureLookupRow,
+  type ApiFixtureOwnershipRow,
 } from "@/lib/server/wc26-api-fixture-id";
 import { getRegisteredWc26ApiFixtureId } from "@/lib/server/wc26-api-fixture-registry";
 import { getCached, setCached } from "@/lib/server/cache";
@@ -22,8 +27,8 @@ import { isWc26ApiConfigured } from "@/lib/server/wc26-api-football";
 
 import { MATCH_STAT_LABELS } from "@/lib/wc26-match";
 
-const WC_LEAGUE = 1;
-const WC_SEASON = 2026;
+const WC_LEAGUE = WC26_API_LEAGUE_ID;
+const WC_SEASON = WC26_API_SEASON;
 
 const STAT_KEYS = [
   "ball_possession",
@@ -171,12 +176,87 @@ function mapPlayerStatistics(rows: ApiFixturePlayerRow[]): MatchPlayerApiStat[] 
   return stats;
 }
 
+async function verifyKnownWc26ApiFixtureOwnership(
+  fixtureId: string,
+  apiFixtureId: number,
+): Promise<boolean> {
+  try {
+    const rows = await apiFetchResponse<ApiFixtureOwnershipRow>(
+      `/fixtures?id=${apiFixtureId}`,
+    );
+    const row = rows.find((entry) => entry.fixture?.id === apiFixtureId) ?? rows[0];
+    if (!row) {
+      return false;
+    }
+    return isWc26ApiFixtureOwnershipBound(fixtureId, row);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * BE-004 — resolve a query/registry apiFixtureId only when ownership is trusted.
+ * Rejects registry mismatches; verifies unregistered ids against WC league/season
+ * and local fixture identity before upstream events/lineups/stats fan-out.
+ */
+export async function resolveTrustedWc26ApiFixtureId(
+  fixtureId: string,
+  knownApiFixtureId?: number | null,
+): Promise<
+  | { ok: true; apiFixtureId?: number }
+  | { ok: false; code: "api_fixture_mismatch"; message: string }
+> {
+  const registered = getRegisteredWc26ApiFixtureId(fixtureId);
+  const trust = classifyKnownWc26ApiFixtureId(knownApiFixtureId, registered);
+
+  if (trust.action === "reject") {
+    return {
+      ok: false,
+      code: "api_fixture_mismatch",
+      message: "apiFixtureId does not match the registered WC26 fixture binding.",
+    };
+  }
+
+  if (trust.action === "use") {
+    return { ok: true, apiFixtureId: trust.apiFixtureId };
+  }
+
+  if (trust.action === "verify") {
+    if (!isWc26ApiConfigured()) {
+      // Cannot bind without provider metadata — ignore untrusted override.
+      return { ok: true, apiFixtureId: undefined };
+    }
+    const bound = await verifyKnownWc26ApiFixtureOwnership(
+      fixtureId,
+      trust.apiFixtureId,
+    );
+    if (!bound) {
+      return {
+        ok: false,
+        code: "api_fixture_mismatch",
+        message: "apiFixtureId is not bound to this WC26 fixture/league/season.",
+      };
+    }
+    setCached(`wc26:api-fixture:${fixtureId}`, trust.apiFixtureId, 86_400_000);
+    return { ok: true, apiFixtureId: trust.apiFixtureId };
+  }
+
+  return { ok: true, apiFixtureId: registered };
+}
+
 async function findApiFootballFixtureId(
   fixtureId: string,
   knownApiFixtureId?: number | null,
 ): Promise<number | null> {
-  if (knownApiFixtureId != null && Number.isFinite(knownApiFixtureId)) {
-    return knownApiFixtureId;
+  const trusted = await resolveTrustedWc26ApiFixtureId(
+    fixtureId,
+    knownApiFixtureId,
+  );
+  if (!trusted.ok) {
+    return null;
+  }
+  if (trusted.apiFixtureId != null) {
+    return trusted.apiFixtureId;
   }
 
   const cachedApiId = getCached(`wc26:api-fixture:${fixtureId}`);

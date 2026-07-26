@@ -5,8 +5,10 @@ import { wc26FixtureIdSchema } from "@/lib/validation/schemas";
 import { getStaleApiCache, setSuccessApiCache } from "@/lib/api-football/cache";
 import { apiFootballErrorMessage } from "@/lib/api-football/errors";
 import { respondApiFootballFailure } from "@/lib/api-football/route-errors";
-import { fetchWc26MatchDetail } from "@/lib/server/wc26-match-detail";
-import { getRegisteredWc26ApiFixtureId } from "@/lib/server/wc26-api-fixture-registry";
+import {
+  fetchWc26MatchDetail,
+  resolveTrustedWc26ApiFixtureId,
+} from "@/lib/server/wc26-match-detail";
 import { getCached, setCached } from "@/lib/server/cache";
 import { isLiveMatchStatus } from "@/lib/wc26-live";
 import type { MatchDetailPayload } from "@/types/match-detail";
@@ -69,15 +71,24 @@ export async function GET(
     return respondError("invalid_fixture_id", "Invalid fixture id.", 400);
   }
   const fixtureId = fixtureParsed.data;
-  const knownApiFixtureId =
-    parseOptionalApiFixtureId(
-      request.nextUrl.searchParams.get("apiFixtureId"),
-    ) ?? getRegisteredWc26ApiFixtureId(fixtureId);
-  const liveHint = isLiveDetailRequest(fixtureId, knownApiFixtureId);
+  const queryApiFixtureId = parseOptionalApiFixtureId(
+    request.nextUrl.searchParams.get("apiFixtureId"),
+  );
 
   if (!getFixtureById(fixtureId)) {
     return respondError("fixture_not_found", "Fixture not found.", 404);
   }
+
+  // BE-004 — never trust unbound apiFixtureId for upstream match fan-out.
+  const trusted = await resolveTrustedWc26ApiFixtureId(
+    fixtureId,
+    queryApiFixtureId,
+  );
+  if (!trusted.ok) {
+    return respondError(trusted.code, trusted.message, 400);
+  }
+  const knownApiFixtureId = trusted.apiFixtureId;
+  const liveHint = isLiveDetailRequest(fixtureId, knownApiFixtureId);
 
   const cacheKey = knownApiFixtureId
     ? `wc26-match:${fixtureId}:${knownApiFixtureId}`

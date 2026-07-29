@@ -8,8 +8,8 @@
 **Starting HEAD:** 3b772cad237cc522174496031b302bc8c32dda0d
 **Phase-1 reconciliation commit:** 1b3e3dda8ca2252d6a516aed50eb27bd624139e4
 **Implementation commit:** f735a7c06bc53f11ebc6f5d2f3dc988806eff4bf
-**Evidence commit:** (filled after commit)
-**Ending HEAD:** (filled after commit)
+**Evidence commit:** e495ab3b174c8f77532ff2c7df2b310419587e56
+**Ending HEAD:** e495ab3b174c8f77532ff2c7df2b310419587e56
 
 ---
 

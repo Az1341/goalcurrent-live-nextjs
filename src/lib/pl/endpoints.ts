@@ -1,5 +1,6 @@
 import { PL_LEAGUE_ID, PL_SEASON } from "@/lib/pl/constants";
 import { resolvePlBroadcasterFromLocale } from "@/lib/pl/pl-broadcasters";
+import { apiFootballClientSafeFetchFailureMessage, apiFootballErrorMessage } from "@/lib/api-football/errors";
 import {
   apiFootballFetch,
   apiFootballFetchAllPages,
@@ -94,11 +95,12 @@ function mapFetchError<T extends { configured: boolean; source: "api-football" |
   if (result.kind === "unconfigured") {
     return { ...base, configured: false, source: "fallback" };
   }
+  // Kind-keyed static message — never trust result.message for client output.
   return {
     ...base,
     configured: true,
     source: "fallback",
-    error: result.message,
+    error: apiFootballClientSafeFetchFailureMessage(result.kind),
   };
 }
 
@@ -297,7 +299,7 @@ async function fetchPlayerLeaderboard(
       return plBaseEnvelope("fallback", {
         configured: true,
         leaders: [],
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
     throw error;
@@ -333,7 +335,7 @@ export async function fetchPlTeams(): Promise<PlTeamsApiResponse> {
       return plBaseEnvelope("fallback", {
         configured: true,
         teams: [],
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
     throw error;
@@ -365,7 +367,7 @@ export async function fetchPlLive(locale = "en-GB"): Promise<PlLiveApiResponse> 
       return plBaseEnvelope("fallback", {
         configured: true,
         fixtures: [],
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
     throw error;
@@ -451,7 +453,7 @@ export async function fetchPlPlayers(): Promise<PlPlayersApiResponse> {
       return plBaseEnvelope("fallback", {
         configured: true,
         players: [],
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
     throw error;
@@ -503,7 +505,7 @@ export async function fetchPlStatistics(): Promise<PlStatisticsApiResponse> {
       return plBaseEnvelope("fallback", {
         configured: true,
         statistics: emptyStats,
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
     throw error;

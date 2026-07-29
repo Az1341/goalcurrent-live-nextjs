@@ -8,6 +8,7 @@ import { apiFootballFetch } from "@/lib/api-football/client";
 import {
   ApiFootballAuthError,
   apiFootballClientAuthErrorMessage,
+  apiFootballErrorMessage,
   ApiFootballRateLimitError,
 } from "@/lib/api-football/errors";
 import { resolvePlBroadcasterFromLocale } from "@/lib/pl/pl-broadcasters";
@@ -161,7 +162,7 @@ async function fetchStandingsFromApi(): Promise<PlStandingsApiResponse> {
     if (error instanceof ApiFootballRateLimitError) {
       return baseResponse("fallback", {
         configured: true,
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
 
@@ -207,7 +208,7 @@ export async function fetchPlStandings(): Promise<PlStandingsApiResponse> {
     if (isQuotaError(message)) {
       return baseResponse("fallback", {
         configured: true,
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
 
@@ -384,7 +385,7 @@ async function fetchFixturesFromApi(locale: string): Promise<PlFixturesApiRespon
     if (error instanceof ApiFootballRateLimitError) {
       return baseFixturesResponse("fallback", {
         configured: true,
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
 
@@ -414,7 +415,7 @@ export async function fetchPlFixtures(
     if (message.includes("429") || isQuotaError(message)) {
       return baseFixturesResponse("fallback", {
         configured: true,
-        error: "API rate limit reached. Please retry shortly.",
+        error: apiFootballErrorMessage("rate_limit"),
       });
     }
 

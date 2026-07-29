@@ -72,3 +72,29 @@ export function apiFootballErrorMessage(code: ApiFootballErrorCode): string {
 export function apiFootballClientAuthErrorMessage(): string {
   return "Live data is temporarily unavailable.";
 }
+
+export type ApiFootballClientFetchFailureKind =
+  | "auth"
+  | "quota"
+  | "api"
+  | "network";
+
+/**
+ * Static, application-controlled client messages for PL fetch failure kinds.
+ * Never pass raw Error.message / provider text through this helper.
+ */
+export function apiFootballClientSafeFetchFailureMessage(
+  kind: ApiFootballClientFetchFailureKind,
+): string {
+  switch (kind) {
+    case "auth":
+      return apiFootballClientAuthErrorMessage();
+    case "quota":
+      return apiFootballErrorMessage("rate_limit");
+    case "network":
+      return apiFootballErrorMessage("network_error");
+    case "api":
+    default:
+      return apiFootballErrorMessage("unknown_error");
+  }
+}

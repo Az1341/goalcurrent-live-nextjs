@@ -1,13 +1,14 @@
+import { serializeJsonLd } from "@/lib/seo/serialize-json-ld";
+
 type JsonLdProps = {
-  data: Record<string, unknown>;
+  data: Record<string, unknown> | Record<string, unknown>[];
 };
 
-/** Server-rendered JSON-LD for schema.org (preferred for crawlers). */
 export default function JsonLd({ data }: JsonLdProps) {
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   );
 }

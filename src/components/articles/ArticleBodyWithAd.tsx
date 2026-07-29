@@ -1,11 +1,17 @@
+import { sanitizeArticleHtml } from "@/lib/sanitize-article-html";
+
 type ArticleBodyWithAdProps = {
   html: string;
 };
 
 export default function ArticleBodyWithAd({ html }: ArticleBodyWithAdProps) {
+  const safeHtml = sanitizeArticleHtml(html);
+
   return (
-    <article style={{ color: "#475569", lineHeight: 1.8, fontSize: 15 }}>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
-    </article>
+    <div
+      className="article-body"
+      // Editorial HTML is sanitised before render (FE-012).
+      dangerouslySetInnerHTML={{ __html: safeHtml }}
+    />
   );
 }

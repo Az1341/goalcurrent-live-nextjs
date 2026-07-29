@@ -186,6 +186,10 @@ NO SECOND FINDING. NO REWORK OF CLOSED FINDINGS. NO GENERAL LINT OR ACCESSIBILIT
 
 ---
 
+BE-006 residual `mapFetchError` / non-auth provider message sanitisation is completed in:
+
+`reports/audits/GC-MVP-READINESS-SPRINT-014-BE-006-CORRECTION-R1.md`
+
 Evidence gaps for Sprint 014 commit-chain / ending-HEAD reconciliation are closed in:
 
 `reports/audits/GC-MVP-READINESS-SPRINT-014-AUDIT-CLOSURE-R1.md`

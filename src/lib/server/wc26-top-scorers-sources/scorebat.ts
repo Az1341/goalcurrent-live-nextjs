@@ -1,8 +1,7 @@
 import { getTeamDisplayName } from "@/lib/teamIdentity";
+import { fetchScoreBatFeed } from "@/lib/scorebat/request";
 import type { ScorerGoalEvent } from "@/lib/wc26-top-scorers";
 import type { Wc26SourceGoalFetchResult } from "./types";
-
-const SCOREBAT_BASE = "https://www.scorebat.com/video-api/v3";
 
 type ScoreBatMatch = {
   title?: string;
@@ -94,17 +93,11 @@ function goalsFromScoreBatMatch(match: ScoreBatMatch): ScorerGoalEvent[] {
 
 /** ScoreBat video feed — goal clips for World Cup matches. */
 export async function fetchScoreBatWc26ScorerGoals(): Promise<Wc26SourceGoalFetchResult> {
-  const token = process.env.SCOREBAT_API_TOKEN?.trim();
-  if (!token) {
-    return { source: "scorebat", available: false, goals: [] };
-  }
-
   try {
-    const res = await fetch(`${SCOREBAT_BASE}/feed/?token=${encodeURIComponent(token)}`, {
+    const res = await fetchScoreBatFeed({
       next: { revalidate: 0 },
     });
-
-    if (!res.ok) {
+    if (!res?.ok) {
       return { source: "scorebat", available: false, goals: [] };
     }
 

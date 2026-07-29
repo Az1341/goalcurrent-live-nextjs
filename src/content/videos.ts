@@ -3,8 +3,7 @@ import { contentIdFromUrl } from "@/content/merge";
 import { extractYouTubeVideoId } from "@/utils/rss/parse";
 import type { ParsedRssItem } from "@/utils/rss/parse";
 import type { YouTubeVideo } from "@/types/video";
-
-const SCOREBAT_BASE = "https://www.scorebat.com/video-api/v3";
+import { fetchScoreBatFeed } from "@/lib/scorebat/request";
 
 type ScoreBatVideo = {
   title?: string;
@@ -47,18 +46,13 @@ function embedUrlFromScoreBatHtml(embed: string): string | null {
 }
 
 export async function fetchScoreBatVideos(): Promise<VideoItem[]> {
-  const token = process.env.SCOREBAT_API_TOKEN?.trim();
-  if (!token) {
-    return [];
-  }
-
   try {
-    const response = await fetch(
-      `${SCOREBAT_BASE}/feed/?token=${encodeURIComponent(token)}`,
-      { signal: AbortSignal.timeout(8000), cache: "no-store" },
-    );
+    const response = await fetchScoreBatFeed({
+      signal: AbortSignal.timeout(8000),
+      cache: "no-store",
+    });
 
-    if (!response.ok) {
+    if (!response?.ok) {
       return [];
     }
 

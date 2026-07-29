@@ -1,6 +1,7 @@
 import "server-only";
 import { getFixtureById, getTeamById } from "@/data/wc26";
 import { parseScoreBatEmbedUrl } from "@/lib/scorebat/parse-embed";
+import { fetchScoreBatFeed } from "@/lib/scorebat/request";
 import type { ScoreBatHighlight } from "@/lib/scorebat/types";
 
 type ScoreBatItem = {
@@ -34,20 +35,15 @@ export async function getScoreBatEmbed(
   homeTeamName: string,
   awayTeamName: string,
 ): Promise<ScoreBatHighlight | null> {
-  const token = process.env.SCOREBAT_API_TOKEN?.trim();
-  if (!token || !homeTeamName || !awayTeamName) {
+  if (!homeTeamName || !awayTeamName) {
     return null;
   }
 
   try {
-    const res = await fetch(
-      `https://www.scorebat.com/video-api/v3/feed/?token=${encodeURIComponent(token)}`,
-      {
-        next: { revalidate: 300 },
-      },
-    );
-
-    if (!res.ok) {
+    const res = await fetchScoreBatFeed({
+      next: { revalidate: 300 },
+    });
+    if (!res?.ok) {
       return null;
     }
 

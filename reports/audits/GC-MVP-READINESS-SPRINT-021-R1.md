@@ -266,7 +266,7 @@ Implement canonical remediation without new dependencies.
 
 | Field | Value |
 |-------|--------|
-| Ending HEAD | `a1cc1a50b51a691d6fc1a118765684022df5ed06` |
+| Ending HEAD | bcf6b30fc9f36d85de3340c8608aa6b1b2fcaa16 |
 | FE-012 | CLOSED in this sprint |
 | FE-014 | Untouched |
 | BE-001 / BE-003 | Remain OPEN and untouched |

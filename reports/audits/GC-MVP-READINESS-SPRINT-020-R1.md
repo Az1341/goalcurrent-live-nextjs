@@ -8,8 +8,8 @@
 **Starting HEAD:** f3623e10e43b86b5bfdcb1dcfe56c0c411ddc991
 **Phase-1 reconciliation commit:** bb487fbdd48abbf4160492139464948c9054833f
 **Implementation commit:** f1139ebf9361db895835641e5b97c8d7701666f6
-**Evidence commit:** PENDING_EVIDENCE_SHA
-**Ending HEAD:** PENDING_ENDING_HEAD
+**Evidence commit:** ef2acbfb21417ab48b551a0822b3774a0e97f87d
+**Ending HEAD:** ef2acbfb21417ab48b551a0822b3774a0e97f87d
 
 ---
 

@@ -7,8 +7,8 @@
 **Branch:** recovery/gc-exec-batch-005
 **Starting HEAD:** 9b823c6f83f9556895f0e9dcc678bf5da4681209
 **Implementation commit:** a2ca91cc7e0b65a2d2f1dff5274f20035292fd77
-**Evidence commit:** (this docs commit; SHA in return payload)
-**Ending HEAD:** (after this docs commit)
+**Evidence commit:** 207ae7dfde41342374917799fd55d28e5e3f8494
+**Ending HEAD:** 207ae7dfde41342374917799fd55d28e5e3f8494
 
 ---
 
@@ -177,3 +177,13 @@ NO SECOND FINDING. NO REWORK OF CLOSED FINDINGS. NO GENERAL LINT OR ACCESSIBILIT
 ---
 
 **GC-MVP-READINESS-SPRINT-013 status:** COMPLETE
+
+---
+
+## 15. Audit-closure addendum
+
+Evidence gaps for BE-005 authentication matrix, equal-secret configuration limitation, secret-exposure assessment, and fail-closed behaviour are closed in:
+
+`reports/audits/GC-MVP-READINESS-SPRINT-013-AUDIT-CLOSURE-R1.md`
+
+No application code or tests were changed by the audit-closure task.

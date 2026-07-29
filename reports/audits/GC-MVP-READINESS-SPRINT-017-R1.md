@@ -9,12 +9,12 @@
 **Phase-1 reconciliation commit:** 373372123209fec00f06269ac48ae46c3efaf2b1
 **Implementation commit:** b53adad5b3723ce3a55ba87a12fe147d39a00fe4
 **Evidence commit:** e99bd06d82a384c37c3b338fc259994aae99a3e8
-**Ending HEAD:** e99bd06d82a384c37c3b338fc259994aae99a3e8
-**SHA-fill tip (docs only):** a95b6883e53e3beb0540ab70a30ad00df41cb97f
+**Ending HEAD:** 8696438538e0b78e94f3b3d45c400b0fa74289b9
+**SHA-fill tip (docs only):** 8696438538e0b78e94f3b3d45c400b0fa74289b9
 
----
 
-## 1. Sprint 016 reconciliation (Phase 1)
+**Sprint 018 Phase-1 reconciliation:** Ending HEAD and SHA-fill tip were stale relative to canonical tip `8696438538e0b78e94f3b3d45c400b0fa74289b9` (docs-only SHA-fill chain after evidence). Corrected to tip; no application/test change.
+---`n`n## 1. Sprint 016 reconciliation (Phase 1)
 
 | Check | Result |
 |---|---|

@@ -145,12 +145,11 @@ function logKnockoutFetch(entry: Wc26KnockoutFetchLog, rows: unknown): void {
   );
 }
 
-/** Fetch one knockout round from API-Football with server-side logging. */
+/** Fetch one knockout round from API-Football with server-side logging only. */
 export async function fetchWc26KnockoutRound(
   round: Wc26KnockoutApiRound,
 ): Promise<{
   fixtures: Wc26KnockoutApiFixture[];
-  log: Wc26KnockoutFetchLog;
 }> {
   const { url, rows } = await fetchKnockoutRoundRaw(round);
   const fixtures = rows
@@ -166,22 +165,20 @@ export async function fetchWc26KnockoutRound(
     responseCount: rows.length,
   };
 
+  // Diagnostics stay on the server — never returned on the public API (BE-011).
   logKnockoutFetch(log, rows);
 
-  return { fixtures, log };
+  return { fixtures };
 }
 
 /** Fetch all knockout rounds (73–104) from API-Football. */
 export async function fetchWc26KnockoutFixtures(): Promise<{
   fixtures: Wc26KnockoutApiFixture[];
-  logs: Wc26KnockoutFetchLog[];
 }> {
-  const logs: Wc26KnockoutFetchLog[] = [];
   const byFixtureId = new Map<string, Wc26KnockoutApiFixture>();
 
   for (const round of WC26_KNOCKOUT_API_ROUNDS) {
-    const { fixtures, log } = await fetchWc26KnockoutRound(round);
-    logs.push(log);
+    const { fixtures } = await fetchWc26KnockoutRound(round);
     for (const fixture of fixtures) {
       const existing = byFixtureId.get(fixture.fixtureId);
       if (!existing || existing.matchNumber > fixture.matchNumber) {
@@ -218,13 +215,14 @@ export async function fetchWc26KnockoutFixtures(): Promise<{
         "[wc26/knockout-fixtures] fallback local fixture ids:",
         mapped.map((row) => row.fixtureId).join(", ") || "(none)",
       );
-      return { fixtures: mapped, logs };
+      return { fixtures: mapped };
     } catch (error) {
-      console.warn("[wc26/knockout-fixtures] fallback fetch failed:", error);
+      const message = error instanceof Error ? error.message : "fallback failed";
+      console.warn("[wc26/knockout-fixtures] fallback fetch failed:", message);
     }
   }
 
-  return { fixtures, logs };
+  return { fixtures };
 }
 
 /** Validate that a local fixture id is a knockout slot (73–104), not group stage. */

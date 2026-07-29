@@ -63,6 +63,8 @@ export const wc26FixtureIdSchema = z
 export const fcmTokenBodySchema = z.object({
   token: z.string().trim().min(1, "FCM token is required."),
   locale: z.enum(LOCALES).optional(),
+  // Application layer requires a verified idToken (BE-007); optional here so
+  // missing tokens return 401 via requireFcmIdToken rather than 400 Zod.
   idToken: z.string().trim().min(1).optional(),
 });
 

@@ -8,8 +8,8 @@
 **Starting HEAD:** b5d80aa9b671ebaa683d6a8eeec42c2d5fe1946b
 **Phase-1 reconciliation commit:** 373372123209fec00f06269ac48ae46c3efaf2b1
 **Implementation commit:** b53adad5b3723ce3a55ba87a12fe147d39a00fe4
-**Evidence commit:** PENDING_EVIDENCE_SHA
-**Ending HEAD:** PENDING_ENDING_HEAD
+**Evidence commit:** e99bd06d82a384c37c3b338fc259994aae99a3e8
+**Ending HEAD:** e99bd06d82a384c37c3b338fc259994aae99a3e8
 
 ---
 
@@ -123,7 +123,7 @@ No unselected finding claimed closed.
 |---|---|---|
 | `373372123209fec00f06269ac48ae46c3efaf2b1` | Phase-1 docs | `reports/audits/GC-MVP-READINESS-SPRINT-016-R1.md` |
 | `b53adad5b3723ce3a55ba87a12fe147d39a00fe4` | Implementation + tests | `src/lib/sentry-config.ts`, `tests/lib/be-009-sentry-secret-headers.test.mjs` |
-| PENDING_EVIDENCE_SHA | Evidence | `reports/audits/GC-MVP-READINESS-SPRINT-017-R1.md` |
+| e99bd06d82a384c37c3b338fc259994aae99a3e8 | Evidence | `reports/audits/GC-MVP-READINESS-SPRINT-017-R1.md` |
 
 Optional SHA-fill only if Ending HEAD placeholder requires it after evidence commit.
 

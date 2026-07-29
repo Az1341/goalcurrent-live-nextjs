@@ -12,6 +12,7 @@ import {
 import {
   ApiFootballAuthError,
   ApiFootballRateLimitError,
+  apiFootballClientAuthErrorMessage,
   isAuthErrorMessage,
   isQuotaErrorMessage,
 } from "@/lib/api-football/errors";
@@ -96,7 +97,7 @@ export async function apiFootballFetch<T>(
       return {
         ok: false,
         kind: "auth",
-        message: "API key rejected. Check API_FOOTBALL_KEY.",
+        message: apiFootballClientAuthErrorMessage(),
       };
     }
     const message = error instanceof Error ? error.message : "API error";
@@ -122,7 +123,7 @@ export async function apiFootballFetchAllPages<TItem>(
       return {
         ok: false,
         kind: "auth",
-        message: "API key rejected. Check API_FOOTBALL_KEY.",
+        message: apiFootballClientAuthErrorMessage(),
       };
     }
     const message = error instanceof Error ? error.message : "API error";

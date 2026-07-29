@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   ApiFootballAuthError,
+  apiFootballClientAuthErrorMessage,
   apiFootballErrorMessage,
   classifyApiFootballError,
   type ApiFootballErrorCode,
@@ -23,9 +24,10 @@ export function respondApiFootballFailure<T extends Record<string, unknown>>({
   cacheControl = "no-store",
 }: RespondOptions<T>): NextResponse {
   if (error instanceof ApiFootballAuthError) {
+    // Detail stays server-side (captureRouteError); clients get a generic envelope.
     captureRouteError(route, error);
     return NextResponse.json(
-      buildBody("unknown_error", error.message, false),
+      buildBody("unknown_error", apiFootballClientAuthErrorMessage(), false),
       { status: 503, headers: { "Cache-Control": cacheControl } },
     );
   }

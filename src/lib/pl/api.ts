@@ -7,6 +7,7 @@ import {
 import { apiFootballFetch } from "@/lib/api-football/client";
 import {
   ApiFootballAuthError,
+  apiFootballClientAuthErrorMessage,
   ApiFootballRateLimitError,
 } from "@/lib/api-football/errors";
 import { resolvePlBroadcasterFromLocale } from "@/lib/pl/pl-broadcasters";
@@ -167,7 +168,7 @@ async function fetchStandingsFromApi(): Promise<PlStandingsApiResponse> {
     if (error instanceof ApiFootballAuthError) {
       return baseResponse("fallback", {
         configured: true,
-        error: "API key invalid or missing permissions.",
+        error: apiFootballClientAuthErrorMessage(),
       });
     }
 
@@ -186,6 +187,7 @@ export async function fetchPlStandings(): Promise<PlStandingsApiResponse> {
     if (
       !body.standings.length &&
       !body.error?.toLowerCase().includes("rate limit") &&
+      body.error !== apiFootballClientAuthErrorMessage() &&
       !body.error?.toLowerCase().includes("key")
     ) {
       let fixtures: PlFixtureRow[] = [];
@@ -389,7 +391,7 @@ async function fetchFixturesFromApi(locale: string): Promise<PlFixturesApiRespon
     if (error instanceof ApiFootballAuthError) {
       return baseFixturesResponse("fallback", {
         configured: true,
-        error: "API key rejected. Check API_FOOTBALL_KEY.",
+        error: apiFootballClientAuthErrorMessage(),
       });
     }
 
@@ -419,7 +421,7 @@ export async function fetchPlFixtures(
     if (message.includes("403")) {
       return baseFixturesResponse("fallback", {
         configured: true,
-        error: "API key rejected. Check API_FOOTBALL_KEY.",
+        error: apiFootballClientAuthErrorMessage(),
       });
     }
 

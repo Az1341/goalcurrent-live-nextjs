@@ -67,3 +67,8 @@ export function apiFootballErrorMessage(code: ApiFootballErrorCode): string {
       return "Unexpected error fetching live data.";
   }
 }
+
+/** Client-safe auth/provider failure text — never name env vars or key status. */
+export function apiFootballClientAuthErrorMessage(): string {
+  return "Live data is temporarily unavailable.";
+}

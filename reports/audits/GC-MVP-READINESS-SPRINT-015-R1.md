@@ -7,8 +7,8 @@
 **Branch:** recovery/gc-exec-batch-005
 **Starting HEAD:** 456b40b329dc1d263fb225e868b6ef71438266ad
 **Implementation commit:** f2677a842a0bb64b15f70cb63ef5909c1272e429
-**Evidence commit:** (filled after commit)
-**Ending HEAD:** (filled after commit)
+**Evidence commit:** c2d6ff06b3bac9f116b6b12b1de8f3dbd32b2713
+**Ending HEAD:** c2d6ff06b3bac9f116b6b12b1de8f3dbd32b2713
 
 ---
 

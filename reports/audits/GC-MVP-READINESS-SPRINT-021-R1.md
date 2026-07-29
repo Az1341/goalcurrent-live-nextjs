@@ -266,7 +266,7 @@ Implement canonical remediation without new dependencies.
 
 | Field | Value |
 |-------|--------|
-| Ending HEAD | `PENDING_EVIDENCE_COMMIT` |
+| Ending HEAD | `a1cc1a50b51a691d6fc1a118765684022df5ed06` |
 | FE-012 | CLOSED in this sprint |
 | FE-014 | Untouched |
 | BE-001 / BE-003 | Remain OPEN and untouched |

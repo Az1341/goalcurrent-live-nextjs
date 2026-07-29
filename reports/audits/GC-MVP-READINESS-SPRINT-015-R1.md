@@ -1,6 +1,6 @@
 # GC-MVP-READINESS-SPRINT-015 - R1
 
-**Date/time:** 2026-07-29 ~11:37–12:20 BST
+**Date/time:** 2026-07-29 ~11:37-12:20 BST
 **Task ID:** GC-MVP-READINESS-SPRINT-015
 **Title:** Next Isolated Canonical Finding After BE-006
 **Status:** COMPLETE
@@ -8,7 +8,7 @@
 **Starting HEAD:** 456b40b329dc1d263fb225e868b6ef71438266ad
 **Implementation commit:** f2677a842a0bb64b15f70cb63ef5909c1272e429
 **Evidence commit:** c2d6ff06b3bac9f116b6b12b1de8f3dbd32b2713
-**Ending HEAD:** c2d6ff06b3bac9f116b6b12b1de8f3dbd32b2713
+**Ending HEAD:** 3b772cad237cc522174496031b302bc8c32dda0d
 
 ---
 
@@ -154,5 +154,7 @@ Football-data, locale, SEO, a11y, polling, fan-out, Vercel: unchanged. Auth: FCM
 NO SECOND FINDING. NO BE-006 REWORK. NO COMPETITION EXPANSION. NO LINT CLEANUP. NO HISTORY REWRITE. NO PUSH. NO MERGE. NO DEPLOY.
 
 ---
+
+**Ending-HEAD note:** Evidence pack is `c2d6ff06b3bac9f116b6b12b1de8f3dbd32b2713`; tip `3b772cad237cc522174496031b302bc8c32dda0d` is documentation-only SHA fill of this report (no application/test changes).
 
 **GC-MVP-READINESS-SPRINT-015 status:** COMPLETE

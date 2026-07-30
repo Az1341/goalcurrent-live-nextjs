@@ -3,6 +3,9 @@
  * Defense-in-depth sanitiser for editorial article HTML (FE-012).
  * Strips executable sinks without adding a sanitiser dependency.
  * Repo-authored CMS content is the primary source today.
+ *
+ * Sprint 021-R2 assurance: also neutralises common scheme obfuscation
+ * (HTML entities / whitespace inside javascript: / data: / vbscript: URLs).
  */
 
 const BLOCKED_ELEMENT_NAMES = [
@@ -24,11 +27,46 @@ const VOIDISH_BLOCKED_TAGS =
 const EVENT_HANDLER_ATTR =
   /\s+on[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi;
 
-const DANGEROUS_URL_ATTR =
-  /(\s(?:href|src|xlink:href|action|formaction|poster)\s*=\s*)(["'])\s*(?:javascript|vbscript|data)\s*:/gi;
+const URL_ATTR_QUOTED =
+  /(\s(?:href|src|xlink:href|action|formaction|poster)\s*=\s*)(["'])([\s\S]*?)\2/gi;
 
-const DANGEROUS_URL_ATTR_UNQUOTED =
-  /(\s(?:href|src|xlink:href|action|formaction|poster)\s*=\s*)(?:javascript|vbscript|data)\s*:/gi;
+const URL_ATTR_UNQUOTED =
+  /(\s(?:href|src|xlink:href|action|formaction|poster)\s*=\s*)([^\s>]+)/gi;
+
+function decodeBasicEntities(value: string): string {
+  return value
+    .replace(/&#x([0-9a-f]+);?/gi, (_, hex: string) =>
+      String.fromCodePoint(Number.parseInt(hex, 16)),
+    )
+    .replace(/&#([0-9]+);?/g, (_, dec: string) =>
+      String.fromCodePoint(Number.parseInt(dec, 10)),
+    )
+    .replace(/&colon;/gi, ":")
+    .replace(/&tab;/gi, "\t")
+    .replace(/&newline;/gi, "\n");
+}
+
+function isDangerousScheme(raw: string): boolean {
+  const decoded = decodeBasicEntities(raw);
+  const compact = decoded.replace(/[\u0000-\u0020\u007f]+/g, "");
+  return /^(?:javascript|vbscript|data):/i.test(compact);
+}
+
+function neutralizeUrlAttrs(html: string): string {
+  let out = html.replace(URL_ATTR_QUOTED, (full, prefix: string, quote: string, value: string) => {
+    if (isDangerousScheme(value)) {
+      return `${prefix}${quote}#${quote}`;
+    }
+    return full;
+  });
+  out = out.replace(URL_ATTR_UNQUOTED, (full, prefix: string, value: string) => {
+    if (isDangerousScheme(value)) {
+      return `${prefix}#`;
+    }
+    return full;
+  });
+  return out;
+}
 
 function stripNamedElements(html: string, name: string): string {
   const openRe = new RegExp(`<${name}\\b[^>]*>`, "i");
@@ -66,9 +104,8 @@ export function sanitizeArticleHtml(html: string): string {
     }
     out = out
       .replace(VOIDISH_BLOCKED_TAGS, "")
-      .replace(EVENT_HANDLER_ATTR, "")
-      .replace(DANGEROUS_URL_ATTR, "$1$2#")
-      .replace(DANGEROUS_URL_ATTR_UNQUOTED, "$1#");
+      .replace(EVENT_HANDLER_ATTR, "");
+    out = neutralizeUrlAttrs(out);
   }
 
   return out;

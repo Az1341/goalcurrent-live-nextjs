@@ -101,3 +101,38 @@ test("FE-012: ArticleBodyWithAd and JsonLd sinks wire helpers", async () => {
   assert.equal(jsonLd.includes("JSON.stringify(data)"), false);
   assert.equal(jsonLdScript.includes("JSON.stringify(data)"), false);
 });
+
+test("FE-012 R2: neutralises javascript HTML-entity scheme (assurance)", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = "<a href=\"javascript&#58;alert(1)\">link</a>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/javascript/i.test(clean), false);
+  assert.match(clean, /href=["']#/);
+});
+
+test("FE-012 R2: neutralises whitespace-obfuscated javascript scheme (assurance)", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = "<a href=\"java\tscript:alert(1)\">link</a>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/javascript/i.test(clean.replace(/[\t\n\r ]+/g, "")), false);
+  assert.match(clean, /href=["']#/);
+});
+
+test("FE-012 R2: strips uppercase SCRIPT elements (assurance)", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = "<p>A</p><SCRIPT>alert(1)</SCRIPT><p>B</p>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/script/i.test(clean), false);
+  assert.match(clean, /A/);
+  assert.match(clean, /B/);
+});
+
+test("FE-012 R2: strips svg/iframe sinks (assurance)", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty =
+    '<svg onload=alert(1)></svg><iframe src="javascript:alert(1)"></iframe><p>ok</p>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/svg|iframe|javascript|onload/i.test(clean), false);
+  assert.match(clean, /ok/);
+});
+

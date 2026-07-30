@@ -151,7 +151,7 @@ Focused: **13/13 PASS** (9 R1 + 4 R2).
 |-------|--------|
 | Starting HEAD | `2c0f7d0418a59b13a9f3d98796bcc9a171032b44` |
 | Implementation SHA | `37c11e8615f5c09828759b9ae5b0c5bf271ac233` |
-| Ending HEAD | `PENDING_EVIDENCE_COMMIT` |
+| Ending HEAD | 96d9358196d67d88fc85b5b58e4c9bcbf981655b |
 | FE-012 | CLOSED with R2 security assurance |
 | Other findings | Unchanged |
 | Push / merge / deploy | **None** |

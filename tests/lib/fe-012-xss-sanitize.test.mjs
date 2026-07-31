@@ -220,3 +220,193 @@ test("FE-012 R3: sanitiser uses sanitize-html structural parser", async () => {
   assert.match(src, /allowedTags/);
   assert.match(src, /allowProtocolRelative:\s*false/);
 });
+
+test("FE-012 closeout: duplicate href keeps only safe structural outcome", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = '<a href="javascript:alert(1)" href="/articles">dup</a>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/javascript/i.test(clean), false);
+  assert.equal(/<\/?script/i.test(clean), false);
+  if (/href=/i.test(clean)) {
+    assert.match(clean, /href="\/articles"/);
+  }
+});
+
+test("FE-012 closeout: duplicate target/rel stripped from anchors", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty =
+    '<a href="/ok" target="_blank" target="_self" rel="noopener" rel="nofollow">x</a>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/target=/i.test(clean), false);
+  assert.equal(/rel=/i.test(clean), false);
+  assert.match(clean, /href="\/ok"/);
+  assert.match(clean, />x<\/a>/);
+});
+
+test("FE-012 closeout: broken quoted attributes cannot inject handlers", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = '<p title="broken onclick="alert(1)">text</p>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/onclick/i.test(clean), false);
+  assert.equal(/alert\s*\(/i.test(clean), false);
+  assert.match(clean, /text/);
+});
+
+test("FE-012 closeout: broken unquoted attributes cannot inject handlers", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = "<p id=broken onclick=alert(1)>text</p>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/onclick/i.test(clean), false);
+  assert.equal(/id=/i.test(clean), false);
+  assert.match(clean, /<p>text<\/p>/);
+});
+
+test("FE-012 closeout: unexpected angle brackets inside attributes are non-executable", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = '<a href="/x" title="a<script>alert(1)</script>b">link</a>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/<\/?script/i.test(clean), false);
+  assert.equal(/javascript/i.test(clean), false);
+  assert.match(clean, /href="\/x"/);
+});
+
+test("FE-012 closeout: malformed attributes followed by event handlers are stripped", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = '<p "broken OnError=alert(1) onload=alert(2)>x</p>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/onerror|onload|alert/i.test(clean), false);
+  assert.match(clean, /x/);
+});
+
+test("FE-012 closeout: mixed-case event-handler attributes removed", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = '<p OnClick="alert(1)" ONMOUSEOVER="alert(2)">x</p>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/on\w+\s*=/i.test(clean), false);
+  assert.equal(clean, "<p>x</p>");
+});
+
+test("FE-012 closeout: parser recovery around malformed permitted elements", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = "<p>ok<strong>bold<em>nest</p></strong><script>alert(1)</script>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/<\/?script/i.test(clean), false);
+  assert.match(clean, /ok/);
+  assert.match(clean, /bold|nest/);
+});
+
+test("FE-012 closeout: script markup inside HTML comments is non-executable", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = "<!-- <script>alert(1)</script> --><p>safe</p>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/<\/?script/i.test(clean), false);
+  assert.equal(/alert\s*\(/i.test(clean), false);
+  assert.equal(clean, "<p>safe</p>");
+});
+
+test("FE-012 closeout: conditional-comment-style input is non-executable", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = "<!--[if IE]><script>alert(1)</script><![endif]--><p>safe</p>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/<\/?script/i.test(clean), false);
+  assert.equal(clean, "<p>safe</p>");
+});
+
+test("FE-012 closeout: entity-encoded script markup remains non-executable", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty =
+    "<p>" +
+    String.fromCharCode(38) +
+    "lt;script" +
+    String.fromCharCode(38) +
+    "gt;alert(1)" +
+    String.fromCharCode(38) +
+    "lt;/script" +
+    String.fromCharCode(38) +
+    "gt;</p>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/<\/?script/i.test(clean), false);
+  assert.equal(clean.includes("<script"), false);
+});
+
+test("FE-012 closeout: double-encoded dangerous protocol cannot survive", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty =
+    '<a href="java' +
+    String.fromCharCode(38) +
+    "amp;#115;cript:alert(1)\">x</a>";
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/javascript/i.test(clean), false);
+  if (/href=/i.test(clean)) {
+    assert.equal(/javascript|vbscript|data:/i.test(clean), false);
+  }
+});
+
+test("FE-012 closeout: encoded event-handler-like content is not an attribute", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty =
+    "<p>" +
+    String.fromCharCode(38) +
+    "quot; onclick=alert(1) " +
+    String.fromCharCode(38) +
+    "quot;>x</p>";
+  const clean = sanitizeArticleHtml(dirty);
+  // May remain as inert text after entity decode; must not become a real attribute.
+  assert.equal(/<\w[^>]*\sonclick\s*=/i.test(clean), false);
+  assert.equal(/<\/?script/i.test(clean), false);
+  assert.match(clean, /^<p>/);
+  assert.match(clean, /x/);
+});
+
+test("FE-012 closeout: comments around dangerous protocols do not restore href", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty = '<a href="java<!-- -->script:alert(1)">x</a>';
+  const clean = sanitizeArticleHtml(dirty);
+  assert.equal(/javascript/i.test(clean), false);
+  assert.equal(/href=/i.test(clean) && /script:/i.test(clean), false);
+});
+
+test("FE-012 closeout: encoded angle brackets remain non-executable tags", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const dirty =
+    "<p>" +
+    String.fromCharCode(38) +
+    "lt;img src=x onerror=alert(1)" +
+    String.fromCharCode(38) +
+    "gt;</p>";
+  const clean = sanitizeArticleHtml(dirty);
+  // Encoded markup may retain the literal word onerror as text; tags must stay non-executable.
+  assert.equal(/<img\b/i.test(clean), false);
+  assert.equal(/<\w[^>]*\sonerror\s*=/i.test(clean), false);
+  assert.match(clean, /&lt;|&amp;lt;/i);
+  assert.match(clean, /^<p>/);
+});
+
+test("FE-012 closeout: fail-closed exception returns empty string", async () => {
+  const { sanitizeArticleHtml } = await load();
+  const hostile = '<script>alert("xss")</script><p>visible</p>';
+  const clean = sanitizeArticleHtml(hostile, {
+    sanitizeHtmlImpl: () => {
+      throw new Error("forced sanitizer failure");
+    },
+  });
+  assert.equal(clean, "");
+  assert.notEqual(clean, hostile);
+  assert.equal(clean.includes("script"), false);
+  assert.equal(clean.includes("visible"), false);
+});
+
+test("FE-012 closeout: ArticleBodyWithAd only renders sanitised output on failure path", async () => {
+  const src = readFileSync(join(root, "src/components/articles/ArticleBodyWithAd.tsx"), "utf8");
+  assert.match(src, /const safeHtml = sanitizeArticleHtml\(html\)/);
+  assert.match(src, /dangerouslySetInnerHTML=\{\{\s*__html:\s*safeHtml\s*\}\}/);
+  assert.equal(src.includes("__html: html"), false);
+  const { sanitizeArticleHtml } = await load();
+  const hostile = '<img src=x onerror=alert(1)><script>alert(1)</script>';
+  const safeHtml = sanitizeArticleHtml(hostile, {
+    sanitizeHtmlImpl: () => {
+      throw new Error("forced");
+    },
+  });
+  assert.equal(safeHtml, "");
+});

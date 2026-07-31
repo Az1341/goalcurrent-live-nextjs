@@ -1,5 +1,5 @@
 /**
- * FE-012 structural article HTML sanitiser (Sprint 021-R3).
+ * FE-012 structural article HTML sanitiser (Sprint 021-R3 / closeout).
  * Uses sanitize-html (htmlparser2) - not regex-primary.
  *
  * Security contract (allowlist only; everything else discarded):
@@ -62,14 +62,25 @@ const SANITIZE_OPTIONS: sanitizeHtml.IOptions = {
   },
 };
 
-export function sanitizeArticleHtml(html: string): string {
+export type SanitizeArticleHtmlDeps = {
+  /** Test-only injection; production always uses the real sanitize-html. */
+  sanitizeHtmlImpl?: typeof sanitizeHtml;
+};
+
+export function sanitizeArticleHtml(
+  html: string,
+  deps: SanitizeArticleHtmlDeps = {},
+): string {
   if (!html) {
     return "";
   }
 
+  const impl = deps.sanitizeHtmlImpl ?? sanitizeHtml;
+
   try {
-    return sanitizeHtml(html, SANITIZE_OPTIONS);
+    return impl(html, SANITIZE_OPTIONS);
   } catch {
+    // Fail closed — never return the original unsafe HTML.
     return "";
   }
 }

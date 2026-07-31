@@ -194,7 +194,7 @@ Both sinks verified to call `serializeJsonLd` only (source assertions).
 |-------|--------|
 | Starting HEAD | `8285ddff8c31d3afe1c0bf4fde5f383d008ef417` |
 | Implementation SHA | `d04aca3c1ce3806c18d4ceab94a9bf39e657912a` |
-| Ending HEAD | `2324a5f683d133a420772f1b882390358c52296c` |
+| Ending HEAD | `3d8b014d1c1e374150bb607650758cee34089e56` |
 | FE-012 status for programme | **Open pending Ahmad formal verdict** (R3 structural correction delivered) |
 
 **Sprint 021-R3 status: COMPLETE — AWAITING INDEPENDENT AUDIT**

@@ -13,6 +13,7 @@ export const LIVE_API_PATHS = {
   wc26Results: "/api/wc26/scores?results=wc",
   wc26TopScorers: "/api/wc26/top-scorers",
   plFixtures: "/api/pl/fixtures",
+  uclFixtures: "/api/ucl/fixtures",
   plTopScorers: "/api/pl/top-scorers",
   wc26Match: (fixtureId: string) =>
     `/api/wc26/match/${encodeURIComponent(fixtureId)}`,
@@ -21,11 +22,11 @@ export const LIVE_API_PATHS = {
 type UseLiveApiOptions = {
   /** Poll interval in ms; omit for hub default (75s). Pass 30_000 for live match pages. */
   refreshInterval?: number;
-  /** Use LIVE_MATCH_FETCH_SWR_OPTIONS — no stale data flash on live/home match sections. */
+  /** Use LIVE_MATCH_FETCH_SWR_OPTIONS â€” no stale data flash on live/home match sections. */
   fresh?: boolean;
 };
 
-/** Build SWR options for useLiveApi — pure helper for hook-stable single useSWR call. */
+/** Build SWR options for useLiveApi â€” pure helper for hook-stable single useSWR call. */
 export function buildUseLiveApiSwrOptions(options?: UseLiveApiOptions) {
   const fresh = Boolean(options?.fresh);
   const pollMs =
@@ -59,7 +60,7 @@ export function useLiveApi<T = unknown>(
   path: string | null,
   options?: UseLiveApiOptions,
 ) {
-  // Single unconditional useSWR call — options vary; Hook order does not.
+  // Single unconditional useSWR call â€” options vary; Hook order does not.
   return useSWR<T>(path, fetcher, buildUseLiveApiSwrOptions(options));
 }
 

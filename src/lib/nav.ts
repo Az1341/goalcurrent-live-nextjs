@@ -40,7 +40,7 @@ export type DesktopDropdownSection = {
   links: NavLinkItem[];
 };
 
-/** Global favourites — saved items across all competitions. */
+/** Global favourites â€” saved items across all competitions. */
 export const FAVOURITES_HREF = "/favourites";
 
 /** Desktop primary links (before dropdowns). */
@@ -53,7 +53,7 @@ export const DESKTOP_PRIMARY_NAV: NavItem[] = [
   { href: "/videos", labelKey: "videos" },
 ];
 
-/** Legacy / footer — full primary list for other consumers. */
+/** Legacy / footer â€” full primary list for other consumers. */
 export const MAIN_NAV: NavItem[] = [
   ...DESKTOP_PRIMARY_NAV,
   { href: "/premier-league", labelKey: "premierLeague", exact: true },
@@ -65,7 +65,7 @@ export const PL_NAV: NavItem[] = [
   { href: "/premier-league/fixtures", labelKey: "fixtures" },
 ];
 
-/** Premier League hub — extended section links */
+/** Premier League hub â€” extended section links */
 export const PL_SECTION_NAV: NavItem[] = [
   { href: "/premier-league/table", labelKey: "table2627" },
   { href: "/premier-league/fixtures", labelKey: "fixtures2627" },
@@ -85,13 +85,13 @@ export const WC26_NAV: NavItem[] = [
   { href: "/worldcup2026/bracket", labelKey: "bracket" },
 ];
 
-/** More dropdown — WC26 hub + section links (legacy) */
+/** More dropdown â€” WC26 hub + section links (legacy) */
 export const MORE_NAV: NavLinkItem[] = [
   { href: "/worldcup2026", labelKey: "overview" },
   ...WC26_NAV,
 ];
 
-/** Mobile bottom tab bar — primary tabs only (<769px) */
+/** Mobile bottom tab bar â€” primary tabs only (<769px) */
 export const MOBILE_BOTTOM_TABS: MobileBottomTab[] = [
   { id: "home", href: "/", labelKey: "home", exact: true },
   { id: "live", href: "/live", labelKey: "live" },
@@ -106,6 +106,7 @@ export const MORE_SHEET_LEVEL1: MoreSheetLevel1Item[] = [
   { type: "link", href: "/articles", labelKey: "articlesEditorial" },
   { type: "submenu", id: "wc26", labelKey: "wc26" },
   { type: "submenu", id: "pl", labelKey: "pl2627" },
+  { type: "link", href: "/champions-league", labelKey: "championsLeague" },
   { type: "submenu", id: "clubs", labelKey: "clubs" },
   { type: "submenu", id: "players", labelKey: "players" },
   { type: "submenu", id: "tables", labelKey: "table" },
@@ -186,7 +187,7 @@ export const MORE_SHEET_SUBMENU_TITLE_KEYS: Record<MoreSheetSubmenuId, string> =
   transfers: "transfers",
 };
 
-/** Desktop PL 26/27 header dropdown — existing routes only */
+/** Desktop PL 26/27 header dropdown â€” existing routes only */
 export const DESKTOP_PL_DROPDOWN: NavLinkItem[] = [
   { href: "/premier-league", labelKey: "plHome" },
   { href: "/premier-league/fixtures", labelKey: "fixtures" },
@@ -195,7 +196,7 @@ export const DESKTOP_PL_DROPDOWN: NavLinkItem[] = [
   { href: "/premier-league/statistics", labelKey: "statistics" },
 ];
 
-/** Archive links for More sheet — not a live competition dropdown. */
+/** Archive links for More sheet â€” not a live competition dropdown. */
 export const DESKTOP_WC26_DROPDOWN: NavLinkItem[] = [
   { href: "/worldcup2026", labelKey: "wc26Home" },
   { href: "/worldcup2026/bracket", labelKey: "bracket" },
@@ -209,7 +210,7 @@ export const SITE_NAV: NavItem[] = [
   { href: "/contact", labelKey: "contact" },
 ];
 
-/** Desktop top bar — all navigation links in one horizontal row */
+/** Desktop top bar â€” all navigation links in one horizontal row */
 export const TOP_NAV: NavItem[] = [
   ...MAIN_NAV,
   ...WC26_NAV,

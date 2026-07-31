@@ -106,14 +106,7 @@ export default async function ArticlePage({ params }: PageProps) {
           </div>
         </div>
 
-        <ArticleBodyWithAd
-          html={article.content
-            .replace(
-              /<h2>/g,
-              '<h2 style="font-size:18px;font-weight:800;color:#0f172a;margin:28px 0 10px;padding-bottom:8px;border-bottom:2px solid #2563eb;">',
-            )
-            .replace(/<p>/g, '<p style="margin-bottom:16px;">')}
-        />
+        <ArticleBodyWithAd html={article.content} />
 
         <ShareButtons
           url={absoluteUrl(`/articles/${article.slug}`)}

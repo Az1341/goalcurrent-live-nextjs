@@ -1,10 +1,22 @@
 /**
- * Central competition configuration (GC-COMP-UCL-SPRINT-001).
+ * Central competition configuration.
  * Single registry of identity / routes / sections — does not fork PL or WC26 data stacks.
  */
 
 import { PL_LEAGUE_ID, PL_SEASON } from "@/lib/pl/constants";
 import { WC26_API_LEAGUE_ID, WC26_API_SEASON } from "@/lib/server/wc26-api-fixture-id";
+import {
+  FACUP_COMPETITION_TYPE,
+  FACUP_DATASETS,
+  FACUP_DISPLAY_NAME,
+  FACUP_INTERNAL_KEY,
+  FACUP_LEAGUE_ID,
+  FACUP_NAV_LABEL,
+  FACUP_SEASON,
+  FACUP_SHORT_NAME,
+  FACUP_SLUG,
+  FACUP_SUPPORTED_SECTIONS,
+} from "@/lib/facup/constants";
 import {
   UCL_COMPETITION_TYPE,
   UCL_DISPLAY_NAME,
@@ -17,7 +29,7 @@ import {
   UCL_SUPPORTED_SECTIONS,
 } from "@/lib/ucl/constants";
 
-export type CompetitionKey = "pl" | "wc26" | "ucl";
+export type CompetitionKey = "pl" | "wc26" | "ucl" | "facup";
 
 export type CompetitionSection =
   | "hub"
@@ -33,8 +45,9 @@ export type CompetitionConfig = {
   shortName: string;
   providerLeagueId: number;
   activeSeason: number;
-  competitionType: "league" | "cup" | "tournament";
+  competitionType: "league" | "cup" | "tournament" | "knockout_cup";
   supportedSections: readonly CompetitionSection[];
+  standingsSupported: boolean;
   navigationLabel: string;
   hubPath: string;
   metadata: {
@@ -55,6 +68,7 @@ export const COMPETITIONS: Record<CompetitionKey, CompetitionConfig> = {
     activeSeason: PL_SEASON,
     competitionType: "league",
     supportedSections: ["hub", "fixtures", "results", "standings", "match"],
+    standingsSupported: true,
     navigationLabel: "Premier League",
     hubPath: "/premier-league",
     metadata: {
@@ -73,6 +87,7 @@ export const COMPETITIONS: Record<CompetitionKey, CompetitionConfig> = {
     activeSeason: WC26_API_SEASON,
     competitionType: "tournament",
     supportedSections: ["hub", "fixtures", "results", "standings", "match"],
+    standingsSupported: true,
     navigationLabel: "WC26 Archive",
     hubPath: "/worldcup2026",
     metadata: {
@@ -91,12 +106,33 @@ export const COMPETITIONS: Record<CompetitionKey, CompetitionConfig> = {
     activeSeason: UCL_SEASON,
     competitionType: UCL_COMPETITION_TYPE,
     supportedSections: UCL_SUPPORTED_SECTIONS,
+    standingsSupported: true,
     navigationLabel: UCL_NAV_LABEL,
     hubPath: `/${UCL_SLUG}`,
     metadata: {
       title: "UEFA Champions League",
       description:
         "UEFA Champions League fixtures, results and league-phase standings on GoalCurrent.",
+      ogType: "website",
+    },
+    matchPathPrefix: null,
+  },
+  facup: {
+    key: FACUP_INTERNAL_KEY,
+    slug: FACUP_SLUG,
+    displayName: FACUP_DISPLAY_NAME,
+    shortName: FACUP_SHORT_NAME,
+    providerLeagueId: FACUP_LEAGUE_ID,
+    activeSeason: FACUP_SEASON,
+    competitionType: FACUP_COMPETITION_TYPE,
+    supportedSections: FACUP_SUPPORTED_SECTIONS,
+    standingsSupported: FACUP_DATASETS.standings,
+    navigationLabel: FACUP_NAV_LABEL,
+    hubPath: `/${FACUP_SLUG}`,
+    metadata: {
+      title: "FA Cup",
+      description:
+        "FA Cup fixtures and results on GoalCurrent — knockout rounds without standings tables.",
       ogType: "website",
     },
     matchPathPrefix: null,
@@ -129,4 +165,8 @@ export function competitionsShareProviderIdentity(
     left.providerLeagueId === right.providerLeagueId &&
     left.activeSeason === right.activeSeason
   );
+}
+
+export function competitionSupportsStandings(key: CompetitionKey): boolean {
+  return COMPETITIONS[key].standingsSupported;
 }

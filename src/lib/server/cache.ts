@@ -92,8 +92,9 @@ export function clientIpFromRequest(request: Request): string {
 }
 
 /**
- * BE-005 — authorize debug/diagnostic routes with DEBUG_SECRET only.
+ * BE-005 / RSR-003 — authorize debug/diagnostic routes with DEBUG_SECRET only.
  * Never accept the cron secret via Bearer, x-cron-secret, or env fallback.
+ * Fail closed when DEBUG_SECRET is unset in every environment (including development).
  */
 export function authorizeDebugAccess(options: {
   debugSecret: string | undefined;
@@ -103,7 +104,7 @@ export function authorizeDebugAccess(options: {
 }): boolean {
   const debugSecret = options.debugSecret?.trim();
   if (!debugSecret) {
-    return options.nodeEnv === "development";
+    return false;
   }
 
   if (options.authorizationHeader === `Bearer ${debugSecret}`) {

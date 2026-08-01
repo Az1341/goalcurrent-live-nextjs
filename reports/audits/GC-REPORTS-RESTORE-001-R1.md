@@ -6,7 +6,7 @@
 **Repository:** `C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs`  
 **Branch:** `recovery/gc-reports-restore-001` (created from authorised HEAD)  
 **Starting HEAD:** `d01befe69e5f5d9a4cf086390ba8d497bc8c3092`  
-**Ending HEAD:** 0c498901c7e46141af3a59b7b30def23a13a30a3  
+**Ending HEAD:** `9802fdc9a148d3a61ec7ef70232e4fbd5e8f79ee`  
 **Forensic source:** `docs/tasks/active/GC-REPORTS-DELETION-FORENSIC-GATE-001.md`  
 **Inventory:** `_forensic_deleted_compact.txt` / `_forensic_deleted_reports.csv`  
 **Task owner:** Cursor  

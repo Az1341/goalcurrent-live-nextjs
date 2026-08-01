@@ -1,0 +1,436 @@
+{
+  "source": "UEFA Nations League 2026/27 league phase draw (Brussels, 12 Feb 2026)",
+  "sourceUrl": "https://www.uefa.com/uefanationsleague/draws/2027/2002276/",
+  "season": 2026,
+  "seasonLabel": "26/27",
+  "leagues": [
+    "a",
+    "b",
+    "c",
+    "d"
+  ],
+  "groups": [
+    {
+      "groupId": "a1",
+      "league": "a",
+      "label": "Group A1",
+      "teams": [
+        {
+          "teamId": 2,
+          "name": "France",
+          "flagCode": "fr",
+          "logo": null
+        },
+        {
+          "teamId": 768,
+          "name": "Italy",
+          "flagCode": "it",
+          "logo": null
+        },
+        {
+          "teamId": 1,
+          "name": "Belgium",
+          "flagCode": "be",
+          "logo": null
+        },
+        {
+          "teamId": 777,
+          "name": "Türkiye",
+          "flagCode": "tr",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "a2",
+      "league": "a",
+      "label": "Group A2",
+      "teams": [
+        {
+          "teamId": 25,
+          "name": "Germany",
+          "flagCode": "de",
+          "logo": null
+        },
+        {
+          "teamId": 1118,
+          "name": "Netherlands",
+          "flagCode": "nl",
+          "logo": null
+        },
+        {
+          "teamId": 7770,
+          "name": "Serbia",
+          "flagCode": "rs",
+          "logo": null
+        },
+        {
+          "teamId": 1117,
+          "name": "Greece",
+          "flagCode": "gr",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "a3",
+      "league": "a",
+      "label": "Group A3",
+      "teams": [
+        {
+          "teamId": 9,
+          "name": "Spain",
+          "flagCode": "es",
+          "logo": null
+        },
+        {
+          "teamId": 3,
+          "name": "Croatia",
+          "flagCode": "hr",
+          "logo": null
+        },
+        {
+          "teamId": 10,
+          "name": "England",
+          "flagCode": "gb-eng",
+          "logo": null
+        },
+        {
+          "teamId": 771,
+          "name": "Czechia",
+          "flagCode": "cz",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "a4",
+      "league": "a",
+      "label": "Group A4",
+      "teams": [
+        {
+          "teamId": 27,
+          "name": "Portugal",
+          "flagCode": "pt",
+          "logo": null
+        },
+        {
+          "teamId": 21,
+          "name": "Denmark",
+          "flagCode": "dk",
+          "logo": null
+        },
+        {
+          "teamId": 1090,
+          "name": "Norway",
+          "flagCode": "no",
+          "logo": null
+        },
+        {
+          "teamId": 767,
+          "name": "Wales",
+          "flagCode": "gb-wls",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "b1",
+      "league": "b",
+      "label": "Group B1",
+      "teams": [
+        {
+          "teamId": 1108,
+          "name": "Scotland",
+          "flagCode": "gb-sct",
+          "logo": null
+        },
+        {
+          "teamId": 15,
+          "name": "Switzerland",
+          "flagCode": "ch",
+          "logo": null
+        },
+        {
+          "teamId": 7771,
+          "name": "Slovenia",
+          "flagCode": "si",
+          "logo": null
+        },
+        {
+          "teamId": 788,
+          "name": "North Macedonia",
+          "flagCode": "mk",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "b2",
+      "league": "b",
+      "label": "Group B2",
+      "teams": [
+        {
+          "teamId": 7772,
+          "name": "Hungary",
+          "flagCode": "hu",
+          "logo": null
+        },
+        {
+          "teamId": 7773,
+          "name": "Ukraine",
+          "flagCode": "ua",
+          "logo": null
+        },
+        {
+          "teamId": 7774,
+          "name": "Georgia",
+          "flagCode": "ge",
+          "logo": null
+        },
+        {
+          "teamId": 7775,
+          "name": "Northern Ireland",
+          "flagCode": "gb-nir",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "b3",
+      "league": "b",
+      "label": "Group B3",
+      "teams": [
+        {
+          "teamId": 7776,
+          "name": "Israel",
+          "flagCode": "il",
+          "logo": null
+        },
+        {
+          "teamId": 7777,
+          "name": "Austria",
+          "flagCode": "at",
+          "logo": null
+        },
+        {
+          "teamId": 7778,
+          "name": "Republic of Ireland",
+          "flagCode": "ie",
+          "logo": null
+        },
+        {
+          "teamId": 7779,
+          "name": "Kosovo",
+          "flagCode": "xk",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "b4",
+      "league": "b",
+      "label": "Group B4",
+      "teams": [
+        {
+          "teamId": 24,
+          "name": "Poland",
+          "flagCode": "pl",
+          "logo": null
+        },
+        {
+          "teamId": 7780,
+          "name": "Bosnia and Herzegovina",
+          "flagCode": "ba",
+          "logo": null
+        },
+        {
+          "teamId": 7781,
+          "name": "Romania",
+          "flagCode": "ro",
+          "logo": null
+        },
+        {
+          "teamId": 7782,
+          "name": "Sweden",
+          "flagCode": "se",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "c1",
+      "league": "c",
+      "label": "Group C1",
+      "teams": [
+        {
+          "teamId": 7783,
+          "name": "Albania",
+          "flagCode": "al",
+          "logo": null
+        },
+        {
+          "teamId": 7784,
+          "name": "Finland",
+          "flagCode": "fi",
+          "logo": null
+        },
+        {
+          "teamId": 7785,
+          "name": "Belarus",
+          "flagCode": "by",
+          "logo": null
+        },
+        {
+          "teamId": 7786,
+          "name": "San Marino",
+          "flagCode": "sm",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "c2",
+      "league": "c",
+      "label": "Group C2",
+      "teams": [
+        {
+          "teamId": 7787,
+          "name": "Montenegro",
+          "flagCode": "me",
+          "logo": null
+        },
+        {
+          "teamId": 7788,
+          "name": "Armenia",
+          "flagCode": "am",
+          "logo": null
+        },
+        {
+          "teamId": 7789,
+          "name": "Cyprus",
+          "flagCode": "cy",
+          "logo": null
+        },
+        {
+          "teamId": 7790,
+          "name": "Latvia",
+          "flagCode": "lv",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "c3",
+      "league": "c",
+      "label": "Group C3",
+      "teams": [
+        {
+          "teamId": 7791,
+          "name": "Kazakhstan",
+          "flagCode": "kz",
+          "logo": null
+        },
+        {
+          "teamId": 7792,
+          "name": "Slovakia",
+          "flagCode": "sk",
+          "logo": null
+        },
+        {
+          "teamId": 7793,
+          "name": "Faroe Islands",
+          "flagCode": "fo",
+          "logo": null
+        },
+        {
+          "teamId": 7794,
+          "name": "Moldova",
+          "flagCode": "md",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "c4",
+      "league": "c",
+      "label": "Group C4",
+      "teams": [
+        {
+          "teamId": 7795,
+          "name": "Iceland",
+          "flagCode": "is",
+          "logo": null
+        },
+        {
+          "teamId": 7796,
+          "name": "Bulgaria",
+          "flagCode": "bg",
+          "logo": null
+        },
+        {
+          "teamId": 7797,
+          "name": "Estonia",
+          "flagCode": "ee",
+          "logo": null
+        },
+        {
+          "teamId": 7798,
+          "name": "Luxembourg",
+          "flagCode": "lu",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "d1",
+      "league": "d",
+      "label": "Group D1",
+      "teams": [
+        {
+          "teamId": 7799,
+          "name": "Gibraltar",
+          "flagCode": "gi",
+          "logo": null
+        },
+        {
+          "teamId": 7800,
+          "name": "Andorra",
+          "flagCode": "ad",
+          "logo": null
+        },
+        {
+          "teamId": 7801,
+          "name": "Malta",
+          "flagCode": "mt",
+          "logo": null
+        }
+      ]
+    },
+    {
+      "groupId": "d2",
+      "league": "d",
+      "label": "Group D2",
+      "teams": [
+        {
+          "teamId": 7802,
+          "name": "Lithuania",
+          "flagCode": "lt",
+          "logo": null
+        },
+        {
+          "teamId": 7803,
+          "name": "Azerbaijan",
+          "flagCode": "az",
+          "logo": null
+        },
+        {
+          "teamId": 7804,
+          "name": "Liechtenstein",
+          "flagCode": "li",
+          "logo": null
+        }
+      ]
+    }
+  ]
+}

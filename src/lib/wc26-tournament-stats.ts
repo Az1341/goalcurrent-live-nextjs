@@ -30,11 +30,32 @@ export function getGamesPlayed(
     .length;
 }
 
-/** Remaining tournament matches: 104 minus completed. */
+/** Remaining tournament matches: 104 minus completed. Zero when archive is complete. */
 export function getGamesLeftToPlay(
   fixtures: readonly FixtureWithStatus[] = getEffectiveFixtures(),
 ): number {
-  return Math.max(WC26_TOURNAMENT.fixtureCount - getGamesPlayed(fixtures), 0);
+  const played = getGamesPlayed(fixtures);
+  const remaining = Math.max(WC26_TOURNAMENT.fixtureCount - played, 0);
+  return played >= WC26_TOURNAMENT.fixtureCount ? 0 : remaining;
+}
+
+export function getTournamentCompletionSummary(
+  fixtures: readonly FixtureWithStatus[] = getEffectiveFixtures(),
+): {
+  readonly played: number;
+  readonly remaining: number;
+  readonly total: number;
+  readonly complete: boolean;
+} {
+  const played = getGamesPlayed(fixtures);
+  const total = WC26_TOURNAMENT.fixtureCount;
+  const remaining = getGamesLeftToPlay(fixtures);
+  return {
+    played,
+    remaining,
+    total,
+    complete: played >= total,
+  };
 }
 
 /** Sum of all goals from fixtures that have home+away scores in the overlay.

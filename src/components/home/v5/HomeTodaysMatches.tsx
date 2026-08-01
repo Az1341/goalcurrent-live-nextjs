@@ -10,6 +10,7 @@ import type { EffectiveFixture } from "@/lib/wc26-fixture-overlay";
 import type { PlFixtureRow } from "@/lib/pl/types";
 import { isLocalToday } from "@/lib/date-utils";
 import { Wc26MatchCard, PlMatchCard } from "./HomeLiveMatchCards";
+import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import styles from "../home-v5.module.css";
 
 type HomeTodaysMatchesProps = {
@@ -22,7 +23,12 @@ export default function HomeTodaysMatches({
   plFixtures = [],
 }: HomeTodaysMatchesProps) {
 
+  const archiveComplete = isWc26TournamentComplete();
+
   const wc26Today = useMemo(() => {
+    if (archiveComplete) {
+      return [];
+    }
     const buckets = partitionFixturesForLiveCentre(fixtures);
     const todayFixtures = [
       ...buckets.live.filter((f) => isLocalToday(f.kickoffUtc)),
@@ -37,7 +43,7 @@ export default function HomeTodaysMatches({
       if (rows.length >= 6) break;
     }
     return rows;
-  }, [fixtures]);
+  }, [fixtures, archiveComplete]);
 
   const plToday = useMemo(() => {
     return plFixtures

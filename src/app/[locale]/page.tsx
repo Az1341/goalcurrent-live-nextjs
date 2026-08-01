@@ -3,12 +3,12 @@ export const revalidate = 30;
 import HomeClient from "@/app/[locale]/HomeClient";
 import type { Metadata } from "next";
 import HomeFeaturedMatchJsonLd from "@/components/seo/HomeFeaturedMatchJsonLd";
-import { WC26_FIXTURES } from "@/data/wc26";
+import { getSeoEffectiveFixtures } from "@/lib/wc26/seo-fixtures";
 import { HOME_HERO_BG } from "@/lib/critical-assets";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME } from "@/lib/site-url";
 import { normalizePageTitleText } from "@/lib/seo/canonical-titles";
-import { selectFeaturedFixtures } from "@/lib/wc26-live";
+import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
 
 export const metadata: Metadata = buildPageMetadata({
   title: normalizePageTitleText(
@@ -25,7 +25,8 @@ type HomePageProps = {
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
-  const featuredSelection = selectFeaturedFixtures(WC26_FIXTURES);
+  const seoFixtures = getSeoEffectiveFixtures();
+  const { wc26Selection } = selectHomeFeaturedContent(seoFixtures);
 
   return (
     <>
@@ -36,7 +37,7 @@ export default async function HomePage({ params }: HomePageProps) {
         fetchPriority="high"
         media="(min-width: 768px)"
       />
-      {featuredSelection.fixtures.map((fixture) => (
+      {wc26Selection.fixtures.map((fixture) => (
         <HomeFeaturedMatchJsonLd
           key={fixture.id}
           fixture={fixture}

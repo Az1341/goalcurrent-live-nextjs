@@ -1,4 +1,3 @@
-import PlCommercialStrip from "@/components/pl/PlCommercialStrip";
 import plStyles from "@/components/pl/PlCommercialStrip.module.css";
 
 type PremierLeagueLayoutProps = {
@@ -8,10 +7,5 @@ type PremierLeagueLayoutProps = {
 export default function PremierLeagueLayout({
   children,
 }: PremierLeagueLayoutProps) {
-  return (
-    <div className={plStyles.plWrap}>
-      <PlCommercialStrip />
-      {children}
-    </div>
-  );
+  return <div className={plStyles.plWrap}>{children}</div>;
 }

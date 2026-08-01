@@ -89,6 +89,30 @@
   justify-content: flex-start;
 }
 
+.desktopNavPrimary {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2px;
+  align-items: center;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.desktopNavPrimary::-webkit-scrollbar {
+  display: none;
+}
+
+.mobileQuickNav {
+  display: none;
+  flex-wrap: nowrap;
+  gap: 2px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .navLink,
 .navBtn {
   padding: 10px 12px;
@@ -213,6 +237,8 @@
   overflow: visible;
   display: flex;
   align-items: center;
+  z-index: 2;
+  background: #7b0d1e;
 }
 
 .dropdownPanel {
@@ -242,6 +268,76 @@
 .dropdownLink:hover {
   background: #fff1f2;
   color: var(--gc-brand-accent, #c8102e);
+}
+
+.competitionsPanel {
+  display: flex;
+  flex-direction: column;
+  min-width: 240px;
+  max-height: min(72vh, 560px);
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #e8dce0;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  z-index: 1000;
+  pointer-events: auto;
+  padding-top: 4px;
+}
+
+.competitionsHint {
+  margin: 0;
+  padding: 8px 14px 6px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+.competitionsGroup {
+  display: block;
+  border-bottom: 1px solid #f1e4e8;
+}
+
+.competitionsGroup:last-child {
+  border-bottom: 0;
+}
+
+.competitionsGroupBtn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1a0a0e;
+  text-align: left;
+  cursor: pointer;
+}
+
+.competitionsGroupBtn:hover,
+.competitionsGroupBtnOpen {
+  background: #fff1f2;
+  color: var(--gc-brand-accent, #c8102e);
+}
+
+.competitionsSubmenu {
+  display: flex;
+  flex-direction: column;
+  background: #fffafb;
+  border-top: 1px solid #f7e8ec;
+  padding: 4px 0;
+}
+
+.competitionsSubmenu .dropdownLink {
+  padding-left: 22px;
+  font-weight: 600;
 }
 
 /* ── Master footer ── */
@@ -512,25 +608,71 @@
 
 @media (max-width: 768px) {
   .desktopNav {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    white-space: nowrap;
+    min-width: 0;
+    padding: 0;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .desktopNav::-webkit-scrollbar {
     display: none;
-    overflow-x: visible;
-    white-space: normal;
+  }
+
+  .desktopNavPrimary {
+    display: none;
+  }
+
+  .mobileQuickNav {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0;
+  }
+
+  .mobileQuickNav .navLink {
+    padding: 8px 6px;
+    font-size: 0.75rem;
+  }
+
+  .dropdownWrap {
+    margin-left: 2px;
+  }
+
+  .dropdownWrap .navBtn {
+    padding: 8px 6px;
+    font-size: 0.75rem;
   }
 
   .bar {
-    padding: 0 max(12px, env(safe-area-inset-right, 0px)) 0
-      max(12px, env(safe-area-inset-left, 0px));
-    gap: 8px;
+    padding: 0 max(10px, env(safe-area-inset-right, 0px)) 0
+      max(10px, env(safe-area-inset-left, 0px));
+    gap: 4px;
     min-height: 48px;
+    flex-wrap: nowrap;
+  }
+
+  .brand {
+    gap: 0;
+    max-width: none;
   }
 
   .brandLogoWrap img {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
   }
 
   .brandName {
-    font-size: 1rem;
+    display: none;
+  }
+
+  .headerActions {
+    gap: 2px;
   }
 
   .headerSubscribe {

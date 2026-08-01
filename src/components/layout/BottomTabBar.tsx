@@ -6,7 +6,6 @@ import { useTranslations } from "next-intl";
 import NavLink from "@/components/nav/NavLink";
 import {
   useCallback,
-  useEffect,
   useRef,
   useState,
   type MouseEvent,
@@ -108,25 +107,16 @@ export default function BottomTabBar() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("nav");
-  const tCommon = useTranslations("common");
   const [moreOpen, setMoreOpen] = useState(false);
-  const [navReady, setNavReady] = useState(false);
   const moreTriggerRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setNavReady(true);
-  }, []);
 
   const handleTabNavigate = useCallback(
     (href: (typeof MOBILE_BOTTOM_TABS)[number]["href"]) =>
       (event: MouseEvent<HTMLAnchorElement>) => {
-        if (!navReady) {
-          return;
-        }
         event.preventDefault();
         router.push(href);
       },
-    [navReady, router],
+    [router],
   );
 
   return (

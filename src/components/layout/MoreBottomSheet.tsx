@@ -17,11 +17,13 @@ import {
   type RefObject,
 } from "react";
 import {
+  DESKTOP_COMPETITIONS_NAV,
   MORE_SHEET_LEVEL1,
   MORE_SHEET_SUBMENU_TITLE_KEYS,
   MORE_SHEET_SUBMENUS,
-  type MoreSheetSubmenuId,
+  isMoreSheetCompetitionId,
   isMoreSheetLinkActive,
+  type MoreSheetSubmenuId,
 } from "@/lib/nav";
 import { trackLanguageChange } from "@/lib/analytics";
 import AuthMenu from "@/components/firebase/AuthMenu";
@@ -112,6 +114,14 @@ export default function MoreBottomSheet({
     onClose();
   };
 
+  const handleBack = () => {
+    if (activeSubmenu && isMoreSheetCompetitionId(activeSubmenu)) {
+      setSubmenu("competitions");
+      return;
+    }
+    setSubmenu(null);
+  };
+
   const handleLocaleChange = (nextLocale: AppLocale) => {
     if (nextLocale === locale) {
       handleNavigate();
@@ -156,7 +166,7 @@ export default function MoreBottomSheet({
               type="button"
               className={styles.backBtn}
               aria-label={t("backToMenu")}
-              onClick={() => setSubmenu(null)}
+              onClick={handleBack}
             >
               ←
             </button>
@@ -288,6 +298,23 @@ export default function MoreBottomSheet({
                   );
                 })}
               </ul>
+            ) : activeSubmenu === "competitions" ? (
+              <nav className={styles.sheetList} aria-label={t("competitions")}>
+                {DESKTOP_COMPETITIONS_NAV.map((group) => (
+                  <button
+                    key={group.id}
+                    type="button"
+                    className={styles.sheetRow}
+                    aria-haspopup="menu"
+                    onClick={() => setSubmenu(group.id)}
+                  >
+                    <span>{t(group.labelKey)}</span>
+                    <span className={styles.chevron} aria-hidden="true">
+                      ▾
+                    </span>
+                  </button>
+                ))}
+              </nav>
             ) : activeSubmenu ? (
               <nav className={styles.sheetList} aria-label={`${submenuTitle} links`}>
                 {MORE_SHEET_SUBMENUS[activeSubmenu].map((link, index) => {

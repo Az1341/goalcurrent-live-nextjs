@@ -528,10 +528,17 @@ function dedupeFeaturedFixtures(
   return unique;
 }
 
+export type SelectFeaturedOptions = {
+  /** When false, never fall back to latest completed result (production-truth default). */
+  readonly allowCompletedFallback?: boolean;
+};
+
 /** Featured: simultaneous kickoff slots (2+), else first live/today/upcoming. */
 export function selectFeaturedFixtures(
   fixtures: readonly EffectiveFixture[],
+  options: SelectFeaturedOptions = {},
 ): FeaturedFixtureSelection {
+  const allowCompletedFallback = options.allowCompletedFallback ?? false;
   const liveFinal = findLiveSimultaneousFinalRoundGroup(fixtures);
   if (liveFinal) {
     const deduped = dedupeFeaturedFixtures(liveFinal.fixtures, fixtures);
@@ -547,7 +554,7 @@ export function selectFeaturedFixtures(
     }
   }
 
-  const seed = selectFeaturedFixture(fixtures);
+  const seed = selectFeaturedFixture(fixtures, { allowCompletedFallback });
   if (!seed) {
     return { mode: "single", fixtures: [] };
   }
@@ -583,10 +590,12 @@ function featuredLivePriority(fixture: EffectiveFixture): number {
   return 0;
 }
 
-/** Featured: first live, else next kickoff today/upcoming, else latest result. */
+/** Featured: first live, else next kickoff today/upcoming, optionally latest result. */
 export function selectFeaturedFixture(
   fixtures: readonly EffectiveFixture[],
+  options: SelectFeaturedOptions = {},
 ): EffectiveFixture | undefined {
+  const allowCompletedFallback = options.allowCompletedFallback ?? false;
   const buckets = partitionFixturesForLiveCentre(fixtures);
   if (buckets.live.length > 0) {
     const sorted = [...buckets.live].sort((left, right) => {
@@ -604,7 +613,7 @@ export function selectFeaturedFixture(
   if (buckets.upcoming[0]) {
     return buckets.upcoming[0];
   }
-  return buckets.completed[0];
+  return allowCompletedFallback ? buckets.completed[0] : undefined;
 }
 
 /** Homepage live football rows — live, recent FT, then upcoming (excludes featured). */

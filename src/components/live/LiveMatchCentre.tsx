@@ -4,11 +4,20 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import LiveMatchCard from "@/components/live/LiveMatchCard";
+import PlLivePanel from "@/components/live/PlLivePanel";
+import UnlLivePanel from "@/components/live/UnlLivePanel";
+import UpcomingCompetitionCards from "@/components/live/UpcomingCompetitionCards";
 import UpcomingMatchCountdown from "@/components/live/UpcomingMatchCountdown";
 import { groupLabel } from "@/data/wc26";
 import type { EffectiveFixture } from "@/lib/wc26-fixture-overlay";
 import { formatStageLabel } from "@/lib/wc26-fixtures-page";
-import { partitionFixturesForLiveCentre, isLiveMatchStatus, resolveFixtureParticipant, findNextUpcomingMatch, shouldShowUpcomingCountdown } from "@/lib/wc26-live";
+import {
+  partitionFixturesForLiveCentre,
+  isLiveMatchStatus,
+  resolveFixtureParticipant,
+  findNextUpcomingMatch,
+  shouldShowUpcomingCountdown,
+} from "@/lib/wc26-live";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
 import { useWc26SyncStatus } from "@/lib/use-wc26-sync-status";
 import { isWc26TournamentComplete } from "@/lib/wc26/archive";
@@ -24,12 +33,13 @@ type LiveSectionProps = {
   emptyMessage?: string;
   showLiveIndicator?: boolean;
   tone?: "live" | "today" | "upcoming" | "completed";
-  /** Rendered inside the section when there are no fixtures (e.g. countdown). */
   emptyContent?: ReactNode;
 };
 
 function competitionLabel(fixture: EffectiveFixture): string {
-  return fixture.groupId ? groupLabel(fixture.groupId) : formatStageLabel(fixture.stage);
+  return fixture.groupId
+    ? groupLabel(fixture.groupId)
+    : formatStageLabel(fixture.stage);
 }
 
 function groupFixturesByCompetition(
@@ -42,7 +52,10 @@ function groupFixturesByCompetition(
     bucket.push(fixture);
     map.set(label, bucket);
   }
-  return [...map.entries()].map(([label, items]) => ({ label, fixtures: items }));
+  return [...map.entries()].map(([label, items]) => ({
+    label,
+    fixtures: items,
+  }));
 }
 
 function sectionToneClass(tone: LiveSectionProps["tone"]): string {
@@ -127,8 +140,6 @@ export default function LiveMatchCentre() {
     [fixtures],
   );
 
-  // Refresh every 15 s so the featured fixture (countdown ↔ live-now ↔ next upcoming)
-  // transitions automatically without waiting for an API sync event.
   const [clockMs, setClockMs] = useState(() => Date.now());
   useEffect(() => {
     const id = setInterval(() => setClockMs(Date.now()), 15_000);
@@ -137,7 +148,6 @@ export default function LiveMatchCentre() {
 
   const archiveComplete = isWc26TournamentComplete();
 
-  /** Next future kickoff only — never invent a LIVE hero from kickoff time alone. */
   const featuredFixture = useMemo<EffectiveFixture | undefined>(() => {
     if (archiveComplete || buckets.live.length > 0) return undefined;
     const next = findNextUpcomingMatch(fixtures, new Date(clockMs));
@@ -145,8 +155,6 @@ export default function LiveMatchCentre() {
     return next;
   }, [archiveComplete, buckets.live.length, fixtures, clockMs]);
 
-  // Never leave "Syncing live data…" up when there is nothing live to wait for.
-  // Only show briefly on cold start before any results/live rows exist.
   const showSyncPending =
     syncStatus === "pending" &&
     !archiveComplete &&
@@ -154,16 +162,31 @@ export default function LiveMatchCentre() {
     buckets.completed.length === 0;
   const showSyncDegraded = syncStatus === "degraded" && !archiveComplete;
 
+  // After WC26 ends, Live is an upcoming-competitions centre — not WC archive results.
+  if (archiveComplete) {
+    return (
+      <main className={styles.content}>
+        <h1 className={styles.pageTitle}>{t("neutralPageTitle")}</h1>
+        <p className={styles.pageIntro}>{t("neutralPageIntro")}</p>
+
+        <UpcomingCompetitionCards />
+
+        <UnlLivePanel />
+        <PlLivePanel />
+
+        <p className={styles.hubBack}>
+          <Link href="/worldcup2026">{t("archiveHubLink")}</Link>
+        </p>
+      </main>
+    );
+  }
+
   return (
     <main className={styles.content}>
       <h1 className={styles.pageTitle}>
-        {archiveComplete
-          ? t("archivePageTitle", { competition: t("competition") })
-          : t("pageTitle", { competition: t("competition") })}
+        {t("pageTitle", { competition: t("competition") })}
       </h1>
-      <p className={styles.pageIntro}>
-        {archiveComplete ? t("archivePageIntro") : t("pageIntro")}
-      </p>
+      <p className={styles.pageIntro}>{t("pageIntro")}</p>
 
       {showSyncPending || showSyncDegraded ? (
         <div className={styles.syncStatusSlot}>
@@ -174,27 +197,31 @@ export default function LiveMatchCentre() {
             </p>
           ) : null}
           {showSyncDegraded ? (
-            <p className={styles.syncStatusDegraded} role="status" aria-live="polite">
+            <p
+              className={styles.syncStatusDegraded}
+              role="status"
+              aria-live="polite"
+            >
               {t("syncDegraded")}
             </p>
           ) : null}
         </div>
       ) : null}
 
+      <UpcomingCompetitionCards />
+
       <LiveSection
         id="live-now-heading"
-        title={archiveComplete ? t("sections.archiveLive") : t("sections.liveNow")}
+        title={t("sections.liveNow")}
         fixtures={buckets.live}
         allFixtures={fixtures}
-        emptyMessage={
-          archiveComplete ? t("empty.archiveLiveNow") : t("empty.liveNow")
-        }
+        emptyMessage={t("empty.liveNow")}
         emptyContent={
           featuredFixture ? (
             <UpcomingMatchCountdown fixture={featuredFixture} />
           ) : undefined
         }
-        showLiveIndicator={!archiveComplete}
+        showLiveIndicator
         tone="live"
       />
 
@@ -204,19 +231,19 @@ export default function LiveMatchCentre() {
             const home = resolveFixtureParticipant(fixture, "home", fixtures);
             const away = resolveFixtureParticipant(fixture, "away", fixtures);
             return (
-            <div key={`pitch-${fixture.id}`} className={styles.livePitchCard}>
-              <MatchLineupPitchSection
-                fixtureId={fixture.id}
-                matchNumber={fixture.matchNumber}
-                homeTeamId={home.teamId}
-                awayTeamId={away.teamId}
-                kickoffUtc={fixture.kickoffUtc}
-                matchStatus={fixture.status}
-                poll={isLiveMatchStatus(fixture.status)}
-                variant="embedded"
-                matchHref={matchHref(fixture.id)}
-              />
-            </div>
+              <div key={`pitch-${fixture.id}`} className={styles.livePitchCard}>
+                <MatchLineupPitchSection
+                  fixtureId={fixture.id}
+                  matchNumber={fixture.matchNumber}
+                  homeTeamId={home.teamId}
+                  awayTeamId={away.teamId}
+                  kickoffUtc={fixture.kickoffUtc}
+                  matchStatus={fixture.status}
+                  poll={isLiveMatchStatus(fixture.status)}
+                  variant="embedded"
+                  matchHref={matchHref(fixture.id)}
+                />
+              </div>
             );
           })}
         </div>
@@ -239,14 +266,8 @@ export default function LiveMatchCentre() {
         tone="upcoming"
       />
 
-      <LiveSection
-        id="completed-heading"
-        title={t("sections.completed")}
-        fixtures={buckets.completed}
-        allFixtures={fixtures}
-        emptyMessage={t("empty.completed")}
-        tone="completed"
-      />
+      <UnlLivePanel />
+      <PlLivePanel />
 
       <p className={styles.hubBack}>
         <Link href="/worldcup2026">{t("backToHub")}</Link>

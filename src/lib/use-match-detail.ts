@@ -178,7 +178,9 @@ export function useMatchDetail(
       playerStats: data.playerStats ?? [],
     };
   }, [data, fixtureId]);
-  const loading = isLoading && !data;
+  const ssotCompleted =
+    fixture != null && isCompletedMatchStatus(String(fixture.status));
+  const loading = isLoading && !data && !ssotCompleted;
 
   const refresh = useCallback(() => {
     void mutate();

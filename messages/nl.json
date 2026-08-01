@@ -1,6 +1,6 @@
 {
   "common": {
-    "loading": "Laden…",
+    "loading": "Ladenâ€¦",
     "vs": "tegen",
     "home": "Home",
     "live": "Live",
@@ -13,7 +13,7 @@
     "updatedSecondsAgo": "Bijgewerkt {count, plural, one {# seconde geleden} other {# seconden geleden}}",
     "returnHome": "Terug naar home",
     "tryAgain": "Opnieuw proberen",
-    "backToHome": "← Terug naar home",
+    "backToHome": "â† Terug naar home",
     "viewAll": "Alles bekijken",
     "search": "Zoeken",
     "noResults": "Geen resultaten.",
@@ -31,6 +31,8 @@
     "premierLeague": "Premier League",
     "table": "Stand",
     "fixtures": "Programma",
+    "results": "Results",
+    "rounds": "Rounds",
     "table2627": "Stand 26/27",
     "fixtures2627": "Programma 26/27",
     "clubs": "Clubs",
@@ -44,6 +46,7 @@
     "bracket": "Schema",
     "pl2627": "PL 26/27",
     "wc26": "WC26 Archive",
+    "archive": "Archive",
     "overview": "Overzicht",
     "plHome": "PL Home",
     "wc26Home": "WK Home",
@@ -53,7 +56,8 @@
     "back": "Terug",
     "backToMenu": "Terug naar menu",
     "closeMenu": "Menu sluiten",
-    "articlesEditorial": "✍️ Artikelen & redactie",
+    "articlesEditorial": "âœï¸ Artikelen & redactie",
+    "fixtureCalendar": "Wedstrijden",
     "about": "Over ons",
     "contact": "Contact",
     "terms": "Voorwaarden",
@@ -63,10 +67,10 @@
     "language": "Taal",
     "liveResults": "Live uitslagen",
     "liveMatches": "Live wedstrijden",
-    "plVideos": "🎬 PL-video's",
-    "wcVideos": "🎬 WK-video's",
+    "plVideos": "ðŸŽ¬ PL-video's",
+    "wcVideos": "ðŸŽ¬ WK-video's",
     "latestNews": "Laatste nieuws",
-    "editorialArticles": "✍️ Redactie & artikelen",
+    "editorialArticles": "âœï¸ Redactie & artikelen",
     "worldCupNews": "WK-nieuws",
     "premierLeagueNews": "Premier League-nieuws",
     "latestVideos": "Laatste video's",
@@ -81,8 +85,30 @@
     "instagram": "Instagram",
     "tiktok": "TikTok",
     "twitter": "X / Twitter",
-    "championsLeague": "Champions League",
-    "faCup": "FA Cup"
+    "championsLeague": "Champions League 26/27",
+    "faCup": "FA Cup 26/27",
+    "nationsLeague": "Nations League 26/27",
+    "leagueA": "League A",
+    "leagueB": "League B",
+    "leagueC": "League C",
+    "leagueD": "League D",
+    "groupA1": "Group A1",
+    "groupA2": "Group A2",
+    "groupA3": "Group A3",
+    "groupA4": "Group A4",
+    "groupB1": "Group B1",
+    "groupB2": "Group B2",
+    "groupB3": "Group B3",
+    "groupB4": "Group B4",
+    "groupC1": "Group C1",
+    "groupC2": "Group C2",
+    "groupC3": "Group C3",
+    "groupC4": "Group C4",
+    "groupD1": "Group D1",
+    "groupD2": "Group D2",
+    "results": "Results",
+    "rounds": "Rounds",
+    "competitions": "Competitions"
   },
   "layout": {
     "cookieConsent": {
@@ -90,18 +116,18 @@
       "message": "We gebruiken cookies om content te personaliseren en verkeer te analyseren.",
       "policy": "Cookiebeleid",
       "decline": "Weigeren",
-      "accept": "Accepteren ✓"
+      "accept": "Accepteren âœ“"
     },
     "footer": {
       "ariaLabel": "Footer",
       "socialAria": "Social media",
-      "nordVpn": "🔒 Stream securely abroad — NordVPN affiliate",
+      "nordVpn": "ðŸ”’ Stream securely abroad â€” NordVPN affiliate",
       "nordAd": "AD",
-      "nordCta": "Get NordVPN →",
-      "copyright": "© {year} Ashna4All · Ahmad Zafarani · {siteName} independent fan site · Not affiliated with FIFA, UEFA or the Premier League.",
+      "nordCta": "Get NordVPN â†’",
+      "copyright": "Â© {year} Ashna4All Â· Ahmad Zafarani Â· {siteName} independent fan site Â· Not affiliated with FIFA, UEFA or the Premier League.",
       "platform": "Platform",
       "company": "Bedrijf",
-      "tagline": "Live uitslagen, speelschema en nieuws — WK 2026 en Premier League 26/27."
+      "tagline": "Live uitslagen, speelschema en nieuws â€” WK 2026 en Premier League 26/27."
     },
     "liveRibbon": {
       "live": "LIVE",
@@ -113,7 +139,7 @@
       "latestResults": "LATEST RESULTS",
       "archive": "ARCHIEF",
       "emptyMessage": "Geen live wedstrijden nu",
-      "emptyArchiveMessage": "WK 2026 is afgelopen — bekijk archiefuitslagen",
+      "emptyArchiveMessage": "WK 2026 is afgelopen â€” bekijk archiefuitslagen",
       "liveMatchesAria": "Live wedstrijden",
       "latestResultsAria": "Laatste uitslagen",
       "moreMatches": "+{count} meer wedstrijden",
@@ -168,7 +194,7 @@
     },
     "playerStats": {
       "title": "Player stats",
-      "loading": "Loading player statistics…",
+      "loading": "Loading player statisticsâ€¦",
       "emptyEvents": "Player goals, assists, cards and substitutions will appear when the live feed records match events.",
       "emptyApi": "Player statistics will appear when server API sync is configured and the match is underway or finished.",
       "noteApi": "From live provider data. Goals and assists also follow match events when the feed updates.",
@@ -197,27 +223,27 @@
       "groups": {
         "label": "Groepen",
         "title": "Groepen",
-        "description": "Alle twaalf groepen van het uitgebreide 48-teamstoernooi — standen, programma en gekwalificeerde teams."
+        "description": "Alle twaalf groepen van het uitgebreide 48-teamstoernooi â€” standen, programma en gekwalificeerde teams."
       },
       "fixtures": {
         "label": "Programma",
         "title": "Programma",
-        "description": "Volledig groepsfaseprogramma — alle 72 wedstrijden met data, UTC-aftrap en stadions."
+        "description": "Volledig groepsfaseprogramma â€” alle 72 wedstrijden met data, UTC-aftrap en stadions."
       },
       "standings": {
         "label": "Standen",
         "title": "Standen",
-        "description": "Live groepsstanden — G, W, GL, V, DV, DT, DS en Ptn."
+        "description": "Live groepsstanden â€” G, W, GL, V, DV, DT, DS en Ptn."
       },
       "teams": {
         "label": "Teams",
         "title": "Teams",
-        "description": "Alle 48 gekwalificeerde landen — selecties, groepen en links naar elk team."
+        "description": "Alle 48 gekwalificeerde landen â€” selecties, groepen en links naar elk team."
       },
       "venues": {
         "label": "Stadions",
         "title": "Stadions",
-        "description": "Zestien stadions in de VS, Mexico en Canada — steden en capaciteiten."
+        "description": "Zestien stadions in de VS, Mexico en Canada â€” steden en capaciteiten."
       },
       "bracket": {
         "label": "Schema",
@@ -237,19 +263,19 @@
       "pts": "Ptn"
     },
     "fixtures": {
-      "searchPlaceholder": "Zoek team, stadion of wedstrijd…",
+      "searchPlaceholder": "Zoek team, stadion of wedstrijdâ€¦",
       "noMatches": "Geen wedstrijden gevonden."
     },
     "teams": {
-      "searchPlaceholder": "Zoek team, code of groep…"
+      "searchPlaceholder": "Zoek team, code of groepâ€¦"
     },
     "venues": {
       "capacity": "Capaciteit:"
     },
     "bracket": {
-      "eyebrow": "WK 2026 · Knock-outfase",
-      "title": "WK 2026 · Knock-outschema",
-      "subtitle": "63 wedstrijden · Zestiende finales tot finale",
+      "eyebrow": "WK 2026 Â· Knock-outfase",
+      "title": "WK 2026 Â· Knock-outschema",
+      "subtitle": "63 wedstrijden Â· Zestiende finales tot finale",
       "note": "Aftrap tijden in uw lokale tijdzone.",
       "lastUpdated": "Bijgewerkt {time}",
       "degraded": "Gegevens mogelijk vertraagd",
@@ -270,12 +296,12 @@
         "final": "Finale"
       },
       "card": {
-        "viewMatchCenter": "Wedstrijdcentrum →",
+        "viewMatchCenter": "Wedstrijdcentrum â†’",
         "tbd": "N.n.b."
       },
       "live": {
         "lineupsBanner": "Opstellingen 30 min. voor aftrap beschikbaar",
-        "matchCenter": "Wedstrijdcentrum →",
+        "matchCenter": "Wedstrijdcentrum â†’",
         "live": "LIVE"
       },
       "tbdVsTbd": "N.n.b. vs N.n.b."
@@ -289,16 +315,16 @@
       "zoneConf": "Conf",
       "zoneRel": "Rel"
     },
-    "loading": "Premier League-gegevens laden…"
+    "loading": "Premier League-gegevens ladenâ€¦"
   },
   "home": {
     "title": "Live voetbalscores en wedstrijdcentrum",
-    "badge": "WK 2026 · hoofdcompetitie",
+    "badge": "WK 2026 Â· hoofdcompetitie",
     "featuredMatch": "Uitgelichte wedstrijd",
     "liveNow": "Live Now",
     "viewAllLive": "View All Live Matches",
     "noLiveMatches": "No live matches right now.",
-    "subtitle": "Live results, fixtures and news from {siteName} — World Cup 2026 is the lead competition.",
+    "subtitle": "Live results, fixtures and news from {siteName} â€” World Cup 2026 is the lead competition.",
     "matchDetails": "Wedstrijddetails",
     "allFixtures": "Alle wedstrijden",
     "noFixturesLoaded": "Geen WK-wedstrijden geladen.",
@@ -310,7 +336,7 @@
     "noUpcomingFixtures": "Geen komende wedstrijden.",
     "wc26Title": "World Cup 2026",
     "viewAll": "View All",
-    "wc26Summary": "VS · Mexico · Canada · 11 jun – 19 jul 2026 · {gamesPlayed} gespeeld · {gamesLeft} resterend",
+    "wc26Summary": "VS Â· Mexico Â· Canada Â· 11 jun â€“ 19 jul 2026 Â· {gamesPlayed} gespeeld Â· {gamesLeft} resterend",
     "heroHeadline1": "Live voetbal.",
     "heroHeadline2": "Elk doelpunt.",
     "heroHeadline3": "Elk moment.",
@@ -345,14 +371,14 @@
     "noCompetitions": "Nog geen competities opgeslagen."
   },
   "news": {
-    "loading": "Laden…",
+    "loading": "Ladenâ€¦",
     "updated": "Bijgewerkt: {date}",
     "empty": "Geen artikelen beschikbaar."
   },
   "seo": {
     "siteTitle": "{siteName} - FIFA WK 2026 | Live uitslagen, nieuws & teams",
     "siteDescription": "{siteName} - live uitslagen, programma, groepen en standen voor het FIFA WK 2026.",
-    "matchDescription": "WK 2026-wedstrijd — {title}. Live centrum, tijdlijn, statistieken en opstellingen op {siteName}.",
+    "matchDescription": "WK 2026-wedstrijd â€” {title}. Live centrum, tijdlijn, statistieken en opstellingen op {siteName}.",
     "titleTemplate": "{title} - {siteName}"
   },
   "auth": {
@@ -366,16 +392,19 @@
     "notificationsEnabled": "Meldingen aan",
     "notificationsBlocked": "Meldingen geblokkeerd in browser",
     "signInError": "Inloggen mislukt. Probeer opnieuw.",
-    "loading": "Laden…"
+    "loading": "Ladenâ€¦"
   },
   "live": {
-    "pageTitle": "Live uitslagen — {competition}",
-    "archivePageTitle": "Archief — {competition}",
+    "pageTitle": "Live uitslagen â€” {competition}",
+    "archivePageTitle": "Archief â€” {competition}",
     "competition": "WK 2026",
     "pageIntro": "WK 2026-uitslagen uit bevestigde resultaten en live API.",
-    "archivePageIntro": "WK 2026 is afgelopen. Hieronder archief / eindstanden — niet live.",
-    "syncPending": "Synchroniseren…",
-    "syncDegraded": "Laatst bekende uitslagen — provider beperkt.",
+    "archivePageIntro": "WK 2026 is afgelopen. Hieronder archief / eindstanden â€” niet live.",
+    "neutralPageTitle": "Live and upcoming",
+    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
+    "archiveHubLink": "World Cup 2026 Archive",
+    "syncPending": "Synchroniserenâ€¦",
+    "syncDegraded": "Laatst bekende uitslagen â€” provider beperkt.",
     "sections": {
       "liveNow": "Nu live",
       "archiveLive": "Nu live",
@@ -385,7 +414,7 @@
     },
     "empty": {
       "liveNow": "Geen live wedstrijden nu",
-      "archiveLiveNow": "Geen live wedstrijden — WK 2026 is afgelopen (Archief). Zie afgeronde wedstrijden hieronder.",
+      "archiveLiveNow": "Geen live wedstrijden â€” WK 2026 is afgelopen (Archief). Zie afgeronde wedstrijden hieronder.",
       "today": "Geen WK-wedstrijden vandaag.",
       "completed": "Nog geen afgeronde wedstrijden."
     },
@@ -397,9 +426,10 @@
       "upNext": "Volgende",
       "untilKickoff": "tot aftrap",
       "viewMatchCentre": "Wedstrijdcentrum",
-      "viewMatchCentreArrow": "Wedstrijdcentrum →",
-      "liveNowAria": "{home} vs {away} — live now, approximately {min} minutes elapsed",
+      "viewMatchCentreArrow": "Wedstrijdcentrum â†’",
+      "liveNowAria": "{home} vs {away} â€” live now, approximately {min} minutes elapsed",
       "nextMatchAria": "Next match: {home} vs {away}, kick-off in {countdown}"
     }
   }
 }
+

@@ -9,6 +9,7 @@ import {
 import type { EffectiveFixture } from "@/lib/wc26-fixture-overlay";
 import type { PlFixtureRow } from "@/lib/pl/types";
 import { isLocalToday } from "@/lib/date-utils";
+import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import styles from "../home-v5.module.css";
 
 type HomeTeamsLeaguesProps = {
@@ -36,34 +37,65 @@ export default function HomeTeamsLeagues({
     return plFixtures.filter((f) => isLocalToday(f.kickoffUtc)).length;
   }, [plFixtures]);
 
+  const archiveComplete = isWc26TournamentComplete();
+
   return (
     <section className={styles.section} aria-labelledby="home-leagues-heading">
       <h2 id="home-leagues-heading" className={styles.sectionTitle}>
         Teams &amp; Leagues
       </h2>
       <div className={styles.leagueCards}>
-        <Link href="/worldcup2026" className={styles.leagueCard}>
-          <span className={styles.leagueCardIcon} aria-hidden="true">
-            🏆
-          </span>
-          <span className={styles.leagueCardBody}>
-            <span className={styles.leagueCardTitle}>World Cup 2026</span>
-            <span className={styles.leagueCardMeta}>
-              World Cup 2026 Archive
-            </span>
-          </span>
-        </Link>
-        <Link href="/premier-league" className={styles.leagueCard}>
-          <span className={styles.leagueCardIcon} aria-hidden="true">
-            ⚽
-          </span>
-          <span className={styles.leagueCardBody}>
-            <span className={styles.leagueCardTitle}>Premier League 26/27</span>
-            <span className={styles.leagueCardMeta}>
-              {plTodayCount} match{plTodayCount === 1 ? "" : "es"} today
-            </span>
-          </span>
-        </Link>
+        {archiveComplete ? (
+          <>
+            <Link href="/premier-league" className={styles.leagueCard}>
+              <span className={styles.leagueCardIcon} aria-hidden="true">
+                ⚽
+              </span>
+              <span className={styles.leagueCardBody}>
+                <span className={styles.leagueCardTitle}>Premier League 26/27</span>
+                <span className={styles.leagueCardMeta}>
+                  {plTodayCount} match{plTodayCount === 1 ? "" : "es"} today
+                </span>
+              </span>
+            </Link>
+            <Link href="/worldcup2026" className={styles.leagueCard}>
+              <span className={styles.leagueCardIcon} aria-hidden="true">
+                🏆
+              </span>
+              <span className={styles.leagueCardBody}>
+                <span className={styles.leagueCardTitle}>World Cup 2026</span>
+                <span className={styles.leagueCardMeta}>
+                  World Cup 2026 Archive
+                </span>
+              </span>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/worldcup2026" className={styles.leagueCard}>
+              <span className={styles.leagueCardIcon} aria-hidden="true">
+                🏆
+              </span>
+              <span className={styles.leagueCardBody}>
+                <span className={styles.leagueCardTitle}>World Cup 2026</span>
+                <span className={styles.leagueCardMeta}>
+                  {wc26TodayCount} match{wc26TodayCount === 1 ? "" : "es"} today
+                </span>
+              </span>
+            </Link>
+            <Link href="/premier-league" className={styles.leagueCard}>
+              <span className={styles.leagueCardIcon} aria-hidden="true">
+                ⚽
+              </span>
+              <span className={styles.leagueCardBody}>
+                <span className={styles.leagueCardTitle}>Premier League 26/27</span>
+                <span className={styles.leagueCardMeta}>
+                  {plTodayCount} match{plTodayCount === 1 ? "" : "es"} today
+                </span>
+              </span>
+            </Link>
+          </>
+        )}
       </div>
     </section>
   );

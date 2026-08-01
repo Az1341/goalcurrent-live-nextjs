@@ -90,7 +90,11 @@ function HubStandingRow({ row }: { row: PlStandingRow }) {
   );
 }
 
-export default function PlHubClient() {
+export default function PlHubClient({
+  initialFixtures,
+}: {
+  initialFixtures?: PlFixtureRow[];
+}) {
   const t = useTranslations("nav");
 
   const {
@@ -101,11 +105,23 @@ export default function PlHubClient() {
 
   // View-layer transform only — must not register a divergent SWR fetcher on the
   // shared /api/pl/fixtures key (FE-010 mount-order cache pollution).
-  const fixturesData = useMemo(
-    () =>
-      rawFixturesData ? withVisitorBroadcasters(rawFixturesData) : undefined,
-    [rawFixturesData],
-  );
+  const fixturesData = useMemo(() => {
+    if (rawFixturesData) {
+      return withVisitorBroadcasters(rawFixturesData);
+    }
+    if (initialFixtures?.length) {
+      return {
+        configured: true,
+        league: "Premier League",
+        leagueId: 39,
+        season: 2026,
+        fixtures: initialFixtures,
+        source: "fallback" as const,
+        fetchedAt: new Date(0).toISOString(),
+      } satisfies PlFixturesApiResponse;
+    }
+    return undefined;
+  }, [rawFixturesData, initialFixtures]);
 
   const { data: teamsData } = useSWR<PlTeamsApiResponse>(
     "/api/pl/teams",
@@ -113,11 +129,11 @@ export default function PlHubClient() {
     LIVE_SWR_OPTIONS,
   );
 
-  const { data: standingsData, error: standingsError, isLoading: standingsLoading } =
+  const { data: standingsData, error: standingsError } =
     useSWR<PlStandingsApiResponse>("/api/pl/standings", fetcher, LIVE_SWR_OPTIONS);
 
-  const isLoading = fixturesLoading || standingsLoading;
-  const hasError = fixturesError || standingsError;
+  const isLoading = !fixturesData && fixturesLoading;
+  const hasError = (fixturesError && !fixturesData) || standingsError;
   const errorMessage = hasError
     ? "Could not load Premier League hub data."
     : null;

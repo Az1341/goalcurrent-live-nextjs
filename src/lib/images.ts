@@ -27,6 +27,59 @@ export function sanitizeRemoteImageUrl(src: string): string {
     .replace(/&#39;/g, "'");
 }
 
+/** Target width for news/card imagery — RSS feeds often ship 140–240px thumbs. */
+export const NEWS_IMAGE_TARGET_WIDTH = 1000;
+/** BBC ichef commonly supports up to 976 on /ace/standard/{n}/ paths. */
+const BBC_IMAGE_TARGET_WIDTH = 976;
+
+/**
+ * Upgrade tiny CDN thumbnail URLs to card/hero-usable sizes.
+ * Guardian media:thumbnail and BBC RSS thumbs are often 140–240px and blur when stretched.
+ */
+export function upgradeRemoteNewsImageUrl(src: string): string {
+  const sanitized = sanitizeRemoteImageUrl(src);
+  try {
+    const url = new URL(sanitized);
+
+    if (url.hostname === "i.guim.co.uk") {
+      const current = Number(url.searchParams.get("width") || "0");
+      if (!Number.isFinite(current) || current < NEWS_IMAGE_TARGET_WIDTH) {
+        url.searchParams.set("width", String(NEWS_IMAGE_TARGET_WIDTH));
+      }
+      return url.toString();
+    }
+
+    if (url.hostname === "ichef.bbci.co.uk") {
+      url.pathname = url.pathname
+        .replace(
+          /\/ace\/standard\/\d+\//i,
+          `/ace/standard/${BBC_IMAGE_TARGET_WIDTH}/`,
+        )
+        .replace(/\/news\/\d+\//i, `/news/${BBC_IMAGE_TARGET_WIDTH}/`)
+        .replace(
+          /\/images\/ic\/\d+x\d+\//i,
+          `/images/ic/${BBC_IMAGE_TARGET_WIDTH}x${Math.round((BBC_IMAGE_TARGET_WIDTH * 9) / 16)}/`,
+        );
+      return url.toString();
+    }
+
+    if (/\.espncdn\.com$/i.test(url.hostname)) {
+      for (const key of ["w", "width"] as const) {
+        if (!url.searchParams.has(key)) continue;
+        const current = Number(url.searchParams.get(key) || "0");
+        if (Number.isFinite(current) && current > 0 && current < NEWS_IMAGE_TARGET_WIDTH) {
+          url.searchParams.set(key, String(NEWS_IMAGE_TARGET_WIDTH));
+        }
+      }
+      return url.toString();
+    }
+
+    return url.toString();
+  } catch {
+    return sanitized;
+  }
+}
+
 export function isSvgSrc(src: string): boolean {
   return src.split("?")[0]?.toLowerCase().endsWith(".svg") ?? false;
 }

@@ -46,6 +46,59 @@ export function extractYouTubeVideoId(url: string): string | null {
   return null;
 }
 
+function decodeXmlAttr(text: string): string {
+  return text
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
+
+function widthFromRssMediaTag(tag: string, url: string): number {
+  const attrWidth = tag.match(/\bwidth=["']?(\d+)/i)?.[1];
+  if (attrWidth) return Number(attrWidth);
+  try {
+    const parsed = new URL(url);
+    const q = parsed.searchParams.get("width") || parsed.searchParams.get("w");
+    if (q) return Number(q);
+    const bbc = parsed.pathname.match(/\/(?:ace\/standard|news)\/(\d+)\//i);
+    if (bbc?.[1]) return Number(bbc[1]);
+    const ic = parsed.pathname.match(/\/images\/ic\/(\d+)x\d+\//i);
+    if (ic?.[1]) return Number(ic[1]);
+  } catch {
+    /* ignore */
+  }
+  return 0;
+}
+
+/** Prefer larger media:content / enclosure over tiny media:thumbnail when present. */
+function pickBestRssImageUrl(itemXml: string): string {
+  const candidates: { url: string; width: number }[] = [];
+  const tagRe =
+    /<(?:media:thumbnail|media:content|enclosure)\b[^>]*\/?>/gi;
+  let match: RegExpExecArray | null;
+  while ((match = tagRe.exec(itemXml)) !== null) {
+    const tag = match[0];
+    const urlMatch = tag.match(/\burl=["']([^"']+)["']/i);
+    if (!urlMatch?.[1]) continue;
+    const url = decodeXmlAttr(urlMatch[1]).trim();
+    if (!/^https?:\/\//i.test(url)) continue;
+    candidates.push({ url, width: widthFromRssMediaTag(tag, url) });
+  }
+
+  if (!candidates.length) {
+    const fallback =
+      itemXml.match(/<media:thumbnail[^>]+url=["']([^"']+)["']/i) ||
+      itemXml.match(/<media:content[^>]+url=["']([^"']+)["']/i) ||
+      itemXml.match(/<enclosure[^>]+url=["']([^"']+)["']/i);
+    return fallback?.[1] ? decodeXmlAttr(fallback[1]).trim() : "";
+  }
+
+  candidates.sort((a, b) => b.width - a.width);
+  return candidates[0].url;
+}
+
 export function parseRssItemXml(itemXml: string): ParsedRssItem | null {
   const titleMatch =
     itemXml.match(/<title><!\[CDATA\[([\s\S]*?)\]\]><\/title>/i) ||
@@ -58,16 +111,11 @@ export function parseRssItemXml(itemXml: string): ParsedRssItem | null {
     itemXml.match(/<description><!\[CDATA\[([\s\S]*?)\]\]><\/description>/i) ||
     itemXml.match(/<description>([\s\S]*?)<\/description>/i);
   const pubDateMatch = itemXml.match(/<pubDate>(.*?)<\/pubDate>/);
-  const imgMatch =
-    itemXml.match(/<media:thumbnail[^>]+url="([^"]+)"/) ||
-    itemXml.match(/<media:content[^>]+url="([^"]+)"/) ||
-    itemXml.match(/<enclosure[^>]+url="([^"]+)"/);
-
   const title = decodeHtml(titleMatch?.[1] ?? "");
   const link = decodeHtml(linkMatch?.[1] ?? "");
   const description = decodeHtml(descMatch?.[1] ?? "");
   const pubDate = pubDateMatch?.[1] ?? "";
-  const image = imgMatch?.[1] ? decodeHtml(imgMatch[1]) : "";
+  const image = pickBestRssImageUrl(itemXml);
 
   if (!title || !link) {
     return null;

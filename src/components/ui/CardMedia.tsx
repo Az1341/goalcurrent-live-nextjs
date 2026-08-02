@@ -2,7 +2,10 @@
 
 import { useState } from "react";
 import RemoteImage from "@/components/ui/RemoteImage";
-import { sanitizeRemoteImageUrl } from "@/lib/images";
+import {
+  sanitizeRemoteImageUrl,
+  upgradeRemoteNewsImageUrl,
+} from "@/lib/images";
 
 const DEFAULT_FALLBACK = "/images/football-hero-bg.jpg";
 
@@ -29,7 +32,9 @@ export default function CardMedia({
   placeholder = "News",
 }: CardMediaProps) {
   const [failed, setFailed] = useState(false);
-  const normalizedSrc = src ? sanitizeRemoteImageUrl(src) : null;
+  const normalizedSrc = src
+    ? upgradeRemoteNewsImageUrl(sanitizeRemoteImageUrl(src))
+    : null;
   const hasSrc = Boolean(normalizedSrc) && !failed;
 
   if (!hasSrc && !fallbackSrc) {

@@ -106,7 +106,14 @@
     "groupC4": "Group C4",
     "groupD1": "Group D1",
     "groupD2": "Group D2",
-    "competitions": "Competitions"
+    "competitions": "Competitions",
+    "laLiga": "La Liga",
+    "serieA": "Serie A",
+    "bundesliga": "Bundesliga",
+    "sidebarLeagues": "Leagues",
+    "sidebarProTitle": "GoalCurrent PRO",
+    "sidebarProBody": "Advanced stats, alerts, and ad-free match centres — membership coming soon.",
+    "sidebarProCta": "Coming soon"
   },
   "layout": {
     "cookieConsent": {

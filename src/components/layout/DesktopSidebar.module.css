@@ -1,0 +1,125 @@
+.sidebar {
+  display: none;
+  flex-direction: column;
+  width: var(--gc-sidebar-width, 240px);
+  flex-shrink: 0;
+  min-height: calc(100vh - var(--gc-site-header-height, 56px));
+  background: var(--gc-sidebar-bg);
+  border-right: 1px solid var(--gc-sidebar-border);
+  color: var(--gc-sidebar-text);
+  font-family: var(--font-body), var(--gc-emoji-font), system-ui, sans-serif;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 12px 16px;
+  gap: 8px;
+}
+
+.sectionLabel {
+  margin: 0 8px 4px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gc-sidebar-label);
+}
+
+.navList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: var(--gc-radius-sm);
+  font-size: 0.9375rem;
+  font-weight: var(--gc-weight-nav);
+  line-height: 1.35;
+  color: var(--gc-sidebar-text);
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.navLink:hover {
+  background: var(--gc-sidebar-hover);
+  color: var(--gc-sidebar-text-hover);
+}
+
+.navLinkActive {
+  background: var(--gc-sidebar-active-bg);
+  color: var(--gc-sidebar-active-text);
+  font-weight: 600;
+}
+
+.navLinkActive:hover {
+  background: var(--gc-sidebar-active-bg);
+  color: var(--gc-sidebar-active-text);
+}
+
+.proSlot {
+  margin-top: auto;
+  padding: 14px 12px;
+  border-radius: var(--gc-radius);
+  background: var(--gc-sidebar-pro-bg);
+  border: 1px solid var(--gc-sidebar-pro-border);
+}
+
+.proEyebrow {
+  margin: 0 0 6px;
+  font-size: 0.625rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gc-sidebar-pro-accent);
+}
+
+.proTitle {
+  margin: 0 0 6px;
+  font-family: var(--font-heading), var(--font-body), sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--gc-sidebar-pro-title);
+}
+
+.proBody {
+  margin: 0 0 12px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--gc-sidebar-pro-body);
+}
+
+.proButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: var(--gc-radius-sm);
+  background: var(--gc-brand-accent, #c8102e);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: default;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    display: flex;
+  }
+}

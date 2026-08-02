@@ -1,32 +1,31 @@
 .page {
-
   min-height: 100vh;
-
+  display: flex;
+  flex-direction: column;
 }
 
-
+.shellRow {
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  padding-top: var(--gc-site-header-height, 56px);
+}
 
 .main {
-
-  min-height: 100vh;
-
+  flex: 1;
+  min-width: 0;
+  min-height: calc(100vh - var(--gc-site-header-height, 56px));
   display: flex;
-
   flex-direction: column;
-
   background: var(--gc-bg);
-
   color: var(--gc-text-primary);
-
-  padding-top: var(--gc-site-header-height, 56px);
-
 }
 
 .mainWithTabBar {
   padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .mainWithTabBar {
     padding-bottom: 0;
   }

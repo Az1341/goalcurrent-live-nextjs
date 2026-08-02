@@ -83,13 +83,13 @@
   background: var(--gc-brand-accent, #c8102e);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .bar {
     display: grid;
   }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .bar {
     display: none !important;
   }

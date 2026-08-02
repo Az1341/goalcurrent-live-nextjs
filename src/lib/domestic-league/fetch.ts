@@ -261,6 +261,7 @@ export function domesticFixturesCacheControl(
   body: DomesticLeagueFixturesResponse,
 ): string {
   if (!body.configured) return "no-store";
+  if (body.error) return "no-store";
   if (body.fixtures.length > 0 && body.source === "api-football") {
     return `s-maxage=${config.fixturesCacheActive}, stale-while-revalidate=60`;
   }
@@ -272,6 +273,7 @@ export function domesticStandingsCacheControl(
   body: DomesticLeagueStandingsResponse,
 ): string {
   if (!body.configured) return "no-store";
+  if (body.error) return "no-store";
   if (body.standings.length > 0 && body.source === "api-football") {
     return `s-maxage=${config.standingsCacheActive}, stale-while-revalidate=60`;
   }

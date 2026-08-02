@@ -110,14 +110,22 @@ function buildStandingsFromFixtures(
     }));
 }
 
-function unavailableMessage(
-  configured: boolean,
+function unconfiguredMessage(leagueName: string): string {
+  return `${leagueName} data will appear when the API key is configured on the server.`;
+}
+
+function seasonNotStartedMessage(
   leagueName: string,
+  seasonLabel: string,
 ): string {
-  if (!configured) {
-    return `${leagueName} data will appear when the API key is configured on the server.`;
-  }
-  return `${leagueName} ${new Date().getFullYear()}/${String(new Date().getFullYear() + 1).slice(-2)} fixtures and standings are not yet available from API-Football.`;
+  return `${leagueName} ${seasonLabel} fixtures and standings are not yet available from API-Football.`;
+}
+
+function resolveApiErrorMessage(
+  fixtures: DomesticLeagueFixturesResponse,
+  standings: DomesticLeagueStandingsResponse,
+): string | null {
+  return fixtures.error ?? standings.error ?? null;
 }
 
 export default function DomesticLeagueHubClient({
@@ -153,7 +161,7 @@ export default function DomesticLeagueHubClient({
 
   const resolvedFixtures = fixturesData ?? initialFixtures;
   const resolvedStandings = standingsData ?? initialStandings;
-  const hasError = Boolean(fixturesError || standingsError);
+  const hasRefreshError = Boolean(fixturesError || standingsError);
 
   const nextFixture = useMemo(
     () =>
@@ -199,7 +207,14 @@ export default function DomesticLeagueHubClient({
   const hasAnyData =
     resolvedFixtures.fixtures.length > 0 || resolvedStandings.standings.length > 0;
 
-  const emptyStateText = unavailableMessage(configured, config.displayName);
+  const apiErrorMessage = resolveApiErrorMessage(
+    resolvedFixtures,
+    resolvedStandings,
+  );
+
+  const emptyStateText = !configured
+    ? unconfiguredMessage(config.displayName)
+    : seasonNotStartedMessage(config.displayName, config.seasonLabel);
 
   return (
     <main className={styles.plPage}>
@@ -211,19 +226,26 @@ export default function DomesticLeagueHubClient({
         </p>
       </header>
 
-      {hasError ? (
+      {hasRefreshError ? (
         <PlErrorPanel
           title="Could not refresh hub"
           text={`${config.displayName} data could not be refreshed. Showing the last server-rendered snapshot.`}
         />
       ) : null}
 
-      {!hasAnyData ? (
+      {apiErrorMessage ? (
+        <PlErrorPanel
+          title="Live data temporarily unavailable"
+          text={apiErrorMessage}
+        />
+      ) : null}
+
+      {!hasAnyData && !apiErrorMessage ? (
         <PlEmptyPanel
           title="Season data not yet available"
           text={emptyStateText}
         />
-      ) : (
+      ) : hasAnyData ? (
         <div className={styles.hubGrid}>
           <section className={styles.hubCard} aria-labelledby="league-next-fixture">
             <h2 id="league-next-fixture" className={styles.hubCardTitle}>
@@ -300,12 +322,15 @@ export default function DomesticLeagueHubClient({
             ) : (
               <PlEmptyPanel
                 title="Standings not yet available"
-                text={emptyStateText}
+                text={
+                  apiErrorMessage ??
+                  seasonNotStartedMessage(config.displayName, config.seasonLabel)
+                }
               />
             )}
           </section>
         </div>
-      )}
+      ) : null}
 
       <p className={styles.meta}>
         Data from API-Football · Updated {updatedAtLabel}

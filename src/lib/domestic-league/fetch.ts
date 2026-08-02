@@ -3,7 +3,9 @@ import {
   ApiFootballAuthError,
   apiFootballClientAuthErrorMessage,
   apiFootballErrorMessage,
+  ApiFootballNetworkError,
   ApiFootballRateLimitError,
+  classifyApiFootballError,
 } from "@/lib/api-football/errors";
 import type {
   PlFixtureRow,
@@ -81,6 +83,20 @@ function baseStandings(
     fetchedAt: new Date().toISOString(),
     ...overrides,
   };
+}
+
+
+function fetchFailureMessage(error: unknown): string {
+  if (error instanceof ApiFootballRateLimitError) {
+    return apiFootballErrorMessage("rate_limit");
+  }
+  if (error instanceof ApiFootballAuthError) {
+    return apiFootballClientAuthErrorMessage();
+  }
+  if (error instanceof ApiFootballNetworkError) {
+    return apiFootballErrorMessage("network_error");
+  }
+  return apiFootballErrorMessage(classifyApiFootballError(error));
 }
 
 function mapFixtureStatus(short: string): PlFixtureStatus {
@@ -198,19 +214,10 @@ export async function fetchDomesticLeagueFixtures(
       fixtures,
     });
   } catch (error) {
-    if (error instanceof ApiFootballRateLimitError) {
-      return baseFixtures(config, "fallback", {
-        configured: true,
-        error: apiFootballErrorMessage("rate_limit"),
-      });
-    }
-    if (error instanceof ApiFootballAuthError) {
-      return baseFixtures(config, "fallback", {
-        configured: true,
-        error: apiFootballClientAuthErrorMessage(),
-      });
-    }
-    throw error;
+    return baseFixtures(config, "fallback", {
+      configured: true,
+      error: fetchFailureMessage(error),
+    });
   }
 }
 
@@ -242,19 +249,10 @@ export async function fetchDomesticLeagueStandings(
       standings,
     });
   } catch (error) {
-    if (error instanceof ApiFootballRateLimitError) {
-      return baseStandings(config, "fallback", {
-        configured: true,
-        error: apiFootballErrorMessage("rate_limit"),
-      });
-    }
-    if (error instanceof ApiFootballAuthError) {
-      return baseStandings(config, "fallback", {
-        configured: true,
-        error: apiFootballClientAuthErrorMessage(),
-      });
-    }
-    throw error;
+    return baseStandings(config, "fallback", {
+      configured: true,
+      error: fetchFailureMessage(error),
+    });
   }
 }
 

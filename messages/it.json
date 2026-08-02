@@ -1,19 +1,19 @@
 {
   "common": {
-    "loading": "Caricamentoâ€¦",
+    "loading": "Caricamento…",
     "vs": "vs",
     "home": "Home",
     "live": "Live",
     "ft": "FT",
     "ht": "HT",
-    "firstHalf": "1Â° tempo",
-    "secondHalf": "2Â° tempo",
+    "firstHalf": "1° tempo",
+    "secondHalf": "2° tempo",
     "tbd": "TBD",
     "updatedMinutesAgo": "Aggiornato {count, plural, one {# minuto fa} other {# minuti fa}}",
     "updatedSecondsAgo": "Aggiornato {count, plural, one {# secondo fa} other {# secondi fa}}",
     "returnHome": "Torna alla home",
     "tryAgain": "Riprova",
-    "backToHome": "â† Torna alla home",
+    "backToHome": "← Torna alla home",
     "viewAll": "Vedi tutto",
     "search": "Cerca",
     "noResults": "Nessun risultato.",
@@ -31,8 +31,6 @@
     "premierLeague": "Premier League",
     "table": "Classifica",
     "fixtures": "Calendario",
-    "results": "Results",
-    "rounds": "Rounds",
     "table2627": "Classifica 26/27",
     "fixtures2627": "Calendario 26/27",
     "clubs": "Clubs",
@@ -46,7 +44,6 @@
     "bracket": "Tabellone",
     "pl2627": "PL 26/27",
     "wc26": "WC26 Archive",
-    "archive": "Archive",
     "overview": "Panoramica",
     "plHome": "Home PL",
     "wc26Home": "Home Mondiale",
@@ -56,8 +53,7 @@
     "back": "Indietro",
     "backToMenu": "Torna al menu",
     "closeMenu": "Chiudi menu",
-    "articlesEditorial": "âœï¸ Articoli e editoriali",
-    "fixtureCalendar": "Calendario",
+    "articlesEditorial": "✍️ Articoli e editoriali",
     "about": "Chi siamo",
     "contact": "Contatti",
     "terms": "Termini",
@@ -67,10 +63,10 @@
     "language": "Lingua",
     "liveResults": "Risultati live",
     "liveMatches": "Partite live",
-    "plVideos": "ðŸŽ¬ Video PL",
-    "wcVideos": "ðŸŽ¬ Video Mondiale",
+    "plVideos": "🎬 Video PL",
+    "wcVideos": "🎬 Video Mondiale",
     "latestNews": "Ultime notizie",
-    "editorialArticles": "âœï¸ Editoriali e articoli",
+    "editorialArticles": "✍️ Editoriali e articoli",
     "worldCupNews": "Notizie Mondiale",
     "premierLeagueNews": "Notizie Premier League",
     "latestVideos": "Ultimi video",
@@ -85,6 +81,10 @@
     "instagram": "Instagram",
     "tiktok": "TikTok",
     "twitter": "X / Twitter",
+    "results": "Results",
+    "rounds": "Rounds",
+    "archive": "Archive",
+    "fixtureCalendar": "Calendario",
     "championsLeague": "Champions League 26/27",
     "faCup": "FA Cup 26/27",
     "nationsLeague": "Nations League 26/27",
@@ -106,8 +106,6 @@
     "groupC4": "Group C4",
     "groupD1": "Group D1",
     "groupD2": "Group D2",
-    "results": "Results",
-    "rounds": "Rounds",
     "competitions": "Competitions"
   },
   "layout": {
@@ -116,18 +114,18 @@
       "message": "Utilizziamo i cookie per personalizzare i contenuti e analizzare il traffico.",
       "policy": "Informativa cookie",
       "decline": "Rifiuta",
-      "accept": "Accetta âœ“"
+      "accept": "Accetta ✓"
     },
     "footer": {
       "ariaLabel": "Footer",
       "socialAria": "Social media",
-      "nordVpn": "ðŸ”’ Stream securely abroad â€” NordVPN affiliate",
+      "nordVpn": "🔒 Stream securely abroad — NordVPN affiliate",
       "nordAd": "AD",
-      "nordCta": "Get NordVPN â†’",
-      "copyright": "Â© {year} Ashna4All Â· Ahmad Zafarani Â· {siteName} independent fan site Â· Not affiliated with FIFA, UEFA or the Premier League.",
+      "nordCta": "Get NordVPN →",
+      "copyright": "© {year} Ashna4All · Ahmad Zafarani · {siteName} independent fan site · Not affiliated with FIFA, UEFA or the Premier League.",
       "platform": "Piattaforma",
       "company": "Azienda",
-      "tagline": "Risultati live, calendario e news â€” Mondiale 2026 e Premier League 26/27."
+      "tagline": "Risultati live, calendario e news — Mondiale 2026 e Premier League 26/27."
     },
     "liveRibbon": {
       "live": "LIVE",
@@ -137,9 +135,7 @@
       "worldCup2026": "WORLD CUP 2026",
       "liveNow": "LIVE NOW",
       "latestResults": "LATEST RESULTS",
-      "archive": "ARCHIVIO",
-      "emptyMessage": "Nessuna partita in diretta adesso",
-      "emptyArchiveMessage": "Il Mondiale 2026 e finito â€” consulta l'archivio",
+      "emptyMessage": "Calendario locale — risultati quando la sincronizzazione API è attiva",
       "liveMatchesAria": "Partite live",
       "latestResultsAria": "Ultimi risultati",
       "moreMatches": "+{count} altre partite",
@@ -147,20 +143,22 @@
       "allFixtures": "TUTTE LE PARTITE",
       "viewAllFixturesAria": "Vedi tutte le partite",
       "tickerAria": "Ticker risultati live",
-      "liveElapsed": "LIVE {elapsed}'"
+      "liveElapsed": "LIVE {elapsed}'",
+      "archive": "ARCHIVIO",
+      "emptyArchiveMessage": "Il Mondiale 2026 e finito — consulta l'archivio"
     }
   },
   "errors": {
     "notFound": {
       "code": "404",
       "title": "Pagina non trovata",
-      "description": "La pagina richiesta non esiste o Ã¨ stata spostata.",
+      "description": "La pagina richiesta non esiste o è stata spostata.",
       "returnHome": "Torna alla home",
       "liveScores": "Risultati live"
     },
     "generic": {
       "code": "Error",
-      "title": "Si Ã¨ verificato un errore",
+      "title": "Si è verificato un errore",
       "description": "Riprova o torna alla home.",
       "tryAgain": "Riprova",
       "returnHome": "Torna alla home"
@@ -177,8 +175,8 @@
       "cancelled": "Annullata",
       "live": "Live",
       "ht": "Intervallo",
-      "1h": "1Â° tempo",
-      "2h": "2Â° tempo",
+      "1h": "1° tempo",
+      "2h": "2° tempo",
       "ft": "Finale",
       "aet": "Suppl.",
       "pen": "Rigori",
@@ -194,7 +192,7 @@
     },
     "playerStats": {
       "title": "Player stats",
-      "loading": "Loading player statisticsâ€¦",
+      "loading": "Loading player statistics…",
       "emptyEvents": "Player goals, assists, cards and substitutions will appear when the live feed records match events.",
       "emptyApi": "Player statistics will appear when server API sync is configured and the match is underway or finished.",
       "noteApi": "From live provider data. Goals and assists also follow match events when the feed updates.",
@@ -223,27 +221,27 @@
       "groups": {
         "label": "Gironi",
         "title": "Gironi",
-        "description": "I dodici gironi del torneo allargato a 48 squadre â€” classifiche, calendario e qualificate."
+        "description": "I dodici gironi del torneo allargato a 48 squadre — classifiche, calendario e qualificate."
       },
       "fixtures": {
         "label": "Calendario",
         "title": "Calendario",
-        "description": "Calendario completo della fase a gironi â€” 72 partite con date, orari UTC e stadi."
+        "description": "Calendario completo della fase a gironi — 72 partite con date, orari UTC e stadi."
       },
       "standings": {
         "label": "Classifiche",
         "title": "Classifiche",
-        "description": "Classifiche live â€” G, V, N, P, GF, GS, DR e Pti."
+        "description": "Classifiche live — G, V, N, P, GF, GS, DR e Pti."
       },
       "teams": {
         "label": "Squadre",
         "title": "Squadre",
-        "description": "Le 48 nazioni qualificate â€” rose, gironi e link a ogni squadra."
+        "description": "Le 48 nazioni qualificate — rose, gironi e link a ogni squadra."
       },
       "venues": {
         "label": "Stadi",
         "title": "Stadi",
-        "description": "Sedici stadi negli USA, in Messico e in Canada â€” cittÃ  e capienze."
+        "description": "Sedici stadi negli USA, in Messico e in Canada — città e capienze."
       },
       "bracket": {
         "label": "Tabellone",
@@ -263,19 +261,19 @@
       "pts": "Pti"
     },
     "fixtures": {
-      "searchPlaceholder": "Cerca squadra, stadio o partitaâ€¦",
+      "searchPlaceholder": "Cerca squadra, stadio o partita…",
       "noMatches": "Nessuna partita trovata."
     },
     "teams": {
-      "searchPlaceholder": "Cerca squadra, codice o gironeâ€¦"
+      "searchPlaceholder": "Cerca squadra, codice o girone…"
     },
     "venues": {
       "capacity": "Capienza:"
     },
     "bracket": {
-      "eyebrow": "Mondiale 2026 Â· Fase a eliminazione",
-      "title": "Mondiale 2026 Â· Tabellone",
-      "subtitle": "63 partite Â· Sedicesimi di finale alla finale",
+      "eyebrow": "Mondiale 2026 · Fase a eliminazione",
+      "title": "Mondiale 2026 · Tabellone",
+      "subtitle": "63 partite · Sedicesimi di finale alla finale",
       "note": "Orari mostrati nel tuo fuso orario locale.",
       "lastUpdated": "Aggiornato {time}",
       "degraded": "Dati possibilmente in ritardo",
@@ -292,16 +290,16 @@
         "r16": "Ottavi di finale",
         "qf": "Quarti di finale",
         "sf": "Semifinali",
-        "3rd": "Finale 3Â° posto",
+        "3rd": "Finale 3° posto",
         "final": "Finale"
       },
       "card": {
-        "viewMatchCenter": "Centro partita â†’",
+        "viewMatchCenter": "Centro partita →",
         "tbd": "Da def."
       },
       "live": {
         "lineupsBanner": "Formazioni disponibili 30 min. prima del calcio d'inizio",
-        "matchCenter": "Centro partita â†’",
+        "matchCenter": "Centro partita →",
         "live": "LIVE"
       },
       "tbdVsTbd": "Da def. vs Da def."
@@ -315,16 +313,16 @@
       "zoneConf": "Conf",
       "zoneRel": "Rel"
     },
-    "loading": "Caricamento dati Premier Leagueâ€¦"
+    "loading": "Caricamento dati Premier League…"
   },
   "home": {
     "title": "Risultati calcio live e centro partita",
-    "badge": "Mondiale 2026 Â· competizione principale",
+    "badge": "Mondiale 2026 · competizione principale",
     "featuredMatch": "Partita in evidenza",
     "liveNow": "Live Now",
     "viewAllLive": "View All Live Matches",
     "noLiveMatches": "No live matches right now.",
-    "subtitle": "Live results, fixtures and news from {siteName} â€” World Cup 2026 is the lead competition.",
+    "subtitle": "Live results, fixtures and news from {siteName} — World Cup 2026 is the lead competition.",
     "matchDetails": "Dettagli partita",
     "allFixtures": "Tutte le partite",
     "noFixturesLoaded": "Nessuna partita del Mondiale caricata.",
@@ -336,7 +334,7 @@
     "noUpcomingFixtures": "Nessuna partita in programma.",
     "wc26Title": "World Cup 2026",
     "viewAll": "View All",
-    "wc26Summary": "USA Â· Messico Â· Canada Â· 11 giu â€“ 19 lug 2026 Â· {gamesPlayed} disputate Â· {gamesLeft} rimanenti",
+    "wc26Summary": "USA · Messico · Canada · 11 giu – 19 lug 2026 · {gamesPlayed} disputate · {gamesLeft} rimanenti",
     "heroHeadline1": "Calcio in diretta.",
     "heroHeadline2": "Ogni gol.",
     "heroHeadline3": "Ogni momento.",
@@ -371,14 +369,14 @@
     "noCompetitions": "Nessuna competizione salvata."
   },
   "news": {
-    "loading": "Caricamentoâ€¦",
+    "loading": "Caricamento…",
     "updated": "Aggiornato: {date}",
     "empty": "Nessun articolo disponibile."
   },
   "seo": {
     "siteTitle": "{siteName} - Coppa del Mondo FIFA 2026 | Risultati live, notizie e squadre",
     "siteDescription": "{siteName} - risultati live, calendario, gironi e classifiche per la Coppa del Mondo 2026.",
-    "matchDescription": "Partita Mondiale 2026 â€” {title}. Centro live, cronologia, statistiche e formazioni su {siteName}.",
+    "matchDescription": "Partita Mondiale 2026 — {title}. Centro live, cronologia, statistiche e formazioni su {siteName}.",
     "titleTemplate": "{title} - {siteName}"
   },
   "auth": {
@@ -392,31 +390,26 @@
     "notificationsEnabled": "Notifiche attive",
     "notificationsBlocked": "Notifiche bloccate nel browser",
     "signInError": "Accesso non riuscito. Riprova.",
-    "loading": "Caricamentoâ€¦"
+    "loading": "Caricamento…"
   },
   "live": {
-    "pageTitle": "Risultati live â€” {competition}",
-    "archivePageTitle": "Archivio â€” {competition}",
+    "pageTitle": "Risultati live — {competition}",
     "competition": "Mondiale 2026",
     "pageIntro": "Risultati del Mondiale 2026 da dati confermati e API live.",
-    "archivePageIntro": "Il Mondiale 2026 e finito. Sotto: risultati archivio / finali â€” non live.",
-    "neutralPageTitle": "Live and upcoming",
-    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
-    "archiveHubLink": "World Cup 2026 Archive",
-    "syncPending": "Sincronizzazioneâ€¦",
-    "syncDegraded": "Ultimi risultati â€” provider limitato.",
+    "syncPending": "Sincronizzazione…",
+    "syncDegraded": "Ultimi risultati — provider limitato.",
     "sections": {
       "liveNow": "In diretta",
-      "archiveLive": "In diretta",
       "today": "Oggi",
       "upcoming": "Prossime partite",
-      "completed": "Concluse"
+      "completed": "Concluse",
+      "archiveLive": "In diretta"
     },
     "empty": {
-      "liveNow": "Nessuna partita in diretta adesso",
-      "archiveLiveNow": "Nessuna partita in diretta â€” Mondiale 2026 finito (Archivio). Vedi le concluse sotto.",
+      "liveNow": "Nessuna partita in diretta.",
       "today": "Nessuna partita oggi.",
-      "completed": "Nessuna partita conclusa."
+      "completed": "Nessuna partita conclusa.",
+      "archiveLiveNow": "Nessuna partita in diretta — Mondiale 2026 finito (Archivio). Vedi le concluse sotto."
     },
     "backToHub": "Torna all hub Mondiale 2026",
     "countdown": {
@@ -426,10 +419,14 @@
       "upNext": "Prossima",
       "untilKickoff": "al calcio d inizio",
       "viewMatchCentre": "Centro partita",
-      "viewMatchCentreArrow": "Centro partita â†’",
-      "liveNowAria": "{home} vs {away} â€” live now, approximately {min} minutes elapsed",
+      "viewMatchCentreArrow": "Centro partita →",
+      "liveNowAria": "{home} vs {away} — live now, approximately {min} minutes elapsed",
       "nextMatchAria": "Next match: {home} vs {away}, kick-off in {countdown}"
-    }
+    },
+    "archivePageTitle": "Archivio — {competition}",
+    "archivePageIntro": "Il Mondiale 2026 e finito. Sotto: risultati archivio / finali — non live.",
+    "neutralPageTitle": "Live and upcoming",
+    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
+    "archiveHubLink": "World Cup 2026 Archive"
   }
 }
-

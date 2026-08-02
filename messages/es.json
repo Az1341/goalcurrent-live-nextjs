@@ -1,19 +1,19 @@
 {
   "common": {
-    "loading": "Cargandoâ€¦",
+    "loading": "Cargando…",
     "vs": "vs",
     "home": "Inicio",
     "live": "En vivo",
     "ft": "FT",
     "ht": "HT",
-    "firstHalf": "1.Âª parte",
-    "secondHalf": "2.Âª parte",
+    "firstHalf": "1.ª parte",
+    "secondHalf": "2.ª parte",
     "tbd": "TBD",
     "updatedMinutesAgo": "Actualizado hace {count, plural, one {# minuto} other {# minutos}}",
     "updatedSecondsAgo": "Actualizado hace {count, plural, one {# segundo} other {# segundos}}",
     "returnHome": "Volver al inicio",
     "tryAgain": "Reintentar",
-    "backToHome": "â† Volver al inicio",
+    "backToHome": "← Volver al inicio",
     "viewAll": "Ver todo",
     "search": "Buscar",
     "noResults": "Sin resultados.",
@@ -25,19 +25,17 @@
     "live": "En vivo",
     "favourites": "Favoritos",
     "news": "Noticias",
-    "articles": "ArtÃ­culos",
-    "videos": "VÃ­deos",
+    "articles": "Artículos",
+    "videos": "Vídeos",
     "worldCup2026": "Mundial 2026",
     "premierLeague": "Premier League",
-    "table": "ClasificaciÃ³n",
+    "table": "Clasificación",
     "fixtures": "Calendario",
-    "results": "Results",
-    "rounds": "Rounds",
-    "table2627": "ClasificaciÃ³n 26/27",
+    "table2627": "Clasificación 26/27",
     "fixtures2627": "Calendario 26/27",
     "clubs": "Clubs",
     "players": "Jugadores",
-    "statistics": "EstadÃ­sticas",
+    "statistics": "Estadísticas",
     "transfers": "Fichajes",
     "groups": "Grupos",
     "standings": "Clasificaciones",
@@ -46,45 +44,47 @@
     "bracket": "Cuadro",
     "pl2627": "PL 26/27",
     "wc26": "WC26 Archive",
-    "archive": "Archive",
     "overview": "Resumen",
     "plHome": "Inicio PL",
     "wc26Home": "Inicio Mundial",
-    "mainNavigation": "NavegaciÃ³n principal",
-    "openMoreNavigation": "Abrir mÃ¡s navegaciÃ³n",
-    "more": "MÃ¡s",
-    "back": "AtrÃ¡s",
-    "backToMenu": "Volver al menÃº",
-    "closeMenu": "Cerrar menÃº",
-    "articlesEditorial": "âœï¸ ArtÃ­culos y editoriales",
-    "fixtureCalendar": "Partidos",
+    "mainNavigation": "Navegación principal",
+    "openMoreNavigation": "Abrir más navegación",
+    "more": "Más",
+    "back": "Atrás",
+    "backToMenu": "Volver al menú",
+    "closeMenu": "Cerrar menú",
+    "articlesEditorial": "✍️ Artículos y editoriales",
     "about": "Acerca de",
     "contact": "Contacto",
-    "terms": "TÃ©rminos",
+    "terms": "Términos",
     "privacy": "Privacidad",
     "cookies": "Cookies",
-    "affiliateDisclosure": "DivulgaciÃ³n de afiliados",
+    "affiliateDisclosure": "Divulgación de afiliados",
     "language": "Idioma",
     "liveResults": "Resultados en directo",
     "liveMatches": "Partidos en directo",
-    "plVideos": "ðŸŽ¬ VÃ­deos PL",
-    "wcVideos": "ðŸŽ¬ VÃ­deos del Mundial",
-    "latestNews": "Ãšltimas noticias",
-    "editorialArticles": "âœï¸ Editoriales y artÃ­culos",
+    "plVideos": "🎬 Vídeos PL",
+    "wcVideos": "🎬 Vídeos del Mundial",
+    "latestNews": "Últimas noticias",
+    "editorialArticles": "✍️ Editoriales y artículos",
     "worldCupNews": "Noticias del Mundial",
     "premierLeagueNews": "Noticias de la Premier League",
-    "latestVideos": "Ãšltimos vÃ­deos",
+    "latestVideos": "Últimos vídeos",
     "plClubs": "Clubes de la Premier League",
     "worldCupTeams": "Selecciones del Mundial",
     "plPlayers": "Jugadores de la Premier League",
     "plTable2627": "Premier League 26/27",
     "wc26GroupTables": "Grupos del Mundial 2026",
     "wc26Bracket": "Cuadro del Mundial 2026",
-    "videoAudio": "VÃ­deo y audio",
+    "videoAudio": "Vídeo y audio",
     "facebook": "Facebook",
     "instagram": "Instagram",
     "tiktok": "TikTok",
     "twitter": "X / Twitter",
+    "results": "Results",
+    "rounds": "Rounds",
+    "archive": "Archive",
+    "fixtureCalendar": "Partidos",
     "championsLeague": "Champions League 26/27",
     "faCup": "FA Cup 26/27",
     "nationsLeague": "Nations League 26/27",
@@ -106,28 +106,26 @@
     "groupC4": "Group C4",
     "groupD1": "Group D1",
     "groupD2": "Group D2",
-    "results": "Results",
-    "rounds": "Rounds",
     "competitions": "Competitions"
   },
   "layout": {
     "cookieConsent": {
       "ariaLabel": "Consentimiento de cookies",
-      "message": "Usamos cookies para personalizar el contenido y analizar el trÃ¡fico.",
-      "policy": "PolÃ­tica de cookies",
+      "message": "Usamos cookies para personalizar el contenido y analizar el tráfico.",
+      "policy": "Política de cookies",
       "decline": "Rechazar",
-      "accept": "Aceptar âœ“"
+      "accept": "Aceptar ✓"
     },
     "footer": {
       "ariaLabel": "Footer",
       "socialAria": "Social media",
-      "nordVpn": "ðŸ”’ Stream securely abroad â€” NordVPN affiliate",
+      "nordVpn": "🔒 Stream securely abroad — NordVPN affiliate",
       "nordAd": "AD",
-      "nordCta": "Get NordVPN â†’",
-      "copyright": "Â© {year} Ashna4All Â· Ahmad Zafarani Â· {siteName} independent fan site Â· Not affiliated with FIFA, UEFA or the Premier League.",
+      "nordCta": "Get NordVPN →",
+      "copyright": "© {year} Ashna4All · Ahmad Zafarani · {siteName} independent fan site · Not affiliated with FIFA, UEFA or the Premier League.",
       "platform": "Plataforma",
       "company": "Empresa",
-      "tagline": "Resultados en vivo, calendario y noticias â€” Mundial 2026 y Premier League 26/27."
+      "tagline": "Resultados en vivo, calendario y noticias — Mundial 2026 y Premier League 26/27."
     },
     "liveRibbon": {
       "live": "LIVE",
@@ -137,31 +135,31 @@
       "worldCup2026": "WORLD CUP 2026",
       "liveNow": "LIVE NOW",
       "latestResults": "LATEST RESULTS",
-      "archive": "ARCHIVO",
-      "emptyMessage": "No hay partidos en vivo ahora",
-      "emptyArchiveMessage": "El Mundial 2026 ha terminado â€” consulta el archivo",
+      "emptyMessage": "Calendario local — resultados cuando la sincronización API esté activa",
       "liveMatchesAria": "Partidos en directo",
-      "latestResultsAria": "Ãšltimos resultados",
-      "moreMatches": "+{count} partidos mÃ¡s",
-      "viewMoreMatchesAria": "Ver {count} partidos mÃ¡s",
+      "latestResultsAria": "Últimos resultados",
+      "moreMatches": "+{count} partidos más",
+      "viewMoreMatchesAria": "Ver {count} partidos más",
       "allFixtures": "TODOS LOS PARTIDOS",
       "viewAllFixturesAria": "Ver todos los partidos",
       "tickerAria": "Ticker de resultados en directo",
-      "liveElapsed": "LIVE {elapsed}'"
+      "liveElapsed": "LIVE {elapsed}'",
+      "archive": "ARCHIVO",
+      "emptyArchiveMessage": "El Mundial 2026 ha terminado — consulta el archivo"
     }
   },
   "errors": {
     "notFound": {
       "code": "404",
-      "title": "PÃ¡gina no encontrada",
-      "description": "La pÃ¡gina solicitada no existe o ha sido movida.",
+      "title": "Página no encontrada",
+      "description": "La página solicitada no existe o ha sido movida.",
       "returnHome": "Volver al inicio",
       "liveScores": "Resultados en directo"
     },
     "generic": {
       "code": "Error",
       "title": "Ha ocurrido un error",
-      "description": "IntÃ©ntelo de nuevo o vuelva al inicio.",
+      "description": "Inténtelo de nuevo o vuelva al inicio.",
       "tryAgain": "Reintentar",
       "returnHome": "Volver al inicio"
     }
@@ -170,19 +168,19 @@
     "title": "{home} vs {away}",
     "liveMatch": "Partido en directo",
     "matchCentre": "Centro del partido",
-    "noEvents": "AÃºn no hay eventos registrados.",
+    "noEvents": "Aún no hay eventos registrados.",
     "status": {
       "scheduled": "Programado",
       "postponed": "Aplazado",
       "cancelled": "Cancelado",
       "live": "En directo",
       "ht": "Descanso",
-      "1h": "1.Âª parte",
-      "2h": "2.Âª parte",
+      "1h": "1.ª parte",
+      "2h": "2.ª parte",
       "ft": "Final",
-      "aet": "PrÃ³r.",
+      "aet": "Prór.",
       "pen": "Penaltis",
-      "et": "PrÃ³rroga"
+      "et": "Prórroga"
     },
     "events": {
       "goal": "Gol",
@@ -190,11 +188,11 @@
       "penaltyGoal": "Gol de penalti",
       "redCard": "Tarjeta roja",
       "yellowCard": "Tarjeta amarilla",
-      "substitution": "SustituciÃ³n"
+      "substitution": "Sustitución"
     },
     "playerStats": {
       "title": "Player stats",
-      "loading": "Loading player statisticsâ€¦",
+      "loading": "Loading player statistics…",
       "emptyEvents": "Player goals, assists, cards and substitutions will appear when the live feed records match events.",
       "emptyApi": "Player statistics will appear when server API sync is configured and the match is underway or finished.",
       "noteApi": "From live provider data. Goals and assists also follow match events when the feed updates.",
@@ -223,27 +221,27 @@
       "groups": {
         "label": "Grupos",
         "title": "Grupos",
-        "description": "Los doce grupos del torneo ampliado a 48 selecciones â€” clasificaciones, calendario y clasificados."
+        "description": "Los doce grupos del torneo ampliado a 48 selecciones — clasificaciones, calendario y clasificados."
       },
       "fixtures": {
         "label": "Calendario",
         "title": "Calendario",
-        "description": "Calendario completo de la fase de grupos â€” 72 partidos con fechas, horarios UTC y estadios."
+        "description": "Calendario completo de la fase de grupos — 72 partidos con fechas, horarios UTC y estadios."
       },
       "standings": {
         "label": "Clasificaciones",
         "title": "Clasificaciones",
-        "description": "Clasificaciones en directo â€” PJ, G, E, P, GF, GC, DG y Pts."
+        "description": "Clasificaciones en directo — PJ, G, E, P, GF, GC, DG y Pts."
       },
       "teams": {
         "label": "Selecciones",
         "title": "Selecciones",
-        "description": "Las 48 naciones clasificadas â€” plantillas, grupos y enlaces a cada selecciÃ³n."
+        "description": "Las 48 naciones clasificadas — plantillas, grupos y enlaces a cada selección."
       },
       "venues": {
         "label": "Estadios",
         "title": "Estadios",
-        "description": "DiecisÃ©is estadios en EE. UU., MÃ©xico y CanadÃ¡ â€” ciudades y capacidades."
+        "description": "Dieciséis estadios en EE. UU., México y Canadá — ciudades y capacidades."
       },
       "bracket": {
         "label": "Cuadro",
@@ -263,19 +261,19 @@
       "pts": "Pts"
     },
     "fixtures": {
-      "searchPlaceholder": "Buscar equipo, estadio o partidoâ€¦",
+      "searchPlaceholder": "Buscar equipo, estadio o partido…",
       "noMatches": "No se encontraron partidos."
     },
     "teams": {
-      "searchPlaceholder": "Buscar equipo, cÃ³digo o grupoâ€¦"
+      "searchPlaceholder": "Buscar equipo, código o grupo…"
     },
     "venues": {
       "capacity": "Capacidad:"
     },
     "bracket": {
-      "eyebrow": "Mundial 2026 Â· Fase eliminatoria",
-      "title": "Mundial 2026 Â· Cuadro eliminatorio",
-      "subtitle": "63 partidos Â· Dieciseisavos de final a la final",
+      "eyebrow": "Mundial 2026 · Fase eliminatoria",
+      "title": "Mundial 2026 · Cuadro eliminatorio",
+      "subtitle": "63 partidos · Dieciseisavos de final a la final",
       "note": "Horarios mostrados en su zona horaria local.",
       "lastUpdated": "Actualizado {time}",
       "degraded": "Datos posiblemente retrasados",
@@ -285,7 +283,7 @@
         "schedule": "Calendario",
         "results": "Resultados",
         "groups": "Grupos",
-        "stats": "EstadÃ­sticas"
+        "stats": "Estadísticas"
       },
       "rounds": {
         "r32": "Dieciseisavos de final",
@@ -296,12 +294,12 @@
         "final": "Final"
       },
       "card": {
-        "viewMatchCenter": "Centro del partido â†’",
+        "viewMatchCenter": "Centro del partido →",
         "tbd": "Por def."
       },
       "live": {
         "lineupsBanner": "Alineaciones disponibles 30 min. antes del inicio",
-        "matchCenter": "Centro del partido â†’",
+        "matchCenter": "Centro del partido →",
         "live": "LIVE"
       },
       "tbdVsTbd": "Por def. vs Por def."
@@ -315,28 +313,28 @@
       "zoneConf": "Conf",
       "zoneRel": "Rel"
     },
-    "loading": "Cargando datos de la Premier Leagueâ€¦"
+    "loading": "Cargando datos de la Premier League…"
   },
   "home": {
-    "title": "Resultados de fÃºtbol en vivo y centro de partidos",
-    "badge": "Mundial 2026 Â· competiciÃ³n principal",
+    "title": "Resultados de fútbol en vivo y centro de partidos",
+    "badge": "Mundial 2026 · competición principal",
     "featuredMatch": "Partido destacado",
     "liveNow": "Live Now",
     "viewAllLive": "View All Live Matches",
     "noLiveMatches": "No live matches right now.",
-    "subtitle": "Live results, fixtures and news from {siteName} â€” World Cup 2026 is the lead competition.",
+    "subtitle": "Live results, fixtures and news from {siteName} — World Cup 2026 is the lead competition.",
     "matchDetails": "Detalles del partido",
     "allFixtures": "Todos los partidos",
     "noFixturesLoaded": "No hay partidos del Mundial cargados.",
-    "latestResults": "Ãšltimos resultados",
+    "latestResults": "Últimos resultados",
     "viewAllResults": "Todos los resultados",
     "noRecentResults": "Sin resultados recientes.",
-    "upcomingFixtures": "PrÃ³ximos partidos",
+    "upcomingFixtures": "Próximos partidos",
     "viewAllFixtures": "Calendario completo",
-    "noUpcomingFixtures": "No hay partidos prÃ³ximos.",
+    "noUpcomingFixtures": "No hay partidos próximos.",
     "wc26Title": "World Cup 2026",
     "viewAll": "View All",
-    "wc26Summary": "EE. UU. Â· MÃ©xico Â· CanadÃ¡ Â· 11 jun â€“ 19 jul 2026 Â· {gamesPlayed} jugados Â· {gamesLeft} restantes",
+    "wc26Summary": "EE. UU. · México · Canadá · 11 jun – 19 jul 2026 · {gamesPlayed} jugados · {gamesLeft} restantes",
     "heroHeadline1": "Futbol en directo.",
     "heroHeadline2": "Cada gol.",
     "heroHeadline3": "Cada momento.",
@@ -371,52 +369,47 @@
     "noCompetitions": "Aun no hay competiciones guardadas."
   },
   "news": {
-    "loading": "Cargandoâ€¦",
+    "loading": "Cargando…",
     "updated": "Actualizado: {date}",
-    "empty": "No hay artÃ­culos disponibles."
+    "empty": "No hay artículos disponibles."
   },
   "seo": {
     "siteTitle": "{siteName} - Copa Mundial FIFA 2026 | Resultados en directo, noticias y selecciones",
     "siteDescription": "{siteName} - resultados en directo, calendario, grupos y clasificaciones para la Copa Mundial 2026.",
-    "matchDescription": "Partido del Mundial 2026 â€” {title}. Centro en directo, cronologÃ­a, estadÃ­sticas y alineaciones en {siteName}.",
+    "matchDescription": "Partido del Mundial 2026 — {title}. Centro en directo, cronología, estadísticas y alineaciones en {siteName}.",
     "titleTemplate": "{title} - {siteName}"
   },
   "auth": {
     "account": "Cuenta",
-    "signIn": "Iniciar sesiÃ³n",
-    "signOut": "Cerrar sesiÃ³n",
+    "signIn": "Iniciar sesión",
+    "signOut": "Cerrar sesión",
     "continueWithGoogle": "Continuar con Google",
     "continueWithApple": "Continuar con Apple",
-    "signedInAs": "SesiÃ³n iniciada como {name}",
+    "signedInAs": "Sesión iniciada como {name}",
     "enableNotifications": "Activar notificaciones",
     "notificationsEnabled": "Notificaciones activadas",
     "notificationsBlocked": "Notificaciones bloqueadas en el navegador",
-    "signInError": "Error al iniciar sesiÃ³n. IntÃ©ntalo de nuevo.",
-    "loading": "Cargandoâ€¦"
+    "signInError": "Error al iniciar sesión. Inténtalo de nuevo.",
+    "loading": "Cargando…"
   },
   "live": {
-    "pageTitle": "Resultados en vivo â€” {competition}",
-    "archivePageTitle": "Archivo â€” {competition}",
+    "pageTitle": "Resultados en vivo — {competition}",
     "competition": "Mundial 2026",
     "pageIntro": "Resultados del Mundial 2026 desde datos confirmados y API en vivo.",
-    "archivePageIntro": "El Mundial 2026 ha terminado. Los resultados son de archivo / finalizados â€” no en vivo.",
-    "neutralPageTitle": "Live and upcoming",
-    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
-    "archiveHubLink": "World Cup 2026 Archive",
-    "syncPending": "Sincronizandoâ€¦",
-    "syncDegraded": "Ultimos resultados â€” proveedor limitado.",
+    "syncPending": "Sincronizando…",
+    "syncDegraded": "Ultimos resultados — proveedor limitado.",
     "sections": {
       "liveNow": "En vivo",
-      "archiveLive": "En vivo",
       "today": "Hoy",
       "upcoming": "Proximos partidos",
-      "completed": "Finalizados"
+      "completed": "Finalizados",
+      "archiveLive": "En vivo"
     },
     "empty": {
-      "liveNow": "No hay partidos en vivo ahora",
-      "archiveLiveNow": "No hay partidos en vivo â€” el Mundial 2026 ha terminado (Archivo). Ver finalizados abajo.",
+      "liveNow": "No hay partidos en vivo.",
       "today": "No hay partidos hoy.",
-      "completed": "Aun no hay partidos finalizados."
+      "completed": "Aun no hay partidos finalizados.",
+      "archiveLiveNow": "No hay partidos en vivo — el Mundial 2026 ha terminado (Archivo). Ver finalizados abajo."
     },
     "backToHub": "Volver al hub del Mundial 2026",
     "countdown": {
@@ -426,10 +419,14 @@
       "upNext": "Proximo",
       "untilKickoff": "hasta el inicio",
       "viewMatchCentre": "Centro del partido",
-      "viewMatchCentreArrow": "Centro del partido â†’",
-      "liveNowAria": "{home} vs {away} â€” live now, approximately {min} minutes elapsed",
+      "viewMatchCentreArrow": "Centro del partido →",
+      "liveNowAria": "{home} vs {away} — live now, approximately {min} minutes elapsed",
       "nextMatchAria": "Next match: {home} vs {away}, kick-off in {countdown}"
-    }
+    },
+    "archivePageTitle": "Archivo — {competition}",
+    "archivePageIntro": "El Mundial 2026 ha terminado. Los resultados son de archivo / finalizados — no en vivo.",
+    "neutralPageTitle": "Live and upcoming",
+    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
+    "archiveHubLink": "World Cup 2026 Archive"
   }
 }
-

@@ -1,19 +1,28 @@
 .sidebar {
   display: none;
   flex-direction: column;
-  width: var(--gc-sidebar-width, 240px);
+  width: var(--gc-sidebar-width, var(--gc-sidebar-width-collapsed, 56px));
   flex-shrink: 0;
   min-height: calc(100vh - var(--gc-site-header-height, 56px));
   background: var(--gc-sidebar-bg);
   border-right: 1px solid var(--gc-sidebar-border);
   color: var(--gc-sidebar-text);
   font-family: var(--font-body), var(--gc-emoji-font), system-ui, sans-serif;
+  overflow: hidden;
+  transition: width 0.2s ease;
+}
+
+.sidebar:hover,
+.sidebar:focus-within,
+.sidebar.pinnedOpen {
+  width: var(--gc-sidebar-width-expanded, 240px);
 }
 
 .inner {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: var(--gc-sidebar-width-expanded, 240px);
   padding: 20px 12px 16px;
   gap: 8px;
 }
@@ -25,6 +34,20 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--gc-sidebar-label);
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  transition:
+    opacity 0.15s ease,
+    max-height 0.2s ease;
+}
+
+.sidebar:hover .sectionLabel,
+.sidebar:focus-within .sectionLabel,
+.sidebar.pinnedOpen .sectionLabel {
+  opacity: 1;
+  max-height: 2rem;
 }
 
 .navList {
@@ -52,6 +75,35 @@
     color 0.15s ease;
 }
 
+.navShort {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.navLabel {
+  margin-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+  max-width: 0;
+  transition:
+    opacity 0.15s ease,
+    max-width 0.2s ease;
+}
+
+.sidebar:hover .navLabel,
+.sidebar:focus-within .navLabel,
+.sidebar.pinnedOpen .navLabel {
+  opacity: 1;
+  max-width: 12rem;
+}
+
 .navLink:hover {
   background: var(--gc-sidebar-hover);
   color: var(--gc-sidebar-text-hover);
@@ -74,6 +126,21 @@
   border-radius: var(--gc-radius);
   background: var(--gc-sidebar-pro-bg);
   border: 1px solid var(--gc-sidebar-pro-border);
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.15s ease,
+    max-height 0.2s ease;
+}
+
+.sidebar:hover .proSlot,
+.sidebar:focus-within .proSlot,
+.sidebar.pinnedOpen .proSlot {
+  opacity: 1;
+  max-height: 20rem;
+  pointer-events: auto;
 }
 
 .proEyebrow {

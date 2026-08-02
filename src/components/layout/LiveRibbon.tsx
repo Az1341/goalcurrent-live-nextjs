@@ -54,9 +54,11 @@ function TickerMatchItem({
   const statusLabel = isLive
     ? match.elapsed != null
       ? t("liveElapsed", { elapsed: match.elapsed })
-      : t("live")
+      : match.statusLabel && match.statusLabel !== "Live"
+        ? match.statusLabel
+        : t("live")
     : isFt
-      ? t("ft")
+      ? match.statusLabel
       : kickoffTime;
   const matchTitle = formatTickerMatchTitle(
     match.homeName,
@@ -106,6 +108,8 @@ export default function LiveRibbon({
   const fixtures = useEffectiveFixtures();
   const allMatches = selectRibbonFixtures(fixtures);
 
+  const archiveComplete = isWc26TournamentComplete();
+
   if (allMatches.length === 0) {
     return (
       <div
@@ -113,8 +117,12 @@ export default function LiveRibbon({
         role="region"
         aria-label={t("tickerAria")}
       >
-        <span className={styles.liveRibbonLabel}>{t("worldCup2026")}</span>
-        <span className={styles.liveRibbonMessage}>{t("emptyMessage")}</span>
+        <span className={styles.liveRibbonLabel}>
+          {archiveComplete ? t("archive") : t("worldCup2026")}
+        </span>
+        <span className={styles.liveRibbonMessage}>
+          {archiveComplete ? t("emptyArchiveMessage") : t("emptyMessage")}
+        </span>
       </div>
     );
   }
@@ -123,6 +131,11 @@ export default function LiveRibbon({
   const desktopMatches = allMatches.slice(0, DESKTOP_MARQUEE_LIMIT);
   const desktopTrackMatches = [...desktopMatches, ...desktopMatches];
   const hiddenCount = Math.max(0, allMatches.length - DESKTOP_MARQUEE_LIMIT);
+  const ribbonModeLabel = hasLive
+    ? t("liveNow")
+    : archiveComplete
+      ? t("archive")
+      : t("latestResults");
 
   return (
     <div
@@ -132,7 +145,7 @@ export default function LiveRibbon({
     >
       <span className={styles.liveRibbonLabel}>
         {hasLive ? <span className={styles.liveDot} aria-hidden="true" /> : null}
-        {hasLive ? t("liveNow") : t("latestResults")}
+        {ribbonModeLabel}
       </span>
 
       <div className={styles.tickerScrollMobile}>

@@ -1,0 +1,55 @@
+﻿node.exe : npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm warn Unknow...config options.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[WebServer] npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+
+Running 4 tests using 1 worker
+
+(node:46196) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+  ok 1 [chromium] ÔÇ║ tests\e2e\mobile-critical-journey.spec.ts:12:7 ÔÇ║ Mobile critical football journeys ÔÇ║ homepage through tabs, match, standings, more, and home return (3.5s)
+  ok 2 [chromium] ÔÇ║ tests\e2e\more-sheet-a11y.spec.ts:26:7 ÔÇ║ FE-007 More sheet accessibility ÔÇ║ opens with dialog semantics, traps focus, Escape restores trigger (2.3s)
+  ok 3 [chromium] ÔÇ║ tests\e2e\more-sheet-a11y.spec.ts:68:7 ÔÇ║ FE-007 More sheet accessibility ÔÇ║ close button dismisses and restores focus to More trigger (1.2s)
+  ok 4 [chromium] ÔÇ║ tests\e2e\more-sheet-a11y.spec.ts:85:7 ÔÇ║ FE-007 More sheet accessibility ÔÇ║ axe scan of open More sheet has no serious/critical dialog failures (1.8s)
+
+  4 passed (1.9m)

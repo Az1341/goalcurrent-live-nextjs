@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://goalcurrent.live/sitemap.xml
+Sitemap: https://goalcurrent.live/sitemap-news.xml

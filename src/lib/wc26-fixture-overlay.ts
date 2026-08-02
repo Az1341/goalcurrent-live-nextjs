@@ -72,8 +72,15 @@ function isLiveOverlayEntry(entry: FixtureOverlayEntry): boolean {
   return LIVE_OVERLAY_STATUSES.has(entry.status.trim().toLowerCase());
 }
 
-/** Replace live overlay entries — clears stale live slots before merging. */
+/**
+ * Replace live overlay entries — clears stale live slots before merging.
+ * Transient empty payloads are ignored so last-known live rows survive API blips.
+ * Use {@link clearLiveFixtureOverlay} for an intentional confirmed-empty live set.
+ */
 export function replaceLiveFixtureOverlay(partial: OverlayState): void {
+  if (Object.keys(partial).length === 0) {
+    return;
+  }
   const next: OverlayState = { ...overlay };
   for (const [fixtureId, entry] of Object.entries(next)) {
     if (isLiveOverlayEntry(entry)) {
@@ -81,6 +88,23 @@ export function replaceLiveFixtureOverlay(partial: OverlayState): void {
     }
   }
   overlay = { ...next, ...partial };
+  notifyFixtureUpdate();
+}
+
+/** Remove only in-play overlay rows (confirmed empty live set). */
+export function clearLiveFixtureOverlay(): void {
+  const next: OverlayState = { ...overlay };
+  let changed = false;
+  for (const [fixtureId, entry] of Object.entries(next)) {
+    if (isLiveOverlayEntry(entry)) {
+      delete next[fixtureId];
+      changed = true;
+    }
+  }
+  if (!changed) {
+    return;
+  }
+  overlay = next;
   notifyFixtureUpdate();
 }
 
@@ -165,21 +189,15 @@ export function getFixtureScore(
   return null;
 }
 
-/** True when overlay status or synced scores indicate a finished match. */
+/**
+ * True when the fixture status is an authoritative completed match status.
+ * Scores, apiFixtureId, elapsed, or kickoff time alone must never invent completion
+ * (live knockout / stoppage / ET / pens remain in-play until the provider finishes).
+ */
 export function isEffectiveFixtureCompleted(
   fixture: EffectiveFixture,
   now: Date = new Date(),
 ): boolean {
-  if (isCompletedMatchStatus(fixture.status)) {
-    return true;
-  }
-  const score = getFixtureScore(fixture);
-  if (score === null) {
-    return false;
-  }
-  // Knockout with API scores — static FIFA kickoff may be a later slot than the real match.
-  if (fixture.apiFixtureId != null && fixture.stage !== "group") {
-    return true;
-  }
-  return new Date(fixture.kickoffUtc).getTime() <= now.getTime();
+  void now;
+  return isCompletedMatchStatus(fixture.status);
 }

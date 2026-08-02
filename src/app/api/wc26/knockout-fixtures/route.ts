@@ -10,6 +10,7 @@ import {
   fetchWc26KnockoutFixtures,
   fetchWc26KnockoutRound,
   isWc26KnockoutApiRound,
+  type Wc26KnockoutApiFixture,
   type Wc26KnockoutApiRound,
 } from "@/lib/server/wc26-knockout-fixtures";
 import {
@@ -19,6 +20,24 @@ import {
 } from "@/lib/server/wc26-api-football";
 
 export const dynamic = "force-dynamic";
+
+/** Public knockout fixtures contract — no diagnostic fetch logs (BE-011). */
+export type Wc26KnockoutFixturesPublicResponse = {
+  readonly fixtures: readonly Wc26KnockoutApiFixture[];
+  readonly source: "api-football" | "static";
+  readonly message?: string;
+  readonly error?: string;
+};
+
+function publicJson(
+  body: Wc26KnockoutFixturesPublicResponse,
+  init?: { status?: number },
+): NextResponse {
+  return NextResponse.json(body, {
+    status: init?.status,
+    headers: { "Cache-Control": "no-store" },
+  });
+}
 
 function isKnockoutRound(value: string): value is Wc26KnockoutApiRound {
   return isWc26KnockoutApiRound(value);
@@ -31,31 +50,21 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const round = validated.data.round ?? "";
 
   if (!isWc26ApiConfigured()) {
-    return NextResponse.json(
-      {
-        fixtures: [],
-        logs: [],
-        source: "static",
-        message: "API key not configured — using local FIFA schedule",
-      },
-      { headers: { "Cache-Control": "no-store" } },
-    );
+    return publicJson({
+      fixtures: [],
+      source: "static",
+      message: "API key not configured — using local FIFA schedule",
+    });
   }
 
   try {
     if (round && isKnockoutRound(round)) {
-      const { fixtures, log } = await fetchWc26KnockoutRound(round);
-      return NextResponse.json(
-        { fixtures, logs: [log], source: "api-football" },
-        { headers: { "Cache-Control": "no-store" } },
-      );
+      const { fixtures } = await fetchWc26KnockoutRound(round);
+      return publicJson({ fixtures, source: "api-football" });
     }
 
-    const { fixtures, logs } = await fetchWc26KnockoutFixtures();
-    return NextResponse.json(
-      { fixtures, logs, source: "api-football" },
-      { headers: { "Cache-Control": "no-store" } },
-    );
+    const { fixtures } = await fetchWc26KnockoutFixtures();
+    return publicJson({ fixtures, source: "api-football" });
   } catch (error) {
     if (
       error instanceof MissingApiKeyError ||
@@ -63,26 +72,20 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         error instanceof Error ? error.message : "Unknown error",
       )
     ) {
-      return NextResponse.json(
-        { fixtures: [], logs: [], source: "static" },
-        { headers: { "Cache-Control": "no-store" } },
-      );
+      return publicJson({ fixtures: [], source: "static" });
     }
 
     const code = classifyApiFootballError(error);
     captureRouteError("api/wc26/knockout-fixtures", error);
 
-    return NextResponse.json(
+    return publicJson(
       {
         error: code,
         message: apiFootballErrorMessage(code),
         fixtures: [],
-        logs: [],
+        source: "static",
       },
-      {
-        status: code === "unknown_error" ? 500 : 503,
-        headers: { "Cache-Control": "no-store" },
-      },
+      { status: code === "unknown_error" ? 500 : 503 },
     );
   }
 }

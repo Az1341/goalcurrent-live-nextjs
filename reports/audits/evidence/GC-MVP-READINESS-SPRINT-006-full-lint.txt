@@ -1,0 +1,552 @@
+﻿node.exe : npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm warn Unknow...config options.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\screenshot-helper.js
+  1:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\screenshot-helper2.js
+  1:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\screenshot-helper3.js
+  1:22  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\capture-lineup-screenshots.cjs
+  1:22  error    A `require()` style import is forbidden                                 @typescript-eslint/no-require-imports
+  2:14  error    A `require()` style import is forbidden                                 @typescript-eslint/no-require-imports
+  3:12  error    A `require()` style import is forbidden                                 @typescript-eslint/no-require-imports
+  9:3   warning  Found mkdirSync from package "fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\capture-lineup-screenshots.mjs
+  1:0  error  Parsing error: File appears to be binary
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\check-message-parity.cjs
+   1:12  error    A `require()` style import is forbidden                                    @typescript-eslint/no-require-imports
+   2:14  error    A `require()` style import is forbidden                                    @typescript-eslint/no-require-imports
+  15:23  warning  Found readFileSync from package "fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+  19:20  warning  Found readdirSync from package "fs" with non literal argument at index 0   security/detect-non-literal-fs-filename
+  20:27  warning  Found readFileSync from package "fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\deep-i18n\apply.cjs
+   1:12  error    A `require()` style import is forbidden                                     @typescript-eslint/no-require-imports
+   2:14  error    A `require()` style import is forbidden                                     @typescript-eslint/no-require-imports
+  23:20  warning  Found readdirSync from package "fs" with non literal argument at index 0    security/detect-non-literal-fs-filename
+  26:28  warning  Found readFileSync from package "fs" with non literal argument at index 0   security/detect-non-literal-fs-filename
+  28:27  warning  Found readFileSync from package "fs" with non literal argument at index 0   security/detect-non-literal-fs-filename
+  30:3   warning  Found writeFileSync from package "fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\generate-locale-messages.mjs
+  282:3   warning  Found writeFileSync from package "node:fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+  302:27  warning  Found readFileSync from package "node:fs" with non literal argument at index 0   security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\migrate-locale-routes.mjs
+  21:3  warning  Found renameSync from package "node:fs" with non literal argument at index 0,1  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\patch-home-messages.cjs
+    1:12  error    A `require()` style import is forbidden                                     @typescript-eslint/no-require-imports
+    2:14  error    A `require()` style import is forbidden                                     @typescript-eslint/no-require-imports
+  106:27  warning  Found readFileSync from package "fs" with non literal argument at index 0   security/detect-non-literal-fs-filename
+  116:3   warning  Found writeFileSync from package "fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\sync-figma-final-lineups.mjs
+  122:9  warning  Found writeFile from package "node:fs/promises" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\sync-wc26-flags.mjs
+  31:9  warning  Found writeFile from package "node:fs/promises" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\translate-messages-deepl.mjs
+  1:0  error  Parsing error: Invalid character
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\verify-fundamentals.cjs
+   1:12  error    A `require()` style import is forbidden                                    @typescript-eslint/no-require-imports
+   2:14  error    A `require()` style import is forbidden                                    @typescript-eslint/no-require-imports
+  24:8   warning  Found existsSync from package "fs" with non literal argument at index 0    security/detect-non-literal-fs-filename
+  30:16  warning  Found readFileSync from package "fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+  44:21  warning  Found readdirSync from package "fs" with non literal argument at index 0   security/detect-non-literal-fs-filename
+  47:8   warning  Found existsSync from package "fs" with non literal argument at index 0    security/detect-non-literal-fs-filename
+  48:16  warning  Found readFileSync from package "fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\verify-fundamentals.mjs
+  1:0  error  Parsing error: Unterminated regular expression literal
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\scripts\write-analytics-tests.mjs
+  141:3  warning  Found writeFileSync from package "node:fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\app\[locale]\privacy\page.tsx
+  3:8  warning  'styles' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\app\api\articles\route.ts
+  2:10  warning  'respondError' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\app\api\firebase\fcm-token\route.ts
+  1:10  warning  'NextResponse' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\app\api\pl\fixtures\route.ts
+  41:11  warning  'message' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\firebase\AuthMenu.tsx
+  32:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\firebase\AuthMenu.tsx:32:5
+  30 |       return;
+  31 |     }
+> 32 |     setPushPermission(getNotificationPermission());
+     |     ^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  33 |   }, [enabled, open]);
+  34 |
+  35 |   useEffect(() => {  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\firebase\FcmRegistration.tsx
+  42:7   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\firebase\FcmRegistration.tsx:42:7
+  40 |     }
+  41 |     if ("Notification" in window) {
+> 42 |       setPermission(Notification.permission);
+     |       ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  43 |     }
+  44 |   }, []);
+  45 |                                                 react-hooks/set-state-in-effect
+  88:12  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\firebase\FcmRegistration.tsx:88:12
+  86 |     const stored = window.localStorage.getItem(STORAGE_KEY);
+  87 |     if (permission === "granted" && stored) {
+> 88 |       void register();
+     |            ^^^^^^^^ Avoid calling setState() directly within an effect
+  89 |       return;
+  90 |     }
+  91 |  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\home\v5\HomeLatestNews.tsx
+  3:15  warning  'ReactNode' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\home\v5\HomeTeamsLeagues.tsx
+  24:9  warning  'wc26TodayCount' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\BottomTabBar.tsx
+  111:9  warning  'tCommon' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+  117:5  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\BottomTabBar.tsx:117:5
+  115 |
+  116 |   useEffect(() => {
+> 117 |     setNavReady(true);
+      |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  118 |   }, []);
+  119 |
+  120 |   const handleTabNavigate = useCallback(  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\GooglePlayBadge.tsx
+  15:7  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\HeaderLocaleDropdown.tsx
+  38:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\HeaderLocaleDropdown.tsx:38:7
+  36 |   useLayoutEffect(() => {
+  37 |     if (!open) {
+> 38 |       setPanelPos(null);
+     |       ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  39 |       return;
+  40 |     }
+  41 |     syncPanelPos();  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\HeaderNavDropdown.tsx
+  39:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\HeaderNavDropdown.tsx:39:7
+  37 |   useLayoutEffect(() => {
+  38 |     if (!open) {
+> 39 |       setPanelPos(null);
+     |       ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  40 |       return;
+  41 |     }
+  42 |     syncPanelPos();  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\layout\MasterHeader.tsx
+  78:15  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\match\MatchDetailSections.tsx
+  8:10  warning  'getTeamById' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\pl\PlHubClient.tsx
+   36:6   warning  'ViewState' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     @typescript-eslint/no-unused-vars
+  103:35  warning  'teamsError' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  168:5   error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `fixturesData`, but the source dependencies were [fixturesData?.fixtures]. Inferred less specific property than source.
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\pl\PlHubClient.tsx:168:5
+  166 |
+  167 |   const nextFixture = useMemo(
+> 168 |     () =>
+      |     ^^^^^
+> 169 |       fixturesData?.fixtures.length
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 170 |         ? findNextFixture(fixturesData.fixtures)
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 171 |         : null,
+      | ^^^^^^^^^^^^^^^ Could not preserve existing manual memoization
+  172 |     [fixturesData?.fixtures],
+  173 |   );
+  174 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                react-hooks/preserve-manual-memoization
+  176:5   error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `fixturesData`, but the source dependencies were [fixturesData?.fixtures]. Inferred less specific property than source.
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\pl\PlHubClient.tsx:176:5
+  174 |
+  175 |   const latestResult = useMemo(
+> 176 |     () =>
+      |     ^^^^^
+> 177 |       fixturesData?.fixtures.length
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 178 |         ? findLatestResult(fixturesData.fixtures)
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 179 |         : null,
+      | ^^^^^^^^^^^^^^^ Could not preserve existing manual memoization
+  180 |     [fixturesData?.fixtures],
+  181 |   );
+  182 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react-hooks/preserve-manual-memoization
+  183:33  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `processedStandingsData.standings`, but the source dependencies were [processedStandingsData?.standings]. Inferred different dependency than source.
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\pl\PlHubClient.tsx:183:33
+  181 |   );
+  182 |
+> 183 |   const tableSnapshot = useMemo(() => {
+      |                                 ^^^^^^^
+> 184 |     if (!processedStandingsData?.standings.length) return [];
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 185 |     return resolveDisplayStandings(processedStandingsData.standings).slice(0, 6);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 186 |   }, [processedStandingsData?.standings]);
+      | ^^^^ Could not preserve existing manual memoization
+  187 |
+  188 |   const updatedAtLabel = useMemo(() => {
+  189 |     const iso = fixturesData?.fetchedAt ?? processedStandingsData?.fetchedAt;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             react-hooks/preserve-manual-memoization
+  188:34  error    Compilation Skipped: Existing memoization could not be preserved
+
+React Compiler has skipped optimizing this component because the existing manual memoization could not be preserved. The inferred dependencies did not match the manually specified dependencies, which could cause the value to change more or less frequently than expected. The inferred dependency was `processedStandingsData`, but the source dependencies were [fixturesData?.fetchedAt, processedStandingsData?.fetchedAt]. Inferred less specific property than source.
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\pl\PlHubClient.tsx:188:34
+  186 |   }, [processedStandingsData?.standings]);
+  187 |
+> 188 |   const updatedAtLabel = useMemo(() => {
+      |                                  ^^^^^^^
+> 189 |     const iso = fixturesData?.fetchedAt ?? processedStandingsData?.fetchedAt;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 190 |     if (!iso) return "ÔÇö";
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 191 |     return new Date(iso).toLocaleString(undefined, {
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 192 |       dateStyle: "medium",
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 193 |       timeStyle: "short",
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 194 |     });
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 195 |   }, [fixturesData?.fetchedAt, processedStandingsData?.fetchedAt]);
+      | ^^^^ Could not preserve existing manual memoization
+  196 |
+  197 |   const preseasonTable =
+  198 |     tableSnapshot.length > 0 && isPreseasonStandings(tableSnapshot);  react-hooks/preserve-manual-memoization
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\scorebat\MatchHighlightsSection.tsx
+  25:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\scorebat\MatchHighlightsSection.tsx:25:5
+  23 |   useEffect(() => {
+  24 |     readyRef.current = false;
+> 25 |     setReady(false);
+     |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  26 |     setFailed(false);
+  27 |
+  28 |     const timeoutId = window.setTimeout(() => {  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\FinalWinnerCelebration.tsx
+  118:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\FinalWinnerCelebration.tsx:118:5
+  116 |
+  117 |   useEffect(() => {
+> 118 |     setPreviewMatch(readPreviewMatch());
+      |     ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  119 |   }, []);
+  120 |
+  121 |   const finalMatch = previewMatch ?? pickFinalMatch(liveData, resultsData);  react-hooks/set-state-in-effect
+  129:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\FinalWinnerCelebration.tsx:129:7
+  127 |   useEffect(() => {
+  128 |     if (!result) {
+> 129 |       setOverlayDismissed(null);
+      |       ^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  130 |       setBannerHidden(null);
+  131 |       return;
+  132 |     }                      react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\GroupHubContent.tsx
+  8:8  warning  'TeamLink' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\GroupsHubContent.tsx
+  5:3  warning  'WC26_TOURNAMENT' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\TeamsSection.tsx
+  22:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\TeamsSection.tsx:22:7
+  20 |     const q = new URLSearchParams(window.location.search).get("q");
+  21 |     if (q) {
+> 22 |       setQuery(q);
+     |       ^^^^^^^^ Avoid calling setState() directly within an effect
+  23 |     }
+  24 |   }, []);
+  25 |  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\bracket\BracketMatchNode.tsx
+  86:3  warning  'matchNumber' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\bracket\BracketPageClient.tsx
+  47:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\bracket\BracketPageClient.tsx:47:5
+  45 |
+  46 |   useEffect(() => {
+> 47 |     setHydrated(true);
+     |     ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  48 |     setLastUpdated(new Date());
+  49 |   }, []);
+  50 |  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\bracket\BracketView.tsx
+  252:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\bracket\BracketView.tsx:252:5
+  250 |
+  251 |   useEffect(() => {
+> 252 |     setReady(true);
+      |     ^^^^^^^^ Avoid calling setState() directly within an effect
+  253 |   }, []);
+  254 |
+  255 |   const width = bracketWidth();  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\bracket\useCountdown.ts
+  10:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\components\wc26\bracket\useCountdown.ts:10:7
+   8 |   useEffect(() => {
+   9 |     if (!targetUtc) {
+> 10 |       setRemainingMs(null);
+     |       ^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  11 |       return;
+  12 |     }
+  13 |  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\contexts\FirebaseAuthContext.tsx
+  46:7  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\contexts\FirebaseAuthContext.tsx:46:7
+  44 |   useEffect(() => {
+  45 |     if (!enabled) {
+> 46 |       setLoading(false);
+     |       ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  47 |       return;
+  48 |     }
+  49 |  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\data\wc26\groups.ts
+  3:3  warning  'WC26_GROUP_IDS' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\analytics\internal-traffic.ts
+  22:3  warning  Potential timing attack, right side: true  security/detect-possible-timing-attacks
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\client\useLiveTopScorers.ts
+  23:6  warning  React Hook useEffect has a missing dependency: 'swr'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\editorial-news.ts
+  3:3  warning  'getEditorialNewsArticles' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\firebase\client.ts
+  50:21  warning  '_vapidKey' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\firebase\messaging-sw.ts
+  11:21  warning  '_vapidKey' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\pl\api-core.ts
+   2:3  warning  'API_FOOTBALL_BASE_URL' is defined but never used  @typescript-eslint/no-unused-vars
+  69:6  warning  'ApiFootballPayload' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\pl\api.ts
+  80:10  warning  'isAuthError' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\seo\schema.ts
+  55:23  warning  '_context' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\use-effective-fixtures.ts
+  21:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\use-effective-fixtures.ts:21:5
+  19 |
+  20 |   useEffect(() => {
+> 21 |     refresh();
+     |     ^^^^^^^ Avoid calling setState() directly within an effect
+  22 |     window.addEventListener(WC26_FIXTURES_UPDATED_EVENT, refresh);
+  23 |     return () => window.removeEventListener(WC26_FIXTURES_UPDATED_EVENT, refresh);
+  24 |   }, [refresh]);  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\use-match-detail.ts
+  87:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\use-match-detail.ts:87:5
+  85 |     }
+  86 |     storeApiFixtureId(fixtureId, apiFixtureId);
+> 87 |     setStoredApiFixtureId(apiFixtureId);
+     |     ^^^^^^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  88 |   }, [apiFixtureId, fixtureId]);
+  89 |
+  90 |   const liveScoresReady = liveScores !== undefined;  react-hooks/set-state-in-effect
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\use-wc26-tv-region.ts
+  48:6  warning  React Hook useMemo has an unnecessary dependency: 'tvRegion'. Either exclude it or remove the dependency array  react-hooks/exhaustive-deps
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\wc26-fixtures-page.ts
+  296:7  error  'cursor' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\wc26-group-hub.ts
+  10:10  warning  'resolveTeamId' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\wc26-match.ts
+  4:3  warning  'getTeamById' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\lib\youtube-videos.ts
+  70:38  warning  'apiKey' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\src\proxy.ts
+  22:3  warning  Unsafe Regular Expression  security/detect-unsafe-regex
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\tests\analytics\spa-page-view-regression.test.mjs
+   10:10  warning  Found readFileSync from package "node:fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+   14:22  warning  Found readdirSync from package "node:fs" with non literal argument at index 0   security/detect-non-literal-fs-filename
+   64:20  warning  Found readFileSync from package "node:fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+   94:11  warning  'calls' is assigned a value but never used                                      @typescript-eslint/no-unused-vars
+  103:11  warning  'origPush' is assigned a value but never used                                   @typescript-eslint/no-unused-vars
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\tests\lib\wc26-redirect-map.test.mjs
+  13:5  warning  Found non-literal argument to RegExp Constructor  security/detect-non-literal-regexp
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\tests\wc26\kickoff-display.test.mjs
+  66:14  warning  Found non-literal argument to RegExp Constructor  security/detect-non-literal-regexp
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\tests\wc26\load-confirmed-results.mjs
+  7:5  warning  Found readFileSync from package "node:fs" with non literal argument at index 0  security/detect-non-literal-fs-filename
+
+C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\tests\wc26\overlay-kickoff.test.mjs
+  22:14  warning  Found non-literal argument to RegExp Constructor  security/detect-non-literal-regexp
+
+Ô£û 98 problems (38 errors, 60 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

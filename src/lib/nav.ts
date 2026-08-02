@@ -21,7 +21,11 @@ export type MobileBottomTab = {
 export type MoreSheetSubmenuId =
   | "language"
   | "wc26"
+  | "competitions"
   | "pl"
+  | "ucl"
+  | "facup"
+  | "unl"
   | "clubs"
   | "players"
   | "tables"
@@ -29,6 +33,18 @@ export type MoreSheetSubmenuId =
   | "news"
   | "video"
   | "transfers";
+
+/** Competition child menus opened from the More → Competitions panel. */
+export const MORE_SHEET_COMPETITION_IDS = ["pl", "ucl", "facup", "unl"] as const;
+
+export type MoreSheetCompetitionId =
+  (typeof MORE_SHEET_COMPETITION_IDS)[number];
+
+export function isMoreSheetCompetitionId(
+  id: MoreSheetSubmenuId,
+): id is MoreSheetCompetitionId {
+  return (MORE_SHEET_COMPETITION_IDS as readonly string[]).includes(id);
+}
 
 export type MoreSheetLevel1Item =
   | { type: "submenu"; id: MoreSheetSubmenuId; labelKey: string }
@@ -40,7 +56,7 @@ export type DesktopDropdownSection = {
   links: NavLinkItem[];
 };
 
-/** Global favourites — saved items across all competitions. */
+/** Global favourites Ã¢â‚¬â€ saved items across all competitions. */
 export const FAVOURITES_HREF = "/favourites";
 
 /** Desktop primary links (before dropdowns). */
@@ -51,9 +67,10 @@ export const DESKTOP_PRIMARY_NAV: NavItem[] = [
   { href: "/news", labelKey: "news" },
   { href: "/articles", labelKey: "articles" },
   { href: "/videos", labelKey: "videos" },
+  { href: "/worldcup2026", labelKey: "archive" },
 ];
 
-/** Legacy / footer — full primary list for other consumers. */
+/** Legacy / footer Ã¢â‚¬â€ full primary list for other consumers. */
 export const MAIN_NAV: NavItem[] = [
   ...DESKTOP_PRIMARY_NAV,
   { href: "/premier-league", labelKey: "premierLeague", exact: true },
@@ -65,7 +82,7 @@ export const PL_NAV: NavItem[] = [
   { href: "/premier-league/fixtures", labelKey: "fixtures" },
 ];
 
-/** Premier League hub — extended section links */
+/** Premier League hub Ã¢â‚¬â€ extended section links */
 export const PL_SECTION_NAV: NavItem[] = [
   { href: "/premier-league/table", labelKey: "table2627" },
   { href: "/premier-league/fixtures", labelKey: "fixtures2627" },
@@ -85,13 +102,13 @@ export const WC26_NAV: NavItem[] = [
   { href: "/worldcup2026/bracket", labelKey: "bracket" },
 ];
 
-/** More dropdown — WC26 hub + section links (legacy) */
+/** More dropdown Ã¢â‚¬â€ WC26 hub + section links (legacy) */
 export const MORE_NAV: NavLinkItem[] = [
   { href: "/worldcup2026", labelKey: "overview" },
   ...WC26_NAV,
 ];
 
-/** Mobile bottom tab bar — primary tabs only (<769px) */
+/** Mobile bottom tab bar Ã¢â‚¬â€ primary tabs only (<769px) */
 export const MOBILE_BOTTOM_TABS: MobileBottomTab[] = [
   { id: "home", href: "/", labelKey: "home", exact: true },
   { id: "live", href: "/live", labelKey: "live" },
@@ -105,7 +122,7 @@ export const MORE_SHEET_LEVEL1: MoreSheetLevel1Item[] = [
   { type: "submenu", id: "language", labelKey: "language" },
   { type: "link", href: "/articles", labelKey: "articlesEditorial" },
   { type: "submenu", id: "wc26", labelKey: "wc26" },
-  { type: "submenu", id: "pl", labelKey: "pl2627" },
+  { type: "submenu", id: "competitions", labelKey: "competitions" },
   { type: "submenu", id: "clubs", labelKey: "clubs" },
   { type: "submenu", id: "players", labelKey: "players" },
   { type: "submenu", id: "tables", labelKey: "table" },
@@ -123,6 +140,7 @@ export const MORE_SHEET_LEVEL1: MoreSheetLevel1Item[] = [
 /** More bottom sheet — level 2 drill-down links */
 export const MORE_SHEET_SUBMENUS: Record<MoreSheetSubmenuId, NavLinkItem[]> = {
   language: [],
+  competitions: [],
   wc26: [
     { href: "/worldcup2026", labelKey: "overview" },
     { href: "/worldcup2026/fixtures", labelKey: "fixtures" },
@@ -135,16 +153,47 @@ export const MORE_SHEET_SUBMENUS: Record<MoreSheetSubmenuId, NavLinkItem[]> = {
     { href: "/videos/world-cup", labelKey: "wcVideos" },
   ],
   pl: [
-    { href: "/premier-league", labelKey: "home" },
+    { href: "/premier-league", labelKey: "plHome" },
     { href: "/premier-league/fixtures", labelKey: "fixtures" },
-    { href: "/premier-league/live", labelKey: "liveMatches" },
     { href: "/premier-league/table", labelKey: "table" },
     { href: "/premier-league/clubs", labelKey: "clubs" },
-    { href: "/premier-league/players", labelKey: "players" },
     { href: "/premier-league/statistics", labelKey: "statistics" },
-    { href: "/premier-league/transfers", labelKey: "transfers" },
-    { href: "/news/premier-league", labelKey: "news" },
-    { href: "/videos/premier-league", labelKey: "plVideos" },
+  ],
+  ucl: [
+    { href: "/champions-league", labelKey: "overview" },
+    { href: "/champions-league#ucl-fixtures", labelKey: "fixtures" },
+    { href: "/champions-league#ucl-results", labelKey: "results" },
+    { href: "/champions-league#ucl-standings", labelKey: "standings" },
+  ],
+  facup: [
+    { href: "/fa-cup", labelKey: "overview" },
+    { href: "/fa-cup#facup-fixtures", labelKey: "fixtures" },
+    { href: "/fa-cup#facup-results", labelKey: "results" },
+    { href: "/fa-cup#facup-rounds", labelKey: "rounds" },
+  ],
+  unl: [
+    { href: "/nations-league", labelKey: "overview" },
+    { href: "/nations-league#unl-fixtures", labelKey: "fixtures" },
+    { href: "/nations-league#unl-results", labelKey: "results" },
+    { href: "/nations-league#unl-standings", labelKey: "standings" },
+    { href: "/nations-league/league/a", labelKey: "leagueA" },
+    { href: "/nations-league/league/b", labelKey: "leagueB" },
+    { href: "/nations-league/league/c", labelKey: "leagueC" },
+    { href: "/nations-league/league/d", labelKey: "leagueD" },
+    { href: "/nations-league/league/a/group/1", labelKey: "groupA1" },
+    { href: "/nations-league/league/a/group/2", labelKey: "groupA2" },
+    { href: "/nations-league/league/a/group/3", labelKey: "groupA3" },
+    { href: "/nations-league/league/a/group/4", labelKey: "groupA4" },
+    { href: "/nations-league/league/b/group/1", labelKey: "groupB1" },
+    { href: "/nations-league/league/b/group/2", labelKey: "groupB2" },
+    { href: "/nations-league/league/b/group/3", labelKey: "groupB3" },
+    { href: "/nations-league/league/b/group/4", labelKey: "groupB4" },
+    { href: "/nations-league/league/c/group/1", labelKey: "groupC1" },
+    { href: "/nations-league/league/c/group/2", labelKey: "groupC2" },
+    { href: "/nations-league/league/c/group/3", labelKey: "groupC3" },
+    { href: "/nations-league/league/c/group/4", labelKey: "groupC4" },
+    { href: "/nations-league/league/d/group/1", labelKey: "groupD1" },
+    { href: "/nations-league/league/d/group/2", labelKey: "groupD2" },
   ],
   clubs: [
     { href: "/premier-league/clubs", labelKey: "plClubs" },
@@ -175,8 +224,12 @@ export const MORE_SHEET_SUBMENUS: Record<MoreSheetSubmenuId, NavLinkItem[]> = {
 
 export const MORE_SHEET_SUBMENU_TITLE_KEYS: Record<MoreSheetSubmenuId, string> = {
   language: "language",
+  competitions: "competitions",
   wc26: "wc26",
   pl: "pl2627",
+  ucl: "championsLeague",
+  facup: "faCup",
+  unl: "nationsLeague",
   clubs: "clubs",
   players: "players",
   tables: "table",
@@ -186,7 +239,7 @@ export const MORE_SHEET_SUBMENU_TITLE_KEYS: Record<MoreSheetSubmenuId, string> =
   transfers: "transfers",
 };
 
-/** Desktop PL 26/27 header dropdown — existing routes only */
+/** Desktop PL 26/27 header dropdown Ã¢â‚¬â€ existing routes only */
 export const DESKTOP_PL_DROPDOWN: NavLinkItem[] = [
   { href: "/premier-league", labelKey: "plHome" },
   { href: "/premier-league/fixtures", labelKey: "fixtures" },
@@ -195,7 +248,61 @@ export const DESKTOP_PL_DROPDOWN: NavLinkItem[] = [
   { href: "/premier-league/statistics", labelKey: "statistics" },
 ];
 
-/** Archive links for More sheet — not a live competition dropdown. */
+export type DesktopCompetitionNavGroup = {
+  id: "pl" | "ucl" | "facup" | "unl";
+  labelKey: string;
+  href: string;
+  links: readonly NavLinkItem[];
+};
+
+/** Desktop competitions menu — each competition has its own submenu */
+export const DESKTOP_COMPETITIONS_NAV: readonly DesktopCompetitionNavGroup[] = [
+  {
+    id: "pl",
+    labelKey: "pl2627",
+    href: "/premier-league",
+    links: DESKTOP_PL_DROPDOWN,
+  },
+  {
+    id: "ucl",
+    labelKey: "championsLeague",
+    href: "/champions-league",
+    links: [
+      { href: "/champions-league", labelKey: "overview" },
+      { href: "/champions-league#ucl-fixtures", labelKey: "fixtures" },
+      { href: "/champions-league#ucl-results", labelKey: "results" },
+      { href: "/champions-league#ucl-standings", labelKey: "standings" },
+    ],
+  },
+  {
+    id: "facup",
+    labelKey: "faCup",
+    href: "/fa-cup",
+    links: [
+      { href: "/fa-cup", labelKey: "overview" },
+      { href: "/fa-cup#facup-fixtures", labelKey: "fixtures" },
+      { href: "/fa-cup#facup-results", labelKey: "results" },
+      { href: "/fa-cup#facup-rounds", labelKey: "rounds" },
+    ],
+  },
+  {
+    id: "unl",
+    labelKey: "nationsLeague",
+    href: "/nations-league",
+    links: [
+      { href: "/nations-league", labelKey: "overview" },
+      { href: "/nations-league#unl-fixtures", labelKey: "fixtures" },
+      { href: "/nations-league#unl-results", labelKey: "results" },
+      { href: "/nations-league#unl-standings", labelKey: "standings" },
+      { href: "/nations-league/league/a", labelKey: "leagueA" },
+      { href: "/nations-league/league/b", labelKey: "leagueB" },
+      { href: "/nations-league/league/c", labelKey: "leagueC" },
+      { href: "/nations-league/league/d", labelKey: "leagueD" },
+    ],
+  },
+];
+
+/** Archive links for More sheet Ã¢â‚¬â€ not a live competition dropdown. */
 export const DESKTOP_WC26_DROPDOWN: NavLinkItem[] = [
   { href: "/worldcup2026", labelKey: "wc26Home" },
   { href: "/worldcup2026/bracket", labelKey: "bracket" },
@@ -209,7 +316,7 @@ export const SITE_NAV: NavItem[] = [
   { href: "/contact", labelKey: "contact" },
 ];
 
-/** Desktop top bar — all navigation links in one horizontal row */
+/** Desktop top bar Ã¢â‚¬â€ all navigation links in one horizontal row */
 export const TOP_NAV: NavItem[] = [
   ...MAIN_NAV,
   ...WC26_NAV,
@@ -284,6 +391,18 @@ export function isDesktopPlActive(pathname: string): boolean {
 
 export function isDesktopWc26Active(pathname: string): boolean {
   return pathname === "/worldcup2026" || pathname.startsWith("/worldcup2026/");
+}
+
+export function isDesktopCompetitionsActive(pathname: string): boolean {
+  return (
+    isDesktopPlActive(pathname) ||
+    pathname === "/champions-league" ||
+    pathname.startsWith("/champions-league/") ||
+    pathname === "/fa-cup" ||
+    pathname.startsWith("/fa-cup/") ||
+    pathname === "/nations-league" ||
+    pathname.startsWith("/nations-league/")
+  );
 }
 
 export function isMobileBottomTabActive(

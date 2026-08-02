@@ -1,0 +1,2 @@
+# Do not commit Search Console export ZIPs (Founder-supplied imports).
+*.zip

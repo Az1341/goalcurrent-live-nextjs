@@ -1,0 +1,77 @@
+{
+  "observation_utc": "2026-07-22T21:31:00Z",
+  "repository_inputs": [
+    {
+      "path": "reports/GC-REC-005-03-PRODUCTION-TRUTH-SNAPSHOT.md",
+      "bytes": 9916,
+      "sha256": "879f1ba697c27c2ec9cf818b83a3406246a985652b84121375c366ef005db51e",
+      "mtime_utc": "2026-07-22T21:24:41.642883+00:00",
+      "source": "repository"
+    },
+    {
+      "path": "reports/GC-REC-005-02-BRANCH-PR-DISPOSITION-AUDIT.md",
+      "bytes": 31959,
+      "sha256": "b6e854a8c6b2cb6dbcae98bb821b62150c198b257e7ddaa8d92414561eba6b69",
+      "mtime_utc": "2026-07-22T21:06:54.518615+00:00",
+      "source": "repository"
+    },
+    {
+      "path": "docs/SITEMAP-ROUTES.md",
+      "bytes": 1388,
+      "sha256": "fd99125505b19232de8555fed7f8c92408886610eb66d4efdc969098b0b757ad",
+      "mtime_utc": "2026-07-11T16:17:42.372389+00:00",
+      "source": "repository"
+    },
+    {
+      "path": "src/lib/seo/sitemap-static-paths.ts",
+      "bytes": 1542,
+      "sha256": "ab8c04c3320a251edc5ba71f51e9a59b87e5168ce3edee118b0a78ab4021ada4",
+      "mtime_utc": "2026-07-11T16:17:42.738971+00:00",
+      "source": "repository"
+    },
+    {
+      "path": "src/lib/seo/sitemap-entries.ts",
+      "bytes": 5492,
+      "sha256": "9d3f8ebf905dfc50928b52295759450772b6a0ae80e5244efd5edd5456935a56",
+      "mtime_utc": "2026-07-11T16:17:42.738971+00:00",
+      "source": "repository"
+    },
+    {
+      "path": "src/app/api/sitemap/route.ts",
+      "bytes": 673,
+      "sha256": "eb07fa09dc0cf479320f6fdab95ceb7a2f4dcd335dd58a695f843a9a2a235898",
+      "mtime_utc": "2026-07-16T19:48:00.067216+00:00",
+      "source": "repository"
+    },
+    {
+      "path": "src/lib/seo/robots-txt.ts",
+      "bytes": 239,
+      "sha256": "77f637d4270663b7a728d469b225a7ff14ccb143f4f88edb05cc4cdfe307f18f",
+      "mtime_utc": "2026-07-11T16:17:42.738971+00:00",
+      "source": "repository"
+    }
+  ],
+  "gsc_exports": [
+    {
+      "filename": "goalcurrent.live-Coverage-2026-07-22.zip",
+      "available": false,
+      "source": "google_export"
+    },
+    {
+      "filename": "goalcurrent.live-Coverage-Valid-2026-07-22.zip",
+      "available": false,
+      "source": "google_export"
+    },
+    {
+      "filename": "goalcurrent.live-Coverage-Validation-2026-07-22.zip",
+      "available": false,
+      "source": "google_export"
+    },
+    {
+      "filename": "goalcurrent.live-Coverage-Drilldown-2026-07-22.zip",
+      "available": false,
+      "source": "google_export"
+    }
+  ],
+  "observation_utc_completed": "2026-07-23T19:36:06Z"
+}

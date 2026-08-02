@@ -13,6 +13,10 @@ import {
 } from "@/lib/wc26-live";
 import { isEffectiveFixtureCompleted } from "@/lib/wc26-fixture-overlay";
 import {
+  isWc26TournamentComplete,
+  WC26_ARCHIVE_DATA_AS_OF,
+} from "@/lib/wc26/archive";
+import {
   getUkBroadcaster,
   ukBroadcasterChannels,
 } from "@/data/wc26/uk-broadcasters";
@@ -284,16 +288,21 @@ export function buildCalendarDays(
   }
 
   const todayKey = localDateKey(now.toISOString());
-  const extendedMaxKey = addDaysToDateKey(todayKey, 90);
+  const archiveComplete = isWc26TournamentComplete();
+  const extendedMaxKey = archiveComplete
+    ? WC26_ARCHIVE_DATA_AS_OF
+    : addDaysToDateKey(todayKey, 90);
 
   const fixtureKeys = [...counts.keys()].sort(compareDateKeys);
   const apiMinKey = fixtureKeys[0] ?? todayKey;
   const apiMaxKey = fixtureKeys[fixtureKeys.length - 1] ?? todayKey;
-  const minKey = minDateKey(apiMinKey, todayKey);
-  const maxKey = maxDateKey(apiMaxKey, extendedMaxKey);
+  const minKey = archiveComplete ? apiMinKey : minDateKey(apiMinKey, todayKey);
+  const maxKey = archiveComplete
+    ? minDateKey(apiMaxKey, WC26_ARCHIVE_DATA_AS_OF)
+    : maxDateKey(apiMaxKey, extendedMaxKey);
 
   const days: CalendarDay[] = [];
-  let cursor = new Date(`${minKey}T12:00:00`);
+  const cursor = new Date(`${minKey}T12:00:00`);
   const end = new Date(`${maxKey}T12:00:00`);
 
   while (cursor <= end) {
@@ -319,6 +328,12 @@ export function pickDefaultDateKey(
   if (days.length === 0) {
     return "";
   }
+
+  if (isWc26TournamentComplete()) {
+    const lastWithFixtures = [...days].reverse().find((day) => day.count > 0);
+    return lastWithFixtures?.dateKey ?? days[days.length - 1].dateKey;
+  }
+
   const todayKey = localDateKey(now.toISOString());
   if (days.some((d) => d.dateKey === todayKey)) {
     return todayKey;

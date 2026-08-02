@@ -1,0 +1,50 @@
+[
+  {
+    "filename": "goalcurrent.live-Coverage-2026-07-22.zip",
+    "bytes": 1175,
+    "sha256": "49a7f5bf3a27c0b48e411db5e19169158f81621c616e7a5c50f5ddb6d77bc3bf",
+    "mtime_utc": "2026-07-23T20:17:23.122156+00:00",
+    "members": [
+      "Chart.csv",
+      "Critical issues.csv",
+      "Non-critical issues.csv",
+      "Metadata.csv"
+    ],
+    "zip_integrity_ok": true
+  },
+  {
+    "filename": "goalcurrent.live-Coverage-Valid-2026-07-22.zip",
+    "bytes": 5812,
+    "sha256": "3e650b6246c5a694ac9fbb689e03724209108fa032f465b50baebc4134f799d0",
+    "mtime_utc": "2026-07-23T20:14:44.937703+00:00",
+    "members": [
+      "Chart.csv",
+      "Table.csv",
+      "Metadata.csv"
+    ],
+    "zip_integrity_ok": true
+  },
+  {
+    "filename": "goalcurrent.live-Coverage-Validation-2026-07-22.zip",
+    "bytes": 4943,
+    "sha256": "7de9c8fd9dee028ea2811b0e7e8550b2aa7baaa883f9cad09fc0a4e45695e3f0",
+    "mtime_utc": "2026-07-23T20:16:06.091647+00:00",
+    "members": [
+      "Table.csv",
+      "Metadata.csv"
+    ],
+    "zip_integrity_ok": true
+  },
+  {
+    "filename": "goalcurrent.live-Coverage-Drilldown-2026-07-22.zip",
+    "bytes": 5169,
+    "sha256": "323054a1bb45f29623dbb71217c7a448450ebc82f6cbb5c49479ce18ce96f853",
+    "mtime_utc": "2026-07-23T20:16:44.130818+00:00",
+    "members": [
+      "Chart.csv",
+      "Table.csv",
+      "Metadata.csv"
+    ],
+    "zip_integrity_ok": true
+  }
+]

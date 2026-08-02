@@ -91,18 +91,35 @@ export function clientIpFromRequest(request: Request): string {
   return "unknown";
 }
 
-/** Gate debug/diagnostic routes behind DEBUG_SECRET or CRON_SECRET. */
-export function isDebugAuthorized(request: Request): boolean {
-  const secret =
-    process.env.DEBUG_SECRET?.trim() || process.env.CRON_SECRET?.trim();
-  if (!secret) {
-    return process.env.NODE_ENV === "development";
+/**
+ * BE-005 / RSR-003 — authorize debug/diagnostic routes with DEBUG_SECRET only.
+ * Never accept the cron secret via Bearer, x-cron-secret, or env fallback.
+ * Fail closed when DEBUG_SECRET is unset in every environment (including development).
+ */
+export function authorizeDebugAccess(options: {
+  debugSecret: string | undefined;
+  nodeEnv: string | undefined;
+  authorizationHeader: string | null;
+  debugSecretHeader: string | null;
+}): boolean {
+  const debugSecret = options.debugSecret?.trim();
+  if (!debugSecret) {
+    return false;
   }
 
-  const authHeader = request.headers.get("authorization");
-  if (authHeader === `Bearer ${secret}`) {
+  if (options.authorizationHeader === `Bearer ${debugSecret}`) {
     return true;
   }
 
-  return request.headers.get("x-debug-secret") === secret;
+  return options.debugSecretHeader === debugSecret;
+}
+
+/** Gate debug/diagnostic routes behind DEBUG_SECRET only (never the cron secret). */
+export function isDebugAuthorized(request: Request): boolean {
+  return authorizeDebugAccess({
+    debugSecret: process.env.DEBUG_SECRET,
+    nodeEnv: process.env.NODE_ENV,
+    authorizationHeader: request.headers.get("authorization"),
+    debugSecretHeader: request.headers.get("x-debug-secret"),
+  });
 }

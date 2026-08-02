@@ -1,0 +1,222 @@
+[22/07/2026 – 22:35 BST]
+
+# GC-REC-005-03 — Production Truth Snapshot
+
+## 1. Executive header
+
+| Field | Value |
+| --- | --- |
+| Project | GoalCurrent (`goalcurrent.live`) |
+| Task ID | GC-REC-005-03 |
+| Execution batch | GC-EXECUTION-BATCH-005 |
+| Type | Evidence-only production audit |
+| Status | Complete (documentation deliverable) |
+| Repository | [Az1341/goalcurrent.live](https://github.com/Az1341/goalcurrent.live) |
+| Working branch | `recovery/gc-exec-batch-005` |
+| Audit starting SHA | `500e905077e6c82e385ac9789e047b3b8bf5d007` |
+| Approved production baseline (`origin/main`) | `20515a11b12026bb6e90c47b023cfb582ab8f718` |
+| Primary observation UTC | `2026-07-22T21:21:56Z` |
+
+## 2. Executive verdict
+
+Production at **https://goalcurrent.live** is served by **Vercel** at Git commit **`20515a11b12026bb6e90c47b023cfb582ab8f718`**, matching **`origin/main`**. World Cup 2026 is **publicly presented as a completed archive** on the hub and in completed-match lists; **no Spain–Argentina LIVE state** was observed. **Wording conflicts** remain (`/live` and M104 SEO still use “live” language; the global ticker is named “Live scores” but shows **FT** results). Premier League **2026/27** uses **pre-season** API data (zero table, upcoming fixtures, empty live). **GitHub Pages** responds but is **not** the production host. **PR #11** remains **Draft/open** and was not modified.
+
+## 3. Observation timestamp and timezone
+
+- **Primary probe window:** `2026-07-22T21:21:56Z` (UTC)
+- **Browser snapshots:** same session (~22:21–22:32 UTC / BST)
+- **M104 kickoff display (browser):** “Sun, Jul 19, 20:00 GMT+1”
+
+## 4. Repository and deployment identity
+
+| Item | Evidence |
+| --- | --- |
+| Public domain | `https://goalcurrent.live` |
+| Provider | **Vercel** (`Server: Vercel`, `x-vercel-id` on probes) |
+| GitHub Production deployment ID | **5539597252** |
+| Deployment created | **2026-07-21T13:57:06Z** |
+| Deployment SHA | **`20515a11b12026bb6e90c47b023cfb582ab8f718`** |
+| Matches `origin/main` | **Yes** (subtask 01 `git rev-parse origin/main`) |
+| Deployment status | GitHub **success** — “Deployment has completed” |
+| GitHub Pages | `https://az1341.github.io/goalcurrent.live/` → **200**, `Server: GitHub.com`, Last-Modified **19 Jul 2026** — **not production** |
+| PR #11 | **OPEN**, **Draft**, head **`5ed5b3cd827627a18b40e6879309f184acbab63f`** |
+
+## 5. Evidence-collection method
+
+Git pre-gate; GitHub Deployments API; non-mutating GET probes (User-Agent `GoalCurrent-GC-REC-005-03-audit/1.0`); HTML metadata regex; browser accessibility snapshots; full `/sitemap.xml` fetch for counts only (not committed, ~4.1 MB). No deployments or code changes.
+
+## 6. Production-route inventory
+
+| Surface | URL |
+| --- | --- |
+| Homepage | `https://goalcurrent.live/` |
+| Live | `https://goalcurrent.live/live` |
+| WC hub | `https://goalcurrent.live/worldcup2026` |
+| WC final (M104) | `https://goalcurrent.live/match/fixture-104` |
+| WC bracket | `https://goalcurrent.live/worldcup2026/bracket` |
+| PL hub | `https://goalcurrent.live/premier-league` |
+| robots | `https://goalcurrent.live/robots.txt` |
+| Sitemap | `https://goalcurrent.live/sitemap.xml` |
+| News sitemap | `https://goalcurrent.live/sitemap-news.xml` |
+
+Locales in sitemap hreflang: **en, fa, ar, fr, de, nl, es, pt, it** + x-default (`localePrefix: as-needed` in repo).
+
+## 7. HTTP response matrix
+
+Observation UTC: **2026-07-22T21:21:56Z**. Redirect chains: **none** (final URL equals requested).
+
+| URL | Status | ms | bytes | x-vercel-cache | Cache-Control (note) |
+| --- | ---: | ---: | ---: | --- | --- |
+| `/` | 200 | 355 | 87794 | HIT | s-maxage=30, SWR |
+| `/live` | 200 | 429 | 226026 | MISS | private, no-store |
+| `/worldcup2026` | 200 | 196 | 98630 | HIT | public, must-revalidate |
+| `/match/fixture-104` | 200 | 139 | 87387 | HIT | public, must-revalidate |
+| `/worldcup2026/bracket` | 200 | 426 | 145948 | MISS | private, no-store |
+| `/premier-league` | 200 | 147 | 84240 | HIT | public, must-revalidate |
+| `/robots.txt` | 200 | 113 | 137 | HIT | max-age=3600 |
+| `/sitemap.xml` | 200 | 1237 | 4085382 | HIT | max-age=3600 |
+
+## 8. SEO metadata matrix
+
+| Route | Title | Description tone | Canonical | hreflang | Canonical 200 |
+| --- | --- | --- | --- | ---: | --- |
+| `/` | Live Football Scores… | Live global scores | `https://goalcurrent.live` | 10 | yes |
+| `/live` | Live Scores | WC 2026 **live** scores | `/live` | 10 | yes |
+| `/worldcup2026` | WC 2026 **Archive** | Final results / archive | `/worldcup2026` | 10 | yes |
+| `/match/fixture-104` | Spain vs Argentina | **Live centre**… | `/match/fixture-104` | 10 | yes |
+| `/worldcup2026/bracket` | Archive · Final Bracket | Historical KO | `/worldcup2026/bracket` | 10 | yes |
+| `/premier-league` | PL 2026/27 | Current hub | `/premier-league` | 10 | yes |
+
+**Misalignment:** archive UX vs **live** SEO on `/live` and M104.
+
+## 9. Visible-state matrix
+
+**Browser (logged-out):**
+
+| Surface | Observed state |
+| --- | --- |
+| `/worldcup2026` | H1 “FIFA World Cup 2026 Archive”; champion **Spain 1–0 Argentina AET**; ticker all **FT**; explicit non-live notice |
+| `/live` | H1 “Live Scores — World Cup 2026”; **No live matches**; long **Completed** list; “Syncing live data…” |
+| `/match/fixture-104` | Final M104; lineups shown; timeline/stats **Loading…** |
+| `/premier-league` | H1 PL 2026/27; snapshot **Loading hub** / fetching data |
+| Global ticker | Label “Live scores ticker”; content **FT** matches |
+
+## 10. World Cup consistency findings
+
+- **Completed presentation:** hub + completed lists; API **`/api/wc26/scores`** → **104** matches, **0 LIVE** (9 finished as **PEN**/**AET**).
+- **Final:** Spain 1–0 Argentina consistent on hub, ticker, and completed `/live` rows.
+- **LIVE Spain–Argentina:** **not observed** in browser or scores API.
+- **`/api/wc26/fixtures`:** returns **`[]`** while scores lists 104 — **data-surface mismatch**.
+- **Bracket vs every result:** not pair-verified here — **GC-REC-005-04**.
+- **Archive labelling:** strong on hub; weak on `/live` and some SEO.
+
+## 11. Premier League findings
+
+- **Season:** 2026/27 in UI; API season **2026**.
+- **`/api/pl/standings`:** all teams **played 0**, points **0**.
+- **`/api/pl/fixtures`:** **UPCOMING** from **2026-08-21**.
+- **`/api/pl/live`:** **empty** fixtures array, `source: api-football`.
+- **SEO:** indexable; no meta robots block observed.
+
+## 12. Robots findings
+
+```
+User-agent: *
+Allow: /
+Disallow: /api/
+Sitemap: https://goalcurrent.live/sitemap.xml
+Sitemap: https://goalcurrent.live/sitemap-news.xml
+```
+
+(`/api/robots` body matches.)
+
+## 13. Sitemap findings
+
+| Metric | Value |
+| --- | --- |
+| `/sitemap.xml` | **3,177** unique `<loc>` URLs (~4.09 MB) |
+| Structure | Single **urlset** (not a sitemap index) |
+| WC + `/match/` URLs | ~**2,484** |
+| PL URLs | ~**315** |
+| Locale-prefixed | ~**2,824** |
+| `/sitemap-news.xml` | **0** `<loc>` (179 bytes) |
+| Per-URL 200/canonical audit | **Deferred** (GC-REC-005-04) |
+
+## 14. Public API / data findings
+
+| Endpoint | Status | Notes |
+| --- | ---: | --- |
+| `/api/wc26/scores` | 200 | 104 finished matches |
+| `/api/wc26/fixtures` | 200 | Empty `[]` |
+| `/api/wc26/knockout-fixtures` | 200 | Knockout metadata |
+| `/api/wc26/match/fixture-104` | 200 | Events/lineups/stats; no top-level status |
+| `/api/scores` | 200 | WC-style feed |
+| `/api/pl/standings` | 200 | Pre-season zeros |
+| `/api/pl/fixtures` | 200 | Upcoming schedule |
+| `/api/pl/live` | 200 | Empty live |
+| `/api/sitemap` | 200 | XML generator |
+
+No API keys in responses. Debug routes exist in repo — **not probed**.
+
+## 15. Cross-surface contradictions
+
+1. Live **branding** vs **archive** tournament state.
+2. M104 **“Live centre”** meta vs archive final.
+3. **`wc26/fixtures` empty** vs **scores populated**.
+4. **“Syncing live data”** with no live WC matches.
+5. **GitHub Pages** 200 vs canonical **Vercel** host.
+
+## 16. Security / privacy observations
+
+Public read-only audit; no auth; no secrets recorded; match/player names are public sports data.
+
+## 17. Prior-claim reconciliation
+
+| Claim | Classification |
+| --- | --- |
+| Production SHA `20515a1` = main | **VERIFIED COMPLETE** |
+| WC archive on production | **VERIFIED COMPLETE** |
+| PR #11 not merged | **VERIFIED COMPLETE** |
+| `/live` “live scores” copy vs archive era | **IMPLEMENTED BUT UNVERIFIED** |
+| Historical ~149 URL sitemap docs | **SUPERSEDED** (3,177 live) |
+| CI/Pages green | **IN PROGRESS** / not re-tested here |
+
+## 18. Status-classification table
+
+See §17; WC completed data **VERIFIED**; sitemap bulk health **PLANNED** for GC-REC-005-04.
+
+## 19. Exact immutable evidence references
+
+```bash
+git fetch origin --no-prune
+git rev-parse HEAD origin/main
+gh api repos/Az1341/goalcurrent.live/deployments?environment=Production&per_page=1
+gh api repos/Az1341/goalcurrent.live/deployments/5539597252/statuses
+gh pr view 11 --json state,isDraft,headRefOid
+# GET https://goalcurrent.live/ … (2026-07-22T21:21:56Z)
+```
+
+## 20. Known blockers and uncertainties
+
+M104/PL **loading** UI may be transient; **3,177** sitemap URLs not individually fetched; bracket graph not fully reconciled; empty **sitemap-news.xml** intent unknown.
+
+## 21. Inputs required for GC-REC-005-04
+
+Sampled sitemap URL health; bracket vs scores reconciliation; M104 hydration if reproducible; SEO/copy harmonisation plan; GitHub Pages policy.
+
+## 22. Final gate verdict
+
+| Gate | Result |
+| --- | --- |
+| Routes + deployment + HTTP + visible state | **PASS** |
+| Robots + sitemap examined | **PASS** (bulk URL check deferred) |
+| WC contradictions documented | **PASS** |
+| No production/code/PR changes | **PASS** |
+
+## 23. Validation record
+
+UTF-8 verified; reporting-standard validator skipped (snapshot doc); secret scan PASS on report; no app/config changes.
+
+---
+
+*Report version: 1.0.0 — GC-REC-005-03*

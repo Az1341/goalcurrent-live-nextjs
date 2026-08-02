@@ -1,17 +1,13 @@
 "use client";
 
-import useSWR from "swr";
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
 import {
-  buildHomepageMatchView,
-  selectFeaturedFixtures,
   selectHomepageFixtures,
 } from "@/lib/wc26-live";
-import { fetcher, LIVE_SWR_OPTIONS } from "@/lib/client/fetcher";
-import type { PlFixturesApiResponse } from "@/lib/pl/types";
-import LiveRibbon from "@/components/layout/LiveRibbon";
+import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
+import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
 import HomeHero from "@/components/home/v5/HomeHero";
 import HomeChampionSnippet from "@/components/home/v5/HomeChampionSnippet";
 import { isWc26TournamentComplete } from "@/lib/wc26/archive";
@@ -42,15 +38,12 @@ const HomeTeamsLeagues = dynamic(
 
 export default function HomeClient() {
   const fixtures = useEffectiveFixtures();
-  const featuredSelection = selectFeaturedFixtures(fixtures);
-  const featuredMatch = featuredSelection.fixtures[0]
-    ? buildHomepageMatchView(featuredSelection.fixtures[0], fixtures)
-    : undefined;
+  const { data: plData } = useLiveFixtures();
+  const plFixtures = plData?.fixtures ?? [];
 
-  const { data: plData } = useSWR<PlFixturesApiResponse>(
-    "/api/pl/fixtures",
-    fetcher,
-    LIVE_SWR_OPTIONS,
+  const { featuredMatch } = selectHomeFeaturedContent(
+    fixtures,
+    plFixtures,
   );
 
   const archiveComplete = isWc26TournamentComplete();
@@ -59,14 +52,8 @@ export default function HomeClient() {
     [fixtures, archiveComplete],
   );
 
-  const plFixtures = plData?.fixtures ?? [];
-
   return (
     <div className={styles.root} data-gc-home-v5>
-      <div className={styles.tickerWrap}>
-        <LiveRibbon embedded variant="v5" />
-      </div>
-
       <main className={styles.main}>
         <HomeChampionSnippet />
         <HomeHero
@@ -74,10 +61,10 @@ export default function HomeClient() {
           wc26Views={heroWc26Views}
           plFixtures={plFixtures}
         />
-        <HomeTodaysMatches fixtures={fixtures} />
+        <HomeTodaysMatches fixtures={fixtures} plFixtures={plFixtures} />
         <HomeLatestNews />
         <HomeTrendingClips />
-        <HomeTeamsLeagues fixtures={fixtures} />
+        <HomeTeamsLeagues fixtures={fixtures} plFixtures={plFixtures} />
       </main>
     </div>
   );

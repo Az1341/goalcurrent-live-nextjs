@@ -1,0 +1,193 @@
+{
+  "observation_utc": "2026-07-23T20:26:21Z",
+  "property": "goalcurrent.live",
+  "export_filename_date": "2026-07-22",
+  "limitation": "Each Table.csv is capped at 1000 example URLs; Coverage Critical issues.csv provides count-level totals only.",
+  "zip_manifest": [
+    {
+      "filename": "goalcurrent.live-Coverage-2026-07-22.zip",
+      "bytes": 1175,
+      "sha256": "49a7f5bf3a27c0b48e411db5e19169158f81621c616e7a5c50f5ddb6d77bc3bf",
+      "mtime_utc": "2026-07-23T20:17:23.122156+00:00",
+      "members": [
+        "Chart.csv",
+        "Critical issues.csv",
+        "Non-critical issues.csv",
+        "Metadata.csv"
+      ],
+      "zip_integrity_ok": true
+    },
+    {
+      "filename": "goalcurrent.live-Coverage-Valid-2026-07-22.zip",
+      "bytes": 5812,
+      "sha256": "3e650b6246c5a694ac9fbb689e03724209108fa032f465b50baebc4134f799d0",
+      "mtime_utc": "2026-07-23T20:14:44.937703+00:00",
+      "members": [
+        "Chart.csv",
+        "Table.csv",
+        "Metadata.csv"
+      ],
+      "zip_integrity_ok": true
+    },
+    {
+      "filename": "goalcurrent.live-Coverage-Validation-2026-07-22.zip",
+      "bytes": 4943,
+      "sha256": "7de9c8fd9dee028ea2811b0e7e8550b2aa7baaa883f9cad09fc0a4e45695e3f0",
+      "mtime_utc": "2026-07-23T20:16:06.091647+00:00",
+      "members": [
+        "Table.csv",
+        "Metadata.csv"
+      ],
+      "zip_integrity_ok": true
+    },
+    {
+      "filename": "goalcurrent.live-Coverage-Drilldown-2026-07-22.zip",
+      "bytes": 5169,
+      "sha256": "323054a1bb45f29623dbb71217c7a448450ebc82f6cbb5c49479ce18ce96f853",
+      "mtime_utc": "2026-07-23T20:16:44.130818+00:00",
+      "members": [
+        "Chart.csv",
+        "Table.csv",
+        "Metadata.csv"
+      ],
+      "zip_integrity_ok": true
+    }
+  ],
+  "issue_totals_coverage": [
+    {
+      "reason": "Alternative page with proper canonical tag",
+      "source": "Website",
+      "validation": "Failed",
+      "pages_reported": 1397
+    },
+    {
+      "reason": "Page with redirect",
+      "source": "Website",
+      "validation": "Failed",
+      "pages_reported": 526
+    },
+    {
+      "reason": "Excluded by \u2018noindex\u2019 tag",
+      "source": "Website",
+      "validation": "Not Started",
+      "pages_reported": 61
+    },
+    {
+      "reason": "Soft 404",
+      "source": "Website",
+      "validation": "Not Started",
+      "pages_reported": 10
+    },
+    {
+      "reason": "Not found (404)",
+      "source": "Website",
+      "validation": "Not Started",
+      "pages_reported": 10
+    },
+    {
+      "reason": "Blocked by robots.txt",
+      "source": "Website",
+      "validation": "Not Started",
+      "pages_reported": 1
+    },
+    {
+      "reason": "Discovered \u2013 currently not indexed",
+      "source": "Google systems",
+      "validation": "Not Started",
+      "pages_reported": 1427
+    },
+    {
+      "reason": "Crawled - currently not indexed",
+      "source": "Google systems",
+      "validation": "Not Started",
+      "pages_reported": 80
+    },
+    {
+      "reason": "Duplicate, Google chose different canonical than user",
+      "source": "Google systems",
+      "validation": "Not Started",
+      "pages_reported": 10
+    },
+    {
+      "reason": "Duplicate without user-selected canonical",
+      "source": "Website",
+      "validation": "Started",
+      "pages_reported": 25
+    }
+  ],
+  "exported_table_rows": 3000,
+  "exported_unique_urls": 1931,
+  "duplicate_rows_across_exports": 1069,
+  "sitemap_urls_gc004": 3177,
+  "export_examples_exact_in_sitemap": 1188,
+  "export_examples_not_exact_in_sitemap": 743,
+  "sitemap_urls_seen_in_exports": 1188,
+  "match_kind_counts": {
+    "in_sitemap": 1188,
+    "absent_sitemap": 743
+  },
+  "valid_example_count": 1931,
+  "discovered_example_count": 1000,
+  "validation_pending_examples": 1000,
+  "route_family_valid": {
+    "static": 1033,
+    "editorial": 104,
+    "wc_match": 390,
+    "pl": 335,
+    "wc_hub": 69
+  },
+  "route_family_discovered": {
+    "static": 557,
+    "editorial": 82,
+    "wc_match": 314,
+    "pl": 17,
+    "wc_hub": 30
+  },
+  "route_family_all_examples": {
+    "static": 1033,
+    "editorial": 104,
+    "wc_match": 390,
+    "pl": 335,
+    "wc_hub": 69
+  },
+  "locale_valid": {
+    "en": 569,
+    "ar": 182,
+    "de": 188,
+    "es": 188,
+    "fa": 140,
+    "fr": 176,
+    "it": 171,
+    "nl": 161,
+    "pt": 156
+  },
+  "locale_discovered": {
+    "en": 111,
+    "ar": 114,
+    "de": 114,
+    "es": 107,
+    "fa": 93,
+    "fr": 125,
+    "it": 112,
+    "nl": 114,
+    "pt": 110
+  },
+  "valid_example_unique": 976,
+  "discovered_example_unique": 1000,
+  "overlap_indexed_and_discovered_examples": 45,
+  "valid_examples_in_current_sitemap": 233,
+  "discovered_examples_in_current_sitemap": 1000,
+  "www_in_valid_export_rows": 0,
+  "valid_table_rows": 1000,
+  "valid_table_unique_urls": 976,
+  "discovered_table_unique_urls": 1000,
+  "validation_equals_drilldown_url_set": true,
+  "validation_status_pending_rows": 1000,
+  "coverage_chart_last_date": "2026-07-10",
+  "coverage_chart_indexed_pages": 1170,
+  "coverage_chart_not_indexed_pages": 3547,
+  "indexed_valid_overlap_urls": 45,
+  "indexed_only_in_valid_export": 931,
+  "discovered_only_not_in_valid_export": 955,
+  "observation_utc_completed": "2026-07-23T20:27:07Z"
+}

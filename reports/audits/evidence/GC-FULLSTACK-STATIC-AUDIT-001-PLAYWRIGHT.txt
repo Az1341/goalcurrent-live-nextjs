@@ -1,0 +1,110 @@
+node.exe : npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (npm warn Unknow...config options.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+[WebServer] npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] npm warn Unknown env config "devdir". This will stop working in the next major version of npm. See `npm 
+help npmrc` for supported config options.
+
+Running 7 tests using 1 worker
+
+
+(node:19588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[1/7] [chromium] ÔÇ║ tests\e2e\homepage.spec.ts:9:7 ÔÇ║ Homepage ÔÇ║ loads hero and primary navigation
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[chromium] ÔÇ║ tests\e2e\homepage.spec.ts:9:7 ÔÇ║ Homepage ÔÇ║ loads hero and primary navigation
+[axe:homepage] deferred ÔÇö color-contrast: Elements must meet minimum color contrast ratio thresholds
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+
+[WebServer] [YouTube] YOUTUBE_API_KEY missing or empty after trim
+[2/7] [chromium] ÔÇ║ tests\e2e\live-journey.spec.ts:9:7 ÔÇ║ Live match journey ÔÇ║ homepage to live to match detail
+
+[chromium] ÔÇ║ tests\e2e\live-journey.spec.ts:9:7 ÔÇ║ Live match journey ÔÇ║ homepage to live to match detail
+[axe:homepage-start] deferred ÔÇö color-contrast: Elements must meet minimum color contrast ratio thresholds
+[axe:live-centre] deferred ÔÇö color-contrast: Elements must meet minimum color contrast ratio thresholds
+
+
+[axe:match-detail] deferred ÔÇö color-contrast: Elements must meet minimum color contrast ratio thresholds
+
+[axe:match-detail] moderate ÔÇö landmark-unique: Landmarks should have a unique role or role/label/title (i.e. 
+accessible name) combination
+
+[axe:match-detail] moderate ÔÇö page-has-heading-one: Page should contain a level-one heading
+[3/7] [chromium] ÔÇ║ tests\e2e\locale-mobile-nav.spec.ts:20:7 ÔÇ║ Locale switcher ÔÇ║ switches to Persian and back to English
+[4/7] [chromium] ÔÇ║ tests\e2e\locale-mobile-nav.spec.ts:36:7 ÔÇ║ Locale switcher ÔÇ║ switches to French on favourites page
+[5/7] [chromium] ÔÇ║ tests\e2e\locale-mobile-nav.spec.ts:54:7 ÔÇ║ Mobile bottom navigation ÔÇ║ bottom tabs navigate to live and favourites
+[6/7] [chromium] ÔÇ║ tests\e2e\locale-mobile-nav.spec.ts:73:7 ÔÇ║ Mobile bottom navigation ÔÇ║ More sheet opens from mobile tab bar
+[7/7] [chromium] ÔÇ║ tests\e2e\mobile-critical-journey.spec.ts:12:7 ÔÇ║ Mobile critical football journeys ÔÇ║ homepage through tabs, match, standings, more, and home return
+  7 passed (2.4m)

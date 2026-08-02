@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useMemo } from "react";
-import useSWR from "swr";
 import NewsCard, { FeaturedArticle } from "@/components/news/NewsCard";
 import type { NewsApiResponse, NewsArticle } from "@/types/news";
 import { sortPartnerNewsFeed } from "@/lib/editorial-news";
 import { EDITORIAL_SOURCE_LABEL } from "@/lib/seo/constants";
-import { fetcher, visibilityAwareRefreshInterval } from "@/lib/client/fetcher";
+import { useNewsFeed } from "@/lib/use-news-feed";
 import styles from "./news.module.css";
 
 function LoadingSkeleton() {
@@ -24,25 +23,14 @@ function LoadingSkeleton() {
   );
 }
 
-const NEWS_REFRESH_MS = 3_600_000;
-const NEWS_DEDUP_MS = 60_000;
-
 type NewsHubProps = {
   initialData?: NewsApiResponse;
 };
 
 export default function NewsHub({ initialData }: NewsHubProps) {
-  const { data, error, isLoading } = useSWR<NewsApiResponse>(
-    "/api/news",
-    fetcher,
-    {
-      fallbackData: initialData,
-      refreshInterval: () => visibilityAwareRefreshInterval(NEWS_REFRESH_MS),
-      dedupingInterval: NEWS_DEDUP_MS,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: true,
-    },
-  );
+  const { data, loading, error, sources } = useNewsFeed({
+    fallbackData: initialData,
+  });
 
   const updatedLabel = useMemo(() => {
     const payload = data?.articles.length ? data : initialData;
@@ -60,12 +48,8 @@ export default function NewsHub({ initialData }: NewsHubProps) {
     return sortPartnerNewsFeed(rssArticles);
   }, [data]);
 
-  const sources = useMemo(
-    () => data?.sources ?? [],
-    [data?.sources],
-  );
-  const showSkeleton = isLoading && articles.length === 0;
-  const showError = !!error && articles.length === 0;
+  const showSkeleton = loading && articles.length === 0;
+  const showError = error && articles.length === 0;
   const featured = articles[0];
   const rest = articles.slice(1);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useMemo } from "react";
 import { PlTeamLogo } from "@/components/pl/PlShared";
 import {
@@ -12,6 +12,7 @@ import type { PlFixtureRow, PlFixtureStatus } from "@/lib/pl/types";
 import {
   isPlBroadcasterAvailable,
 } from "@/lib/pl/pl-broadcasters";
+import { isPlSsotFixtureId } from "@/lib/pl/constants";
 import { absoluteUrl } from "@/lib/site-url";
 import styles from "./PlFixtures.module.css";
 
@@ -86,6 +87,7 @@ export default function PlFixtureCard({ fixture }: PlFixtureCardProps) {
     fixture.homeScore !== null &&
     fixture.awayScore !== null &&
     (fixture.status === "FT" || fixture.status === "LIVE");
+  const hasMatchCentre = !isPlSsotFixtureId(fixture.fixtureId);
 
   const calendarEvent = useMemo(
     () => toCalendarEvent(fixture),
@@ -151,12 +153,16 @@ export default function PlFixtureCard({ fixture }: PlFixtureCardProps) {
       </div>
 
       <div className={styles.calendarActions}>
-        <Link
-          href={`/premier-league/match/${fixture.fixtureId}`}
-          className={`${styles.calendarLink} ${styles.calendarLinkPrimary}`}
-        >
-          Match Centre
-        </Link>
+        {hasMatchCentre ? (
+          <Link
+            href={`/premier-league/match/${fixture.fixtureId}`}
+            className={`${styles.calendarLink} ${styles.calendarLinkPrimary}`}
+          >
+            Match Centre
+          </Link>
+        ) : (
+          <span className={styles.calendarLink}>Fixtures list</span>
+        )}
         <div className={styles.calendarActionsRow}>
           <a
             href={googleCalendarUrl}

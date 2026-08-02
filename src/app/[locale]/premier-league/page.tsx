@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PlHubClient from "@/components/pl/PlHubClient";
 import JsonLdScript from "@/components/seo/JsonLdScript";
 import { buildPageMetadata } from "@/lib/page-metadata";
+import { getPlSsotFixtures } from "@/lib/pl/fixtures-ssot";
 import { SITE_NAME, absoluteUrl } from "@/lib/site-url";
 
 export const metadata: Metadata = buildPageMetadata({
@@ -11,6 +12,7 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function PremierLeagueHubPage() {
+  const initialFixtures = getPlSsotFixtures();
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SportsOrganization",
@@ -22,7 +24,7 @@ export default function PremierLeagueHubPage() {
   return (
     <>
       <JsonLdScript data={jsonLd} />
-      <PlHubClient />
+      <PlHubClient initialFixtures={initialFixtures} />
     </>
   );
 }

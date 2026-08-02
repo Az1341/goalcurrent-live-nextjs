@@ -23,6 +23,7 @@ import {
   DEFAULT_TWITTER_CARD,
 } from "@/lib/seo/constants";
 import { SITE_URL, SITE_NAME } from "@/lib/site-url";
+import { deployRobotsMetadata } from "@/lib/seo/deploy-robots";
 import "../globals.css";
 
 const inter = Inter({
@@ -54,6 +55,7 @@ const vazirmatn = Vazirmatn({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  ...deployRobotsMetadata(),
   title: {
     template: `%s - ${SITE_NAME}`,
     default: `${SITE_NAME} - FIFA World Cup 2026 | Live Scores, News & Teams`,

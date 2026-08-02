@@ -1,0 +1,56 @@
+{
+  "observation_utc": "2026-07-22T21:31:00Z",
+  "robots_sitemaps_declared": [
+    "https://goalcurrent.live/sitemap.xml",
+    "https://goalcurrent.live/sitemap-news.xml"
+  ],
+  "sitemap_files": {
+    "https://goalcurrent.live/sitemap.xml": {
+      "bytes": 4085382,
+      "sha256": "3b9bdb46e5b8ea94cccff3cc0ea32b16914194c2c856633e24a1bb7aca6bd52f"
+    },
+    "https://goalcurrent.live/sitemap-news.xml": {
+      "bytes": 179,
+      "sha256": "1d39feae470870fbf1c28b16795270b7783a44a0fe9cc4fa829da57da3cdff66"
+    }
+  },
+  "unique_sitemap_urls": 3177,
+  "gc_rec_005_03_reported_unique": 3177,
+  "raw_loc_entries": 3177,
+  "duplicate_loc_rows": 0,
+  "urls_tested": 3177,
+  "http_status_totals": {
+    "200": 3177
+  },
+  "transport_errors": 0,
+  "redirect_hop_urls": 0,
+  "meta_noindex_urls": 0,
+  "canonical_missing_200": 0,
+  "soft404_heuristic": 3150,
+  "syncing_heuristic": 355,
+  "route_family_counts": {
+    "static": 2004,
+    "wc_match": 1040,
+    "editorial": 36,
+    "pl": 29,
+    "wc_hub": 68
+  },
+  "locale_counts": {
+    "en": 353,
+    "ar": 353,
+    "de": 353,
+    "es": 353,
+    "fa": 353,
+    "fr": 353,
+    "it": 353,
+    "nl": 353,
+    "pt": 353
+  },
+  "gsc_exports_available": false,
+  "observation_utc_retry": "2026-07-23T19:34:43Z",
+  "canonical_missing_200_html": 0,
+  "canonical_locale_to_en": 2824,
+  "canonical_en_self": 243,
+  "canonical_other_heuristic": 110,
+  "audit_completed_utc": "2026-07-23T19:36:06Z"
+}

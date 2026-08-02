@@ -65,6 +65,8 @@ export default async function MatchPage({ params }: MatchPageProps) {
 
   const fixture = getFixtureById(fixtureId)!;
   const seoFixtures = getSeoEffectiveFixtures();
+  const effectiveFixture =
+    seoFixtures.find((entry) => entry.id === fixtureId) ?? fixture;
   const homeName = resolveFixtureParticipantLabel(fixture, "home", seoFixtures);
   const awayName = resolveFixtureParticipantLabel(fixture, "away", seoFixtures);
   const venue = getVenueById(fixture.venueId);
@@ -84,7 +86,7 @@ export default async function MatchPage({ params }: MatchPageProps) {
           country: venue?.country,
           competition: "FIFA World Cup 2026",
           organizerUrl: "https://www.fifa.com/fifaplus/en/tournaments/mens/worldcup/canadamexicousa2026",
-          eventStatus: sportsEventStatus(String(fixture.status)),
+          eventStatus: sportsEventStatus(String(effectiveFixture.status)),
           description: `FIFA World Cup 2026 — ${homeName} vs ${awayName}. Live scores, lineups and statistics on ${SITE_NAME}.`,
           image: absoluteUrl("/icons/screenshot-desktop.png"),
         }}
@@ -99,7 +101,7 @@ export default async function MatchPage({ params }: MatchPageProps) {
         competition="FIFA World Cup 2026"
         homeTeam={analyticsTeamLabel(homeName)}
         awayTeam={analyticsTeamLabel(awayName)}
-        matchStatus={String(fixture.status)}
+        matchStatus={String(effectiveFixture.status)}
       />
       <MatchPageClient fixtureId={fixtureId} scorebatHighlight={scorebatHighlight} />
     </ErrorBoundary>

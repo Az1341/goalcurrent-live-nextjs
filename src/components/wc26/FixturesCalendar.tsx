@@ -38,6 +38,7 @@ import {
   classifyFixtureMatch,
   type FixtureMatchClass,
 } from "@/lib/wc26-fixtures-page";
+import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import {
   formatBstKickoffTime,
   formatVenueKickoffTime,
@@ -340,6 +341,16 @@ export default function FixturesCalendar() {
 
   /** Today stays centred in the calendar strip (non-negotiable layout rule). */
   const calendarCenterKey = useMemo(() => {
+    if (isWc26TournamentComplete()) {
+      const lastWithFixtures = [...calendarDays]
+        .reverse()
+        .find((day) => day.count > 0);
+      return (
+        lastWithFixtures?.dateKey ??
+        calendarDays[calendarDays.length - 1]?.dateKey ??
+        ""
+      );
+    }
     const today = todayKey || localDateKey(new Date().toISOString());
     if (calendarDays.some((d) => d.dateKey === today)) {
       return today;

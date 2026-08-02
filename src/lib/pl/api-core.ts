@@ -1,5 +1,4 @@
 import {
-  API_FOOTBALL_BASE_URL,
   PL_LEAGUE_ID,
   PL_LEAGUE_NAME,
   PL_SEASON,
@@ -11,10 +10,13 @@ import {
 } from "@/lib/api-football/client";
 import {
   ApiFootballAuthError,
+  ApiFootballNetworkError,
   ApiFootballRateLimitError,
+  apiFootballClientSafeFetchFailureMessage,
   isAuthErrorMessage,
   isQuotaErrorMessage,
 } from "@/lib/api-football/errors";
+import { logError } from "@/lib/log";
 import type { PlStandingsSource } from "@/lib/pl/types";
 
 export function getApiKey(): string | undefined {
@@ -66,17 +68,52 @@ export function plGenericCacheControl(
   return "s-maxage=3600, stale-while-revalidate=300";
 }
 
-type ApiFootballPayload<T> = {
-  errors?: Record<string, string>;
-  results?: number;
-  paging?: { current: number; total: number };
-  response?: T;
-};
-
 export type ApiFootballFetchResult<T> =
   | { ok: true; data: T; results: number }
   | { ok: false; kind: "unconfigured" }
-  | { ok: false; kind: "auth" | "quota" | "api"; message: string };
+  | {
+      ok: false;
+      kind: "auth" | "quota" | "api" | "network";
+      message: string;
+    };
+
+/**
+ * Map a thrown provider/network error to a client-safe fetch failure.
+ * Original exception text is retained only via server-side logError.
+ */
+export function toClientSafeApiFootballFetchFailure(
+  error: unknown,
+  context = "pl/api-core",
+): Extract<ApiFootballFetchResult<unknown>, { ok: false }> {
+  logError(context, error);
+
+  if (error instanceof ApiFootballRateLimitError) {
+    return {
+      ok: false,
+      kind: "quota",
+      message: apiFootballClientSafeFetchFailureMessage("quota"),
+    };
+  }
+  if (error instanceof ApiFootballAuthError) {
+    return {
+      ok: false,
+      kind: "auth",
+      message: apiFootballClientSafeFetchFailureMessage("auth"),
+    };
+  }
+  if (error instanceof ApiFootballNetworkError) {
+    return {
+      ok: false,
+      kind: "network",
+      message: apiFootballClientSafeFetchFailureMessage("network"),
+    };
+  }
+  return {
+    ok: false,
+    kind: "api",
+    message: apiFootballClientSafeFetchFailureMessage("api"),
+  };
+}
 
 export async function apiFootballFetch<T>(
   path: string,
@@ -89,18 +126,10 @@ export async function apiFootballFetch<T>(
     const result = await fetchApiFootball<T>(path);
     return { ok: true, data: result.data, results: result.results };
   } catch (error) {
-    if (error instanceof ApiFootballRateLimitError) {
-      return { ok: false, kind: "quota", message: error.message };
-    }
-    if (error instanceof ApiFootballAuthError) {
-      return {
-        ok: false,
-        kind: "auth",
-        message: "API key rejected. Check API_FOOTBALL_KEY.",
-      };
-    }
-    const message = error instanceof Error ? error.message : "API error";
-    return { ok: false, kind: "api", message };
+    return toClientSafeApiFootballFetchFailure(
+      error,
+      "pl/api-core/apiFootballFetch",
+    );
   }
 }
 
@@ -115,17 +144,9 @@ export async function apiFootballFetchAllPages<TItem>(
     const result = await fetchAllApiFootballPages<TItem>(buildPath);
     return { ok: true, data: result.data, results: result.results };
   } catch (error) {
-    if (error instanceof ApiFootballRateLimitError) {
-      return { ok: false, kind: "quota", message: error.message };
-    }
-    if (error instanceof ApiFootballAuthError) {
-      return {
-        ok: false,
-        kind: "auth",
-        message: "API key rejected. Check API_FOOTBALL_KEY.",
-      };
-    }
-    const message = error instanceof Error ? error.message : "API error";
-    return { ok: false, kind: "api", message };
+    return toClientSafeApiFootballFetchFailure(
+      error,
+      "pl/api-core/apiFootballFetchAllPages",
+    );
   }
 }

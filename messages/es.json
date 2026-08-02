@@ -80,7 +80,33 @@
     "facebook": "Facebook",
     "instagram": "Instagram",
     "tiktok": "TikTok",
-    "twitter": "X / Twitter"
+    "twitter": "X / Twitter",
+    "results": "Results",
+    "rounds": "Rounds",
+    "archive": "Archive",
+    "fixtureCalendar": "Partidos",
+    "championsLeague": "Champions League 26/27",
+    "faCup": "FA Cup 26/27",
+    "nationsLeague": "Nations League 26/27",
+    "leagueA": "League A",
+    "leagueB": "League B",
+    "leagueC": "League C",
+    "leagueD": "League D",
+    "groupA1": "Group A1",
+    "groupA2": "Group A2",
+    "groupA3": "Group A3",
+    "groupA4": "Group A4",
+    "groupB1": "Group B1",
+    "groupB2": "Group B2",
+    "groupB3": "Group B3",
+    "groupB4": "Group B4",
+    "groupC1": "Group C1",
+    "groupC2": "Group C2",
+    "groupC3": "Group C3",
+    "groupC4": "Group C4",
+    "groupD1": "Group D1",
+    "groupD2": "Group D2",
+    "competitions": "Competitions"
   },
   "layout": {
     "cookieConsent": {
@@ -117,7 +143,9 @@
       "allFixtures": "TODOS LOS PARTIDOS",
       "viewAllFixturesAria": "Ver todos los partidos",
       "tickerAria": "Ticker de resultados en directo",
-      "liveElapsed": "LIVE {elapsed}'"
+      "liveElapsed": "LIVE {elapsed}'",
+      "archive": "ARCHIVO",
+      "emptyArchiveMessage": "El Mundial 2026 ha terminado — consulta el archivo"
     }
   },
   "errors": {
@@ -374,12 +402,14 @@
       "liveNow": "En vivo",
       "today": "Hoy",
       "upcoming": "Proximos partidos",
-      "completed": "Finalizados"
+      "completed": "Finalizados",
+      "archiveLive": "En vivo"
     },
     "empty": {
       "liveNow": "No hay partidos en vivo.",
       "today": "No hay partidos hoy.",
-      "completed": "Aun no hay partidos finalizados."
+      "completed": "Aun no hay partidos finalizados.",
+      "archiveLiveNow": "No hay partidos en vivo — el Mundial 2026 ha terminado (Archivo). Ver finalizados abajo."
     },
     "backToHub": "Volver al hub del Mundial 2026",
     "countdown": {
@@ -392,6 +422,11 @@
       "viewMatchCentreArrow": "Centro del partido →",
       "liveNowAria": "{home} vs {away} — live now, approximately {min} minutes elapsed",
       "nextMatchAria": "Next match: {home} vs {away}, kick-off in {countdown}"
-    }
+    },
+    "archivePageTitle": "Archivo — {competition}",
+    "archivePageIntro": "El Mundial 2026 ha terminado. Los resultados son de archivo / finalizados — no en vivo.",
+    "neutralPageTitle": "Live and upcoming",
+    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
+    "archiveHubLink": "World Cup 2026 Archive"
   }
 }

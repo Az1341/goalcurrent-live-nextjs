@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useMemo } from "react";
 import PlFixtureCard from "@/components/pl/PlFixtureCard";
 import { useLiveFixtures } from "@/lib/client/useLiveFixtures";

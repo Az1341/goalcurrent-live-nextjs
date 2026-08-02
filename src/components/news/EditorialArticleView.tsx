@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { EditorialArticle } from "@/types/editorial";
 import { EDITORIAL_SOURCE_LABEL } from "@/lib/seo/constants";
 import styles from "./news.module.css";

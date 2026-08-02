@@ -1,0 +1,96 @@
+{
+  "urls_total": 3177,
+  "http_200": 3177,
+  "transport_errors": 0,
+  "redirect_hops": 0,
+  "meta_noindex": 0,
+  "canonical_issue_counts": {
+    "self_canonical": 249,
+    "path_mismatch": 2928
+  },
+  "soft404_heuristic": 3150,
+  "syncing_heuristic": 355,
+  "hreflang_zero_count": 0,
+  "hreflang_gte9_count": 3177,
+  "route_family_detail": {
+    "static": {
+      "count": 2004,
+      "noindex": 0,
+      "soft404": 1979,
+      "syncing": 20,
+      "canonical_missing": 0,
+      "live_tokens_gt0": 1955,
+      "tbd_gt0": 1955
+    },
+    "wc_match": {
+      "count": 1040,
+      "noindex": 0,
+      "soft404": 1040,
+      "syncing": 208,
+      "canonical_missing": 0,
+      "live_tokens_gt0": 1040,
+      "tbd_gt0": 1040
+    },
+    "editorial": {
+      "count": 36,
+      "noindex": 0,
+      "soft404": 34,
+      "syncing": 32,
+      "canonical_missing": 0,
+      "live_tokens_gt0": 33,
+      "tbd_gt0": 33
+    },
+    "pl": {
+      "count": 29,
+      "noindex": 0,
+      "soft404": 29,
+      "syncing": 29,
+      "canonical_missing": 0,
+      "live_tokens_gt0": 29,
+      "tbd_gt0": 29
+    },
+    "wc_hub": {
+      "count": 68,
+      "noindex": 0,
+      "soft404": 68,
+      "syncing": 66,
+      "canonical_missing": 0,
+      "live_tokens_gt0": 66,
+      "tbd_gt0": 66
+    }
+  },
+  "wc_m104_rows": 18,
+  "wc_m104_sample": [
+    {
+      "loc": "https://goalcurrent.live/ar/match/fixture-104",
+      "title_sample": "Spain vs Argentina - GoalCurrent.live",
+      "canonical": "https://goalcurrent.live/match/fixture-104",
+      "live_tokens": "3",
+      "meta_robots": ""
+    },
+    {
+      "loc": "https://goalcurrent.live/ar/worldcup2026/match/fixture-104",
+      "title_sample": "Spain vs Argentina - GoalCurrent.live",
+      "canonical": "https://goalcurrent.live/match/fixture-104",
+      "live_tokens": "3",
+      "meta_robots": ""
+    },
+    {
+      "loc": "https://goalcurrent.live/de/match/fixture-104",
+      "title_sample": "Spain vs Argentina - GoalCurrent.live",
+      "canonical": "https://goalcurrent.live/match/fixture-104",
+      "live_tokens": "5",
+      "meta_robots": ""
+    },
+    {
+      "loc": "https://goalcurrent.live/de/worldcup2026/match/fixture-104",
+      "title_sample": "Spain vs Argentina - GoalCurrent.live",
+      "canonical": "https://goalcurrent.live/match/fixture-104",
+      "live_tokens": "5",
+      "meta_robots": ""
+    }
+  ],
+  "live_route_rows": 18,
+  "pl_rows": 29,
+  "pl_syncing": 29
+}

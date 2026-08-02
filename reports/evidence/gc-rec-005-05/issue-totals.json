@@ -1,0 +1,62 @@
+[
+  {
+    "reason": "Alternative page with proper canonical tag",
+    "source": "Website",
+    "validation": "Failed",
+    "pages_reported": 1397
+  },
+  {
+    "reason": "Page with redirect",
+    "source": "Website",
+    "validation": "Failed",
+    "pages_reported": 526
+  },
+  {
+    "reason": "Excluded by \u2018noindex\u2019 tag",
+    "source": "Website",
+    "validation": "Not Started",
+    "pages_reported": 61
+  },
+  {
+    "reason": "Soft 404",
+    "source": "Website",
+    "validation": "Not Started",
+    "pages_reported": 10
+  },
+  {
+    "reason": "Not found (404)",
+    "source": "Website",
+    "validation": "Not Started",
+    "pages_reported": 10
+  },
+  {
+    "reason": "Blocked by robots.txt",
+    "source": "Website",
+    "validation": "Not Started",
+    "pages_reported": 1
+  },
+  {
+    "reason": "Discovered \u2013 currently not indexed",
+    "source": "Google systems",
+    "validation": "Not Started",
+    "pages_reported": 1427
+  },
+  {
+    "reason": "Crawled - currently not indexed",
+    "source": "Google systems",
+    "validation": "Not Started",
+    "pages_reported": 80
+  },
+  {
+    "reason": "Duplicate, Google chose different canonical than user",
+    "source": "Google systems",
+    "validation": "Not Started",
+    "pages_reported": 10
+  },
+  {
+    "reason": "Duplicate without user-selected canonical",
+    "source": "Website",
+    "validation": "Started",
+    "pages_reported": 25
+  }
+]

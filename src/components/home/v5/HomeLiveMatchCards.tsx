@@ -20,7 +20,7 @@ function Wc26StatusPill({ match }: { match: HomepageMatchView }) {
     return <span className={styles.statusLive}>{label}</span>;
   }
   if (match.matchClass === "ft") {
-    return <span className={styles.statusFt}>FT</span>;
+    return <span className={styles.statusFt}>{match.statusLabel}</span>;
   }
   return <span className={styles.statusUpcoming}>{kickoffTime}</span>;
 }
@@ -28,12 +28,30 @@ function Wc26StatusPill({ match }: { match: HomepageMatchView }) {
 function PlStatusPill({ fixture }: { fixture: PlFixtureRow }) {
   const kickoffTime = useLocalizedKickoffTime(fixture.kickoffUtc);
   if (fixture.status === "LIVE") {
+    const short = fixture.statusShort?.trim().toUpperCase();
+    const period =
+      short === "1H" || short === "2H" || short === "HT" || short === "ET" || short === "P"
+        ? short === "P"
+          ? "PEN"
+          : short
+        : null;
     const label =
-      fixture.elapsed != null ? `LIVE ${fixture.elapsed}'` : "LIVE";
+      fixture.elapsed != null
+        ? `LIVE ${fixture.elapsed}'`
+        : period ?? "LIVE";
     return <span className={styles.statusLive}>{label}</span>;
   }
   if (fixture.status === "FT") {
-    return <span className={styles.statusFt}>FT</span>;
+    const short = fixture.statusShort?.trim().toUpperCase();
+    const label =
+      short === "AET" || short === "PEN" ? short : "FT";
+    return <span className={styles.statusFt}>{label}</span>;
+  }
+  if (fixture.status === "POSTPONED") {
+    return <span className={styles.statusUpcoming}>PST</span>;
+  }
+  if (fixture.status === "CANCELLED") {
+    return <span className={styles.statusUpcoming}>CANC</span>;
   }
   return <span className={styles.statusUpcoming}>{kickoffTime}</span>;
 }

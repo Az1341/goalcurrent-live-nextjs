@@ -1,10 +1,11 @@
 "use client";
 
 import { Link } from "@/i18n/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import TeamFlag from "@/components/TeamFlag";
 import { getTeamById } from "@/data/wc26";
 import { LIVE_API_PATHS, useLiveApi } from "@/lib/client/live-data";
+import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import { LIVE_POLL_MATCH_MS } from "@/lib/client/fetcher";
 import { matchHref } from "@/lib/wc26-match";
 import {
@@ -97,22 +98,22 @@ function bannerHiddenKey(resultKey: string): string {
 }
 
 export default function FinalWinnerCelebration() {
-  const { data: liveData } = useLiveApi<Wc26ScoresApiResponse>(LIVE_API_PATHS.wc26LiveScores, {
+  const archiveComplete = isWc26TournamentComplete();
+  const livePath = archiveComplete ? null : LIVE_API_PATHS.wc26LiveScores;
+  const resultsPath = archiveComplete ? null : LIVE_API_PATHS.wc26Results;
+  const { data: liveData } = useLiveApi<Wc26ScoresApiResponse>(livePath, {
     fresh: true,
     refreshInterval: LIVE_POLL_MATCH_MS,
   });
-  const { data: resultsData } = useLiveApi<Wc26ScoresApiResponse>(LIVE_API_PATHS.wc26Results, {
+  const { data: resultsData } = useLiveApi<Wc26ScoresApiResponse>(resultsPath, {
     fresh: true,
     refreshInterval: LIVE_POLL_MATCH_MS,
   });
-  const [previewMatch, setPreviewMatch] = useState<Wc26ApiMatch | null>(null);
-  /** null = loading from storage; false = show overlay; true = show compact banner */
-  const [overlayDismissed, setOverlayDismissed] = useState<boolean | null>(null);
-  const [bannerHidden, setBannerHidden] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    setPreviewMatch(readPreviewMatch());
-  }, []);
+  const previewMatch = useSyncExternalStore(
+    () => () => {},
+    () => readPreviewMatch(),
+    () => null,
+  );
 
   const finalMatch = previewMatch ?? pickFinalMatch(liveData, resultsData);
   const result = useMemo(
@@ -120,44 +121,65 @@ export default function FinalWinnerCelebration() {
     [finalMatch],
   );
 
+  const resultKey = result?.resultKey ?? null;
+  const [overlayDismissed, setOverlayDismissed] = useState(false);
+  const [bannerHidden, setBannerHidden] = useState(false);
+  const [prefsReady, setPrefsReady] = useState(false);
+
+  // Read dismissal prefs once resultKey is known (async storage, not sync-in-effect cascade).
   useEffect(() => {
-    if (!result) {
-      setOverlayDismissed(null);
-      setBannerHidden(null);
-      return;
+    let cancelled = false;
+    if (!resultKey) {
+      queueMicrotask(() => {
+        if (!cancelled) {
+          setOverlayDismissed(false);
+          setBannerHidden(false);
+          setPrefsReady(false);
+        }
+      });
+      return () => {
+        cancelled = true;
+      };
     }
-    try {
-      setOverlayDismissed(
-        localStorage.getItem(storageKey(result.resultKey)) === "1",
-      );
-      setBannerHidden(
-        localStorage.getItem(bannerHiddenKey(result.resultKey)) === "1",
-      );
-    } catch {
-      setOverlayDismissed(false);
-      setBannerHidden(false);
-    }
-  }, [result]);
+
+    queueMicrotask(() => {
+      if (cancelled) return;
+      try {
+        setOverlayDismissed(localStorage.getItem(storageKey(resultKey)) === "1");
+        setBannerHidden(
+          localStorage.getItem(bannerHiddenKey(resultKey)) === "1",
+        );
+      } catch {
+        setOverlayDismissed(false);
+        setBannerHidden(false);
+      }
+      setPrefsReady(true);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [resultKey]);
 
   const dismissOverlay = useCallback(() => {
-    if (!result) return;
+    if (!resultKey) return;
     try {
-      localStorage.setItem(storageKey(result.resultKey), "1");
+      localStorage.setItem(storageKey(resultKey), "1");
     } catch {
       /* ignore */
     }
     setOverlayDismissed(true);
-  }, [result]);
+  }, [resultKey]);
 
   const hideBanner = useCallback(() => {
-    if (!result) return;
+    if (!resultKey) return;
     try {
-      localStorage.setItem(bannerHiddenKey(result.resultKey), "1");
+      localStorage.setItem(bannerHiddenKey(resultKey), "1");
     } catch {
       /* ignore */
     }
     setBannerHidden(true);
-  }, [result]);
+  }, [resultKey]);
 
   useEffect(() => {
     if (!result || overlayDismissed !== false) return;
@@ -173,7 +195,7 @@ export default function FinalWinnerCelebration() {
     };
   }, [dismissOverlay, overlayDismissed, result]);
 
-  if (!result || overlayDismissed == null || bannerHidden == null) {
+  if (!result || !prefsReady) {
     return null;
   }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { WC26_TOURNAMENT } from "@/data/wc26";
+import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import { useTournamentStats } from "@/lib/use-tournament-stats";
 import styles from "./wc26.module.css";
 
@@ -38,6 +39,7 @@ const TONE_CLASS: Record<HubStatTone, string> = {
 
 export default function Wc26HeroStats({ variant = "hub" }: Wc26HeroStatsProps) {
   const { gamesPlayed, gamesLeft, totalGoals } = useTournamentStats();
+  const archiveComplete = isWc26TournamentComplete();
 
   const fourthStat: StatItem =
     variant === "home"
@@ -53,7 +55,9 @@ export default function Wc26HeroStats({ variant = "hub" }: Wc26HeroStatsProps) {
     { value: WC26_TOURNAMENT.venueCount, label: "Venues", tone: "venues" },
     fourthStat,
     { value: gamesPlayed, label: "Games Played", tone: "played" },
-    { value: gamesLeft, label: "Games Left", tone: "left" },
+    ...(archiveComplete
+      ? []
+      : [{ value: gamesLeft, label: "Games Left", tone: "left" as const }]),
     {
       value: goalsValue,
       label: "Total Goals Scored",

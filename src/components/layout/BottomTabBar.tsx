@@ -4,7 +4,12 @@ import dynamic from "next/dynamic";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import NavLink from "@/components/nav/NavLink";
-import { useCallback, useEffect, useState, type MouseEvent } from "react";
+import {
+  useCallback,
+  useRef,
+  useState,
+  type MouseEvent,
+} from "react";
 import {
   MOBILE_BOTTOM_TABS,
   isMobileBottomTabActive,
@@ -102,24 +107,16 @@ export default function BottomTabBar() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("nav");
-  const tCommon = useTranslations("common");
   const [moreOpen, setMoreOpen] = useState(false);
-  const [navReady, setNavReady] = useState(false);
-
-  useEffect(() => {
-    setNavReady(true);
-  }, []);
+  const moreTriggerRef = useRef<HTMLButtonElement>(null);
 
   const handleTabNavigate = useCallback(
     (href: (typeof MOBILE_BOTTOM_TABS)[number]["href"]) =>
       (event: MouseEvent<HTMLAnchorElement>) => {
-        if (!navReady) {
-          return;
-        }
         event.preventDefault();
         router.push(href);
       },
-    [navReady, router],
+    [router],
   );
 
   return (
@@ -148,9 +145,12 @@ export default function BottomTabBar() {
         })}
 
         <button
+          ref={moreTriggerRef}
           type="button"
           className={`${styles.tabButton} ${moreOpen ? styles.tabButtonActive : ""}`}
           aria-expanded={moreOpen}
+          aria-haspopup="dialog"
+          aria-controls="gc-more-sheet"
           aria-label={t("openMoreNavigation")}
           onClick={() => setMoreOpen(true)}
         >
@@ -162,7 +162,11 @@ export default function BottomTabBar() {
       </nav>
 
       {moreOpen ? (
-        <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
+        <MoreBottomSheet
+          open={moreOpen}
+          onClose={() => setMoreOpen(false)}
+          returnFocusRef={moreTriggerRef}
+        />
       ) : null}
     </>
   );

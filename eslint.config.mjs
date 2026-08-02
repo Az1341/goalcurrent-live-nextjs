@@ -1,30 +1,36 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-import jsxA11y from "eslint-plugin-jsx-a11y";
 import security from "eslint-plugin-security";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    // jsx-a11y is already registered by eslint-config-next; do not redefine it.
+    // jsx-a11y is registered by eslint-config-next/core-web-vitals.
+    // Re-registering the plugin causes flat-config "Cannot redefine plugin".
+    // Applying jsx-a11y/* rules from an object without the plugin caused the
+    // Sprint 001 crash ("could not find plugin jsx-a11y"). Accessibility rules
+    // therefore remain those provided by next/core-web-vitals — not disabled.
     plugins: {
       security,
     },
     rules: {
-      ...jsxA11y.configs.recommended.rules,
       ...security.configs.recommended.rules,
       "security/detect-object-injection": "off",
     },
   },
-  // Override default ignores of eslint-config-next.
   globalIgnores([
-    // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Non-application artefacts (audit evidence, one-off local scripts)
+    "reports/**",
+    "ss-figma*.js",
+    "scripts/_*.py",
+    "scripts/_fix_closure.py",
+    "GC-SOT-*.md",
   ]),
 ]);
 

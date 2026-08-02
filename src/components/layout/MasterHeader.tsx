@@ -5,13 +5,11 @@ import { useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import NavLink from "@/components/nav/NavLink";
 import {
-  DESKTOP_PL_DROPDOWN,
   DESKTOP_PRIMARY_NAV,
-  isDesktopPlActive,
+  isDesktopCompetitionsActive,
   isMainNavActive,
 } from "@/lib/nav";
-import HeaderNavDropdown from "./HeaderNavDropdown";
-import LiveRibbon from "./LiveRibbon";
+import HeaderCompetitionsDropdown from "./HeaderCompetitionsDropdown";
 import HeaderLocaleDropdown from "./HeaderLocaleDropdown";
 import { trackSubscriptionStart } from "@/lib/analytics";
 import AuthMenu from "@/components/firebase/AuthMenu";
@@ -34,8 +32,6 @@ export default function MasterHeader() {
   const pathname = usePathname();
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
-  const isHome = pathname === "/";
-  const isMatchPage = pathname.startsWith("/match/");
   const chromeRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -60,16 +56,16 @@ export default function MasterHeader() {
       observer.disconnect();
       window.removeEventListener("resize", syncHeaderHeight);
     };
-  }, [isHome]);
+  }, [pathname]);
 
   return (
     <div
       ref={chromeRef}
-      className={`${styles.chromeWrap} ${isHome ? styles.chromeWrapV5 : ""}`}
+      className={styles.chromeWrap}
       data-gc-chrome="site-header"
     >
       <header
-        className={`${styles.masterHeader} ${isHome ? styles.masterHeaderV5 : ""}`}
+        className={styles.masterHeader}
         role="banner"
       >
         <div className={styles.bar}>
@@ -89,22 +85,45 @@ export default function MasterHeader() {
           </NavLink>
 
           <nav className={styles.desktopNav} aria-label={t("mainNavigation")}>
-            {DESKTOP_PRIMARY_NAV.map((item) => {
-              const active = isMainNavActive(pathname, item.href, item.exact);
-              return (
-                <NavLink
-                  key={item.href}
-                  href={item.href}
-                  className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
-                >
-                  {t(item.labelKey)}
-                </NavLink>
-              );
-            })}
-            <HeaderNavDropdown
-              label={t("pl2627")}
-              links={DESKTOP_PL_DROPDOWN}
-              isActive={isDesktopPlActive(pathname)}
+            <div className={styles.desktopNavPrimary}>
+              {DESKTOP_PRIMARY_NAV.map((item) => {
+                const active = isMainNavActive(pathname, item.href, item.exact);
+                return (
+                  <NavLink
+                    key={item.href}
+                    href={item.href}
+                    className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
+                  >
+                    {t(item.labelKey)}
+                  </NavLink>
+                );
+              })}
+            </div>
+            <div className={styles.mobileQuickNav}>
+              <NavLink
+                href="/fixture"
+                className={`${styles.navLink} ${
+                  isMainNavActive(pathname, "/fixture")
+                    ? styles.navLinkActive
+                    : ""
+                }`}
+              >
+                {t("fixtureCalendar")}
+              </NavLink>
+              <NavLink
+                href="/worldcup2026"
+                className={`${styles.navLink} ${
+                  isMainNavActive(pathname, "/worldcup2026")
+                    ? styles.navLinkActive
+                    : ""
+                }`}
+              >
+                {t("archive")}
+              </NavLink>
+            </div>
+            <HeaderCompetitionsDropdown
+              label={t("competitions")}
+              isActive={isDesktopCompetitionsActive(pathname)}
             />
           </nav>
 
@@ -122,8 +141,6 @@ export default function MasterHeader() {
           </div>
         </div>
       </header>
-
-      {!isHome && !isMatchPage ? <LiveRibbon /> : null}
     </div>
   );
 }

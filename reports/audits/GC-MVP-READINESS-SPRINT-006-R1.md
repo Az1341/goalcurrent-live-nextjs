@@ -1,0 +1,156 @@
+# GC-MVP-READINESS-SPRINT-006 - R1
+
+**UK date/time:** 2026-07-26 15:10-15:45 BST  
+**Task ID:** GC-MVP-READINESS-SPRINT-006  
+**Title:** FE-007 More-Sheet Accessibility  
+**Status:** COMPLETE  
+**Starting HEAD:** `a5d0e83baa7f7fe4d5f02fee0488e1449f01f6b1`  
+**Implementation commit:** `d0b3ce36978a7b11231a1c3b69d80cd95e318cc8`  
+**Evidence commit:** (this docs commit; SHA in return payload)
+
+---
+
+## 1. R2 traceability (FE-007 only)
+
+**Source:** `reports/audits/GC-FULLSTACK-STATIC-AUDIT-001-R2.md`
+
+| Field | Value |
+|-------|-------|
+| Finding | FE-007 - More sheet missing dialog keyboard pattern |
+| Severity | MAJOR |
+| Location | `src/components/layout/MoreBottomSheet.tsx` |
+| Evidence | role=dialog without focus trap / Escape / focus restore |
+| Root cause | Incomplete dialog pattern |
+| Impact | Keyboard/SR users can strand focus |
+| Required correction | Focus trap, Escape, initial/restore focus |
+| Required tests | Playwright keyboard More sheet |
+| Private-preview blocker | Yes |
+| Production blocker | Yes (WCAG dialog) |
+
+No other findings remediated.
+
+---
+
+## 2. Component contract (before)
+
+- BottomTabBar More trigger: accessible name Open more navigation; aria-expanded; click opens sheet.
+- MoreBottomSheet mounted only while open (dynamic import, ssr false).
+- Dialog already had role=dialog, aria-modal=true, close button, backdrop click close, link navigation close.
+- Missing: focus trap, Escape, initial focus, focus restore, labelled-by naming.
+
+## 3. Requirements matrix
+
+| Behaviour | Applicable | Result |
+|-----------|------------|--------|
+| Trigger accessible name | Yes | PASS |
+| Open via pointer/touch | Yes | PASS |
+| Open via keyboard (Enter) | Yes | PASS |
+| Dialog role + accessible name | Yes | PASS (aria-labelledby title More) |
+| Initial focus in sheet | Yes | PASS (close control) |
+| Tab / Shift+Tab containment | Yes | PASS (40-cycle Playwright) |
+| Escape dismissal | Yes | PASS |
+| Explicit close control | Yes | PASS (Close menu) |
+| Backdrop dismissal | Yes (intended) | PASS |
+| Navigation-link activation | Yes | PASS |
+| Focus restoration | Yes | PASS |
+| Background interaction while open | Overlay + trap | PASS |
+| Repeated open/close | Yes | PASS |
+| Mobile viewport 390x844 | Yes | PASS |
+| Desktop non-regression | Yes | PASS (no desktop redesign) |
+
+---
+
+## 4. Files changed (implementation)
+
+1. `src/components/layout/MoreBottomSheet.tsx`
+2. `src/components/layout/BottomTabBar.tsx`
+3. `src/lib/a11y/dialog-focus.ts` (new helper, no dependency)
+4. `tests/e2e/more-sheet-a11y.spec.ts` (new)
+5. `tests/lib/dialog-focus.test.mjs` (new)
+
+---
+
+## 5. Before / after behaviour
+
+| Aspect | Before | After |
+|--------|--------|-------|
+| Semantics | dialog + aria-modal; label = open trigger text | dialog + aria-modal + aria-labelledby title |
+| Escape | No-op | Closes sheet |
+| Tab | Could reach bottom nav / background | Trapped inside sheet; inert hidden panels |
+| Initial focus | Unconstrained | Moves to Close control |
+| Focus restore | Not restored | Restored to More trigger |
+| Scroll lock | None | body overflow hidden while open |
+
+---
+
+## 6. Focus lifecycle evidence
+
+Proven by Playwright `tests/e2e/more-sheet-a11y.spec.ts`:
+
+1. Keyboard open from More trigger.
+2. Focus enters dialog.
+3. Tab cycles stay inside dialog (Home tab never focused).
+4. Escape closes and restores focus to More.
+5. Close button closes and restores focus; re-open works.
+
+---
+
+## 7. Automated accessibility
+
+- Tool: `@axe-core/playwright` (already in repo)
+- Scope: open More sheet `[data-gc-chrome="more-sheet"]`
+- Result: no serious/critical violations (color-contrast deferred per repo helper policy)
+- No new a11y dependency installed
+
+---
+
+## 8. Quality gates
+
+| Gate | Command / scope | Result |
+|------|-----------------|--------|
+| Unit | `npm run test:unit` | **160/160 pass** (+2 FE-007 helper tests) |
+| Playwright FE-007 + mobile | more-sheet-a11y + mobile-critical-journey chromium | **4/4 pass** |
+| Viewport | 390x844 | Used |
+| Typecheck | `npx tsc --noEmit` | PASS |
+| Scoped lint | MoreBottomSheet, dialog-focus, new tests | PASS (0 problems) |
+| Full lint | `npx eslint .` | **38 errors, 60 warnings** (baseline 39e/60w; no increase) |
+| Production build | via Playwright webServer build+start | PASS |
+
+Evidence logs: `reports/audits/evidence/GC-MVP-READINESS-SPRINT-006-playwright.txt`, `...-full-lint.txt`
+
+---
+
+## 9. Request / polling / API impact
+
+- No new polling intervals
+- No new provider requests
+- No API fan-out changes
+- No Vercel / env / Deployment Protection changes
+
+---
+
+## 10. Remaining R2 findings (unchanged)
+
+FE-004, FE-009-015, BE-*, ENV-*, inherited BLK-* remain as in R2. FE-008 already addressed in Sprint 005. BLK-006 closed separately as PASS by founder-authenticated preview evidence (prior gate).
+
+---
+
+## 11. Limitations
+
+- Full screen-reader software testing (NVDA/VoiceOver) was not performed; DOM/accessibility-tree and axe evidence used.
+- BottomTabBar still carries pre-existing scoped lint issues (setNavReady effect / unused tCommon) untouched beyond FE-007 wiring.
+
+---
+
+## 12. Prohibited-action confirmation
+
+- No FE-004 / FE-008-015 work
+- No backend/env/Vercel/protection changes
+- No navigation redesign / general a11y cleanup / lint cleanup
+- No dependency or lockfile changes
+- No AI/AEO work
+- Nothing pushed, merged, or deployed
+
+---
+
+**GC-MVP-READINESS-SPRINT-006 status:** COMPLETE

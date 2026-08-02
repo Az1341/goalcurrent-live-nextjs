@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { useEffect, useMemo, useState } from "react";
 import type { PlTeamRow, PlTeamsApiResponse } from "@/lib/pl/types";
 import { clubHref, getClubSlugByName } from "@/lib/team-profile/club-slug";
@@ -62,9 +62,11 @@ export default function PlClubsClient() {
   return (
     <main className={styles.plPage}>
       <header className={styles.hero}>
-        <h1 className={styles.heroTitle}>Premier League Clubs 2026/27</h1>
+        <h1 className={styles.heroTitle}>Premier League Clubs 26/27</h1>
         <p className={styles.heroSub}>
-          All clubs for the season on {SITE_NAME} — from official API data.
+          All 20 Premier League 26/27 clubs on {SITE_NAME} — from the official
+          season fixture release (promoted: Coventry, Leeds, Sunderland, Hull;
+          Ipswich bounce back).
         </p>
       </header>
 

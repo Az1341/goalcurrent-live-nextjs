@@ -80,7 +80,33 @@
     "facebook": "Facebook",
     "instagram": "Instagram",
     "tiktok": "TikTok",
-    "twitter": "X / Twitter"
+    "twitter": "X / Twitter",
+    "results": "Results",
+    "rounds": "Rounds",
+    "archive": "Archive",
+    "fixtureCalendar": "برنامه بازی‌ها",
+    "championsLeague": "Champions League 26/27",
+    "faCup": "FA Cup 26/27",
+    "nationsLeague": "Nations League 26/27",
+    "leagueA": "League A",
+    "leagueB": "League B",
+    "leagueC": "League C",
+    "leagueD": "League D",
+    "groupA1": "Group A1",
+    "groupA2": "Group A2",
+    "groupA3": "Group A3",
+    "groupA4": "Group A4",
+    "groupB1": "Group B1",
+    "groupB2": "Group B2",
+    "groupB3": "Group B3",
+    "groupB4": "Group B4",
+    "groupC1": "Group C1",
+    "groupC2": "Group C2",
+    "groupC3": "Group C3",
+    "groupC4": "Group C4",
+    "groupD1": "Group D1",
+    "groupD2": "Group D2",
+    "competitions": "Competitions"
   },
   "layout": {
     "cookieConsent": {
@@ -117,7 +143,9 @@
       "allFixtures": "همه برنامه‌ها",
       "viewAllFixturesAria": "مشاهده همه برنامه‌ها",
       "tickerAria": "نوار نتایج زنده",
-      "liveElapsed": "زنده {elapsed}'"
+      "liveElapsed": "زنده {elapsed}'",
+      "archive": "بایگانی",
+      "emptyArchiveMessage": "جام جهانی ۲۰۲۶ تمام شده — نتایج بایگانی را ببینید"
     }
   },
   "errors": {
@@ -374,12 +402,14 @@
       "liveNow": "اکنون زنده",
       "today": "امروز",
       "upcoming": "مسابقات آینده",
-      "completed": "پایان‌یافته"
+      "completed": "پایان‌یافته",
+      "archiveLive": "اکنون زنده"
     },
     "empty": {
       "liveNow": "اکنون مسابقه زنده‌ای نیست. نتایج زنده با شروع تورنمنت و فعال شدن همگام‌سازی API اینجا نمایش داده می‌شوند.",
       "today": "امروز مسابقه‌ای از جام جهانی در برنامه محلی ثبت نشده است.",
-      "completed": "هنوز مسابقه تمام‌شده‌ای نیست. نتایج نهایی پس از پایان مسابقات نمایش داده می‌شوند."
+      "completed": "هنوز مسابقه تمام‌شده‌ای نیست. نتایج نهایی پس از پایان مسابقات نمایش داده می‌شوند.",
+      "archiveLiveNow": "مسابقه زنده‌ای نیست — جام جهانی ۲۰۲۶ تمام شده (بایگانی). نتایج پایان‌یافته را پایین ببینید."
     },
     "backToHub": "← بازگشت به صفحه جام جهانی ۲۰۲۶",
     "countdown": {
@@ -392,6 +422,11 @@
       "viewMatchCentreArrow": "مشاهده مرکز مسابقه ←",
       "liveNowAria": "{home} در برابر {away} — اکنون زنده، حدود {min} دقیقه سپری‌شده",
       "nextMatchAria": "مسابقه بعد: {home} در برابر {away}، شروع در {countdown}"
-    }
+    },
+    "archivePageTitle": "بایگانی — {competition}",
+    "archivePageIntro": "جام جهانی ۲۰۲۶ تمام شده است. نتایج زیر بایگانی / نهایی هستند — زنده نیستند.",
+    "neutralPageTitle": "Live and upcoming",
+    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
+    "archiveHubLink": "World Cup 2026 Archive"
   }
 }

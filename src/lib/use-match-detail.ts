@@ -6,10 +6,28 @@ import { useLiveScores } from "@/lib/client/useLiveScores";
 import { LIVE_POLL_MATCH_MS } from "@/lib/client/fetcher";
 import { WC26_FIXTURES_UPDATED_EVENT } from "@/lib/wc26-fixture-overlay";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
+import { isCompletedMatchStatus } from "@/lib/wc26-tournament-stats";
 import type { MatchDetailPayload } from "@/types/match-detail";
 
 const POLL_MS = LIVE_POLL_MATCH_MS;
 const API_FIXTURE_ID_STORAGE_KEY = "wc26:api-fixture-ids";
+
+/**
+ * FE-015 — finished matches must not keep a 15s match-detail poller.
+ * Returns 0 when polling is disabled or the match status is completed.
+ */
+export function matchDetailRefreshIntervalMs(
+  pollRequested: boolean,
+  status: string | null | undefined,
+): number {
+  if (!pollRequested) {
+    return 0;
+  }
+  if (status != null && String(status).trim() !== "" && isCompletedMatchStatus(status)) {
+    return 0;
+  }
+  return POLL_MS;
+}
 
 function readStoredApiFixtureId(fixtureId: string): number | undefined {
   if (typeof window === "undefined") {
@@ -66,25 +84,33 @@ export function useMatchDetail(
   const fixtures = useEffectiveFixtures();
   const { data: liveScores } = useLiveScores();
 
-  const [storedApiFixtureId, setStoredApiFixtureId] = useState<number | undefined>(
-    () => readStoredApiFixtureId(fixtureId),
+  const [storedApiFixtureId] = useState<number | undefined>(() =>
+    readStoredApiFixtureId(fixtureId),
   );
 
   const fixture = fixtures.find((entry) => entry.id === fixtureId);
   const liveMatches = Array.isArray(liveScores?.matches)
     ? liveScores.matches
     : [];
+  const liveMatch = liveMatches.find((match) => match.fixtureId === fixtureId);
   const apiFixtureId =
     fixture?.apiFixtureId ??
-    liveMatches.find((match) => match.fixtureId === fixtureId)?.apiFixtureId ??
+    liveMatch?.apiFixtureId ??
     storedApiFixtureId;
+  // Prefer live feed status so FT stops polling even when SSOT fixture remains scheduled.
+  const matchStatus = liveMatch?.status ?? fixture?.status;
+  const refreshInterval = matchDetailRefreshIntervalMs(
+    poll,
+    matchStatus,
+  );
+  const activePoll = refreshInterval > 0;
 
   useEffect(() => {
     if (apiFixtureId == null) {
       return;
     }
+    // Persist for remounts only — avoid setState-in-effect (live/fixture already win).
     storeApiFixtureId(fixtureId, apiFixtureId);
-    setStoredApiFixtureId(apiFixtureId);
   }, [apiFixtureId, fixtureId]);
 
   const liveScoresReady = liveScores !== undefined;
@@ -104,7 +130,7 @@ export function useMatchDetail(
 
   const { data, isLoading, mutate } = useLiveApi<MatchDetailPayload>(path, {
     fresh: true,
-    refreshInterval: poll && fetchReady ? POLL_MS : 0,
+    refreshInterval,
   });
 
   useEffect(() => {
@@ -115,7 +141,7 @@ export function useMatchDetail(
   }, [mutate, path]);
 
   useEffect(() => {
-    if (!poll) {
+    if (!activePoll) {
       return undefined;
     }
 
@@ -125,14 +151,14 @@ export function useMatchDetail(
 
     window.addEventListener(WC26_FIXTURES_UPDATED_EVENT, onOverlay);
     return () => window.removeEventListener(WC26_FIXTURES_UPDATED_EVENT, onOverlay);
-  }, [mutate, poll]);
+  }, [activePoll, mutate]);
 
   useEffect(() => {
-    if (!poll || !liveScoresReady || apiFixtureId == null) {
+    if (!activePoll || !liveScoresReady || apiFixtureId == null) {
       return;
     }
     void mutate();
-  }, [apiFixtureId, liveScoresReady, mutate, poll]);
+  }, [activePoll, apiFixtureId, liveScoresReady, mutate]);
 
   // API error bodies (e.g. 503 JSON) can arrive without lineups/events —
   // normalise so match sections always receive a well-formed payload.
@@ -152,7 +178,9 @@ export function useMatchDetail(
       playerStats: data.playerStats ?? [],
     };
   }, [data, fixtureId]);
-  const loading = isLoading && !data;
+  const ssotCompleted =
+    fixture != null && isCompletedMatchStatus(String(fixture.status));
+  const loading = isLoading && !data && !ssotCompleted;
 
   const refresh = useCallback(() => {
     void mutate();

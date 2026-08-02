@@ -80,7 +80,33 @@
     "facebook": "Facebook",
     "instagram": "Instagram",
     "tiktok": "TikTok",
-    "twitter": "X / Twitter"
+    "twitter": "X / Twitter",
+    "results": "Results",
+    "rounds": "Rounds",
+    "archive": "Archive",
+    "fixtureCalendar": "المباريات",
+    "championsLeague": "Champions League 26/27",
+    "faCup": "FA Cup 26/27",
+    "nationsLeague": "Nations League 26/27",
+    "leagueA": "League A",
+    "leagueB": "League B",
+    "leagueC": "League C",
+    "leagueD": "League D",
+    "groupA1": "Group A1",
+    "groupA2": "Group A2",
+    "groupA3": "Group A3",
+    "groupA4": "Group A4",
+    "groupB1": "Group B1",
+    "groupB2": "Group B2",
+    "groupB3": "Group B3",
+    "groupB4": "Group B4",
+    "groupC1": "Group C1",
+    "groupC2": "Group C2",
+    "groupC3": "Group C3",
+    "groupC4": "Group C4",
+    "groupD1": "Group D1",
+    "groupD2": "Group D2",
+    "competitions": "Competitions"
   },
   "layout": {
     "cookieConsent": {
@@ -117,7 +143,9 @@
       "allFixtures": "جميع المباريات",
       "viewAllFixturesAria": "عرض جميع المباريات",
       "tickerAria": "شريط النتائج المباشرة",
-      "liveElapsed": "مباشر {elapsed}'"
+      "liveElapsed": "مباشر {elapsed}'",
+      "archive": "الأرشيف",
+      "emptyArchiveMessage": "انتهت كأس العالم 2026 — تصفح نتائج الأرشيف"
     }
   },
   "errors": {
@@ -374,12 +402,14 @@
       "liveNow": "مباشر الآن",
       "today": "اليوم",
       "upcoming": "المباريات القادمة",
-      "completed": "منتهية"
+      "completed": "منتهية",
+      "archiveLive": "مباشر الآن"
     },
     "empty": {
       "liveNow": "لا توجد مباريات مباشرة الآن. تظهر النتائج المباشرة هنا عند بدء البطولة وتفعيل مزامنة API.",
       "today": "لا توجد مباريات كأس العالم مجدولة اليوم في الجدول المحلي.",
-      "completed": "لا توجد مباريات منتهية بعد. تظهر النتائج النهائية عند انتهاء المباريات."
+      "completed": "لا توجد مباريات منتهية بعد. تظهر النتائج النهائية عند انتهاء المباريات.",
+      "archiveLiveNow": "لا توجد مباريات مباشرة — انتهت كأس العالم 2026 (الأرشيف). انظر النتائج المنتهية أدناه."
     },
     "backToHub": "← Back to World Cup 2026 hub",
     "countdown": {
@@ -392,6 +422,11 @@
       "viewMatchCentreArrow": "View match centre →",
       "liveNowAria": "{home} ضد {away} — مباشر الآن، حوالي {min} دقيقة من اللعب",
       "nextMatchAria": "المباراة التالية: {home} ضد {away}، البداية خلال {countdown}"
-    }
+    },
+    "archivePageTitle": "الأرشيف — {competition}",
+    "archivePageIntro": "انتهت كأس العالم 2026. النتائج أدناه أرشيف / نهائية — وليست مباشرة.",
+    "neutralPageTitle": "Live and upcoming",
+    "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
+    "archiveHubLink": "World Cup 2026 Archive"
   }
 }

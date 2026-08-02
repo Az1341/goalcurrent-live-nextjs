@@ -9,36 +9,99 @@ import {
   LANGUAGE_MENU_ICON,
   type AppLocale,
 } from "@/i18n/locales";
-import { useEffect, useState } from "react";
 import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
+import {
+  DESKTOP_COMPETITIONS_NAV,
   MORE_SHEET_LEVEL1,
   MORE_SHEET_SUBMENU_TITLE_KEYS,
   MORE_SHEET_SUBMENUS,
-  type MoreSheetSubmenuId,
+  isMoreSheetCompetitionId,
   isMoreSheetLinkActive,
+  type MoreSheetSubmenuId,
 } from "@/lib/nav";
 import { trackLanguageChange } from "@/lib/analytics";
 import AuthMenu from "@/components/firebase/AuthMenu";
+import { trapTabKey } from "@/lib/a11y/dialog-focus";
 import styles from "./MoreBottomSheet.module.css";
 
 type MoreBottomSheetProps = {
   open: boolean;
   onClose: () => void;
+  /** Prefer restoring focus to the More trigger after dismissal. */
+  returnFocusRef?: RefObject<HTMLElement | null>;
 };
 
-export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps) {
+export default function MoreBottomSheet({
+  open,
+  onClose,
+  returnFocusRef,
+}: MoreBottomSheetProps) {
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale() as AppLocale;
   const t = useTranslations("nav");
   const tAuth = useTranslations("auth");
+  const titleId = useId();
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  const returnFocusRefInternal = useRef(returnFocusRef);
   const [submenu, setSubmenu] = useState<MoreSheetSubmenuId | null>(null);
+  // Sheet unmounts when closed (BottomTabBar), so submenu resets on remount.
   const activeSubmenu = open ? submenu : null;
 
   useEffect(() => {
-    if (!open) {
-      setSubmenu(null);
-    }
+    onCloseRef.current = onClose;
+    returnFocusRefInternal.current = returnFocusRef;
+  });
+
+  // FE-007: initial focus, Escape dismissal, Tab trap, focus restore, scroll lock.
+  useEffect(() => {
+    if (!open) return;
+
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const previouslyFocused =
+      (document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null) ?? null;
+
+    const focusTarget =
+      dialog.querySelector<HTMLElement>('[data-gc-more-close="true"]') ?? dialog;
+    // Defer so dynamic mount + CSS open class settle before focusing.
+    const focusTimer = window.setTimeout(() => {
+      focusTarget.focus();
+    }, 0);
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      trapTabKey(event, dialog);
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      const restore =
+        returnFocusRefInternal.current?.current ?? previouslyFocused;
+      if (restore && typeof restore.focus === "function") {
+        restore.focus();
+      }
+    };
   }, [open]);
 
   const handleClose = () => {
@@ -49,6 +112,14 @@ export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps)
   const handleNavigate = () => {
     setSubmenu(null);
     onClose();
+  };
+
+  const handleBack = () => {
+    if (activeSubmenu && isMoreSheetCompetitionId(activeSubmenu)) {
+      setSubmenu("competitions");
+      return;
+    }
+    setSubmenu(null);
   };
 
   const handleLocaleChange = (nextLocale: AppLocale) => {
@@ -75,16 +146,19 @@ export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps)
       <div
         className={`${styles.moreOverlay} ${open ? styles.moreOverlayOpen : ""}`}
         onClick={handleClose}
-        aria-hidden={!open}
+        aria-hidden="true"
       />
 
       <div
+        ref={dialogRef}
         className={`${styles.sheet} ${open ? styles.sheetOpen : ""}`}
         role="dialog"
         aria-modal="true"
-        aria-label={t("openMoreNavigation")}
+        aria-labelledby={titleId}
         aria-hidden={!open}
+        tabIndex={-1}
         data-gc-chrome="more-sheet"
+        id="gc-more-sheet"
       >
         <div className={styles.sheetHeader}>
           {activeSubmenu ? (
@@ -92,7 +166,7 @@ export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps)
               type="button"
               className={styles.backBtn}
               aria-label={t("backToMenu")}
-              onClick={() => setSubmenu(null)}
+              onClick={handleBack}
             >
               ←
             </button>
@@ -100,12 +174,15 @@ export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps)
             <span className={styles.headerSpacer} aria-hidden="true" />
           )}
 
-          <h2 className={styles.sheetTitle}>{submenuTitle}</h2>
+          <h2 id={titleId} className={styles.sheetTitle}>
+            {submenuTitle}
+          </h2>
 
           <button
             type="button"
             className={styles.closeBtn}
             aria-label={t("closeMenu")}
+            data-gc-more-close="true"
             onClick={handleClose}
           >
             ×
@@ -116,6 +193,7 @@ export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps)
           <div
             className={`${styles.panel} ${activeSubmenu ? styles.panelHidden : styles.panelActive}`}
             aria-hidden={Boolean(activeSubmenu)}
+            inert={activeSubmenu ? true : undefined}
           >
             <nav className={styles.sheetList} aria-label={t("openMoreNavigation")}>
               {MORE_SHEET_LEVEL1.map((item, index) => {
@@ -195,6 +273,7 @@ export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps)
           <div
             className={`${styles.panel} ${activeSubmenu ? styles.panelActive : styles.panelHidden}`}
             aria-hidden={!activeSubmenu}
+            inert={!activeSubmenu ? true : undefined}
           >
             {activeSubmenu === "language" ? (
               <ul className={styles.sheetList} aria-label={t("language")}>
@@ -219,6 +298,23 @@ export default function MoreBottomSheet({ open, onClose }: MoreBottomSheetProps)
                   );
                 })}
               </ul>
+            ) : activeSubmenu === "competitions" ? (
+              <nav className={styles.sheetList} aria-label={t("competitions")}>
+                {DESKTOP_COMPETITIONS_NAV.map((group) => (
+                  <button
+                    key={group.id}
+                    type="button"
+                    className={styles.sheetRow}
+                    aria-haspopup="menu"
+                    onClick={() => setSubmenu(group.id)}
+                  >
+                    <span>{t(group.labelKey)}</span>
+                    <span className={styles.chevron} aria-hidden="true">
+                      ▾
+                    </span>
+                  </button>
+                ))}
+              </nav>
             ) : activeSubmenu ? (
               <nav className={styles.sheetList} aria-label={`${submenuTitle} links`}>
                 {MORE_SHEET_SUBMENUS[activeSubmenu].map((link, index) => {

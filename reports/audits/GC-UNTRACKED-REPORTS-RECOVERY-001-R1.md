@@ -1,0 +1,159 @@
+# GC-UNTRACKED-REPORTS-RECOVERY-001-R1
+
+**DKAMS code:** GC-UNTRACKED-REPORTS-RECOVERY-001  
+**Report timestamp:** 2026-08-01 21:50:53 +01:00 (BST)  
+**Project:** GoalCurrent.live Rebuild  
+**Repository:** `C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs`  
+**Branch:** `recovery/gc-reports-restore-001`  
+**Starting HEAD:** `addbb95c9cc017e21e38042184ce517f551b465d`  
+**Ending HEAD:** `c37d538830b3c9734eba6f14c27c567f0db5bb1b` (pre-UTF-8 normalization; see commit chase note)  
+**Recovery commit:** `dc89c69e5a98fe5103b511fac578506d408bd266`  
+**Evidence commit:** `8bc6f1b18a2a5e8d44704774287855bf25f82e61`  
+**Task owner:** Cursor  
+**Control owner:** ChatGPT  
+**Founder approval owner:** Ahmad  
+**Deployment:** none
+
+---
+
+## 1. Starting gate (Task 01)
+
+| Item | Value |
+|------|--------|
+| Local time (BST) | 2026-08-01 21:50:53 +01:00 |
+| Repository | `C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs` |
+| Branch | `recovery/gc-reports-restore-001` |
+| HEAD | `addbb95c9cc017e21e38042184ce517f551b465d` (exact match to accepted baseline) |
+| Tracked deletions under `reports/` | **0** (`git diff --name-only --diff-filter=D HEAD -- reports/` empty) |
+| Other recovery task active | **No** (GC-REPORTS-RESTORE-001 and GC-REPORTS-RESTORE-CLOSURE-001 closed) |
+| Task card source verified | `C:\Users\zafar\Downloads\GC-UNTRACKED-REPORTS-RECOVERY-001.md` SHA-256 `626190C12D0F00D1F3B3C4AAC8E1E476CFB96D9481E1B5FE4C017C405B23CCFF` matches active card |
+
+---
+
+## 2. Authoritative source search (Task 02)
+
+| Filename | Match path | Size (bytes) | Modified | SHA-256 | Notes |
+|----------|------------|--------------|----------|---------|-------|
+| `GC-BACKEND-TOOLING-AUDIT-002.md` | Not on disk in Downloads/OneDrive/repo | — | — | — | **Recovered from Cursor agent transcript Write** (see section 3) |
+| `GC-RUNTIME-SECURITY-RECONCILIATION-001.md` | Not on disk in Downloads/OneDrive/repo | — | — | — | **Recovered from Cursor agent transcript Write** (see section 3) |
+| `GC-SOT-RECOVERY-CLOSURE-001.md` | `...\GC-SOT-RECOVERY-CLOSURE-001-draft.md` | 56230 | (repo root untracked) | `B1E15C0895B613EC61BDD7FAFF9055F693D448AEA9A00552BD02982F6BA35D66` | **DRAFT ONLY** (UTF-16 LE; filename contains `-draft`) |
+| `GC-SOT-RECOVERY-CLOSURE-001-R1.md` | — | — | — | — | **NOT FOUND** (R2 cites 49408 UTF-8 bytes; no exact file located) |
+| `GC-SOT-CLOSURE-R2-STAGE-01.md` | — | — | — | — | **NOT FOUND** |
+| Close variant | `...\GC-SOT-CLOSURE-R2-STAGE-01(1).md` | 4889 | (repo root untracked) | `15863857B3E77969769AAB00AFC8F6D054EEECF96E68C86741C8571B4D6036E1` | **Task card**, not Stage-01 evidence report |
+| Task card (verified) | `C:\Users\zafar\Downloads\GC-UNTRACKED-REPORTS-RECOVERY-001.md` | 9890 | 2026-08-01 21:42:51 | `626190C12D0F00D1F3B3C4AAC8E1E476CFB96D9481E1B5FE4C017C405B23CCFF` | Active task card source |
+
+Downloads `GC-*.md` inventory (no missing-report exact names): GC-FINAL-20260720-VERIFY.md, GC-FINAL-LINEUP-ADD-NOW.md, GC-MVP-READINESS-SPRINT-014.md, GC-REPORTS-DELETION-FORENSIC-GATE-001.md, GC-REPORTS-RESTORE-001.md, GC-REPORTS-RESTORE-CLOSURE-001-v2.md, GC-RSR-003-IMPLEMENTATION-001.md, GC-UNTRACKED-REPORTS-RECOVERY-001.md.
+
+---
+
+## 3. Recovered reports (Tasks 03-04, 07-08)
+
+### 3.1 GC-BACKEND-TOOLING-AUDIT-002.md
+
+| Field | Value |
+|-------|--------|
+| Status | **EXACT RECOVERED** |
+| Source type | Cursor agent transcript Write (session `2fc2ef`) |
+| Source path | `C:\Users\zafar\.cursor\projects\c-Users-zafar-OneDrive-Desktop-CURSOR-BAT-goalcurrent-live-nextjs\agent-transcripts\2fc2ef75-76ac-45b8-9d60-cf7bdbc1a4ed\2fc2ef75-76ac-45b8-9d60-cf7bdbc1a4ed.jsonl` line **680** |
+| Source SHA-256 | `906198A5A7E66AF81BEDD0A088D7EE9D2A25E3ADD28A7737577F12DDD78669C3` |
+| Destination | `reports/audits/GC-BACKEND-TOOLING-AUDIT-002.md` |
+| Destination SHA-256 | `906198A5A7E66AF81BEDD0A088D7EE9D2A25E3ADD28A7737577F12DDD78669C3` |
+| Byte size | 3942 |
+| Line count | 87 |
+| Hash match | **YES** |
+| Validation | Tool matrix, H1-H5, dependency findings, Sentry findings, BA-001-BA-006, instrumentation note — all present |
+
+### 3.2 GC-RUNTIME-SECURITY-RECONCILIATION-001.md
+
+| Field | Value |
+|-------|--------|
+| Status | **EXACT RECOVERED** |
+| Source type | Cursor agent transcript Write (session `2fc2ef`; Shell heredoc line 689 rejected — UTF-16 corruption) |
+| Source path | Same transcript, line **688** |
+| Source SHA-256 | `547226D0EE98CAACBCFF6C54841E8D6321E200DA21874D219E076297FF9B3E56` |
+| Destination | `reports/audits/GC-RUNTIME-SECURITY-RECONCILIATION-001.md` |
+| Destination SHA-256 | `547226D0EE98CAACBCFF6C54841E8D6321E200DA21874D219E076297FF9B3E56` |
+| Byte size | 9430 |
+| Line count | 155 |
+| Hash match | **YES** |
+| Validation | Git gate, tooling status, H1-H5 mapping, BA risk mapping, BE register reconciliation, RSR-001-RSR-005, completion verdict — all present |
+
+---
+
+## 4. SOT closure investigation (Tasks 05-06)
+
+| Report | Classification | Evidence |
+|--------|----------------|----------|
+| `GC-SOT-RECOVERY-CLOSURE-001.md` | **DRAFT ONLY** | Root `GC-SOT-RECOVERY-CLOSURE-001-draft.md` (UTF-16 LE, 56230 bytes). Explicitly labelled draft. **Not promoted.** |
+| `GC-SOT-RECOVERY-CLOSURE-001-R1.md` | **NOT FOUND** | Referenced in R2 @ 49408 bytes; absent from Downloads, OneDrive walk, repo, and agent transcript Write payloads. |
+| `GC-SOT-CLOSURE-R2-STAGE-01.md` | **NOT FOUND** | Root `GC-SOT-CLOSURE-R2-STAGE-01(1).md` is the Stage-01 **task card** (4889 bytes), not the evidence deliverable. Committed correction `GC-SOT-CLOSURE-R2-STAGE-01-R1.md` exists but is not a substitute for the missing Stage-01 source report. |
+
+### Draft reconciliation gate (Task 06) — not promoted
+
+**Draft path:** `C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\GC-SOT-RECOVERY-CLOSURE-001-draft.md`
+
+| Check | Finding |
+|-------|---------|
+| Encoding | UTF-16 LE (not UTF-8 final report encoding) |
+| Size vs R2 expectation | Draft 56230 bytes vs R1 cited 49408 bytes — **size mismatch** |
+| Filename | Contains `-draft` suffix |
+| R2/R3 relationship | R2 supersedes R1 conclusions; draft predates canonical R2 baseline |
+| Missing fields vs R2 | Cannot verify exact R1/Stage-01 cross-refs without original R1 |
+| Conflicting statements | Draft is planning/closure candidate; R2 is Founder-accepted canonical baseline |
+| Exact reconstruction possible | **No** without original R1 (49408 bytes) or Founder-supplied copy |
+| Confidence | **Low** for promoting draft to `GC-SOT-RECOVERY-CLOSURE-001.md` |
+
+**No reconstructed SOT file written. Ahmad approval required before any draft promotion.**
+
+---
+
+## 5. Unresolved report table
+
+| # | Intended path | Status |
+|---|---------------|--------|
+| 3 | `reports/audits/GC-SOT-RECOVERY-CLOSURE-001.md` | **UNRESOLVED** — draft only; not promoted |
+| 4 | `reports/audits/GC-SOT-RECOVERY-CLOSURE-001-R1.md` | **UNRESOLVED** — not found |
+| 5 | `reports/audits/evidence/GC-SOT-CLOSURE-R2-STAGE-01.md` | **UNRESOLVED** — not found |
+
+---
+
+## 6. Controls
+
+| Control | State |
+|---------|-------|
+| Content fabricated | **No** — only transcript-exact backend reports written |
+| Drafts promoted without approval | **No** |
+| Product work touched | **No** |
+| Runtime instrumentation touched | **No** |
+| Git history rewritten | **No** |
+| Push / merge / deploy | **None** |
+| Tracked deletions under `reports/` | **0** |
+
+---
+
+## 7. Commit record (Tasks 09, 11)
+
+| Commit | Subject | Files | SHA |
+|--------|---------|-------|-----|
+| Recovery | `docs(audit): recover missing untracked GoalCurrent reports` | `reports/audits/GC-BACKEND-TOOLING-AUDIT-002.md`, `reports/audits/GC-RUNTIME-SECURITY-RECONCILIATION-001.md` | `dc89c69e5a98fe5103b511fac578506d408bd266` |
+| Evidence | `docs(audit): record GC-UNTRACKED-REPORTS-RECOVERY-001-R1 evidence` | `reports/audits/GC-UNTRACKED-REPORTS-RECOVERY-001-R1.md` | `8bc6f1b18a2a5e8d44704774287855bf25f82e61` |
+
+**Note:** Evidence file initial commit landed as UTF-16 LE (Windows encoding artefact). UTF-8 normalization commit `c37d538830b3c9734eba6f14c27c567f0db5bb1b` followed; working-tree UTF-8 rewrite pending Founder review if further chase required.
+
+---
+
+## 8. Archive status (Task 12)
+
+| Item | State |
+|------|-------|
+| Task card archive | **Deferred** — active card retained per mandatory archive instruction until Founder confirms closure |
+| Active task path | `C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\docs\tasks\active\GC-UNTRACKED-REPORTS-RECOVERY-001.md` |
+| Planned archive path | `C:\Users\zafar\OneDrive\Desktop\CURSOR BAT\goalcurrent-live-nextjs\docs\governance\dkams-task-archive\GC-UNTRACKED-REPORTS-RECOVERY-001.md` |
+
+---
+
+## 9. Final verdict
+
+**PARTIAL** — 2 of 5 missing untracked reports recovered with exact provenance from Cursor agent transcript Write payloads. 3 SOT reports remain unresolved; draft not promoted. No content fabricated. Product and runtime work untouched. Nothing pushed, merged, or deployed.
+
+**GC-UNTRACKED-REPORTS-RECOVERY-001 status:** PARTIAL (pending Founder review and SOT source recovery)

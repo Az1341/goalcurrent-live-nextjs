@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import CardMedia from "@/components/ui/CardMedia";
 import { withSvgMediaClass } from "@/lib/images";
 import type { NewsArticle, NewsTag } from "@/types/news";

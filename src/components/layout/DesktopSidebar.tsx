@@ -78,14 +78,15 @@ export default function DesktopSidebar() {
           {DESKTOP_SIDEBAR_LEAGUES_NAV.map((item) => {
             const active = isDesktopSidebarLeagueActive(pathname, item);
             const label = t(item.labelKey);
+            const ariaLabel = t(item.ariaLabelKey ?? item.labelKey);
             return (
               <li key={item.id}>
                 <NavLink
                   href={item.href}
                   className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
                   aria-current={active ? "page" : undefined}
-                  aria-label={label}
-                  title={label}
+                  aria-label={ariaLabel}
+                  title={ariaLabel}
                 >
                   <span className={styles.navShort} aria-hidden="true">
                     {item.shortLabel}

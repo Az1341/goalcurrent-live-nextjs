@@ -312,6 +312,8 @@ export type DesktopSidebarLeagueId =
 export type DesktopSidebarLeagueItem = {
   id: DesktopSidebarLeagueId;
   labelKey: string;
+  /** Full league name for aria-label when labelKey is abbreviated (e.g. pl2627). */
+  ariaLabelKey?: string;
   shortLabel: string;
   href: string;
 };
@@ -328,6 +330,7 @@ export const DESKTOP_SIDEBAR_LEAGUES_NAV: readonly DesktopSidebarLeagueItem[] = 
   {
     id: "pl",
     labelKey: DESKTOP_SIDEBAR_PL.labelKey,
+    ariaLabelKey: "premierLeague",
     shortLabel: "PL",
     href: DESKTOP_SIDEBAR_PL.href,
   },

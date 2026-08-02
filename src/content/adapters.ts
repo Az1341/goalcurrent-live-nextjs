@@ -1,6 +1,9 @@
 import type { ContentItem, VideoItem } from "@/content/types";
 import { plainTextFromHtml } from "@/content/merge";
-import { sanitizeRemoteImageUrl } from "@/lib/images";
+import {
+  sanitizeRemoteImageUrl,
+  upgradeRemoteNewsImageUrl,
+} from "@/lib/images";
 import type { NewsArticle, NewsTag } from "@/types/news";
 import type { YouTubeVideo } from "@/types/video";
 
@@ -69,7 +72,9 @@ export function formatNewsSource(source: string): string {
 }
 
 export function contentItemToNewsArticle(item: ContentItem): NewsArticle {
-  const thumbnail = item.thumbnail ? sanitizeRemoteImageUrl(item.thumbnail) : undefined;
+  const thumbnail = item.thumbnail
+    ? upgradeRemoteNewsImageUrl(sanitizeRemoteImageUrl(item.thumbnail))
+    : undefined;
 
   return {
     title: plainTextFromHtml(item.title),

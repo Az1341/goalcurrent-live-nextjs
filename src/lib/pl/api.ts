@@ -12,6 +12,7 @@ import {
   ApiFootballRateLimitError,
 } from "@/lib/api-football/errors";
 import { resolvePlBroadcasterFromLocale } from "@/lib/pl/pl-broadcasters";
+import { getPlSsotFixtures } from "@/lib/pl/fixtures-ssot";
 import type {
   PlFixtureRow,
   PlFixturesApiResponse,
@@ -77,16 +78,6 @@ function baseResponse(
     fetchedAt: new Date().toISOString(),
     ...overrides,
   };
-}
-
-function isAuthError(message: string): boolean {
-  const lower = message.toLowerCase();
-  return (
-    lower.includes("token") ||
-    lower.includes("key") ||
-    lower.includes("missing application key") ||
-    lower.includes("application key missing")
-  );
 }
 
 function isQuotaError(message: string): boolean {
@@ -351,10 +342,17 @@ function normalizeFixture(
   };
 }
 
+function ssotFixturesResponse(locale: string): PlFixturesApiResponse {
+  return baseFixturesResponse("fallback", {
+    configured: true,
+    fixtures: getPlSsotFixtures(locale),
+  });
+}
+
 async function fetchFixturesFromApi(locale: string): Promise<PlFixturesApiResponse> {
   const apiKey = getApiKey();
   if (!apiKey) {
-    return baseFixturesResponse("fallback", { configured: false });
+    return ssotFixturesResponse(locale);
   }
 
   try {
@@ -371,10 +369,7 @@ async function fetchFixturesFromApi(locale: string): Promise<PlFixturesApiRespon
       );
 
     if (!fixtures.length) {
-      return baseFixturesResponse("fallback", {
-        configured: true,
-        fixtures: [],
-      });
+      return ssotFixturesResponse(locale);
     }
 
     return baseFixturesResponse("api-football", {
@@ -383,17 +378,17 @@ async function fetchFixturesFromApi(locale: string): Promise<PlFixturesApiRespon
     });
   } catch (error) {
     if (error instanceof ApiFootballRateLimitError) {
-      return baseFixturesResponse("fallback", {
-        configured: true,
+      return {
+        ...ssotFixturesResponse(locale),
         error: apiFootballErrorMessage("rate_limit"),
-      });
+      };
     }
 
     if (error instanceof ApiFootballAuthError) {
-      return baseFixturesResponse("fallback", {
-        configured: true,
+      return {
+        ...ssotFixturesResponse(locale),
         error: apiFootballClientAuthErrorMessage(),
-      });
+      };
     }
 
     throw error;
@@ -404,7 +399,7 @@ export async function fetchPlFixtures(
   locale = "en-GB",
 ): Promise<PlFixturesApiResponse> {
   if (!isPlApiConfigured()) {
-    return baseFixturesResponse("fallback", { configured: false });
+    return ssotFixturesResponse(locale);
   }
 
   try {
@@ -413,17 +408,17 @@ export async function fetchPlFixtures(
     const message = error instanceof Error ? error.message : "Unknown error";
 
     if (message.includes("429") || isQuotaError(message)) {
-      return baseFixturesResponse("fallback", {
-        configured: true,
+      return {
+        ...ssotFixturesResponse(locale),
         error: apiFootballErrorMessage("rate_limit"),
-      });
+      };
     }
 
     if (message.includes("403")) {
-      return baseFixturesResponse("fallback", {
-        configured: true,
+      return {
+        ...ssotFixturesResponse(locale),
         error: apiFootballClientAuthErrorMessage(),
-      });
+      };
     }
 
     throw error;
@@ -431,12 +426,16 @@ export async function fetchPlFixtures(
 }
 
 export function plFixturesCacheControl(body: PlFixturesApiResponse): string {
-  if (!body.configured) {
+  if (!body.configured && body.fixtures.length === 0) {
     return "no-store";
   }
 
   if (body.fixtures.length > 0 && body.source === "api-football") {
     return "s-maxage=300, stale-while-revalidate=60";
+  }
+
+  if (body.fixtures.length > 0) {
+    return "s-maxage=3600, stale-while-revalidate=300";
   }
 
   return "s-maxage=3600, stale-while-revalidate=300";

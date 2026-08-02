@@ -5,9 +5,10 @@
 
 export const UCL_INTERNAL_KEY = "ucl" as const;
 export const UCL_SLUG = "champions-league" as const;
-export const UCL_DISPLAY_NAME = "UEFA Champions League" as const;
+export const UCL_DISPLAY_NAME = "UEFA Champions League 26/27" as const;
 export const UCL_SHORT_NAME = "UCL" as const;
-export const UCL_NAV_LABEL = "Champions League" as const;
+export const UCL_NAV_LABEL = "Champions League 26/27" as const;
+export const UCL_SEASON_LABEL = "26/27" as const;
 export const UCL_LEAGUE_ID = 2 as const;
 export const UCL_SEASON = 2026 as const;
 export const UCL_COMPETITION_TYPE = "cup" as const;

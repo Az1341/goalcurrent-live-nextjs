@@ -9,7 +9,8 @@ export const FACUP_INTERNAL_KEY = "facup" as const;
 export const FACUP_SLUG = "fa-cup" as const;
 export const FACUP_DISPLAY_NAME = "FA Cup" as const;
 export const FACUP_SHORT_NAME = "FA Cup" as const;
-export const FACUP_NAV_LABEL = "FA Cup" as const;
+export const FACUP_NAV_LABEL = "FA Cup 26/27" as const;
+export const FACUP_SEASON_LABEL = "26/27" as const;
 
 /** api-sports England FA Cup id — stable across seasons on v3. */
 export const FACUP_LEAGUE_ID = 45 as const;

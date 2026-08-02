@@ -9,6 +9,7 @@ import {
   plGenericCacheControl,
   type ApiFootballFetchResult,
 } from "@/lib/pl/api-core";
+import { getPlSsotTeams } from "@/lib/pl/teams-ssot";
 import type {
   PlFixtureRow,
   PlFixtureStatus,
@@ -306,37 +307,52 @@ async function fetchPlayerLeaderboard(
   }
 }
 
+function ssotTeamsResponse(
+  overrides: Partial<PlTeamsApiResponse> = {},
+): PlTeamsApiResponse {
+  return plBaseEnvelope("fallback", {
+    configured: true,
+    teams: getPlSsotTeams(),
+    ...overrides,
+  });
+}
+
 export async function fetchPlTeams(): Promise<PlTeamsApiResponse> {
   const base = plBaseEnvelope("fallback", { teams: [] as PlTeamRow[] });
-  if (!base.configured) return base;
+  if (!base.configured) {
+    return ssotTeamsResponse();
+  }
 
   try {
     const result = await apiFootballFetch<ApiTeamItem[]>(
       `/teams?league=${PL_LEAGUE_ID}&season=${PL_SEASON}`,
     );
-    if (!result.ok) return mapFetchError(base, result);
+    if (!result.ok) {
+      if (result.kind === "unconfigured") {
+        return ssotTeamsResponse();
+      }
+      return {
+        ...ssotTeamsResponse(),
+        error: apiFootballClientSafeFetchFailureMessage(result.kind),
+      };
+    }
 
     const teams = result.data
       .map(normalizeTeam)
       .sort((a, b) => a.name.localeCompare(b.name));
 
     if (!teams.length) {
-      return plBaseEnvelope("fallback", {
-        configured: true,
-        teams: [],
-        error: "Premier League clubs are not available yet.",
-      });
+      return ssotTeamsResponse();
     }
 
     return plBaseEnvelope("api-football", { configured: true, teams });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
     if (isQuotaError(message)) {
-      return plBaseEnvelope("fallback", {
-        configured: true,
-        teams: [],
+      return {
+        ...ssotTeamsResponse(),
         error: apiFootballErrorMessage("rate_limit"),
-      });
+      };
     }
     throw error;
   }

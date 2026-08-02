@@ -54,6 +54,7 @@ function isUpstreamPath(pathname: string): boolean {
     pathname.startsWith("/api/pl/") ||
     pathname.startsWith("/api/ucl/") ||
     pathname.startsWith("/api/facup/") ||
+    pathname.startsWith("/api/unl/") ||
     pathname.startsWith("/api/debug/")
   );
 }

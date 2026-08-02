@@ -13,6 +13,7 @@ import {
 } from "@/lib/ucl/contract";
 import {
   UCL_DISPLAY_NAME,
+  UCL_SEASON_LABEL,
   UCL_LEAGUE_ID,
   UCL_SEASON,
 } from "@/lib/ucl/constants";
@@ -242,11 +243,17 @@ export default function UclHubClient() {
   return (
     <main className={styles.uclPage}>
       <header className={styles.hero}>
+        <p className={styles.seasonBadge}>CHAMPIONS LEAGUE {UCL_SEASON_LABEL}</p>
         <h1 className={styles.heroTitle}>{UCL_DISPLAY_NAME}</h1>
         <p className={styles.heroSub}>
-          {SITE_NAME} private-preview hub — fixtures and results first, with
-          league-phase standings when the provider returns a reliable table.
+          UEFA Champions League {UCL_SEASON_LABEL} on {SITE_NAME} — league-phase
+          fixtures, results and standings for Europe&apos;s top club competition.
         </p>
+        <nav className={styles.hubNav} aria-label="Champions League 26/27 sections">
+          <a href="#ucl-fixtures">Fixtures</a>
+          <a href="#ucl-results">Results</a>
+          <a href="#ucl-standings">Standings</a>
+        </nav>
       </header>
 
       {isLoading ? (

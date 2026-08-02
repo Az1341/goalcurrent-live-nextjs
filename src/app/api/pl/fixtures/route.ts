@@ -38,7 +38,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
     captureRouteError("api/pl/fixtures", error);
 
     return NextResponse.json(

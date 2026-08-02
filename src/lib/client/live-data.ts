@@ -15,6 +15,8 @@ export const LIVE_API_PATHS = {
   plFixtures: "/api/pl/fixtures",
   uclFixtures: "/api/ucl/fixtures",
   facupFixtures: "/api/facup/fixtures",
+  unlFixtures: "/api/unl/fixtures",
+  unlStandings: "/api/unl/standings",
   plTopScorers: "/api/pl/top-scorers",
   wc26Match: (fixtureId: string) =>
     `/api/wc26/match/${encodeURIComponent(fixtureId)}`,

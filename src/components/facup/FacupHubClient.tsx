@@ -14,6 +14,7 @@ import {
   FACUP_DISPLAY_NAME,
   FACUP_LEAGUE_ID,
   FACUP_SEASON,
+  FACUP_SEASON_LABEL,
 } from "@/lib/facup/constants";
 import type { FacupFixtureRow } from "@/lib/facup/types";
 import styles from "./FacupHub.module.css";
@@ -241,16 +242,38 @@ export default function FacupHubClient() {
   return (
     <main className={styles.facupPage}>
       <header className={styles.hero}>
+        <p className={styles.seasonBadge}>FA CUP {FACUP_SEASON_LABEL}</p>
         <h1 className={styles.heroTitle}>{FACUP_DISPLAY_NAME}</h1>
         <p className={styles.heroSub}>
-          {SITE_NAME} private-preview hub — FA Cup fixtures and results by round.
-          Standings are not shown for this knockout competition.
+          The FA Cup {FACUP_SEASON_LABEL} is England&apos;s oldest national knockout
+          competition — from the early rounds through to Wembley. On {SITE_NAME} you
+          get fixtures, results and round-by-round coverage for the full cup run.
+          Standings are not used in this competition.
         </p>
+        <nav className={styles.hubNav} aria-label="FA Cup 26/27 sections">
+          <a href="#facup-about">About</a>
+          <a href="#facup-fixtures">Fixtures</a>
+          <a href="#facup-results">Results</a>
+          <a href="#facup-rounds">Rounds</a>
+        </nav>
       </header>
+
+      <section className={styles.card} aria-labelledby="facup-about">
+        <h2 id="facup-about" className={styles.cardTitle}>
+          About FA Cup {FACUP_SEASON_LABEL}
+        </h2>
+        <p className={styles.panelText}>
+          Every club from the Premier League and the English football pyramid can
+          enter the FA Cup. Ties are single-leg knockout matches, with replays or
+          extra time and penalties used when ties are level. The 2026/27 season
+          runs alongside Premier League 26/27 and Champions League 26/27 — follow
+          this hub for the latest FA Cup schedule as rounds are drawn and played.
+        </p>
+      </section>
 
       {isLoading ? (
         <div className={styles.panel} role="status" data-testid="facup-hub-loading">
-          <p className={styles.panelTitle}>Loading FA Cup</p>
+          <p className={styles.panelTitle}>Loading FA Cup {FACUP_SEASON_LABEL}</p>
           <p className={styles.panelText}>Fetching fixtures and results…</p>
         </div>
       ) : null}
@@ -325,8 +348,8 @@ export default function FacupHubClient() {
             )}
           </section>
           <p className={styles.footerMeta}>
-            Data ownership: FA Cup league {FACUP_LEAGUE_ID} / season {FACUP_SEASON}.
-            Standings unsupported. Thin round and match pages are deferred.
+            FA Cup {FACUP_SEASON_LABEL} · league {FACUP_LEAGUE_ID} / season{" "}
+            {FACUP_SEASON}. Knockout cup — standings not shown.
           </p>
         </div>
       ) : null}

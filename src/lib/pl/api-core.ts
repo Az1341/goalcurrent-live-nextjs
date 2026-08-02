@@ -1,5 +1,4 @@
 import {
-  API_FOOTBALL_BASE_URL,
   PL_LEAGUE_ID,
   PL_LEAGUE_NAME,
   PL_SEASON,
@@ -68,13 +67,6 @@ export function plGenericCacheControl(
   }
   return "s-maxage=3600, stale-while-revalidate=300";
 }
-
-type ApiFootballPayload<T> = {
-  errors?: Record<string, string>;
-  results?: number;
-  paging?: { current: number; total: number };
-  response?: T;
-};
 
 export type ApiFootballFetchResult<T> =
   | { ok: true; data: T; results: number }

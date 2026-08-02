@@ -49,6 +49,10 @@ export const wc26KnockoutFixturesQuerySchema = z.object({
   round: z.string().optional(),
 });
 
+export const unlStandingsQuerySchema = z.object({
+  group: z.string().optional(),
+});
+
 export const fixtureIdParamSchema = z
   .string()
   .min(1)

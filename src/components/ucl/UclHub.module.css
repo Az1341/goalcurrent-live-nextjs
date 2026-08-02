@@ -9,6 +9,18 @@
 
 .hero { margin-bottom: 20px; }
 
+.seasonBadge {
+  margin: 0 0 8px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #7b0d1e;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
 .heroTitle {
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 800;
@@ -22,6 +34,24 @@
   color: #475569;
   font-size: 0.95rem;
   line-height: 1.45;
+}
+
+.hubNav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: 14px;
+}
+
+.hubNav a {
+  color: #7b0d1e;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.hubNav a:hover {
+  text-decoration: underline;
 }
 
 .stack {

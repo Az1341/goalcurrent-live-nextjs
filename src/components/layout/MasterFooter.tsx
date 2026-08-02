@@ -2,7 +2,6 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import NordVpnAffiliateCta from "@/components/analytics/NordVpnAffiliateCta";
 import {
   FOOTER_COMPANY_LINKS,
   FOOTER_PLATFORM_LINKS,
@@ -62,19 +61,6 @@ export default function MasterFooter() {
         <div className={styles.footerStoreCol}>
           <GooglePlayBadge />
         </div>
-      </div>
-
-      <div
-        className={styles.nordVpn}
-        role="complementary"
-        aria-label="Affiliate promotion"
-        data-gc-chrome="nordvpn"
-      >
-        <span>{tLayout("nordVpn")}</span>
-        <span className={styles.nordAd}>{tLayout("nordAd")}</span>
-        <NordVpnAffiliateCta className={styles.nordCta} sourceSurface="footer_nordvpn">
-          {tLayout("nordCta")}
-        </NordVpnAffiliateCta>
       </div>
 
       <p className={styles.footerCopy}>

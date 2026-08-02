@@ -17,6 +17,7 @@ import { absoluteUrl } from "@/lib/site-url";
 import styles from "./PlFixtures.module.css";
 
 const PL_COMPETITION = "Premier League 2026/27";
+const PL_MATCH_BASE_PATH = "/premier-league/match";
 
 function formatLocalKickoff(kickoffUtc: string): string {
   const date = new Date(kickoffUtc);
@@ -62,16 +63,20 @@ function statusLabel(status: PlFixtureStatus): string {
   }
 }
 
-function toCalendarEvent(fixture: PlFixtureRow): CalendarEventInput {
+function toCalendarEvent(
+  fixture: PlFixtureRow,
+  competition: string,
+  matchBasePath: string | null,
+): CalendarEventInput {
   return {
     homeTeam: fixture.homeTeamName,
     awayTeam: fixture.awayTeamName,
     kickoffUtc: fixture.kickoffUtc,
     venue: fixture.venue ?? undefined,
-    competition: PL_COMPETITION,
-    matchPageUrl: absoluteUrl(
-      `/premier-league/match/${fixture.fixtureId}`,
-    ),
+    competition,
+    matchPageUrl: matchBasePath
+      ? absoluteUrl(`${matchBasePath}/${fixture.fixtureId}`)
+      : absoluteUrl("/"),
     broadcaster: isPlBroadcasterAvailable(fixture.broadcaster)
       ? fixture.broadcaster
       : undefined,
@@ -80,18 +85,25 @@ function toCalendarEvent(fixture: PlFixtureRow): CalendarEventInput {
 
 type PlFixtureCardProps = {
   fixture: PlFixtureRow;
+  competition?: string;
+  matchBasePath?: string | null;
 };
 
-export default function PlFixtureCard({ fixture }: PlFixtureCardProps) {
+export default function PlFixtureCard({
+  fixture,
+  competition = PL_COMPETITION,
+  matchBasePath = PL_MATCH_BASE_PATH,
+}: PlFixtureCardProps) {
   const showScore =
     fixture.homeScore !== null &&
     fixture.awayScore !== null &&
     (fixture.status === "FT" || fixture.status === "LIVE");
-  const hasMatchCentre = !isPlSsotFixtureId(fixture.fixtureId);
+  const hasMatchCentre =
+    matchBasePath !== null && !isPlSsotFixtureId(fixture.fixtureId);
 
   const calendarEvent = useMemo(
-    () => toCalendarEvent(fixture),
-    [fixture],
+    () => toCalendarEvent(fixture, competition, matchBasePath),
+    [fixture, competition, matchBasePath],
   );
   const googleCalendarUrl = useMemo(
     () => buildGoogleCalendarUrl(calendarEvent),
@@ -154,12 +166,21 @@ export default function PlFixtureCard({ fixture }: PlFixtureCardProps) {
 
       <div className={styles.calendarActions}>
         {hasMatchCentre ? (
-          <Link
-            href={`/premier-league/match/${fixture.fixtureId}`}
-            className={`${styles.calendarLink} ${styles.calendarLinkPrimary}`}
-          >
-            Match Centre
-          </Link>
+          matchBasePath && matchBasePath !== PL_MATCH_BASE_PATH ? (
+            <Link
+              href={`${matchBasePath}/${fixture.fixtureId}`}
+              className={`${styles.calendarLink} ${styles.calendarLinkPrimary}`}
+            >
+              Match Centre
+            </Link>
+          ) : (
+            <Link
+              href={`/premier-league/match/${fixture.fixtureId}`}
+              className={`${styles.calendarLink} ${styles.calendarLinkPrimary}`}
+            >
+              Match Centre
+            </Link>
+          )
         ) : (
           <span className={styles.calendarLink}>Fixtures list</span>
         )}

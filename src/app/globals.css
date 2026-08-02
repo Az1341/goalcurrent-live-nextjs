@@ -69,7 +69,9 @@
   --gc-content-max: 960px;
   --gc-home-max: 1320px;
   --gc-home-gutter: 16px;
-  --gc-sidebar-width: 240px;
+  --gc-sidebar-width-collapsed: 56px;
+  --gc-sidebar-width-expanded: 240px;
+  --gc-sidebar-width: var(--gc-sidebar-width-collapsed);
 
   /* Velocity Premier — desktop sidebar surfaces (dark tier; brand red stays on CTAs) */
   --gc-velocity-surface: #131313;

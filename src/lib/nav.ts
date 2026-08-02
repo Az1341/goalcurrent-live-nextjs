@@ -312,6 +312,7 @@ export type DesktopSidebarLeagueId =
 export type DesktopSidebarLeagueItem = {
   id: DesktopSidebarLeagueId;
   labelKey: string;
+  shortLabel: string;
   href: string;
 };
 
@@ -324,15 +325,26 @@ const DESKTOP_SIDEBAR_UCL = DESKTOP_COMPETITIONS_NAV.find(
 
 /** Desktop left sidebar — founder-approved league order (no WC26). */
 export const DESKTOP_SIDEBAR_LEAGUES_NAV: readonly DesktopSidebarLeagueItem[] = [
-  { id: "pl", labelKey: DESKTOP_SIDEBAR_PL.labelKey, href: DESKTOP_SIDEBAR_PL.href },
+  {
+    id: "pl",
+    labelKey: DESKTOP_SIDEBAR_PL.labelKey,
+    shortLabel: "PL",
+    href: DESKTOP_SIDEBAR_PL.href,
+  },
   {
     id: "ucl",
     labelKey: DESKTOP_SIDEBAR_UCL.labelKey,
+    shortLabel: "UCL",
     href: DESKTOP_SIDEBAR_UCL.href,
   },
-  { id: "laliga", labelKey: "laLiga", href: "/la-liga" },
-  { id: "seriea", labelKey: "serieA", href: "/serie-a" },
-  { id: "bundesliga", labelKey: "bundesliga", href: "/bundesliga" },
+  { id: "laliga", labelKey: "laLiga", shortLabel: "LL", href: "/la-liga" },
+  { id: "seriea", labelKey: "serieA", shortLabel: "SA", href: "/serie-a" },
+  {
+    id: "bundesliga",
+    labelKey: "bundesliga",
+    shortLabel: "BL",
+    href: "/bundesliga",
+  },
 ];
 
 /** Archive links for More sheet — not a live competition dropdown. */

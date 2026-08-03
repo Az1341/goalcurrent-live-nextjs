@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { GC_STALE_RESPONSE_HEADER } from "@/lib/api-football/cache";
 import {
-  ApiFootballAuthError,
   apiFootballClientAuthErrorMessage,
   apiFootballErrorMessage,
   classifyApiFootballError,
+  isApiFootballAuthError,
   type ApiFootballErrorCode,
 } from "@/lib/api-football/errors";
 import { captureRouteError } from "@/lib/log";
@@ -36,7 +36,7 @@ export function respondApiFootballFailure<T extends Record<string, unknown>>({
   buildBody,
   cacheControl = "no-store",
 }: RespondOptions<T>): NextResponse {
-  if (error instanceof ApiFootballAuthError) {
+  if (isApiFootballAuthError(error)) {
     // Detail stays server-side (captureRouteError); clients get a generic envelope.
     // Auth failures do not serve stale success payloads.
     captureRouteError(route, error);

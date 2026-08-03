@@ -6,7 +6,6 @@ import { respondDomesticFixtures } from "@/lib/domestic-league/routes";
 
 export const dynamic = "force-dynamic";
 
-const ROUTE = "/api/la-liga/fixtures";
 const CACHE_KEY = "la-liga-fixtures";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {

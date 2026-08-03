@@ -6,7 +6,7 @@ import { buildMatchMetadata } from "@/lib/page-metadata";
 import { SITE_NAME } from "@/lib/site-url";
 
 type PlMatchPageProps = {
-  params: Promise<{ fixtureId: string }>;
+  params: Promise<{ locale: string; fixtureId: string }>;
 };
 
 function parseFixtureId(raw: string): number | null {
@@ -27,7 +27,8 @@ function plEventStatus(status: string): string {
 export async function generateMetadata({
   params,
 }: PlMatchPageProps): Promise<Metadata> {
-  const fixtureId = parseFixtureId((await params).fixtureId);
+  const { locale, fixtureId: rawFixtureId } = await params;
+  const fixtureId = parseFixtureId(rawFixtureId);
   if (fixtureId === null) {
     return { title: "Match not found" };
   }
@@ -40,6 +41,7 @@ export async function generateMetadata({
       title: "Premier League Match",
       description: `Premier League match centre on ${SITE_NAME}.`,
       path: `/premier-league/match/${fixtureId}`,
+      locale,
     });
   }
 
@@ -49,13 +51,16 @@ export async function generateMetadata({
     title,
     description: `${title} — Premier League 2026/27 match centre with timeline, lineups, stats and H2H on ${SITE_NAME}.`,
     path: `/premier-league/match/${fixtureId}`,
+    locale,
   });
 }
 
 export default async function PremierLeagueMatchPage({
   params,
 }: PlMatchPageProps) {
-  const fixtureId = parseFixtureId((await params).fixtureId) ?? 0;
+  const { locale, fixtureId: rawFixtureId } = await params;
+  void locale;
+  const fixtureId = parseFixtureId(rawFixtureId) ?? 0;
   const detail = await fetchPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
   const path = `/premier-league/match/${fixtureId}`;

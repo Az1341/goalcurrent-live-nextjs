@@ -69,6 +69,26 @@
   --gc-content-max: 960px;
   --gc-home-max: 1320px;
   --gc-home-gutter: 16px;
+  --gc-sidebar-width: 240px;
+
+  /* Velocity Premier — desktop sidebar surfaces (dark tier; brand red stays on CTAs) */
+  --gc-velocity-surface: #131313;
+  --gc-velocity-surface-container: #201f1f;
+  --gc-velocity-surface-variant: #2c2b2b;
+  --gc-velocity-on-primary-container: #ffb3af;
+  --gc-sidebar-bg: var(--gc-velocity-surface-container);
+  --gc-sidebar-border: rgba(255, 255, 255, 0.08);
+  --gc-sidebar-text: #e8e8e8;
+  --gc-sidebar-text-hover: #ffffff;
+  --gc-sidebar-label: rgba(255, 255, 255, 0.52);
+  --gc-sidebar-hover: rgba(255, 255, 255, 0.06);
+  --gc-sidebar-active-bg: var(--gc-velocity-surface-variant);
+  --gc-sidebar-active-text: var(--gc-velocity-on-primary-container);
+  --gc-sidebar-pro-bg: var(--gc-velocity-surface);
+  --gc-sidebar-pro-border: rgba(255, 255, 255, 0.1);
+  --gc-sidebar-pro-accent: var(--gc-velocity-on-primary-container);
+  --gc-sidebar-pro-title: #ffffff;
+  --gc-sidebar-pro-body: rgba(255, 255, 255, 0.68);
   --gc-radius-sm: 8px;
   --gc-radius: 10px;
   --gc-radius-lg: 12px;

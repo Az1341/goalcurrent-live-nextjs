@@ -24,6 +24,31 @@ export class ApiFootballAuthError extends Error {
   }
 }
 
+function hasErrorName(error: unknown, name: string): boolean {
+  return error instanceof Error && error.name === name;
+}
+
+export function isApiFootballRateLimitError(error: unknown): boolean {
+  return (
+    error instanceof ApiFootballRateLimitError ||
+    hasErrorName(error, "ApiFootballRateLimitError")
+  );
+}
+
+export function isApiFootballNetworkError(error: unknown): boolean {
+  return (
+    error instanceof ApiFootballNetworkError ||
+    hasErrorName(error, "ApiFootballNetworkError")
+  );
+}
+
+export function isApiFootballAuthError(error: unknown): boolean {
+  return (
+    error instanceof ApiFootballAuthError ||
+    hasErrorName(error, "ApiFootballAuthError")
+  );
+}
+
 export function isQuotaErrorMessage(message: string): boolean {
   const lower = message.toLowerCase();
   return (
@@ -45,10 +70,10 @@ export function isAuthErrorMessage(message: string): boolean {
 }
 
 export function classifyApiFootballError(error: unknown): ApiFootballErrorCode {
-  if (error instanceof ApiFootballRateLimitError) {
+  if (isApiFootballRateLimitError(error)) {
     return "rate_limit";
   }
-  if (error instanceof ApiFootballNetworkError) {
+  if (isApiFootballNetworkError(error)) {
     return "network_error";
   }
   if (error instanceof Error && isQuotaErrorMessage(error.message)) {

@@ -302,7 +302,40 @@ export const DESKTOP_COMPETITIONS_NAV: readonly DesktopCompetitionNavGroup[] = [
   },
 ];
 
-/** Archive links for More sheet Ã¢â‚¬â€ not a live competition dropdown. */
+export type DesktopSidebarLeagueId =
+  | "pl"
+  | "ucl"
+  | "laliga"
+  | "seriea"
+  | "bundesliga";
+
+export type DesktopSidebarLeagueItem = {
+  id: DesktopSidebarLeagueId;
+  labelKey: string;
+  href: string;
+};
+
+const DESKTOP_SIDEBAR_PL = DESKTOP_COMPETITIONS_NAV.find(
+  (group) => group.id === "pl",
+)!;
+const DESKTOP_SIDEBAR_UCL = DESKTOP_COMPETITIONS_NAV.find(
+  (group) => group.id === "ucl",
+)!;
+
+/** Desktop left sidebar — founder-approved league order (no WC26). */
+export const DESKTOP_SIDEBAR_LEAGUES_NAV: readonly DesktopSidebarLeagueItem[] = [
+  { id: "pl", labelKey: DESKTOP_SIDEBAR_PL.labelKey, href: DESKTOP_SIDEBAR_PL.href },
+  {
+    id: "ucl",
+    labelKey: DESKTOP_SIDEBAR_UCL.labelKey,
+    href: DESKTOP_SIDEBAR_UCL.href,
+  },
+  { id: "laliga", labelKey: "laLiga", href: "/la-liga" },
+  { id: "seriea", labelKey: "serieA", href: "/serie-a" },
+  { id: "bundesliga", labelKey: "bundesliga", href: "/bundesliga" },
+];
+
+/** Archive links for More sheet — not a live competition dropdown. */
 export const DESKTOP_WC26_DROPDOWN: NavLinkItem[] = [
   { href: "/worldcup2026", labelKey: "wc26Home" },
   { href: "/worldcup2026/bracket", labelKey: "bracket" },
@@ -403,6 +436,18 @@ export function isDesktopCompetitionsActive(pathname: string): boolean {
     pathname === "/nations-league" ||
     pathname.startsWith("/nations-league/")
   );
+}
+
+export function isDesktopSidebarLeagueActive(
+  pathname: string,
+  item: DesktopSidebarLeagueItem,
+): boolean {
+  if (item.id === "pl") {
+    return isDesktopPlActive(pathname);
+  }
+
+  const base = item.href.split("#")[0] ?? item.href;
+  return pathname === base || pathname.startsWith(`${base}/`);
 }
 
 export function isMobileBottomTabActive(

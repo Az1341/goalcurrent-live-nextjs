@@ -253,6 +253,47 @@ export function sportsEventSchema(
   };
 }
 
+export type LiveBlogPostingSchemaInput = {
+  path: string;
+  headline: string;
+  coverageStartTime: string;
+  coverageEndTime?: string;
+  liveBlogUpdate: Array<{ text: string; datePublished: string }>;
+  locale?: string;
+};
+
+export function liveBlogPostingSchema(
+  input: LiveBlogPostingSchemaInput,
+): SchemaNode | null {
+  if (!input.liveBlogUpdate.length) {
+    return null;
+  }
+
+  const locale = input.locale ?? routing.defaultLocale;
+  const url = localizedUrl(input.path, locale);
+  const headline = input.headline.trim();
+  if (!headline) {
+    return null;
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "LiveBlogPosting",
+    "@id": url,
+    url,
+    headline,
+    coverageStartTime: input.coverageStartTime,
+    ...(input.coverageEndTime
+      ? { coverageEndTime: input.coverageEndTime }
+      : {}),
+    liveBlogUpdate: input.liveBlogUpdate.map((update) => ({
+      "@type": "BlogPosting",
+      headline: update.text,
+      datePublished: update.datePublished,
+    })),
+  };
+}
+
 export function sportsTeamSchema(input: SportsTeamSchemaInput): SchemaNode {
   const memberOfType = input.memberOfType ?? "SportsOrganization";
 

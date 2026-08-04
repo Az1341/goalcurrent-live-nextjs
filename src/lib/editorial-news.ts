@@ -1,8 +1,12 @@
 import {
   getArticleIndexNewsArticles,
-  getEditorialNewsArticles,
   getPinnedGoalCurrentNewsArticles,
+  isWorldCup2026EditorialLink,
 } from "@/lib/article-hub";
+import {
+  excludeWorldCup2026NewsItems,
+  isWorldCup2026HomepageNewsItem,
+} from "@/lib/news-wc26-filter";
 import type { NewsArticle } from "@/types/news";
 
 export { getEditorialNewsArticles } from "@/lib/article-hub";
@@ -21,16 +25,27 @@ export function sortPartnerNewsFeed(articles: readonly NewsArticle[]): NewsArtic
   return sortNewsByDateDesc(articles);
 }
 
-/** Homepage: latest GoalCurrent article first, then partner RSS (deduped). */
+/**
+ * Homepage: latest non-WC26 GoalCurrent article first, then partner RSS
+ * (deduped). WC26 editorial + partner items are excluded — WC26 lives on
+ * /worldcup2026 only. Does not affect mergeWc26NewsFeed / mergeEditorialFirst.
+ */
 export function mergeHomepageNewsFeed(articles: readonly NewsArticle[]): NewsArticle[] {
-  const [latestEditorial] = getArticleIndexNewsArticles();
+  const nonWc26Editorial = getArticleIndexNewsArticles().filter(
+    (item) => !isWorldCup2026EditorialLink(item.link),
+  );
+  const [latestEditorial] = nonWc26Editorial;
+  const partnerOnly = excludeWorldCup2026NewsItems(articles);
+
   if (!latestEditorial) {
-    return sortNewsByDateDesc(articles);
+    return sortNewsByDateDesc(partnerOnly);
   }
 
   const pinnedLinks = new Set([latestEditorial.link]);
   const rest = sortNewsByDateDesc(
-    articles.filter((item) => !pinnedLinks.has(item.link)),
+    partnerOnly.filter(
+      (item) => !pinnedLinks.has(item.link) && !isWorldCup2026HomepageNewsItem(item),
+    ),
   );
   return [latestEditorial, ...rest];
 }

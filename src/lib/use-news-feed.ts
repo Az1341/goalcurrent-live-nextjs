@@ -22,15 +22,23 @@ export type NewsFeedSnapshot = {
 type UseNewsFeedOptions = {
   /** SSR/hydration seed for the news hub route. */
   fallbackData?: NewsApiResponse;
+  /**
+   * Homepage hard gate — requests `/api/news?excludeWc26=1` so partner RSS
+   * never includes WC26. Uses a separate SWR key from the shared feed.
+   */
+  excludeWc26?: boolean;
 };
 
 /**
- * Single client owner for `/api/news`.
- * All route surfaces (home, profile, group, /news) must use this hook.
+ * Client owner for `/api/news`.
+ * Homepage should pass `excludeWc26: true`. Other surfaces keep the shared path.
  */
 export function useNewsFeed(options?: UseNewsFeedOptions): NewsFeedSnapshot {
+  const path = options?.excludeWc26
+    ? `${NEWS_API_PATH}?excludeWc26=1`
+    : NEWS_API_PATH;
   const { data, error: swrError, isLoading } = useSWR<NewsApiResponse>(
-    NEWS_API_PATH,
+    path,
     fetcher,
     {
       fallbackData: options?.fallbackData,

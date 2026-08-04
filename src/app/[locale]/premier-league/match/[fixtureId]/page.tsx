@@ -3,6 +3,11 @@ import MatchSeo from "@/components/seo/MatchSeo";
 import PlMatchClient from "@/components/pl/PlMatchClient";
 import { fetchPlMatchDetail } from "@/lib/pl/match-detail";
 import { buildMatchMetadata } from "@/lib/page-metadata";
+import {
+  buildLiveBlogUpdates,
+  coverageEndTimeForFinishedMatch,
+  isLiveBlogEligibleStatus,
+} from "@/lib/seo/live-blog-updates";
 import { SITE_NAME } from "@/lib/site-url";
 
 type PlMatchPageProps = {
@@ -60,6 +65,31 @@ export default async function PremierLeagueMatchPage({
   const fixture = detail.fixture;
   const path = `/premier-league/match/${fixtureId}`;
 
+  const liveBlog =
+    fixture && isLiveBlogEligibleStatus(fixture.status)
+      ? (() => {
+          const liveBlogUpdate = buildLiveBlogUpdates(
+            detail.events,
+            fixture.kickoffUtc,
+          );
+          if (liveBlogUpdate.length === 0) return null;
+          const isFinished = fixture.status.trim().toUpperCase() === "FT";
+          return {
+            path,
+            headline: `${fixture.homeTeamName} vs ${fixture.awayTeamName} — live updates`,
+            coverageStartTime: fixture.kickoffUtc,
+            ...(isFinished
+              ? {
+                  coverageEndTime: coverageEndTimeForFinishedMatch(
+                    fixture.kickoffUtc,
+                  ),
+                }
+              : {}),
+            liveBlogUpdate,
+          };
+        })()
+      : null;
+
   return (
     <>
       {fixture ? (
@@ -76,6 +106,7 @@ export default async function PremierLeagueMatchPage({
             eventStatus: plEventStatus(fixture.status),
             description: `Premier League — ${fixture.homeTeamName} vs ${fixture.awayTeamName}. Live match centre on ${SITE_NAME}.`,
           }}
+          liveBlog={liveBlog}
           breadcrumbs={[
             { name: "Premier League", path: "/premier-league" },
             { name: "Fixtures", path: "/premier-league/fixtures" },

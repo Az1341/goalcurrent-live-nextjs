@@ -381,3 +381,12 @@ button,
   min-height: 44px;
   min-width: 44px;
 }
+
+/* Pastel Pulse Match Center preview tokens (isolated; do not alter production surfaces) */
+[data-pastel-preview] {
+  /* Sampled dark teal-tint from available Stitch dark desktop surface pixels
+     (official Pastel Pulse zip was unavailable at scaffold time). RGB(29,53,60). */
+  --pastel-dark-surface-accent: #1d353c;
+  --pastel-page-bg: #0b1214;
+  --pastel-text: #e8f1f0;
+}

@@ -1,16 +1,95 @@
 /* Pastel Pulse Match Center preview - isolated from production chrome */
 
 .shell {
+  /* Dark defaults — also mirrored in globals.css [data-pastel-preview] */
+  color-scheme: dark;
+  --pastel-page-bg: #0b1214;
+  --pastel-text: #e8f1f0;
+  --pastel-text-muted: rgba(232, 241, 240, 0.65);
+  --pastel-text-soft: rgba(232, 241, 240, 0.75);
+  --pastel-text-body: rgba(232, 241, 240, 0.82);
+  --pastel-surface-accent: #1d353c;
+  --pastel-chrome-bg: color-mix(in srgb, var(--pastel-surface-accent) 85%, #000);
+  --pastel-topnav-bg: color-mix(in srgb, var(--pastel-surface-accent) 70%, #000);
+  --pastel-bottom-bg: color-mix(in srgb, var(--pastel-surface-accent) 88%, #000);
+  --pastel-card-bg: color-mix(in srgb, var(--pastel-surface-accent) 55%, #061012);
+  --pastel-border: rgba(255, 255, 255, 0.08);
+  --pastel-border-strong: rgba(255, 255, 255, 0.12);
+  --pastel-hover-bg: rgba(255, 255, 255, 0.08);
+  --pastel-active-bg: rgba(255, 255, 255, 0.14);
+  --pastel-nav-fg: rgba(232, 241, 240, 0.72);
+  --pastel-nav-fg-strong: #ffffff;
+  --pastel-overlay: rgba(0, 0, 0, 0.55);
+  --pastel-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --pastel-banner-bg: rgba(255, 255, 255, 0.06);
+  --pastel-accent-live: #ff6b7a;
+  --pastel-badge-bg: rgba(255, 255, 255, 0.12);
+  --pastel-dark-surface-accent: var(--pastel-surface-accent);
+
   position: fixed;
   inset: 0;
   z-index: 20000;
   display: flex;
   flex-direction: column;
-  background: var(--pastel-page-bg, #0b1214);
-  color: var(--pastel-text, #e8f1f0);
+  background: var(--pastel-page-bg);
+  color: var(--pastel-text);
   font-family: var(--font-body), system-ui, sans-serif;
   overflow: hidden;
 }
+
+.shell[data-pastel-theme="light"] {
+  color-scheme: light;
+  --pastel-page-bg: #f5f1ed;
+  --pastel-text: #1a1816;
+  --pastel-text-muted: rgba(26, 24, 22, 0.58);
+  --pastel-text-soft: rgba(26, 24, 22, 0.7);
+  --pastel-text-body: rgba(26, 24, 22, 0.78);
+  --pastel-surface-accent: #ffffff;
+  --pastel-chrome-bg: #efeae4;
+  --pastel-topnav-bg: #f7f3ef;
+  --pastel-bottom-bg: #f7f3ef;
+  --pastel-card-bg: #ffffff;
+  --pastel-border: rgba(26, 24, 22, 0.1);
+  --pastel-border-strong: rgba(26, 24, 22, 0.14);
+  --pastel-hover-bg: rgba(26, 24, 22, 0.06);
+  --pastel-active-bg: rgba(26, 24, 22, 0.1);
+  --pastel-nav-fg: rgba(26, 24, 22, 0.72);
+  --pastel-nav-fg-strong: #1a1816;
+  --pastel-overlay: rgba(26, 24, 22, 0.4);
+  --pastel-shadow: 0 12px 32px rgba(26, 24, 22, 0.12);
+  --pastel-banner-bg: rgba(26, 24, 22, 0.04);
+  --pastel-accent-live: #ff6b7a;
+  --pastel-badge-bg: rgba(26, 24, 22, 0.08);
+  --pastel-dark-surface-accent: var(--pastel-surface-accent);
+}
+
+.shell[data-pastel-theme="dark"] {
+  color-scheme: dark;
+  /* same dark token values as .shell defaults — explicit for toggle */
+  --pastel-page-bg: #0b1214;
+  --pastel-text: #e8f1f0;
+  --pastel-text-muted: rgba(232, 241, 240, 0.65);
+  --pastel-text-soft: rgba(232, 241, 240, 0.75);
+  --pastel-text-body: rgba(232, 241, 240, 0.82);
+  --pastel-surface-accent: #1d353c;
+  --pastel-chrome-bg: color-mix(in srgb, var(--pastel-surface-accent) 85%, #000);
+  --pastel-topnav-bg: color-mix(in srgb, var(--pastel-surface-accent) 70%, #000);
+  --pastel-bottom-bg: color-mix(in srgb, var(--pastel-surface-accent) 88%, #000);
+  --pastel-card-bg: color-mix(in srgb, var(--pastel-surface-accent) 55%, #061012);
+  --pastel-border: rgba(255, 255, 255, 0.08);
+  --pastel-border-strong: rgba(255, 255, 255, 0.12);
+  --pastel-hover-bg: rgba(255, 255, 255, 0.08);
+  --pastel-active-bg: rgba(255, 255, 255, 0.14);
+  --pastel-nav-fg: rgba(232, 241, 240, 0.72);
+  --pastel-nav-fg-strong: #ffffff;
+  --pastel-overlay: rgba(0, 0, 0, 0.55);
+  --pastel-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --pastel-banner-bg: rgba(255, 255, 255, 0.06);
+  --pastel-accent-live: #ff6b7a;
+  --pastel-badge-bg: rgba(255, 255, 255, 0.12);
+  --pastel-dark-surface-accent: var(--pastel-surface-accent);
+}
+
 
 .shellRow {
   display: flex;
@@ -117,6 +196,12 @@
   font-size: 14px;
   letter-spacing: 0.02em;
   white-space: nowrap;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
 }
 
 .topNavDesktop,
@@ -152,6 +237,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
+
+  flex-shrink: 0;
 }
 
 .topNavLink {

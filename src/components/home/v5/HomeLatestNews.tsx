@@ -46,7 +46,7 @@ function NewsLink({
 export default function HomeLatestNews() {
   const tNav = useTranslations("nav");
   const tCommon = useTranslations("common");
-  const { articles, loading } = useNewsFeed();
+  const { articles, loading } = useNewsFeed({ excludeWc26: true });
   const [featured, ...rest] = useMemo(() => {
     const merged = mergeHomepageNewsFeed(articles);
     return merged.slice(0, 4);

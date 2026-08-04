@@ -19,6 +19,11 @@ export const videoCategorySchema = z.enum([
 
 export const newsCategoryQuerySchema = z.object({
   category: newsCategorySchema.optional().default("all"),
+  /** When true, strip WC26 partner RSS before response (homepage hard gate). */
+  excludeWc26: z
+    .union([z.literal("1"), z.literal("true"), z.literal("0"), z.literal("false")])
+    .optional()
+    .transform((value) => value === "1" || value === "true"),
 });
 
 export const videoCategoryQuerySchema = z.object({

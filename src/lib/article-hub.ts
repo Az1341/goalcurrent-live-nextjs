@@ -1,4 +1,9 @@
-import { ARTICLE_INDEX, articleHref, type ArticleIndexEntry } from "@/data/articles";
+import {
+  ARTICLE_INDEX,
+  ARTICLES,
+  articleHref,
+  type ArticleIndexEntry,
+} from "@/data/articles";
 import { EDITORIAL_ARTICLES } from "@/data/editorial";
 import { EDITORIAL_SOURCE_LABEL } from "@/lib/seo/constants";
 import { toIsoDate } from "@/lib/seo/dates";
@@ -81,6 +86,62 @@ function sortNewsByDateDesc(articles: readonly NewsArticle[]): NewsArticle[] {
   return [...articles].sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 }
 
+/**
+ * True when `slug` maps to ARTICLES with competition category world-cup-2026.
+ * Unmatched ARTICLE_INDEX-only slugs return false (unknown) — callers that need
+ * a hard homepage gate should also use slug/path/title signals.
+ */
+export function isWorldCup2026Slug(slug: string): boolean {
+  const normalized = slug.trim().toLowerCase();
+  if (!normalized) return false;
+  const article = ARTICLES.find((entry) => entry.slug === normalized);
+  return article?.category === "world-cup-2026";
+}
+
+/** Extract article slug from a news link when possible. */
+export function slugFromNewsLink(link: string): string | null {
+  const trimmed = link.trim();
+  if (!trimmed) return null;
+  const worldcupNews = trimmed.match(/\/worldcup2026\/news\/([^/?#]+)/i);
+  if (worldcupNews?.[1]) return decodeURIComponent(worldcupNews[1]);
+  const articlesPath = trimmed.match(/\/articles\/([^/?#]+)/i);
+  if (articlesPath?.[1]) return decodeURIComponent(articlesPath[1]);
+  return null;
+}
+
+/**
+ * Homepage / hard-gate WC26 detection for GoalCurrent editorial cards.
+ * Uses ARTICLES.category when present; otherwise slug/path WC26 signals
+ * (needed because most ARTICLE_INDEX slugs have no ARTICLES counterpart).
+ */
+export function isWorldCup2026EditorialLink(link: string, slug?: string): boolean {
+  const resolvedSlug = (slug ?? slugFromNewsLink(link) ?? "").toLowerCase();
+  if (resolvedSlug && isWorldCup2026Slug(resolvedSlug)) {
+    return true;
+  }
+  if (
+    resolvedSlug &&
+    (resolvedSlug.includes("world-cup") ||
+      resolvedSlug.includes("fifa-world-cup-2026") ||
+      resolvedSlug.includes("worldcup2026"))
+  ) {
+    return true;
+  }
+  if (/\/worldcup2026(\/|$)/i.test(link)) {
+    return true;
+  }
+  // Index-only WC26 match reports without year token in the slug.
+  if (
+    resolvedSlug === "morocco-knock-out-netherlands-on-penalties" ||
+    resolvedSlug === "england-advance-to-face-mexico-round-of-16" ||
+    resolvedSlug === "england-france-third-place-preview" ||
+    resolvedSlug === "england-6-4-france-third-place-recap"
+  ) {
+    return true;
+  }
+  return false;
+}
+
 /** All GoalCurrent articles from ARTICLE_INDEX as news cards, newest first. */
 export function getArticleIndexNewsArticles(): NewsArticle[] {
   return sortNewsByDateDesc(
@@ -112,9 +173,16 @@ export function getLatestMatchRecap(): ArticleIndexEntry | undefined {
   return recaps.length > 0 ? recaps[recaps.length - 1] : undefined;
 }
 
-/** Newest GoalCurrent articles first for the homepage grid. */
+/** Newest non-WC26 GoalCurrent articles first for the homepage grid. */
 export function getHomepageArticles(limit = 3): ArticleIndexEntry[] {
   return [...ARTICLE_INDEX]
+    .filter(
+      (entry) =>
+        !isWorldCup2026EditorialLink(
+          entry.href ?? articleHref(entry.slug),
+          entry.slug,
+        ),
+    )
     .sort((a, b) => toIsoDate(b.date).localeCompare(toIsoDate(a.date)))
     .slice(0, limit);
 }

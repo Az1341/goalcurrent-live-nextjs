@@ -2,7 +2,7 @@ import styles from "../pastel.module.css";
 
 /**
  * Preview-only Daily Digest card.
- * Dark surface uses --pastel-dark-surface-accent (teal-tint), never white.
+ * Surface uses theme-aware --pastel-surface-accent (dark teal or light white).
  */
 export default function PastelDailyDigest() {
   return (

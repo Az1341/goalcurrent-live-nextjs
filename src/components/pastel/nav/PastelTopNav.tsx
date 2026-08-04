@@ -13,6 +13,7 @@ import {
   type PastelNavItem,
 } from "./pastelNav";
 import PastelMoreMenu from "./PastelMoreMenu";
+import PastelThemeToggle, { type PastelTheme } from "../PastelThemeToggle";
 import styles from "../pastel.module.css";
 
 function PastelTopNavItem({
@@ -44,7 +45,12 @@ function PastelTopNavItem({
   );
 }
 
-export default function PastelTopNav() {
+type Props = {
+  theme: PastelTheme;
+  onToggleTheme: () => void;
+};
+
+export default function PastelTopNav({ theme, onToggleTheme }: Props) {
   const pathname = usePathname();
   const [moreOpen, setMoreOpen] = useState(false);
 
@@ -95,6 +101,10 @@ export default function PastelTopNav() {
             />
           </div>
         </nav>
+
+        <div className={styles.topNavActions}>
+          <PastelThemeToggle theme={theme} onToggle={onToggleTheme} />
+        </div>
       </div>
     </header>
   );

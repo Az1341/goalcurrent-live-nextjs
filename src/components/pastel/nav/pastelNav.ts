@@ -14,17 +14,40 @@ export type PastelNavItem = {
   id: PastelNavId;
   href: string;
   label: string;
+  /** Only Home is interactive in this preview scaffold. */
+  enabled: boolean;
 };
 
 export const PASTEL_NAV_ITEMS: Record<PastelNavId, PastelNavItem> = {
-  home: { id: "home", href: "/", label: "Home" },
-  scores: { id: "scores", href: "/live", label: "Scores" },
-  transfers: { id: "transfers", href: "/transfers", label: "Transfers" },
-  tables: { id: "tables", href: "/premier-league/table", label: "Tables" },
-  news: { id: "news", href: "/news", label: "News" },
-  favourites: { id: "favourites", href: "/favourites", label: "Favourites" },
-  videos: { id: "videos", href: "/videos", label: "Videos" },
-  articles: { id: "articles", href: "/articles", label: "Articles" },
+  /** Stay inside the preview shell — do not link to production `/`. */
+  home: { id: "home", href: "/preview-pastel", label: "Home", enabled: true },
+  scores: { id: "scores", href: "/live", label: "Scores", enabled: false },
+  transfers: {
+    id: "transfers",
+    href: "/transfers",
+    label: "Transfers",
+    enabled: false,
+  },
+  tables: {
+    id: "tables",
+    href: "/premier-league/table",
+    label: "Tables",
+    enabled: false,
+  },
+  news: { id: "news", href: "/news", label: "News", enabled: false },
+  favourites: {
+    id: "favourites",
+    href: "/favourites",
+    label: "Favourites",
+    enabled: false,
+  },
+  videos: { id: "videos", href: "/videos", label: "Videos", enabled: false },
+  articles: {
+    id: "articles",
+    href: "/articles",
+    label: "Articles",
+    enabled: false,
+  },
 };
 
 export const PASTEL_DESKTOP_SIDEBAR: PastelNavId[] = [
@@ -71,4 +94,20 @@ export const PASTEL_MOBILE_MORE: PastelNavId[] = [
 
 export function resolvePastelItems(ids: PastelNavId[]): PastelNavItem[] {
   return ids.map((id) => PASTEL_NAV_ITEMS[id]);
+}
+
+/** Active-state helper for the Pastel preview shell (locale-stripped pathname). */
+export function isPastelNavActive(
+  pathname: string,
+  href: string,
+  exact?: boolean,
+): boolean {
+  if (exact || href === "/" || href === "/preview-pastel") {
+    return (
+      pathname === "/" ||
+      pathname === "" ||
+      pathname === "/preview-pastel"
+    );
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
 }

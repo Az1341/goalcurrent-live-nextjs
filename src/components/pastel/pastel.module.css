@@ -443,3 +443,38 @@
   font-size: 12px;
   color: rgba(232, 241, 240, 0.75);
 }
+
+/* Disabled preview nav — visible for layout review, non-interactive */
+.navItemDisabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  user-select: none;
+}
+
+.navItemDisabled:hover {
+  background: transparent;
+  color: inherit;
+}
+
+.soonBadge {
+  display: inline-flex;
+  align-items: center;
+  margin-inline-start: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(232, 241, 240, 0.85);
+  background: rgba(255, 255, 255, 0.12);
+  line-height: 1.4;
+}
+
+.bottomTab .soonBadge {
+  margin-inline-start: 0;
+  margin-top: 1px;
+  font-size: 8px;
+  padding: 0 4px;
+}

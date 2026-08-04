@@ -4,18 +4,44 @@ import { useState } from "react";
 import NavLink from "@/components/nav/NavLink";
 import { usePathname } from "@/i18n/navigation";
 import {
+  isPastelNavActive,
   PASTEL_DESKTOP_TOP,
   PASTEL_NAV_ITEMS,
   PASTEL_TABLET_MORE,
   PASTEL_TABLET_TOP,
   resolvePastelItems,
+  type PastelNavItem,
 } from "./pastelNav";
 import PastelMoreMenu from "./PastelMoreMenu";
 import styles from "../pastel.module.css";
 
-function isActive(pathname: string, href: string, exact?: boolean) {
-  if (exact || href === "/") return pathname === "/" || pathname === "";
-  return pathname === href || pathname.startsWith(`${href}/`);
+function PastelTopNavItem({
+  item,
+  active,
+}: {
+  item: PastelNavItem;
+  active: boolean;
+}) {
+  const className = `${styles.topNavLink}${active ? ` ${styles.topNavLinkActive}` : ""}${item.enabled ? "" : ` ${styles.navItemDisabled}`}`;
+
+  if (!item.enabled) {
+    return (
+      <span
+        className={className}
+        aria-disabled="true"
+        title={`${item.label} — Soon`}
+      >
+        {item.label}
+        <span className={styles.soonBadge}>Soon</span>
+      </span>
+    );
+  }
+
+  return (
+    <NavLink href={item.href} className={className}>
+      {item.label}
+    </NavLink>
+  );
 }
 
 export default function PastelTopNav() {
@@ -30,15 +56,12 @@ export default function PastelTopNav() {
         <nav className={styles.topNavDesktop} aria-label="Desktop tabs">
           {PASTEL_DESKTOP_TOP.map((id) => {
             const item = PASTEL_NAV_ITEMS[id];
-            const active = isActive(pathname, item.href);
             return (
-              <NavLink
+              <PastelTopNavItem
                 key={id}
-                href={item.href}
-                className={`${styles.topNavLink}${active ? ` ${styles.topNavLinkActive}` : ""}`}
-              >
-                {item.label}
-              </NavLink>
+                item={item}
+                active={isPastelNavActive(pathname, item.href)}
+              />
             );
           })}
         </nav>
@@ -46,15 +69,12 @@ export default function PastelTopNav() {
         <nav className={styles.topNavTablet} aria-label="Tablet tabs">
           {PASTEL_TABLET_TOP.map((id) => {
             const item = PASTEL_NAV_ITEMS[id];
-            const active = isActive(pathname, item.href, id === "home");
             return (
-              <NavLink
+              <PastelTopNavItem
                 key={id}
-                href={item.href}
-                className={`${styles.topNavLink}${active ? ` ${styles.topNavLinkActive}` : ""}`}
-              >
-                {item.label}
-              </NavLink>
+                item={item}
+                active={isPastelNavActive(pathname, item.href, id === "home")}
+              />
             );
           })}
           <div className={styles.moreWrap}>

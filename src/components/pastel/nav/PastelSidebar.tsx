@@ -3,16 +3,12 @@
 import NavLink from "@/components/nav/NavLink";
 import { usePathname } from "@/i18n/navigation";
 import {
+  isPastelNavActive,
   PASTEL_DESKTOP_SIDEBAR,
   PASTEL_NAV_ITEMS,
 } from "./pastelNav";
 import { PastelNavIcon } from "./PastelNavIcons";
 import styles from "../pastel.module.css";
-
-function isActive(pathname: string, href: string, exact?: boolean) {
-  if (exact || href === "/") return pathname === "/" || pathname === "";
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
 
 export default function PastelSidebar() {
   const pathname = usePathname();
@@ -25,12 +21,28 @@ export default function PastelSidebar() {
       <nav className={styles.sidebarNav}>
         {PASTEL_DESKTOP_SIDEBAR.map((id) => {
           const item = PASTEL_NAV_ITEMS[id];
-          const active = isActive(pathname, item.href, id === "home");
+          const active = isPastelNavActive(pathname, item.href, id === "home");
+          const className = `${styles.sidebarLink}${active ? ` ${styles.sidebarLinkActive}` : ""}${item.enabled ? "" : ` ${styles.navItemDisabled}`}`;
+
+          if (!item.enabled) {
+            return (
+              <span
+                key={id}
+                className={className}
+                aria-disabled="true"
+                aria-label={`${item.label} (Soon)`}
+                title={`${item.label} — Soon`}
+              >
+                <PastelNavIcon id={id} />
+              </span>
+            );
+          }
+
           return (
             <NavLink
               key={id}
               href={item.href}
-              className={`${styles.sidebarLink}${active ? ` ${styles.sidebarLinkActive}` : ""}`}
+              className={className}
               aria-label={item.label}
               title={item.label}
             >

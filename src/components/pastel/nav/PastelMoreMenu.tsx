@@ -13,6 +13,43 @@ type PastelMoreMenuProps = {
   triggerLabel?: string;
 };
 
+function MoreItem({
+  item,
+  className,
+  role,
+  onClose,
+}: {
+  item: PastelNavItem;
+  className: string;
+  role?: string;
+  onClose: () => void;
+}) {
+  if (!item.enabled) {
+    return (
+      <span
+        className={`${className} ${styles.navItemDisabled}`}
+        role={role}
+        aria-disabled="true"
+        title={`${item.label} — Soon`}
+      >
+        {item.label}
+        <span className={styles.soonBadge}>Soon</span>
+      </span>
+    );
+  }
+
+  return (
+    <NavLink
+      href={item.href}
+      className={className}
+      role={role}
+      onClick={onClose}
+    >
+      {item.label}
+    </NavLink>
+  );
+}
+
 export default function PastelMoreMenu({
   variant,
   open,
@@ -57,15 +94,13 @@ export default function PastelMoreMenu({
         aria-label={triggerLabel}
       >
         {items.map((item) => (
-          <NavLink
+          <MoreItem
             key={item.id}
-            href={item.href}
+            item={item}
             className={styles.moreDropdownItem}
             role="menuitem"
-            onClick={onClose}
-          >
-            {item.label}
-          </NavLink>
+            onClose={onClose}
+          />
         ))}
       </div>
     );
@@ -99,14 +134,12 @@ export default function PastelMoreMenu({
         </div>
         <nav className={styles.moreSheetNav} aria-label="More navigation">
           {items.map((item) => (
-            <NavLink
+            <MoreItem
               key={item.id}
-              href={item.href}
+              item={item}
               className={styles.moreSheetItem}
-              onClick={onClose}
-            >
-              {item.label}
-            </NavLink>
+              onClose={onClose}
+            />
           ))}
         </nav>
       </div>

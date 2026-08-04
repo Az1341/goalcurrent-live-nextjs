@@ -20,7 +20,7 @@ import {
   coverageEndTimeForFinishedMatch,
   isLiveBlogEligibleStatus,
 } from "@/lib/seo/live-blog-updates";
-import { fetchWc26MatchDetail } from "@/lib/server/wc26-match-detail";
+import { fetchWc26MatchEvents } from "@/lib/server/wc26-match-detail";
 import { isCompletedMatchStatus } from "@/lib/wc26-tournament-stats";
 import { getScoreBatEmbedForFixture } from "@/lib/scorebat/getScoreBatEmbed";
 import { absoluteUrl, SITE_NAME } from "@/lib/site-url";
@@ -81,13 +81,12 @@ export default async function MatchPage({ params }: MatchPageProps) {
   const matchPath = matchHref(fixtureId);
   const status = String(effectiveFixture.status);
 
+  // Use events-only fetch (swallows API errors) so SSG of completed WC26
+  // matches cannot fail the production build on network/rate-limit faults.
   let liveBlog = null;
   if (isLiveBlogEligibleStatus(status)) {
-    const detail = await fetchWc26MatchDetail(fixtureId);
-    const liveBlogUpdate = buildLiveBlogUpdates(
-      detail.events,
-      fixture.kickoffUtc,
-    );
+    const { events } = await fetchWc26MatchEvents(fixtureId);
+    const liveBlogUpdate = buildLiveBlogUpdates(events, fixture.kickoffUtc);
     if (liveBlogUpdate.length > 0) {
       liveBlog = {
         path: matchPath,

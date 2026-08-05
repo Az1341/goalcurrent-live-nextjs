@@ -6,6 +6,8 @@ import PastelTopNav from "./nav/PastelTopNav";
 import PastelBottomTabs from "./nav/PastelBottomTabs";
 import PastelLiveMatches from "./home/PastelLiveMatches";
 import PastelDailyDigest from "./home/PastelDailyDigest";
+import PastelStandings from "./home/PastelStandings";
+import PastelTransferRadar from "./home/PastelTransferRadar";
 import type { PastelTheme } from "./PastelThemeToggle";
 import styles from "./pastel.module.css";
 
@@ -100,8 +102,16 @@ export default function PastelMatchCenter() {
             Private design preview - Pastel Pulse Match Center. Not production
             navigation.
           </p>
-          <PastelLiveMatches />
-          <PastelDailyDigest />
+          <div className={styles.contentGrid}>
+            <div className={styles.contentPrimary}>
+              <PastelLiveMatches />
+            </div>
+            <aside className={styles.contentRail} aria-label="Match center widgets">
+              <PastelStandings />
+              <PastelDailyDigest />
+              <PastelTransferRadar />
+            </aside>
+          </div>
         </main>
       </div>
       <PastelBottomTabs />

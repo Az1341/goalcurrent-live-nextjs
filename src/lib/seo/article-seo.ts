@@ -5,11 +5,19 @@ import {
   type Article,
 } from "@/data/articles";
 import { getEditorialArticleByPath } from "@/data/editorial";
+import { ARTICLE_CARD_IMAGES } from "@/lib/article-hub";
 import type { ArticleSchemaInput } from "@/lib/seo/schema";
 import type { BreadcrumbItem } from "@/lib/seo/breadcrumbs";
 import type { Metadata } from "next";
 import { buildArticleMetadata } from "@/lib/page-metadata";
 import { EDITORIAL_AUTHOR } from "@/lib/seo/constants";
+import { absoluteUrl } from "@/lib/site-url";
+
+/** Only dedicated hub card art — never invent or force the generic hero fallback. */
+function articleSchemaImage(slug: string): string | undefined {
+  const dedicated = ARTICLE_CARD_IMAGES[slug];
+  return dedicated ? absoluteUrl(dedicated) : undefined;
+}
 
 export function articleSeoFromArticle(article: Article): ArticleSchemaInput {
   return {
@@ -19,6 +27,7 @@ export function articleSeoFromArticle(article: Article): ArticleSchemaInput {
     datePublished: article.date,
     dateModified: article.date,
     author: EDITORIAL_AUTHOR,
+    image: articleSchemaImage(article.slug),
   };
 }
 
@@ -37,6 +46,7 @@ export function articleSeoFromSlug(slug: string): ArticleSchemaInput | null {
       datePublished: indexEntry.date,
       dateModified: indexEntry.date,
       author: indexEntry.author ?? EDITORIAL_AUTHOR,
+      image: articleSchemaImage(slug),
     };
   }
 
@@ -49,6 +59,7 @@ export function articleSeoFromSlug(slug: string): ArticleSchemaInput | null {
       datePublished: editorial.publishedAt,
       dateModified: editorial.publishedAt,
       author: editorial.author,
+      image: articleSchemaImage(editorial.slug),
     };
   }
 

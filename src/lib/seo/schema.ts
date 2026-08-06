@@ -317,4 +317,98 @@ export function sportsTeamSchema(input: SportsTeamSchemaInput): SchemaNode {
   };
 }
 
+export type RankingListItemInput = {
+  position: number;
+  name: string;
+  /** Standings: points. Stats: goals/assists/cards/etc. */
+  metricValue?: number;
+  /** Schema PropertyValue name, e.g. "points" or "goals". */
+  metricName?: string;
+  /** Standings: matches played. */
+  played?: number;
+  /** Optional club for Person rankings. */
+  teamName?: string;
+};
+
+export type RankingListSchemaInput = {
+  path: string;
+  name: string;
+  description?: string;
+  locale?: string;
+  /** SportsTeam for league tables; Person for scorer/assist rankings. */
+  itemType: "SportsTeam" | "Person";
+  competitionName?: string;
+  items: readonly RankingListItemInput[];
+};
+
+/**
+ * ItemList of ranked SportsTeam (standings) or Person (leaderboards).
+ * Only maps fields supplied by callers — never invents metrics.
+ */
+export function rankingListSchema(
+  input: RankingListSchemaInput,
+): SchemaNode | null {
+  if (!input.items.length) {
+    return null;
+  }
+
+  const locale = input.locale ?? routing.defaultLocale;
+  const url = localizedUrl(input.path, locale);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: input.name,
+    ...(input.description ? { description: input.description } : {}),
+    url,
+    numberOfItems: input.items.length,
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    itemListElement: input.items.map((row) => {
+      const properties: SchemaNode[] = [];
+      if (row.metricValue != null && row.metricName) {
+        properties.push({
+          "@type": "PropertyValue",
+          name: row.metricName,
+          value: row.metricValue,
+        });
+      }
+      if (row.played != null) {
+        properties.push({
+          "@type": "PropertyValue",
+          name: "played",
+          value: row.played,
+        });
+      }
+
+      const item: SchemaNode = {
+        "@type": input.itemType,
+        name: row.name,
+        ...(input.itemType === "SportsTeam" && input.competitionName
+          ? {
+              memberOf: {
+                "@type": "SportsOrganization",
+                name: input.competitionName,
+              },
+            }
+          : {}),
+        ...(input.itemType === "Person" && row.teamName
+          ? {
+              memberOf: {
+                "@type": "SportsTeam",
+                name: row.teamName,
+              },
+            }
+          : {}),
+        ...(properties.length ? { additionalProperty: properties } : {}),
+      };
+
+      return {
+        "@type": "ListItem",
+        position: row.position,
+        item,
+      };
+    }),
+  };
+}
+
 export { DEFAULT_OG_IMAGE_ALT };

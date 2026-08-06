@@ -16,6 +16,17 @@ Run `npm run verify:design` and confirm in the browser:
 
 Do **not** set `HOME_HERO_BG` to `null` or remove `image` fields from article hubs. Do not route `/flags`, `/images`, or `/icons` through the service-worker cache-first path.
 
+## Forbidden: Relay / NovaAI SaaS preview (GC-CLEANUP-20260806)
+
+Do **not** create, restore, or serve any of the following in this repository:
+
+- Routes: `/preview-relay`, `/preview-novaai` (any locale)
+- Folders: `src/components/relay/`, `src/components/novaai/`, `src/app/**/preview-relay/`, `src/app/**/preview-novaai/`
+- Brand names for demos: "Relay", "NovaAI" as a GoalCurrent landing/preview product
+- Supporting helpers added only for that demo: `LayoutShell` standalone bypass for those routes, `src/lib/cn.ts` if reintroduced solely for that page
+
+This surface was repeatedly recreated as untracked local files and is permanently banned. GoalCurrent is a football product — do not add unrelated AI SaaS landing demos here.
+
 ## Mandatory private-preview release policy
 
 Every GoalCurrent change must follow:

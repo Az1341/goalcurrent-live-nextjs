@@ -47,3 +47,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Banned Relay/NovaAI demo surfaces (GC-CLEANUP-20260806) - do not recreate
+src/components/relay/
+src/components/novaai/
+src/app/**/preview-relay/
+src/app/**/preview-novaai/
+src/lib/cn.ts

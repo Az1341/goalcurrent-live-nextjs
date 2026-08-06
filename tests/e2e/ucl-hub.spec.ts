@@ -200,7 +200,7 @@ for (const viewport of VIEWPORTS) {
         });
       });
 
-      await page.goto("/fa/champions-league");
+      await page.goto("/es/champions-league");
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(
         /UEFA Champions League/i,
       );

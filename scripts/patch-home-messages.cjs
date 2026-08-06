@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const dir = path.join(process.cwd(), "messages");
-const locales = ["en", "fa", "ar", "fr", "de", "nl", "es", "pt", "it"];
+const locales = ["en", "es", "it", "de", "fr", "nl"];
 
 const homeByLocale = {
   en: {
@@ -26,27 +26,6 @@ const homeByLocale = {
     viewAllLive: "View All Live Matches",
     noLiveMatches: "No live matches right now.",
   },
-  fa: {
-    subtitle:
-      "نتایج زنده، برنامه بازی‌ها و اخبار از {siteName} — جام جهانی ۲۰۲۶ مسابقه اصلی است.",
-    matchDetails: "جزئیات مسابقه",
-    allFixtures: "همه بازی‌ها",
-    noFixturesLoaded: "برنامه جام جهانی بارگذاری نشده است.",
-    latestResults: "آخرین نتایج",
-    viewAllResults: "مشاهده همه نتایج",
-    noRecentResults: "نتیجه تمام‌شده‌ای در این بازه نیست.",
-    upcomingFixtures: "بازی‌های پیش‌رو",
-    viewAllFixtures: "مشاهده همه برنامه‌ها",
-    noUpcomingFixtures: "بازی پیش‌رویی برنامه‌ریزی نشده است.",
-    wc26Title: "جام جهانی ۲۰۲۶",
-    viewAll: "مشاهده همه",
-    wc26Summary:
-      "آمریکا · مکزیک · کانادا · ۱۱ ژوئن – ۱۹ جولای ۲۰۲۶ · {gamesPlayed} بازی انجام‌شده · {gamesLeft} بازی باقی‌مانده",
-    featuredMatch: "مسابقه ویژه",
-    liveNow: "در حال پخش",
-    viewAllLive: "مشاهده همه بازی‌های زنده",
-    noLiveMatches: "اکنون بازی زنده‌ای نیست.",
-  },
 };
 
 const favByLocale = {
@@ -57,14 +36,6 @@ const favByLocale = {
     liveScores: "live scores",
     worldCupTeams: "World Cup teams",
     or: "or",
-  },
-  fa: {
-    stripTitle: "علاقه‌مندی‌های شما",
-    manage: "مدیریت",
-    emptyStripLead: "برای دیدن اینجا، یک مسابقه یا تیم را ستاره‌دار کنید. مرور کنید",
-    liveScores: "نتایج زنده",
-    worldCupTeams: "تیم‌های جام جهانی",
-    or: "یا",
   },
 };
 
@@ -83,21 +54,6 @@ const ribbonByLocale = {
     viewAllFixturesAria: "View all fixtures",
     tickerAria: "Live scores ticker",
     liveElapsed: "LIVE {elapsed}'",
-  },
-  fa: {
-    worldCup2026: "جام جهانی ۲۰۲۶",
-    liveNow: "زنده اکنون",
-    latestResults: "آخرین نتایج",
-    emptyMessage:
-      "برنامه از تقویم محلی — نتایج با فعال شدن همگام‌سازی API",
-    liveMatchesAria: "مسابقات زنده",
-    latestResultsAria: "آخرین نتایج",
-    moreMatches: "+{count} مسابقه بیشتر",
-    viewMoreMatchesAria: "مشاهده {count} مسابقه بیشتر",
-    allFixtures: "همه برنامه‌ها",
-    viewAllFixturesAria: "مشاهده همه برنامه‌ها",
-    tickerAria: "نوار نتایج زنده",
-    liveElapsed: "زنده {elapsed}'",
   },
 };
 

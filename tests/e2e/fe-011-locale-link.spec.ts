@@ -16,7 +16,7 @@ for (const viewport of VIEWPORTS) {
       page,
     }) => {
       await preparePage(page);
-      await gotoApp(page, "/fa/premier-league");
+      await gotoApp(page, "/es/premier-league");
       await expect(
         page.getByRole("heading", { name: /Premier League/i }).first(),
       ).toBeVisible({ timeout: 30_000 });

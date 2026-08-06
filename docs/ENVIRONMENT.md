@@ -56,14 +56,14 @@ If you mirror the site on **Netlify**, set the same `YOUTUBE_API_KEY` in **Site 
 
 ### Locale translation (DeepL)
 
-For higher-quality Farsi and Arabic UI copy, use the DeepL helper after editing `messages/en.json`:
+For higher-quality UI copy in supported locales, use the DeepL helper after editing `messages/en.json`:
 
 ```bash
-DEEPL_AUTH_KEY=your_key node scripts/translate-messages-deepl.mjs fa
-DEEPL_AUTH_KEY=your_key node scripts/translate-messages-deepl.mjs ar
+DEEPL_AUTH_KEY=your_key node scripts/translate-messages-deepl.mjs es
+DEEPL_AUTH_KEY=your_key node scripts/translate-messages-deepl.mjs fr
 ```
 
-Use `--dry-run` to preview, or `--force` to re-translate keys that already differ from English. Manual overrides live in `scripts/deep-i18n/fa.json` — apply with `node scripts/deep-i18n/apply.cjs`.
+Use `--dry-run` to preview, or `--force` to re-translate keys that already differ from English. Approved locales: `en`, `es`, `it`, `de`, `fr`, `nl`.
 
 See `.env.example` for the full template including Sentry.
 

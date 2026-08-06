@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Noto_Sans_Arabic, Vazirmatn } from "next/font/google";
+import { Inter } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
@@ -32,24 +32,6 @@ const inter = Inter({
   variable: "--font-inter",
   weight: ["400", "500", "600", "700"],
   preload: true,
-  adjustFontFallback: true,
-});
-
-const notoSansArabic = Noto_Sans_Arabic({
-  subsets: ["arabic"],
-  display: "swap",
-  variable: "--font-noto-arabic",
-  weight: ["400", "500", "600", "700"],
-  preload: false,
-  adjustFontFallback: true,
-});
-
-const vazirmatn = Vazirmatn({
-  subsets: ["arabic"],
-  display: "swap",
-  variable: "--font-vazirmatn",
-  weight: ["400", "500", "600", "700"],
-  preload: false,
   adjustFontFallback: true,
 });
 
@@ -135,18 +117,12 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
   const direction = getDirection(locale);
-  const fontVariables = [inter.variable];
-  if (locale === "fa") {
-    fontVariables.push(vazirmatn.variable);
-  } else if (locale === "ar") {
-    fontVariables.push(notoSansArabic.variable);
-  }
 
   return (
     <html
       lang={locale}
       dir={direction}
-      className={fontVariables.join(" ")}
+      className={inter.variable}
       suppressHydrationWarning
     >
       <head>

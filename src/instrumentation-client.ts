@@ -12,7 +12,7 @@ if (typeof window !== "undefined") {
 function initializeClientTelemetry() {
   try {
     const locale = extractLocaleFromUrl() || "unknown";
-    const isRTL = ["fa", "ar"].includes(locale);
+    const isRTL = false;
 
     const telemetryMsg = `Client telemetry initialized: locale=${locale}, RTL=${isRTL}`;
     console.log(telemetryMsg, {

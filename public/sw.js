@@ -1,12 +1,12 @@
 // GoalCurrent.live — Service Worker (PWA app shell)
 // Bump CACHE_VERSION when changing cache strategy so activate purges stale shells.
-const CACHE_VERSION = "7";
+const CACHE_VERSION = "8";
 const STATIC_CACHE = `goalcurrent-online-static-v${CACHE_VERSION}`;
 const SHELL_CACHE = `goalcurrent-online-shell-v${CACHE_VERSION}`;
 const API_CACHE = "goalcurrent-online-api-v1";
 
-const LOCALES = ["en", "fa", "ar", "fr", "de", "nl", "es", "pt", "it"];
-const RTL_LOCALES = new Set(["fa", "ar"]);
+const LOCALES = ["en", "es", "it", "de", "fr", "nl"];
+const RTL_LOCALES = new Set([]);
 
 const OFFLINE_COPY = {
   en: {
@@ -14,18 +14,6 @@ const OFFLINE_COPY = {
     description:
       "You are offline. Check your connection to see live World Cup scores.",
     tryAgain: "Try again",
-  },
-  fa: {
-    title: "GoalCurrent",
-    description:
-      "شما آفلاین هستید. برای مشاهده نتایج زنده جام جهانی اتصال خود را بررسی کنید.",
-    tryAgain: "دوباره تلاش کنید",
-  },
-  ar: {
-    title: "GoalCurrent",
-    description:
-      "أنت غير متصل. تحقق من اتصالك لمشاهدة نتائج كأس العالم المباشرة.",
-    tryAgain: "حاول مرة أخرى",
   },
   fr: {
     title: "GoalCurrent",
@@ -50,12 +38,6 @@ const OFFLINE_COPY = {
     description:
       "Estás sin conexión. Comprueba tu conexión para ver los resultados en vivo del Mundial.",
     tryAgain: "Reintentar",
-  },
-  pt: {
-    title: "GoalCurrent",
-    description:
-      "Está offline. Verifique a sua ligação para ver resultados ao vivo do Mundial.",
-    tryAgain: "Tentar novamente",
   },
   it: {
     title: "GoalCurrent",

@@ -3,9 +3,9 @@ import { preparePage, gotoApp, waitForShell } from "./helpers/test-utils";
 
 async function switchLocale(
   page: import("@playwright/test").Page,
-  code: "FA" | "AR" | "EN" | "FR",
+  code: "ES" | "EN" | "FR" | "DE",
 ) {
-  const languageButton = page.getByRole("button", { name: /Language|زبان|Langue/i });
+  const languageButton = page.getByRole("button", { name: /Language|Langue|Idioma/i });
   await languageButton.hover();
   const option = page.getByRole("menuitem", { name: code, exact: true });
   await expect(option).toBeVisible({ timeout: 10_000 });
@@ -17,15 +17,15 @@ test.describe("Locale switcher", () => {
     await preparePage(page);
   });
 
-  test("switches to Persian and back to English", async ({ page }) => {
+  test("switches to Spanish and back to English", async ({ page }) => {
     await gotoApp(page, "/");
 
-    await switchLocale(page, "FA");
-    await expect(page).toHaveURL(/\/fa(\/|$)/);
-    await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
+    await switchLocale(page, "ES");
+    await expect(page).toHaveURL(/\/es(\/|$)/);
+    await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
     await waitForShell(page);
     await expect(
-      page.getByRole("navigation", { name: /Main navigation|ناوبری اصلی/i }),
+      page.getByRole("navigation", { name: /Main navigation|Navegación principal/i }),
     ).toBeVisible();
 
     await switchLocale(page, "EN");
@@ -59,14 +59,14 @@ test.describe("Mobile bottom navigation", () => {
     });
     await expect(mobileNav).toBeVisible();
 
-    await mobileNav.getByRole("link", { name: /^Live$|زنده|En direct/i }).click();
+    await mobileNav.getByRole("link", { name: /^Live$|En direct|En vivo/i }).click();
     await expect(page).toHaveURL(/\/live/);
     await waitForShell(page);
 
-    await mobileNav.getByRole("link", { name: /Favourites|علاقه|Favoris/i }).click();
+    await mobileNav.getByRole("link", { name: /Favourites|Favoris|Favoritos/i }).click();
     await expect(page).toHaveURL(/\/favourites/);
     await expect(
-      page.getByRole("heading", { level: 1, name: /Favourites|Favoris|علاقه/i }),
+      page.getByRole("heading", { level: 1, name: /Favourites|Favoris|Favoritos/i }),
     ).toBeVisible();
   });
 
@@ -74,14 +74,14 @@ test.describe("Mobile bottom navigation", () => {
     await gotoApp(page, "/");
 
     const moreButton = page.getByRole("button", {
-      name: /Open more navigation|Ouvrir|بیشتر/i,
+      name: /Open more navigation|Ouvrir|Abrir/i,
     });
     await expect(moreButton).toBeVisible();
     await moreButton.click();
 
     await expect(page.getByRole("dialog")).toBeVisible({ timeout: 10_000 });
     await expect(
-      page.getByRole("navigation", { name: /Open more navigation|Ouvrir|بیشتر/i }),
+      page.getByRole("navigation", { name: /Open more navigation|Ouvrir|Abrir/i }),
     ).toBeVisible();
   });
 });

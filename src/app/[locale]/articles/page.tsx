@@ -4,11 +4,14 @@ export const revalidate = 300;
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { getLocale } from "next-intl/server";
 import ArticleCard from "@/components/articles/ArticleCard";
 import ArticleAuthorLine, { ArticleCopyrightNotice } from "@/components/articles/ArticleAuthorLine";
+import JsonLd from "@/components/seo/JsonLd";
 import { fetchSyndicatedArticles } from "@/content/readers";
 import { ARTICLE_INDEX, ARTICLES, EXTERNAL_ARTICLE_CARDS, articleHref } from "@/data/articles";
 import { getArticleCardImage, isArticleCardImageUnoptimized } from "@/lib/article-hub";
+import { localizedUrl } from "@/lib/i18n/urls";
 import { withSvgMediaClass } from "@/lib/images";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { toIsoDate } from "@/lib/seo/dates";
@@ -30,6 +33,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 export default async function ArticlesIndexPage() {
+  const locale = await getLocale();
   let syndicatedArticles: Awaited<ReturnType<typeof fetchSyndicatedArticles>> = [];
 
   try {
@@ -55,6 +59,7 @@ export default async function ArticlesIndexPage() {
   );
   const sortedArticles = [...ARTICLES].sort((a, b) => b.date.localeCompare(a.date));
   const indexSlugs = new Set(sortedIndex.map((a) => a.slug));
+  const orphanArticles = sortedArticles.filter((a) => !indexSlugs.has(a.slug));
 
   if (
     !sortedIndex.length &&
@@ -70,8 +75,44 @@ export default async function ArticlesIndexPage() {
     );
   }
 
+  const collectionItems = [
+    ...sortedIndex.map((a) => ({
+      name: a.title,
+      path: a.href ?? articleHref(a.slug),
+    })),
+    ...orphanArticles.map((a) => ({
+      name: a.title,
+      path: articleHref(a.slug),
+    })),
+  ];
+
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Football Articles & Analysis",
+    description: `In-depth football articles, World Cup 2026 match recaps, and expert analysis by ${EDITORIAL_AUTHOR} on ${EDITORIAL_PUBLISHER}.`,
+    url: localizedUrl("/articles", locale),
+    inLanguage: locale,
+    isPartOf: {
+      "@type": "WebSite",
+      name: EDITORIAL_PUBLISHER,
+      url: localizedUrl("/", locale),
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      numberOfItems: collectionItems.length,
+      itemListElement: collectionItems.map((item, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: item.name,
+        url: localizedUrl(item.path, locale),
+      })),
+    },
+  };
+
   return (
     <main className={styles.articlePage}>
+      <JsonLd data={collectionSchema} />
       <div className={styles.stack}>
         <div className={styles.heroCard}>
           <div className={styles.categoryPill}>{EDITORIAL_PUBLISHER}</div>
@@ -147,7 +188,7 @@ export default async function ArticlesIndexPage() {
               <span className={styles.readMore}>Read on MSN ↗</span>
             </a>
           ))}
-          {sortedArticles.filter((a) => !indexSlugs.has(a.slug)).map((a) => (
+          {orphanArticles.map((a) => (
             <Link
               key={a.slug}
               href={articleHref(a.slug)}

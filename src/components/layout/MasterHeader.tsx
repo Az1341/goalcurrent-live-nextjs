@@ -61,11 +61,11 @@ export default function MasterHeader() {
   return (
     <div
       ref={chromeRef}
-      className={styles.chromeWrap}
+      className={`${styles.chromeWrap} ${styles.chromeWrapV5}`}
       data-gc-chrome="site-header"
     >
       <header
-        className={styles.masterHeader}
+        className={`${styles.masterHeader} ${styles.masterHeaderV5}`}
         role="banner"
       >
         <div className={styles.bar}>

@@ -685,7 +685,7 @@
   }
 }
 
-/* ── V5 homepage chrome (home route only) ── */
+/* ── V5 site-wide chrome (neutral bar; brand red accent only) ── */
 
 .chromeWrapV5 {
   box-shadow: 0 1px 0 var(--gc-header-bar-border, #e5e5ea);
@@ -694,6 +694,9 @@
 .masterHeaderV5 {
   background: var(--gc-header-bar-bg, #fff);
   color: var(--gc-v5-text, #1d1d1f);
+  border-bottom: 1px solid var(--gc-header-bar-border, #e5e5ea);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
 }
 
 .masterHeaderV5 .brandName {
@@ -706,16 +709,53 @@
 
 .masterHeaderV5 .brandLogoWrap {
   border-color: var(--gc-brand-from, #c8102e);
-  background: #fff;
+  background: var(--gc-v5-surface, #fff);
 }
 
-.masterHeaderV5 .navLink {
+.masterHeaderV5 .navLink,
+.masterHeaderV5 .navBtn {
   color: var(--gc-v5-muted, #6e6e73);
 }
 
-.masterHeaderV5 .navLinkActive,
-.masterHeaderV5 .navLink:hover {
+.masterHeaderV5 .navLink:hover,
+.masterHeaderV5 .navBtn:hover {
   color: var(--gc-v5-text, #1d1d1f);
+  background: transparent;
+}
+
+/* DESIGN-SPEC v2 active underline (green) — not maroon gold */
+.masterHeaderV5 .navLinkActive,
+.masterHeaderV5 .navBtnOpen {
+  color: var(--gc-v5-text, #1d1d1f);
+  border-bottom-color: var(--gc-nav-active-border, #16a34a);
+  font-weight: 700;
+}
+
+.masterHeaderV5 .dropdownWrap {
+  background: transparent;
+}
+
+.masterHeaderV5 .localeBtn {
+  border: 1px solid var(--gc-v5-border, #e5e5ea);
+  background: var(--gc-v5-surface, #fff);
+  color: var(--gc-v5-text, #1d1d1f);
+}
+
+.masterHeaderV5 .localeBtn:hover,
+.masterHeaderV5 .localeBtnOpen {
+  background: var(--gc-v5-section-alt, #f5f5f7);
+  border-color: var(--gc-brand-from, #c8102e);
+}
+
+.masterHeaderV5 .headerSubscribe {
+  border: 1px solid var(--gc-brand-from, #c8102e);
+  background: transparent;
+  color: var(--gc-brand-from, #c8102e);
+}
+
+.masterHeaderV5 .headerSubscribe:hover {
+  background: color-mix(in srgb, var(--gc-brand-from, #c8102e) 10%, transparent);
+  border-color: var(--gc-brand-from, #c8102e);
 }
 
 /* ── V5 footer grid ── */

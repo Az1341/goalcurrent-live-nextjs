@@ -240,8 +240,9 @@ html {
   --gc-v5-ticker-text: #f5f5f7;
   --gc-v5-footer-bg: #0d0d0f;
   --gc-page-bg: #120508;
-  --gc-header-bar-bg: #1d1d1f;
-  --gc-header-bar-border: #3a3a3c;
+  /* Dark glass header — Match Center card hue (#1d1d1f), not pure black */
+  --gc-header-bar-bg: rgba(29, 29, 31, 0.78);
+  --gc-header-bar-border: rgba(58, 58, 60, 0.9);
 }
 
 :root {

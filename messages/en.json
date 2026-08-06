@@ -23,6 +23,8 @@
   "nav": {
     "home": "Home",
     "live": "Live",
+    "scores": "Scores",
+    "tables": "Tables",
     "favourites": "Favourites",
     "news": "News",
     "articles": "Articles",

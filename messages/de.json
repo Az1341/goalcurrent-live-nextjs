@@ -23,6 +23,8 @@
   "nav": {
     "home": "Startseite",
     "live": "Live",
+    "scores": "Ergebnisse",
+    "tables": "Tabellen",
     "favourites": "Favoriten",
     "news": "Nachrichten",
     "articles": "Artikel",

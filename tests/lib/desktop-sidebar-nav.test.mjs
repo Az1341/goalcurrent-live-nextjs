@@ -23,3 +23,42 @@ test("DESKTOP_SIDEBAR_LEAGUES_NAV uses founder-approved order without WC26", asy
     assert.ok(!item.labelKey.toLowerCase().includes("wc26"));
   }
 });
+
+test("DESKTOP_PRIMARY_NAV uses locked GC-NAV-20260806-170000 order", async () => {
+  const { DESKTOP_PRIMARY_NAV, FAVOURITES_HREF } = await import(navMod);
+
+  assert.deepEqual(
+    DESKTOP_PRIMARY_NAV.map((item) => item.href),
+    [
+      "/",
+      "/live",
+      "/transfers",
+      "/premier-league/table",
+      "/news",
+      FAVOURITES_HREF,
+      "/videos",
+      "/articles",
+    ],
+  );
+  assert.deepEqual(
+    DESKTOP_PRIMARY_NAV.map((item) => item.labelKey),
+    [
+      "home",
+      "scores",
+      "transfers",
+      "tables",
+      "news",
+      "favourites",
+      "videos",
+      "articles",
+    ],
+  );
+  // League hubs must not be injected into primary header nav.
+  for (const item of DESKTOP_PRIMARY_NAV) {
+    assert.ok(!item.href.includes("la-liga"));
+    assert.ok(!item.href.includes("serie-a"));
+    assert.ok(!item.href.includes("bundesliga"));
+    assert.ok(!item.href.includes("champions-league"));
+    assert.notEqual(item.href, "/premier-league");
+  }
+});

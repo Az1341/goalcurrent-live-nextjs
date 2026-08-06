@@ -13,15 +13,15 @@ import {
 } from "@/lib/seo/deploy-robots";
 
 const LEGACY_GROUP_PATH = /^\/worldcup2026\/groups\/group-([a-l])$/i;
-const LOCALE_PREFIX = /^\/(en|fa|ar|fr|de|nl|es|pt|it)(\/|$)/;
+const LOCALE_PREFIX = /^\/(en|es|it|de|fr|nl)(\/|$)/;
 const LOCALE_NEXT_ASSET =
-  /^\/(en|fa|ar|fr|de|nl|es|pt|it)\/_next\/(.+)$/;
+  /^\/(en|es|it|de|fr|nl)\/_next\/(.+)$/;
 const LOCALE_API =
-  /^\/(en|fa|ar|fr|de|nl|es|pt|it)\/api\/(.+)$/;
+  /^\/(en|es|it|de|fr|nl)\/api\/(.+)$/;
 const LOCALE_PUBLIC_ASSET =
-  /^\/(en|fa|ar|fr|de|nl|es|pt|it)\/(flags|images|icons)(\/.*)?$/;
+  /^\/(en|es|it|de|fr|nl)\/(flags|images|icons)(\/.*)?$/;
 const LOCALE_PUBLIC_FILE =
-  /^\/(en|fa|ar|fr|de|nl|es|pt|it)\/(logo\.svg|favicon\.ico|favicon\.svg|sw\.js|firebase-messaging-sw\.js|OneSignalSDKWorker\.js|OneSignalSDKUpdaterWorker\.js|manifest\.json)$/;
+  /^\/(en|es|it|de|fr|nl)\/(logo\.svg|favicon\.ico|favicon\.svg|sw\.js|firebase-messaging-sw\.js|OneSignalSDKWorker\.js|OneSignalSDKUpdaterWorker\.js|manifest\.json)$/;
 
 const PUBLIC_STATIC_FILES = new Set([
   "/logo.svg",
@@ -165,7 +165,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // Locale-prefixed API calls (e.g. mistaken /fa/api/*) → /api/*
+  // Locale-prefixed API calls (e.g. mistaken /es/api/*) → /api/*
   const localeApi = LOCALE_API.exec(pathname);
   if (localeApi) {
     const url = request.nextUrl.clone();

@@ -24,18 +24,6 @@ const ERROR_COPY: Record<AppLocale, ErrorCopy> = {
     description: "Please try again or return home.",
     tryAgain: "Try again",
   },
-  fa: {
-    code: "خطا",
-    title: "مشکلی پیش آمد",
-    description: "لطفاً دوباره تلاش کنید یا به صفحه اصلی برگردید.",
-    tryAgain: "تلاش دوباره",
-  },
-  ar: {
-    code: "خطأ",
-    title: "حدث خطأ ما",
-    description: "يرجى المحاولة مرة أخرى أو العودة إلى الصفحة الرئيسية.",
-    tryAgain: "حاول مرة أخرى",
-  },
   fr: {
     code: "Erreur",
     title: "Une erreur est survenue",
@@ -59,12 +47,6 @@ const ERROR_COPY: Record<AppLocale, ErrorCopy> = {
     title: "Algo salió mal",
     description: "Inténtalo de nuevo o vuelve al inicio.",
     tryAgain: "Reintentar",
-  },
-  pt: {
-    code: "Erro",
-    title: "Algo correu mal",
-    description: "Tente novamente ou volte ao início.",
-    tryAgain: "Tentar novamente",
   },
   it: {
     code: "Errore",

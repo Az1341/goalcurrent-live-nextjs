@@ -1,17 +1,14 @@
 import * as Sentry from "@sentry/nextjs";
 import type { LOCALES } from "@/i18n/locales";
 
-/** Supported locales for telemetry tracking (9 languages). */
+/** Supported locales for telemetry tracking (6 approved languages). */
 const TRACKED_LOCALES: readonly (typeof LOCALES)[number][] = [
-  "en", // English
-  "fa", // Farsi / Persian
-  "ar", // Arabic
-  "fr", // French
-  "de", // German
-  "nl", // Dutch
-  "es", // Spanish
-  "pt", // Portuguese
-  "it", // Italian
+  "en",
+  "es",
+  "it",
+  "de",
+  "fr",
+  "nl",
 ];
 
 /**
@@ -39,7 +36,7 @@ function initializeLogging(runtime: "nodejs" | "edge") {
     console.log(logMessage, {
       localeCount: TRACKED_LOCALES.length,
       features: {
-        rtl: ["fa", "ar"],
+        rtl: [],
         multilingual: true,
         swr_polling: true,
         visibility_aware: true,
@@ -83,7 +80,7 @@ export const onRequestError = (error: Error, request: Request) => {
 };
 
 /**
- * Extract locale from request path (e.g., /en/page, /fa/page).
+ * Extract locale from request path (e.g., /en/page, /es/page).
  */
 function extractLocaleFromPath(pathname: string): string | null {
   const match = pathname.match(/^\/([a-z]{2})(?:\/|$)/);

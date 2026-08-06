@@ -27,68 +27,6 @@ function deepMerge(base: unknown, overrides: unknown): unknown {
 }
 
 const localeOverrides: Record<string, Record<string, unknown>> = {
-  fa: {
-    common: {
-      loading: "در حال بارگذاری…",
-      vs: "در برابر",
-      home: "خانه",
-      live: "زنده",
-      returnHome: "بازگشت به خانه",
-      subscribe: "عضویت",
-      language: "زبان",
-    },
-    nav: {
-      home: "خانه",
-      live: "زنده",
-      favourites: "علاقه‌مندی‌ها",
-      news: "اخبار",
-      articles: "مقالات",
-      videos: "ویدیوها",
-      about: "درباره",
-      contact: "تماس",
-    },
-    errors: {
-      notFound: {
-        title: "صفحه پیدا نشد",
-        description: "صفحه‌ای که دنبال آن هستید وجود ندارد یا جابه‌جا شده است.",
-        returnHome: "بازگشت به خانه",
-        liveScores: "نتایج زنده",
-      },
-    },
-    match: { title: "{home} در برابر {away}" },
-    home: { title: "نتایج زنده فوتبال و مرکز مسابقات" },
-  },
-  ar: {
-    common: {
-      loading: "جارٍ التحميل…",
-      vs: "ضد",
-      home: "الرئيسية",
-      live: "مباشر",
-      returnHome: "العودة للرئيسية",
-      subscribe: "اشترك",
-      language: "اللغة",
-    },
-    nav: {
-      home: "الرئيسية",
-      live: "مباشر",
-      favourites: "المفضلة",
-      news: "الأخبار",
-      articles: "المقالات",
-      videos: "الفيديو",
-      about: "حول",
-      contact: "اتصل",
-    },
-    errors: {
-      notFound: {
-        title: "الصفحة غير موجودة",
-        description: "الصفحة التي تبحث عنها غير موجودة أو ربما نُقلت.",
-        returnHome: "العودة للرئيسية",
-        liveScores: "النتائج المباشرة",
-      },
-    },
-    match: { title: "{home} ضد {away}" },
-    home: { title: "نتائج كرة القدم المباشرة ومركز المباريات" },
-  },
   fr: {
     common: {
       loading: "Chargement…",
@@ -212,37 +150,6 @@ const localeOverrides: Record<string, Record<string, unknown>> = {
     },
     match: { title: "{home} vs {away}" },
     home: { title: "Resultados de fútbol en vivo y centro de partidos" },
-  },
-  pt: {
-    common: {
-      loading: "A carregar…",
-      vs: "vs",
-      home: "Início",
-      live: "Ao vivo",
-      returnHome: "Voltar ao início",
-      subscribe: "Subscrever",
-      language: "Idioma",
-    },
-    nav: {
-      home: "Início",
-      live: "Ao vivo",
-      favourites: "Favoritos",
-      news: "Notícias",
-      articles: "Artigos",
-      videos: "Vídeos",
-      about: "Sobre",
-      contact: "Contacto",
-    },
-    errors: {
-      notFound: {
-        title: "Página não encontrada",
-        description: "A página que procura não existe ou pode ter sido movida.",
-        returnHome: "Voltar ao início",
-        liveScores: "Resultados ao vivo",
-      },
-    },
-    match: { title: "{home} vs {away}" },
-    home: { title: "Resultados de futebol ao vivo e centro de jogos" },
   },
   it: {
     common: {

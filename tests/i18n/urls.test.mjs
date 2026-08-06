@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const LOCALES = ["en", "fa", "ar", "fr", "de", "nl", "es", "pt", "it"];
+const LOCALES = ["en", "es", "it", "de", "fr", "nl"];
 const DEFAULT_LOCALE = "en";
 const SITE_URL = "https://goalcurrent.live";
 
@@ -29,14 +29,14 @@ function buildHreflangAlternates(pathname) {
 
 test("localizedPath keeps English unprefixed", () => {
   assert.equal(localizedPath("/live", "en"), "/live");
-  assert.equal(localizedPath("/live", "fa"), "/fa/live");
+  assert.equal(localizedPath("/live", "es"), "/es/live");
   assert.equal(localizedPath("/", "de"), "/de");
 });
 
 test("hreflang alternates include x-default and all locales", () => {
   const alternates = buildHreflangAlternates("/live");
   assert.ok(alternates["x-default"]);
-  assert.equal(Object.keys(alternates).length, 10);
+  assert.equal(Object.keys(alternates).length, 7);
   assert.equal(alternates.en, "https://goalcurrent.live/live");
-  assert.equal(alternates.fa, "https://goalcurrent.live/fa/live");
+  assert.equal(alternates.es, "https://goalcurrent.live/es/live");
 });

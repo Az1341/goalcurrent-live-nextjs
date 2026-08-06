@@ -200,7 +200,7 @@ for (const viewport of VIEWPORTS) {
         });
       });
 
-      await page.goto("/fa/fa-cup");
+      await page.goto("/es/fa-cup");
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(/FA Cup/i);
     });
   });

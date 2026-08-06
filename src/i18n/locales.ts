@@ -1,13 +1,10 @@
 export const LOCALES = [
   "en",
-  "fa",
-  "ar",
-  "fr",
-  "de",
-  "nl",
   "es",
-  "pt",
   "it",
+  "de",
+  "fr",
+  "nl",
 ] as const;
 
 export type AppLocale = (typeof LOCALES)[number];
@@ -17,7 +14,8 @@ export const DEFAULT_LOCALE: AppLocale = "en";
 /** Shown on language menu rows (renders reliably across platforms). */
 export const LANGUAGE_MENU_ICON = "🌐";
 
-export const RTL_LOCALES = new Set<AppLocale>(["fa", "ar"]);
+/** No RTL locales remain after GC-LOCALE-20260805-155356 (ar/fa removed). */
+export const RTL_LOCALES = new Set<AppLocale>([]);
 
 export type LocaleMeta = {
   label: string;
@@ -28,14 +26,11 @@ export type LocaleMeta = {
 
 export const LOCALE_META: Record<AppLocale, LocaleMeta> = {
   en: { label: "English", dateLocale: "en-GB", direction: "ltr", flag: "🇬🇧" },
-  fa: { label: "فارسی", dateLocale: "fa-IR", direction: "rtl", flag: "🇮🇷" },
-  ar: { label: "العربية", dateLocale: "ar", direction: "rtl", flag: "🇸🇦" },
-  fr: { label: "Français", dateLocale: "fr-FR", direction: "ltr", flag: "🇫🇷" },
-  de: { label: "Deutsch", dateLocale: "de-DE", direction: "ltr", flag: "🇩🇪" },
-  nl: { label: "Nederlands", dateLocale: "nl-NL", direction: "ltr", flag: "🇳🇱" },
   es: { label: "Español", dateLocale: "es-ES", direction: "ltr", flag: "🇪🇸" },
-  pt: { label: "Português", dateLocale: "pt-PT", direction: "ltr", flag: "🇵🇹" },
   it: { label: "Italiano", dateLocale: "it-IT", direction: "ltr", flag: "🇮🇹" },
+  de: { label: "Deutsch", dateLocale: "de-DE", direction: "ltr", flag: "🇩🇪" },
+  fr: { label: "Français", dateLocale: "fr-FR", direction: "ltr", flag: "🇫🇷" },
+  nl: { label: "Nederlands", dateLocale: "nl-NL", direction: "ltr", flag: "🇳🇱" },
 };
 
 /** Match rows keep home-left / away-right globally (sport convention). */

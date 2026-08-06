@@ -110,7 +110,7 @@ test("UCL: canonical generation and no duplicate slug variants", async () => {
     await load();
   assert.equal(uclCanonicalPath(), "/champions-league");
   assert.equal(isUclHubPath("/champions-league"), true);
-  assert.equal(isUclHubPath("/fa/champions-league"), true);
+  assert.equal(isUclHubPath("/es/champions-league"), true);
   assert.equal(isUclHubPath("/premier-league"), false);
   assert.equal(resolveUclCanonicalFromSlug("champions-league"), "/champions-league");
   assert.equal(resolveUclCanonicalFromSlug("premier-league"), null);

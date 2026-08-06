@@ -208,6 +208,29 @@ html {
   color-scheme: light;
 }
 
+/* Light V5 defaults first — dark block must follow so it can override */
+:root {
+  --gc-v5-hero-bg: #ffffff;
+  --gc-v5-text: #1d1d1f;
+  --gc-v5-muted: #6e6e73;
+  --gc-v5-border: #e5e5ea;
+  --gc-v5-surface: #ffffff;
+  --gc-v5-section-alt: #f5f5f7;
+  --gc-v5-ticker-bg: #1d1d1f;
+  --gc-v5-ticker-text: #ffffff;
+  --gc-v5-footer-bg: #1d1d1f;
+  --gc-page-bg: #ffffff;
+  --gc-header-bar-bg: #ffffff;
+  --gc-header-bar-border: #e5e5ea;
+  /* Semantic aliases (single token set — light/dark via data-theme) */
+  --bg-page: var(--gc-page-bg);
+  --bg-surface: var(--gc-v5-surface);
+  --text-primary: var(--gc-v5-text);
+  --text-secondary: var(--gc-v5-muted);
+  --border: var(--gc-v5-border);
+  --accent-red: var(--gc-brand-from);
+}
+
 [data-theme="dark"] {
   color-scheme: dark;
   --gc-bg: #0d0d0f;
@@ -243,28 +266,6 @@ html {
   /* Dark glass header — Match Center card hue (#1d1d1f), not pure black */
   --gc-header-bar-bg: rgba(29, 29, 31, 0.78);
   --gc-header-bar-border: rgba(58, 58, 60, 0.9);
-}
-
-:root {
-  --gc-v5-hero-bg: #ffffff;
-  --gc-v5-text: #1d1d1f;
-  --gc-v5-muted: #6e6e73;
-  --gc-v5-border: #e5e5ea;
-  --gc-v5-surface: #ffffff;
-  --gc-v5-section-alt: #f5f5f7;
-  --gc-v5-ticker-bg: #1d1d1f;
-  --gc-v5-ticker-text: #ffffff;
-  --gc-v5-footer-bg: #1d1d1f;
-  --gc-page-bg: #ffffff;
-  --gc-header-bar-bg: #ffffff;
-  --gc-header-bar-border: #e5e5ea;
-  /* Semantic aliases (single token set — light/dark via data-theme) */
-  --bg-page: var(--gc-page-bg);
-  --bg-surface: var(--gc-v5-surface);
-  --text-primary: var(--gc-v5-text);
-  --text-secondary: var(--gc-v5-muted);
-  --border: var(--gc-v5-border);
-  --accent-red: var(--gc-brand-from);
 }
 
 /* Pastel / white cards keep dark copy when site chrome is in dark mode */

@@ -695,8 +695,9 @@
   background: var(--gc-header-bar-bg, #fff);
   color: var(--gc-v5-text, #1d1d1f);
   border-bottom: 1px solid var(--gc-header-bar-border, #e5e5ea);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  /* blur-only: lightningcss drops saturate()+blur combo from CSS modules */
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
 .masterHeaderV5 .brandName {

@@ -23,6 +23,8 @@
   "nav": {
     "home": "Inicio",
     "live": "En vivo",
+    "scores": "Marcadores",
+    "tables": "Tablas",
     "favourites": "Favoritos",
     "news": "Noticias",
     "articles": "Artículos",

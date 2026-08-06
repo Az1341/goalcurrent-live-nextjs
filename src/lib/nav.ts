@@ -59,15 +59,21 @@ export type DesktopDropdownSection = {
 /** Global favourites Ã¢â‚¬â€ saved items across all competitions. */
 export const FAVOURITES_HREF = "/favourites";
 
-/** Desktop primary links (before dropdowns). */
+/**
+ * Desktop primary links (before dropdowns).
+ * Locked order (GC-NAV-20260806-170000):
+ * Home → Scores → Transfers → Tables → News → Favourites → Videos → Articles
+ * League-filter tabs stay a secondary Home/Scores row — never injected here.
+ */
 export const DESKTOP_PRIMARY_NAV: NavItem[] = [
   { href: "/", labelKey: "home", exact: true },
-  { href: "/live", labelKey: "live" },
-  { href: FAVOURITES_HREF, labelKey: "favourites" },
+  { href: "/live", labelKey: "scores" },
+  { href: "/transfers", labelKey: "transfers" },
+  { href: "/premier-league/table", labelKey: "tables" },
   { href: "/news", labelKey: "news" },
-  { href: "/articles", labelKey: "articles" },
+  { href: FAVOURITES_HREF, labelKey: "favourites" },
   { href: "/videos", labelKey: "videos" },
-  { href: "/worldcup2026", labelKey: "archive" },
+  { href: "/articles", labelKey: "articles" },
 ];
 
 /** Legacy / footer Ã¢â‚¬â€ full primary list for other consumers. */
@@ -325,7 +331,11 @@ const DESKTOP_SIDEBAR_UCL = DESKTOP_COMPETITIONS_NAV.find(
   (group) => group.id === "ucl",
 )!;
 
-/** Desktop left sidebar — founder-approved league order (no WC26). */
+/**
+ * Desktop left sidebar — locked league order (GC-NAV-20260806-170000).
+ * Target: PL → UCL → La Liga → Serie A → Bundesliga → Ligue 1 → EFL Championship.
+ * Ligue 1 / EFL Championship omitted until routes exist (do not fabricate).
+ */
 export const DESKTOP_SIDEBAR_LEAGUES_NAV: readonly DesktopSidebarLeagueItem[] = [
   {
     id: "pl",

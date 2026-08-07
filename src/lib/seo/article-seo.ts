@@ -5,18 +5,16 @@ import {
   type Article,
 } from "@/data/articles";
 import { getEditorialArticleByPath } from "@/data/editorial";
-import { ARTICLE_CARD_IMAGES } from "@/lib/article-hub";
 import type { ArticleSchemaInput } from "@/lib/seo/schema";
 import type { BreadcrumbItem } from "@/lib/seo/breadcrumbs";
 import type { Metadata } from "next";
 import { buildArticleMetadata } from "@/lib/page-metadata";
 import { EDITORIAL_AUTHOR } from "@/lib/seo/constants";
-import { absoluteUrl } from "@/lib/site-url";
+import { resolveArticleShareImageUrl } from "@/lib/seo/article-og-image";
 
-/** Only dedicated hub card art — never invent or force the generic hero fallback. */
-function articleSchemaImage(slug: string): string | undefined {
-  const dedicated = ARTICLE_CARD_IMAGES[slug];
-  return dedicated ? absoluteUrl(dedicated) : undefined;
+/** Dedicated card art when present; otherwise branded generated OG image. */
+function articleSchemaImage(slug: string): string {
+  return resolveArticleShareImageUrl(slug);
 }
 
 export function articleSeoFromArticle(article: Article): ArticleSchemaInput {
@@ -68,11 +66,13 @@ export function articleSeoFromSlug(slug: string): ArticleSchemaInput | null {
 
 export function buildStaticArticleMetadata(slug: string): Metadata {
   const seo = articleSeoFromSlug(slug);
+  const ogImage = resolveArticleShareImageUrl(slug);
   if (!seo) {
     return buildArticleMetadata({
       title: "Article",
       description: "Football article on GoalCurrent.live",
       path: articleHref(slug),
+      ogImage,
     });
   }
 
@@ -83,6 +83,7 @@ export function buildStaticArticleMetadata(slug: string): Metadata {
     publishedTime: seo.datePublished,
     modifiedTime: seo.dateModified,
     authors: seo.author ? [seo.author] : undefined,
+    ogImage,
   });
 }
 

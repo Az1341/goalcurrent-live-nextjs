@@ -5,21 +5,17 @@ import { BEIRANVAND_FEATURE } from "@/data/editorial/beiranvand-feature";
 import {
   articleBreadcrumbs,
   articleSeoFromSlug,
+  buildStaticArticleMetadata,
 } from "@/lib/seo/article-seo";
-import { buildArticleMetadata } from "@/lib/page-metadata";
 
+const SLUG = "alireza-beiranvand-iran-world-cup-hero";
 const article = BEIRANVAND_FEATURE;
-const seo = articleSeoFromSlug("alireza-beiranvand-iran-world-cup-hero")!;
+const seo = articleSeoFromSlug(SLUG)!;
 
-export const metadata: Metadata = buildArticleMetadata({
-  title: article.title,
-  description: article.description,
-  path: article.path,
+export const metadata: Metadata = {
+  ...buildStaticArticleMetadata(SLUG),
   keywords: article.keywords,
-  publishedTime: article.publishedAt,
-  modifiedTime: article.publishedAt,
-  authors: [article.author],
-});
+};
 
 export default function BeiranvandFeaturePage() {
   return (

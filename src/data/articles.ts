@@ -23,6 +23,15 @@ export type ArticleIndexEntry = {
 /** Canonical index for /articles — append-only; do not remove existing entries. */
 export const ARTICLE_INDEX: readonly ArticleIndexEntry[] = [
   {
+    slug: "premier-league-2026-27-two-weeks-out",
+    category: "Preview",
+    title:
+      "Two Weeks to Kick-Off — Premier League 2026/27 Returns After Spain's World Cup Triumph",
+    excerpt:
+      "Arsenal open their title defence against Coventry on 21 August, Chelsea have spent big under new manager Xabi Alonso, and the Community Shield in Cardiff kicks off the countdown this weekend.",
+    date: "7 August 2026",
+  },
+  {
     slug: "alireza-beiranvand-iran-world-cup-hero",
     category: "Feature",
     title: "Who Is Alireza Beiranvand? The Story Behind Iran's World Cup Hero",

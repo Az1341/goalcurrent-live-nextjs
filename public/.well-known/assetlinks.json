@@ -1,8 +1,0 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.goalcurrent.app",
-    "sha256_cert_fingerprints": ["89:11:AD:11:9A:CC:51:DD:A0:16:B6:C8:5F:0A:E8:12:89:B4:16:1B:E8:96:D9:2B:7B:D0:BF:07:79:EA:A2:DD"]
-  }
-}]

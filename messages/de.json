@@ -349,7 +349,18 @@
     "heroHeadline3": "Jeder Moment.",
     "viewAllMatches": "Alle Spiele anzeigen",
     "heroAria": "Startseiten-Hero",
-    "featuredHeroAria": "Spiel des Tages"
+    "featuredHeroAria": "Spiel des Tages",
+    "kickoffCountdown": {
+      "eyebrow": "Countdown zum Anpfiff",
+      "untilKickoff": "Bis Anpfiff",
+      "days": "Tage",
+      "hours": "Std",
+      "minutes": "Min",
+      "viewMatch": "Zum Match Centre",
+      "seasonStartsSoon": "Die Premier-League-Saison beginnt bald",
+      "aria": "Countdown {home} gegen {away}: {days} Tage, {hours} Stunden, {minutes} Minuten",
+      "ariaEmpty": "Premier-League-Countdown nicht verfugbar"
+    }
   },
   "favourites": {
     "add": "Add {team} to favourites",

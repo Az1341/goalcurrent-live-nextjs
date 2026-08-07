@@ -748,3 +748,171 @@
   flex-direction: column;
   gap: 4px;
 }
+
+/* PL kickoff countdown — glass panel aligned with V5 header tokens */
+.kickoffCountdown {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg-surface, var(--gc-v5-surface)) 72%, transparent);
+  border: 1px solid var(--border, var(--gc-v5-border));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+[data-theme="dark"] .kickoffCountdown {
+  background: rgba(29, 29, 31, 0.72);
+  border-color: var(--gc-header-bar-border, rgba(58, 58, 60, 0.9));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+.kickoffCountdownHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.kickoffCountdownEyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-red, var(--gc-brand-from, #c8102e));
+}
+
+.kickoffCountdownComp {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-secondary, var(--gc-v5-muted));
+}
+
+.kickoffCountdownBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
+.kickoffCountdownTeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kickoffCountdownTeamHome {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.kickoffCountdownTeamAway {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.kickoffCountdownTeamName {
+  font-size: clamp(0.85rem, 2.4vw, 1.05rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-primary, var(--gc-v5-text));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.kickoffCountdownCentre {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.kickoffCountdownUnits {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.kickoffCountdownUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 8px 6px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface, #fff) 55%, transparent);
+  border: 1px solid var(--border, var(--gc-v5-border));
+}
+
+[data-theme="dark"] .kickoffCountdownUnit {
+  background: rgba(0, 0, 0, 0.28);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.kickoffCountdownValue {
+  font-size: clamp(1.35rem, 4vw, 1.85rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  color: var(--text-primary, var(--gc-v5-text));
+}
+
+.kickoffCountdownUnitLabel {
+  margin-top: 4px;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary, var(--gc-v5-muted));
+}
+
+.kickoffCountdownSub {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary, var(--gc-v5-muted));
+}
+
+.kickoffCountdownMeta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 14px;
+  margin-top: 14px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary, var(--gc-v5-muted));
+}
+
+.kickoffCountdownKickoff {
+  color: var(--text-primary, var(--gc-v5-text));
+  font-weight: 600;
+}
+
+.kickoffCountdownLink {
+  display: inline-flex;
+  margin-top: 12px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--accent-red, var(--gc-brand-from, #c8102e));
+  text-decoration: none;
+}
+
+.kickoffCountdownLink:hover {
+  text-decoration: underline;
+}
+
+.kickoffCountdownEmpty {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-secondary, var(--gc-v5-muted));
+  text-align: center;
+  padding: 4px 0;
+}

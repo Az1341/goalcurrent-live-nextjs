@@ -51,15 +51,25 @@ const seoArticle = {
   image: absoluteUrl(HERO_IMAGE),
 };
 
-export const metadata: Metadata = buildArticleMetadata({
-  title: SEO_TITLE,
-  description: META_DESCRIPTION,
-  path: ARTICLE_PATH,
-  keywords: ARTICLE_KEYWORDS,
-  publishedTime: "2026-06-30",
-  modifiedTime: "2026-06-30",
-  ogImage: absoluteUrl(HERO_IMAGE),
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildArticleMetadata({
+    title: SEO_TITLE,
+    description: META_DESCRIPTION,
+    path: ARTICLE_PATH,
+    keywords: ARTICLE_KEYWORDS,
+    publishedTime: "2026-06-30",
+    modifiedTime: "2026-06-30",
+    ogImage: absoluteUrl(HERO_IMAGE),
+    locale,
+  });
+}
 
 export default function MoroccoNetherlandsPenaltiesArticlePage() {
   return (

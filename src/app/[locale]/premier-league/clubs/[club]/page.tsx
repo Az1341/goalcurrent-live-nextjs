@@ -7,17 +7,17 @@ import { buildPlClubMetadata } from "@/lib/team-profile/metadata";
 import { clubHref } from "@/lib/team-profile/club-slug";
 import { absoluteUrl } from "@/lib/site-url";
 
-type PageProps = { params: Promise<{ club: string }> };
+type PageProps = { params: Promise<{ locale: string; club: string }> };
 
 export function generateStaticParams() {
   return getAllClubSlugs().map((slug) => ({ club: slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { club } = await params;
+  const { locale, club } = await params;
   const data = getClubBySlug(club);
   if (!data) return { title: "Club — Premier League" };
-  return buildPlClubMetadata(data);
+  return buildPlClubMetadata(data, locale);
 }
 
 export default async function ClubPage({ params }: PageProps) {

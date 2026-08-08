@@ -8,7 +8,7 @@ import { buildWc26TeamMetadata } from "@/lib/team-profile/metadata";
 import { absoluteUrl } from "@/lib/site-url";
 
 type TeamPageProps = {
-  params: Promise<{ teamId: string }>;
+  params: Promise<{ locale: string; teamId: string }>;
 };
 
 export function generateStaticParams() {
@@ -18,7 +18,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: TeamPageProps): Promise<Metadata> {
-  const { teamId: rawId } = await params;
+  const { locale, teamId: rawId } = await params;
   const teamId = decodeURIComponent(rawId);
   const team = getTeamById(teamId);
 
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: TeamPageProps): Promise<Metad
     return { title: "Team — World Cup 2026" };
   }
 
-  return buildWc26TeamMetadata(team);
+  return buildWc26TeamMetadata(team, locale);
 }
 
 export default async function TeamPage({ params }: TeamPageProps) {

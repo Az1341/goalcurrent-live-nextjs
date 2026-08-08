@@ -7,12 +7,22 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 
 export const revalidate = 86400;
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Videos",
-  description:
-    "Premier League and World Cup 2026 football videos on GoalCurrent.live.",
-  path: "/videos/",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Videos",
+    description:
+      "Premier League and World Cup 2026 football videos on GoalCurrent.live.",
+    path: "/videos/",
+    locale,
+  });
+}
 
 export default async function VideosHubPage() {
   const { videos } = await fetchCachedVideos(4);

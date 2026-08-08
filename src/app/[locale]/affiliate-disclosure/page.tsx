@@ -5,11 +5,21 @@ import styles from "@/components/info/info-pages.module.css";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Affiliate Disclosure",
-  description: `Affiliate disclosure for ${SITE_NAME} — independent football fan site.`,
-  path: "/affiliate-disclosure",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Affiliate Disclosure",
+    description: `Affiliate disclosure for ${SITE_NAME} — independent football fan site.`,
+    path: "/affiliate-disclosure",
+    locale,
+  });
+}
 
 export default function AffiliateDisclosurePage() {
   return (
@@ -28,9 +38,9 @@ export default function AffiliateDisclosurePage() {
           <div>
             <h3>Independent Football Fan Site</h3>
             <p>
-              {SITE_NAME} is run by a football fan, for football fans. We are not
-              affiliated with, endorsed by, or connected to any official football
-              organisation, governing body, or club.
+              {SITE_NAME} is run by a football fan, for football fans. We are
+              not affiliated with, endorsed by, or connected to any official
+              football organisation, governing body, or club.
             </p>
           </div>
         </div>
@@ -52,15 +62,15 @@ export default function AffiliateDisclosurePage() {
         <article className={styles.card}>
           <h2>Content Accuracy</h2>
           <p>
-            We aim to provide accurate football news, scores, fixtures, standings,
-            and squad information. However, we make <strong>no guarantees</strong>{" "}
-            regarding the accuracy, completeness, or timeliness of any content
-            published on this site.
+            We aim to provide accurate football news, scores, fixtures,
+            standings, and squad information. However, we make{" "}
+            <strong>no guarantees</strong> regarding the accuracy, completeness,
+            or timeliness of any content published on this site.
           </p>
           <p>
-            Football data can change rapidly. Always verify important information
-            — such as kick-off times, results, or squad selections — with official
-            sources before relying on it.
+            Football data can change rapidly. Always verify important
+            information — such as kick-off times, results, or squad selections —
+            with official sources before relying on it.
           </p>
         </article>
 
@@ -79,8 +89,8 @@ export default function AffiliateDisclosurePage() {
           <p>
             All affiliate and sponsored content is clearly labelled with{" "}
             <strong>#AD</strong> or <strong>Affiliate link</strong> notices.
-            Affiliate partnerships do <strong>not</strong> influence our editorial
-            content or news coverage.
+            Affiliate partnerships do <strong>not</strong> influence our
+            editorial content or news coverage.
           </p>
           <p>
             Purchasing through our affiliate links supports the site at{" "}
@@ -93,31 +103,31 @@ export default function AffiliateDisclosurePage() {
           <p>
             This site may contain links to third-party websites including news
             sources, official football organisations, and affiliate partners. We
-            are not responsible for the content, accuracy, or privacy practices of
-            those sites.
+            are not responsible for the content, accuracy, or privacy practices
+            of those sites.
           </p>
         </article>
 
         <article className={styles.card}>
           <h2>Copyright</h2>
           <p>
-            All original content on {SITE_NAME} — including articles, design, and
-            code — is <strong>© 2026 Ashna4All (A. Zafarani)</strong>. Unauthorised
-            reproduction is prohibited.
+            All original content on {SITE_NAME} — including articles, design,
+            and code — is <strong>© 2026 Ashna4All (A. Zafarani)</strong>.
+            Unauthorised reproduction is prohibited.
           </p>
           <p>
-            Football statistics, club names, competition names, and logos remain the
-            property of their respective owners and are used for informational and
-            fan purposes only.
+            Football statistics, club names, competition names, and logos remain
+            the property of their respective owners and are used for
+            informational and fan purposes only.
           </p>
         </article>
 
         <article className={styles.card}>
           <h2>No Liability</h2>
           <p>
-            {SITE_NAME} and A. Zafarani (Ashna4All) accept <strong>no liability</strong>{" "}
-            for any loss, damage, or inconvenience arising from use of this website
-            or reliance on its content.
+            {SITE_NAME} and A. Zafarani (Ashna4All) accept{" "}
+            <strong>no liability</strong> for any loss, damage, or inconvenience
+            arising from use of this website or reliance on its content.
           </p>
         </article>
 
@@ -132,8 +142,9 @@ export default function AffiliateDisclosurePage() {
             <a href="mailto:info@goalcurrent.live">info@goalcurrent.live</a>
           </p>
           <p>
-            You can also read our full <Link href="/privacy">Privacy Policy</Link>{" "}
-            and <Link href="/terms">Terms & Conditions</Link>.
+            You can also read our full{" "}
+            <Link href="/privacy">Privacy Policy</Link> and{" "}
+            <Link href="/terms">Terms & Conditions</Link>.
           </p>
         </article>
 

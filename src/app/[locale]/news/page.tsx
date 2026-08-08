@@ -7,12 +7,21 @@ import { fetchNewsFeed } from "@/content/readers";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "News",
-  description:
-    `Latest FIFA World Cup 2026 and football news from BBC Sport, ESPN, and partner feeds on ${SITE_NAME}.`,
-  path: "/news",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "News",
+    description: `Latest FIFA World Cup 2026 and football news from BBC Sport, ESPN, and partner feeds on ${SITE_NAME}.`,
+    path: "/news",
+    locale,
+  });
+}
 
 export default async function NewsPage() {
   const initialData = await fetchNewsFeed("all");

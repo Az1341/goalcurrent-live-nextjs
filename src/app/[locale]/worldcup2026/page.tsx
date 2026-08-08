@@ -17,11 +17,21 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME, absoluteUrl } from "@/lib/site-url";
 import styles from "@/components/wc26/wc26.module.css";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "World Cup 2026 Archive",
-  description: `FIFA World Cup 2026 Archive on ${SITE_NAME} — final results, champion, bracket, standings and GoalCurrent tournament coverage.`,
-  path: "/worldcup2026",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "World Cup 2026 Archive",
+    description: `FIFA World Cup 2026 Archive on ${SITE_NAME} — final results, champion, bracket, standings and GoalCurrent tournament coverage.`,
+    path: "/worldcup2026",
+    locale,
+  });
+}
 
 export default function WorldCupArchiveHubPage() {
   const hosts = WC26_TOURNAMENT.hosts.join(" \u00b7 ");
@@ -62,9 +72,9 @@ export default function WorldCupArchiveHubPage() {
         </h1>
         <p className={styles.pageIntro}>
           {hosts}. Tournament window {WC26_TOURNAMENT.startUtc.slice(0, 10)} to{" "}
-          {WC26_TOURNAMENT.endUtc.slice(0, 10)}. This hub is a permanent historical
-          archive of GoalCurrent&apos;s World Cup 2026 coverage — not live
-          tournament coverage.
+          {WC26_TOURNAMENT.endUtc.slice(0, 10)}. This hub is a permanent
+          historical archive of GoalCurrent&apos;s World Cup 2026 coverage — not
+          live tournament coverage.
         </p>
 
         <p className={styles.archiveTimestamp}>
@@ -77,7 +87,10 @@ export default function WorldCupArchiveHubPage() {
             className={styles.archiveChampion}
             aria-labelledby="wc26-archive-champion-heading"
           >
-            <h2 id="wc26-archive-champion-heading" className={styles.sectionTitle}>
+            <h2
+              id="wc26-archive-champion-heading"
+              className={styles.sectionTitle}
+            >
               Champion and final
             </h2>
             <div className={styles.archiveChampionCard}>
@@ -87,7 +100,10 @@ export default function WorldCupArchiveHubPage() {
                   <strong>{finalSummary.winnerName}</strong>
                   <span className={styles.archiveChampionTag}>Champion</span>
                 </span>
-                <span className={styles.archiveScore} aria-label={`Final score ${scoreLine}`}>
+                <span
+                  className={styles.archiveScore}
+                  aria-label={`Final score ${scoreLine}`}
+                >
                   {scoreLine}
                 </span>
                 <span className={styles.archiveTeam}>
@@ -142,16 +158,20 @@ export default function WorldCupArchiveHubPage() {
         <h2 className={styles.sectionTitle}>Tournament timeline</h2>
         <p className={styles.pageIntro}>
           Group stage and knockout football across {WC26_TOURNAMENT.teamCount}{" "}
-          teams and {WC26_TOURNAMENT.fixtureCount} matches, hosted in{" "}
-          {hosts}, ending {WC26_TOURNAMENT.endUtc.slice(0, 10)}.
+          teams and {WC26_TOURNAMENT.fixtureCount} matches, hosted in {hosts},
+          ending {WC26_TOURNAMENT.endUtc.slice(0, 10)}.
         </p>
 
-        <aside className={styles.archiveNotice} aria-label="Historical data notice">
+        <aside
+          className={styles.archiveNotice}
+          aria-label="Historical data notice"
+        >
           <h2 className={styles.sectionTitle}>Historical-data notice</h2>
           <p>
-            Scores and pairings shown in this archive come from GoalCurrent&apos;s
-            curated confirmed-results dataset. This is not a live feed. Facts that
-            are not verified in the repository are omitted rather than invented.
+            Scores and pairings shown in this archive come from
+            GoalCurrent&apos;s curated confirmed-results dataset. This is not a
+            live feed. Facts that are not verified in the repository are omitted
+            rather than invented.
           </p>
         </aside>
       </main>

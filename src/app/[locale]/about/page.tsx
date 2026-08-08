@@ -6,11 +6,21 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME, SITE_URL } from "@/lib/site-url";
 import styles from "@/components/info/info-pages.module.css";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "About Us",
-  description: `Learn about ${SITE_NAME}, created by Ahmad Zafarani (Ashna4All). Your go-to source for live Premier League and World Cup 2026 football scores.`,
-  path: "/about",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "About Us",
+    description: `Learn about ${SITE_NAME}, created by Ahmad Zafarani (Ashna4All). Your go-to source for live Premier League and World Cup 2026 football scores.`,
+    path: "/about",
+    locale,
+  });
+}
 
 export default async function AboutPage() {
   return (
@@ -19,29 +29,32 @@ export default async function AboutPage() {
         <article className={styles.card}>
           <h1>About {SITE_NAME}</h1>
           <p className={styles.intro}>
-            Your go-to destination for live football scores, World Cup 2026 fixtures
-            and Premier League updates — free, fast and built with passion.
+            Your go-to destination for live football scores, World Cup 2026
+            fixtures and Premier League updates — free, fast and built with
+            passion.
           </p>
         </article>
 
         <article className={styles.card}>
           <h2>Who We Are</h2>
           <p>
-            {SITE_NAME} is a free live football scores website created and owned by{" "}
-            <strong>Ahmad Zafarani</strong>, operating under the brand{" "}
-            <strong>Ashna4All</strong>. We launched in 2026 with a simple mission —
-            to give football fans around the world instant access to live scores,
-            fixtures, standings and World Cup 2026 coverage, completely free.
+            {SITE_NAME} is a free live football scores website created and owned
+            by <strong>Ahmad Zafarani</strong>, operating under the brand{" "}
+            <strong>Ashna4All</strong>. We launched in 2026 with a simple
+            mission — to give football fans around the world instant access to
+            live scores, fixtures, standings and World Cup 2026 coverage,
+            completely free.
           </p>
           <p>
-            Based in the United Kingdom, we cover the <strong>Premier League</strong>,
-            the <strong>FIFA World Cup 2026</strong> and major international football
-            tournaments.
+            Based in the United Kingdom, we cover the{" "}
+            <strong>Premier League</strong>, the{" "}
+            <strong>FIFA World Cup 2026</strong> and major international
+            football tournaments.
           </p>
           <div className={styles.highlight}>
-            {SITE_NAME} is visited by football fans from the UK, USA, Canada, Iran
-            and across the world. All match times are shown in your local device
-            timezone automatically.
+            {SITE_NAME} is visited by football fans from the UK, USA, Canada,
+            Iran and across the world. All match times are shown in your local
+            device timezone automatically.
           </div>
           <div className={styles.stats}>
             <div className={styles.stat}>
@@ -64,7 +77,9 @@ export default async function AboutPage() {
           <div className={styles.teamCard}>
             <div>
               <h3>Ahmad Zafarani</h3>
-              <p className={styles.teamCardMeta}>Founder & Creator · Ashna4All</p>
+              <p className={styles.teamCardMeta}>
+                Founder & Creator · Ashna4All
+              </p>
               <p className={styles.teamCardMeta}>
                 Email:{" "}
                 <a href="mailto:info@goalcurrent.live">info@goalcurrent.live</a>
@@ -73,10 +88,10 @@ export default async function AboutPage() {
           </div>
           <p>
             Ahmad is a passionate football fan and web developer who built{" "}
-            {SITE_NAME} to provide football fans with a fast, clean and easy-to-use
-            live scores experience. With a love for the Premier League and huge
-            excitement for the FIFA World Cup 2026, Ahmad built this site to share
-            that passion with fans worldwide.
+            {SITE_NAME} to provide football fans with a fast, clean and
+            easy-to-use live scores experience. With a love for the Premier
+            League and huge excitement for the FIFA World Cup 2026, Ahmad built
+            this site to share that passion with fans worldwide.
           </p>
           <p>
             Follow us on Instagram and Facebook for updates, matchday posts and
@@ -96,7 +111,8 @@ export default async function AboutPage() {
           <div className={styles.features}>
             <div className={styles.feature}>
               <strong>Live Scores</strong>
-              Real-time Premier League & World Cup scores updated every 60 seconds
+              Real-time Premier League & World Cup scores updated every 60
+              seconds
             </div>
             <div className={styles.feature}>
               <strong>Full Schedule</strong>
@@ -125,13 +141,14 @@ export default async function AboutPage() {
           <h2>Data Sources</h2>
           <p>
             {SITE_NAME} uses data from trusted third-party sports data providers
-            including ESPN, TheSportsDB and API-Football to deliver accurate live
-            scores. We make every effort to display accurate information but cannot
-            guarantee 100% accuracy of live data at all times.
+            including ESPN, TheSportsDB and API-Football to deliver accurate
+            live scores. We make every effort to display accurate information
+            but cannot guarantee 100% accuracy of live data at all times.
           </p>
           <p>
-            World Cup 2026 fixture times are sourced from official FIFA schedules
-            and verified against Sky Sports and Squawka UK broadcaster schedules.
+            World Cup 2026 fixture times are sourced from official FIFA
+            schedules and verified against Sky Sports and Squawka UK broadcaster
+            schedules.
           </p>
         </article>
 
@@ -144,7 +161,8 @@ export default async function AboutPage() {
           </p>
           <p>
             Affiliate partnerships and advertising support the site but do not
-            influence editorial coverage, fixture data, or standings calculations.
+            influence editorial coverage, fixture data, or standings
+            calculations.
           </p>
         </article>
 

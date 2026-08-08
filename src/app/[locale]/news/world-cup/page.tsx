@@ -7,13 +7,23 @@ import { fetchNewsFeed } from "@/lib/news-rss";
 import { mergeWc26NewsFeed } from "@/lib/editorial-news";
 import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "World Cup 2026 News | GoalCurrent.live",
-  description:
-    "Latest FIFA World Cup 2026 news from BBC Sport and ESPN on GoalCurrent.live.",
-  path: "/news/world-cup/",
-  absoluteTitle: true,
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "World Cup 2026 News | GoalCurrent.live",
+    description:
+      "Latest FIFA World Cup 2026 news from BBC Sport and ESPN on GoalCurrent.live.",
+    path: "/news/world-cup/",
+    absoluteTitle: true,
+    locale,
+  });
+}
 
 export default async function WorldCupNewsPage() {
   const { articles, sources } = await fetchNewsFeed("wc26");

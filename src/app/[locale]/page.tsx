@@ -10,18 +10,24 @@ import { SITE_NAME } from "@/lib/site-url";
 import { normalizePageTitleText } from "@/lib/seo/canonical-titles";
 import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: normalizePageTitleText(
-    `${SITE_NAME} | Live Football Scores, Fixtures and News`,
-  ),
-  description: `${SITE_NAME} | live football scores, fixtures, results, standings and news from leagues and tournaments worldwide.`,
-  path: "/",
-  absoluteTitle: true,
-});
-
 type HomePageProps = {
   params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: HomePageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: normalizePageTitleText(
+      `${SITE_NAME} | Live Football Scores, Fixtures and News`,
+    ),
+    description: `${SITE_NAME} | live football scores, fixtures, results, standings and news from leagues and tournaments worldwide.`,
+    path: "/",
+    absoluteTitle: true,
+    locale,
+  });
+}
 
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;

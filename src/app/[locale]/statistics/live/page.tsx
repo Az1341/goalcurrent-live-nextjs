@@ -3,8 +3,7 @@ import { buildComingSoonMetadata, ComingSoonPage } from "@/lib/coming-soon-page"
 
 const STATS_LINKS = [
   { href: "/statistics/live", label: "Live Match Stats" },
-  { href: "/statistics/top-scorers", label: "Top Scorers" },
-  { href: "/statistics/assists", label: "Top Assists" },
+  { href: "/premier-league/statistics", label: "PL Statistics" },
 ];
 
 export const metadata: Metadata = buildComingSoonMetadata({

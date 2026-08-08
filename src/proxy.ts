@@ -81,6 +81,18 @@ const SITE_REDIRECTS: Array<{ source: RegExp; destination: (match: RegExpMatchAr
     source: /^\/worldcup2026\/match\/(.+)$/,
     destination: (m, prefix) => `${prefix}/match/${m[1]}`,
   },
+  {
+    source: /^\/statistics\/top-scorers\/?$/,
+    destination: (_m, prefix) => `${prefix}/premier-league/statistics`,
+  },
+  {
+    source: /^\/statistics\/assists\/?$/,
+    destination: (_m, prefix) => `${prefix}/premier-league/statistics`,
+  },
+  {
+    source: /^\/statistics\/disciplinary\/?$/,
+    destination: (_m, prefix) => `${prefix}/premier-league/statistics`,
+  },
 ];
 
 function applySecurityHeaders(response: NextResponse): NextResponse {

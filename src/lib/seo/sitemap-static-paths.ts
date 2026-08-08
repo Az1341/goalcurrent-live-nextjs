@@ -5,14 +5,11 @@
 
 /** robots:noindex stubs — built for nav but omitted from sitemap until content ships. */
 export const NOINDEX_STUB_PATHS = [
-  "/statistics/assists",
   "/statistics/clean-sheets",
-  "/statistics/disciplinary",
   "/statistics/live",
   "/statistics/player-rankings",
   "/statistics/players",
   "/statistics/teams",
-  "/statistics/top-scorers",
   "/transfers",
   "/transfers/rumours",
   "/transfers/completed",

@@ -6,6 +6,12 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const navMod = pathToFileURL(join(root, "src/lib/nav.ts")).href;
 
+const DOMESTIC_HUB_ANCHORS = [
+  "league-next-fixture",
+  "league-latest-result",
+  "league-table-snapshot",
+];
+
 test("DESKTOP_SIDEBAR_LEAGUES_NAV uses founder-approved order without WC26", async () => {
   const { DESKTOP_SIDEBAR_LEAGUES_NAV, DESKTOP_COMPETITIONS_NAV } =
     await import(navMod);
@@ -21,6 +27,66 @@ test("DESKTOP_SIDEBAR_LEAGUES_NAV uses founder-approved order without WC26", asy
   for (const item of DESKTOP_SIDEBAR_LEAGUES_NAV) {
     assert.ok(!item.href.includes("worldcup"));
     assert.ok(!item.labelKey.toLowerCase().includes("wc26"));
+  }
+});
+
+test("DESKTOP_COMPETITIONS_NAV includes domestic leagues with honest hub anchors", async () => {
+  const {
+    DESKTOP_COMPETITIONS_NAV,
+    MORE_SHEET_COMPETITION_IDS,
+    MORE_SHEET_SUBMENUS,
+    isDesktopCompetitionsActive,
+  } = await import(navMod);
+
+  assert.deepEqual(
+    DESKTOP_COMPETITIONS_NAV.map((group) => group.id),
+    ["pl", "ucl", "laliga", "seriea", "bundesliga", "facup", "unl"],
+  );
+  assert.deepEqual([...MORE_SHEET_COMPETITION_IDS], [
+    "pl",
+    "ucl",
+    "laliga",
+    "seriea",
+    "bundesliga",
+    "facup",
+    "unl",
+  ]);
+
+  const domestic = [
+    { id: "laliga", hub: "/la-liga" },
+    { id: "seriea", hub: "/serie-a" },
+    { id: "bundesliga", hub: "/bundesliga" },
+  ];
+
+  for (const { id, hub } of domestic) {
+    const group = DESKTOP_COMPETITIONS_NAV.find((item) => item.id === id);
+    assert.ok(group, `missing competitions group ${id}`);
+    assert.equal(group.href, hub);
+    assert.deepEqual(
+      group.links.map((link) => link.href),
+      [
+        hub,
+        `${hub}#league-next-fixture`,
+        `${hub}#league-latest-result`,
+        `${hub}#league-table-snapshot`,
+      ],
+    );
+    assert.deepEqual(
+      MORE_SHEET_SUBMENUS[id].map((link) => link.href),
+      group.links.map((link) => link.href),
+    );
+    for (const href of group.links.map((link) => link.href)) {
+      for (const fake of ["#ucl-", "#facup-", "/fixtures", "/table"]) {
+        assert.ok(!href.includes(fake), `${id} must not invent ${fake}`);
+      }
+    }
+    for (const anchor of DOMESTIC_HUB_ANCHORS) {
+      assert.ok(
+        group.links.some((link) => link.href.endsWith(`#${anchor}`)),
+        `${id} missing #${anchor}`,
+      );
+    }
+    assert.equal(isDesktopCompetitionsActive(hub), true);
   }
 });
 

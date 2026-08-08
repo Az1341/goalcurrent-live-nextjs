@@ -44,15 +44,25 @@ const seoArticle = {
   image: absoluteUrl(HERO_IMAGE),
 };
 
-export const metadata: Metadata = buildArticleMetadata({
-  title: SEO_TITLE,
-  description: META_DESCRIPTION,
-  path: articleHref(SLUG),
-  keywords: ARTICLE_KEYWORDS,
-  publishedTime: "2026-06-25",
-  modifiedTime: "2026-06-25",
-  ogImage: absoluteUrl(HERO_IMAGE),
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildArticleMetadata({
+    title: SEO_TITLE,
+    description: META_DESCRIPTION,
+    path: articleHref(SLUG),
+    keywords: ARTICLE_KEYWORDS,
+    publishedTime: "2026-06-25",
+    modifiedTime: "2026-06-25",
+    ogImage: absoluteUrl(HERO_IMAGE),
+    locale,
+  });
+}
 
 export default function FifaHeadToHeadRuleArticlePage() {
   return (

@@ -1,6 +1,5 @@
 import CookieConsent from "./CookieConsent";
 import BottomTabBar from "./BottomTabBar";
-import DesktopSidebar from "./DesktopSidebar";
 import MasterFooter from "./MasterFooter";
 import MasterHeader from "./MasterHeader";
 import MobileBackBar from "./MobileBackBar";
@@ -16,8 +15,6 @@ export default function Layout({ children }: LayoutProps) {
       <MasterHeader />
 
       <div className={styles.shellRow}>
-        <DesktopSidebar />
-
         <div className={`${styles.main} ${styles.mainWithTabBar}`} data-gc-shell>
           <MobileBackBar />
           {children}

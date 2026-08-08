@@ -121,6 +121,7 @@
     "sidebarProCta": "Coming soon"
   },
   "layout": {
+    "skipToContent": "Aller au contenu",
     "cookieConsent": {
       "ariaLabel": "Consentement aux cookies",
       "message": "Nous utilisons des cookies pour personnaliser le contenu et analyser le trafic.",

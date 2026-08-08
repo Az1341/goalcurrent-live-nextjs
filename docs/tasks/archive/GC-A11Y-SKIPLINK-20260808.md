@@ -57,8 +57,8 @@ Layout remains a server component and uses `getTranslations("layout")` from `nex
 | Field | Value |
 |---|---|
 | **Branch** | `a11y/gc-a11y-skiplink-20260808` |
-| **PR** | _(filled after create)_ |
-| **Head SHA** | _(filled after commit)_ |
+| **PR** | https://github.com/Az1341/goalcurrent.live/pull/40 |
+| **Head SHA** | `f886660f7efb4cc9e25e82bc03adb01b5313a32a` |
 | **Lint** | 29 errors, 52 warnings - delta 0 vs baseline |
 | **Unit tests** | 344 pass, 0 fail |
 

@@ -11,11 +11,21 @@ import {
 } from "@/lib/serie-a/constants";
 import { SITE_NAME, absoluteUrl } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: SERIEA_DISPLAY_NAME,
-  description: `${SERIEA_DISPLAY_NAME} fixtures and standings on ${SITE_NAME}.`,
-  path: SERIEA_HUB_PATH,
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: SERIEA_DISPLAY_NAME,
+    description: `${SERIEA_DISPLAY_NAME} fixtures and standings on ${SITE_NAME}.`,
+    path: SERIEA_HUB_PATH,
+    locale,
+  });
+}
 
 export default async function SerieAHubPage() {
   const [initialFixtures, initialStandings] = await Promise.all([

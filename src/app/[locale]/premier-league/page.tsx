@@ -5,11 +5,21 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { getPlSsotFixtures } from "@/lib/pl/fixtures-ssot";
 import { SITE_NAME, absoluteUrl } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Premier League 2026/27",
-  description: `Premier League 2026/27 hub — table, fixtures, clubs and stats on ${SITE_NAME}.`,
-  path: "/premier-league",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Premier League 2026/27",
+    description: `Premier League 2026/27 hub — table, fixtures, clubs and stats on ${SITE_NAME}.`,
+    path: "/premier-league",
+    locale,
+  });
+}
 
 export default function PremierLeagueHubPage() {
   const initialFixtures = getPlSsotFixtures();

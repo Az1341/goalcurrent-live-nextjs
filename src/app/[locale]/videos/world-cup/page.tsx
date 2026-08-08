@@ -6,13 +6,23 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "World Cup 2026 Videos | GoalCurrent.live",
-  description:
-    "FIFA World Cup 2026 previews and highlights on GoalCurrent.live.",
-  path: "/videos/world-cup/",
-  absoluteTitle: true,
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "World Cup 2026 Videos | GoalCurrent.live",
+    description:
+      "FIFA World Cup 2026 previews and highlights on GoalCurrent.live.",
+    path: "/videos/world-cup/",
+    absoluteTitle: true,
+    locale,
+  });
+}
 
 export default async function WorldCupVideosPage() {
   const { videos } = await fetchYouTubeVideos("wc", 12);

@@ -13,11 +13,21 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { rankingListSchema } from "@/lib/seo/schema";
 import { SITE_NAME } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Premier League Table 2026/27",
-  description: `Premier League 2026/27 standings on ${SITE_NAME}.`,
-  path: "/premier-league/table",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Premier League Table 2026/27",
+    description: `Premier League 2026/27 standings on ${SITE_NAME}.`,
+    path: "/premier-league/table",
+    locale,
+  });
+}
 
 function teamsFromFixtures(fixtures: PlFixtureRow[]) {
   const teams = new Map<

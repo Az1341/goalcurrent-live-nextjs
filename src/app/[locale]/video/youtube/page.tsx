@@ -9,11 +9,21 @@ const MEDIA_LINKS = [
   { href: "/worldcup2026", label: "World Cup 2026" },
 ];
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "YouTube Videos",
-  description: `GoalCurrent YouTube videos on ${SITE_NAME} — coming soon.`,
-  path: "/video/youtube",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "YouTube Videos",
+    description: `GoalCurrent YouTube videos on ${SITE_NAME} — coming soon.`,
+    path: "/video/youtube",
+    locale,
+  });
+}
 
 export default function VideoYoutubePage() {
   return (

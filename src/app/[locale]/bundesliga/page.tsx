@@ -14,11 +14,21 @@ import {
 } from "@/lib/bundesliga/constants";
 import { SITE_NAME, absoluteUrl } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: BUNDESLIGA_DISPLAY_NAME,
-  description: `${BUNDESLIGA_DISPLAY_NAME} fixtures and standings on ${SITE_NAME}.`,
-  path: BUNDESLIGA_HUB_PATH,
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: BUNDESLIGA_DISPLAY_NAME,
+    description: `${BUNDESLIGA_DISPLAY_NAME} fixtures and standings on ${SITE_NAME}.`,
+    path: BUNDESLIGA_HUB_PATH,
+    locale,
+  });
+}
 
 export default async function BundesligaHubPage() {
   const [initialFixtures, initialStandings] = await Promise.all([

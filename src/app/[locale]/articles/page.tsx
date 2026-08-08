@@ -6,11 +6,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { getLocale } from "next-intl/server";
 import ArticleCard from "@/components/articles/ArticleCard";
-import ArticleAuthorLine, { ArticleCopyrightNotice } from "@/components/articles/ArticleAuthorLine";
+import ArticleAuthorLine, {
+  ArticleCopyrightNotice,
+} from "@/components/articles/ArticleAuthorLine";
 import JsonLd from "@/components/seo/JsonLd";
 import { fetchSyndicatedArticles } from "@/content/readers";
-import { ARTICLE_INDEX, ARTICLES, EXTERNAL_ARTICLE_CARDS, articleHref } from "@/data/articles";
-import { getArticleCardImage, isArticleCardImageUnoptimized } from "@/lib/article-hub";
+import {
+  ARTICLE_INDEX,
+  ARTICLES,
+  EXTERNAL_ARTICLE_CARDS,
+  articleHref,
+} from "@/data/articles";
+import {
+  getArticleCardImage,
+  isArticleCardImageUnoptimized,
+} from "@/lib/article-hub";
 import { localizedUrl } from "@/lib/i18n/urls";
 import { withSvgMediaClass } from "@/lib/images";
 import { buildPageMetadata } from "@/lib/page-metadata";
@@ -18,12 +28,21 @@ import { toIsoDate } from "@/lib/seo/dates";
 import { EDITORIAL_AUTHOR, EDITORIAL_PUBLISHER } from "@/lib/seo/constants";
 import styles from "./article.module.css";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Football Articles & Analysis",
-  description:
-    `In-depth football articles, World Cup 2026 match recaps, and expert analysis by ${EDITORIAL_AUTHOR} on ${EDITORIAL_PUBLISHER}.`,
-  path: "/articles",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Football Articles & Analysis",
+    description: `In-depth football articles, World Cup 2026 match recaps, and expert analysis by ${EDITORIAL_AUTHOR} on ${EDITORIAL_PUBLISHER}.`,
+    path: "/articles",
+    locale,
+  });
+}
 
 const CATEGORY_LABELS: Record<string, string> = {
   "world-cup-2026": "🌍 World Cup 2026",
@@ -34,7 +53,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export default async function ArticlesIndexPage() {
   const locale = await getLocale();
-  let syndicatedArticles: Awaited<ReturnType<typeof fetchSyndicatedArticles>> = [];
+  let syndicatedArticles: Awaited<ReturnType<typeof fetchSyndicatedArticles>> =
+    [];
 
   try {
     syndicatedArticles = await fetchSyndicatedArticles();
@@ -57,7 +77,9 @@ export default async function ArticlesIndexPage() {
   const sortedIndex = [...ARTICLE_INDEX].sort((a, b) =>
     toIsoDate(b.date).localeCompare(toIsoDate(a.date)),
   );
-  const sortedArticles = [...ARTICLES].sort((a, b) => b.date.localeCompare(a.date));
+  const sortedArticles = [...ARTICLES].sort((a, b) =>
+    b.date.localeCompare(a.date),
+  );
   const indexSlugs = new Set(sortedIndex.map((a) => a.slug));
   const orphanArticles = sortedArticles.filter((a) => !indexSlugs.has(a.slug));
 
@@ -131,37 +153,37 @@ export default async function ArticlesIndexPage() {
           {sortedIndex.map((a) => {
             const image = getArticleCardImage(a.slug);
             return (
-            <Link
-              key={a.slug}
-              href={a.href ?? articleHref(a.slug)}
-              className={styles.articleIndexCard}
-            >
-              <div
-                className={withSvgMediaClass(
-                  image,
-                  styles.articleIndexImageWrap,
-                  styles.articleIndexImageWrapSvg,
-                )}
+              <Link
+                key={a.slug}
+                href={a.href ?? articleHref(a.slug)}
+                className={styles.articleIndexCard}
               >
-                <Image
-                  src={image}
-                  alt=""
-                  width={640}
-                  height={360}
-                  sizes="(max-width: 768px) 100vw, 400px"
+                <div
                   className={withSvgMediaClass(
                     image,
-                    styles.articleIndexImage,
-                    styles.articleIndexImageSvg,
+                    styles.articleIndexImageWrap,
+                    styles.articleIndexImageWrapSvg,
                   )}
-                  unoptimized={isArticleCardImageUnoptimized(image)}
-                />
-              </div>
-              <span className={styles.pill}>{a.category}</span>
-              <h2>{a.title}</h2>
-              <p>{a.excerpt}</p>
-              <span className={styles.readMore}>Read article →</span>
-            </Link>
+                >
+                  <Image
+                    src={image}
+                    alt=""
+                    width={640}
+                    height={360}
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className={withSvgMediaClass(
+                      image,
+                      styles.articleIndexImage,
+                      styles.articleIndexImageSvg,
+                    )}
+                    unoptimized={isArticleCardImageUnoptimized(image)}
+                  />
+                </div>
+                <span className={styles.pill}>{a.category}</span>
+                <h2>{a.title}</h2>
+                <p>{a.excerpt}</p>
+                <span className={styles.readMore}>Read article →</span>
+              </Link>
             );
           })}
           {EXTERNAL_ARTICLE_CARDS.map((article) => (
@@ -211,12 +233,16 @@ export default async function ArticlesIndexPage() {
             <ArticleCopyrightNotice />
             <br />
             For syndication enquiries contact us at{" "}
-            <a href="https://goalcurrent.live/contact">goalcurrent.live/contact</a>
+            <a href="https://goalcurrent.live/contact">
+              goalcurrent.live/contact
+            </a>
           </p>
         </div>
 
         <div className={styles.btnRow}>
-          <Link href="/" className={styles.btnSecondary}>← Back to Home</Link>
+          <Link href="/" className={styles.btnSecondary}>
+            ← Back to Home
+          </Link>
         </div>
       </div>
     </main>

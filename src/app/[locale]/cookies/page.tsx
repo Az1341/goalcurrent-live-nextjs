@@ -6,11 +6,21 @@ import styles from "@/components/info/info-pages.module.css";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME, SITE_URL } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Cookie Policy",
-  description: `Cookie Policy for ${SITE_NAME}. Learn about the cookies we use and how to manage your preferences.`,
-  path: "/cookies",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Cookie Policy",
+    description: `Cookie Policy for ${SITE_NAME}. Learn about the cookies we use and how to manage your preferences.`,
+    path: "/cookies",
+    locale,
+  });
+}
 
 export default function CookiesPage() {
   return (
@@ -20,9 +30,8 @@ export default function CookiesPage() {
       intro={`This Cookie Policy explains what cookies are, how ${SITE_NAME} uses them, and how you can control them. This policy should be read alongside our Privacy Policy.`}
     >
       <div className={styles.highlight}>
-        Read our{" "}
-        <Link href="/privacy">Privacy Policy</Link> for how personal data is handled
-        alongside cookies.
+        Read our <Link href="/privacy">Privacy Policy</Link> for how personal
+        data is handled alongside cookies.
       </div>
 
       <section>
@@ -40,15 +49,16 @@ export default function CookiesPage() {
         <p>{SITE_NAME} uses cookies for the following purposes:</p>
         <ul>
           <li>
-            <strong>Essential cookies</strong> — to make the website work correctly
+            <strong>Essential cookies</strong> — to make the website work
+            correctly
           </li>
           <li>
-            <strong>Analytics cookies</strong> — to understand how visitors use the
-            site
+            <strong>Analytics cookies</strong> — to understand how visitors use
+            the site
           </li>
           <li>
-            <strong>Push notification cookies</strong> — to manage your notification
-            preferences via OneSignal
+            <strong>Push notification cookies</strong> — to manage your
+            notification preferences via OneSignal
           </li>
           <li>
             <strong>Affiliate cookies</strong> — to track clicks on NordVPN and
@@ -109,7 +119,9 @@ export default function CookiesPage() {
               <td>Manages push notification subscriptions</td>
               <td>Session/1 year</td>
               <td>
-                <span className={`${styles.badge} ${styles.badgePush}`}>Push</span>
+                <span className={`${styles.badge} ${styles.badgePush}`}>
+                  Push
+                </span>
               </td>
             </tr>
             <tr>
@@ -141,16 +153,16 @@ export default function CookiesPage() {
       <section>
         <h2>4. Your Consent</h2>
         <p>
-          When you first visit {SITE_NAME}, a cookie consent banner appears. You can
-          choose to:
+          When you first visit {SITE_NAME}, a cookie consent banner appears. You
+          can choose to:
         </p>
         <ul>
           <li>
             <strong>Accept</strong> — allow cookies including analytics
           </li>
           <li>
-            <strong>Decline</strong> — allow only essential cookies required for the
-            site to work
+            <strong>Decline</strong> — allow only essential cookies required for
+            the site to work
           </li>
         </ul>
         <p>You can change your preferences at any time:</p>
@@ -205,7 +217,9 @@ export default function CookiesPage() {
 
       <section>
         <h2>6. How to Control Cookies in Your Browser</h2>
-        <p>You can also control cookies directly through your browser settings:</p>
+        <p>
+          You can also control cookies directly through your browser settings:
+        </p>
         <ul>
           <li>
             <a
@@ -244,26 +258,32 @@ export default function CookiesPage() {
             </a>
           </li>
         </ul>
-        <p>Note: disabling all cookies may affect the functionality of {SITE_NAME}.</p>
+        <p>
+          Note: disabling all cookies may affect the functionality of{" "}
+          {SITE_NAME}.
+        </p>
       </section>
 
       <section>
         <h2>7. Affiliate Link Disclosure</h2>
         <div className={styles.highlight}>
           #AD — {SITE_NAME} participates in affiliate programmes. NordVPN and
-          NordPass links are affiliate links — if you click and purchase, we may earn
-          a commission at no extra cost to you. Affiliate tracking cookies are only
-          placed with your consent.
+          NordPass links are affiliate links — if you click and purchase, we may
+          earn a commission at no extra cost to you. Affiliate tracking cookies
+          are only placed with your consent.
         </div>
       </section>
 
       <section>
         <h2>8. Contact Us</h2>
-        <p>If you have any questions about our use of cookies, please contact:</p>
+        <p>
+          If you have any questions about our use of cookies, please contact:
+        </p>
         <div className={styles.highlight}>
           <strong>Ahmad Zafarani (Ashna4All)</strong>
           <br />
-          Email: <a href="mailto:info@goalcurrent.live">info@goalcurrent.live</a>
+          Email:{" "}
+          <a href="mailto:info@goalcurrent.live">info@goalcurrent.live</a>
           <br />
           Website: <a href={SITE_URL}>goalcurrent.live</a>
         </div>

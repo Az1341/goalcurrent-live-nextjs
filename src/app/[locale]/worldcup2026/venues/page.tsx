@@ -9,11 +9,21 @@ import { buildVenueDescription, getVenueStats } from "@/lib/wc26-venue-stats";
 
 const section = getWc26Section("venues")!;
 
-export const metadata: Metadata = buildPageMetadata({
-  title: `${section.label} — World Cup 2026 Archive`,
-  description: section.description,
-  path: section.href,
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: `${section.label} — World Cup 2026 Archive`,
+    description: section.description,
+    path: section.href,
+    locale,
+  });
+}
 function venuesStructuredData(): Record<string, unknown> {
   return {
     "@context": "https://schema.org",

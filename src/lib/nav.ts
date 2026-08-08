@@ -24,6 +24,9 @@ export type MoreSheetSubmenuId =
   | "competitions"
   | "pl"
   | "ucl"
+  | "laliga"
+  | "seriea"
+  | "bundesliga"
   | "facup"
   | "unl"
   | "clubs"
@@ -35,7 +38,15 @@ export type MoreSheetSubmenuId =
   | "transfers";
 
 /** Competition child menus opened from the More → Competitions panel. */
-export const MORE_SHEET_COMPETITION_IDS = ["pl", "ucl", "facup", "unl"] as const;
+export const MORE_SHEET_COMPETITION_IDS = [
+  "pl",
+  "ucl",
+  "laliga",
+  "seriea",
+  "bundesliga",
+  "facup",
+  "unl",
+] as const;
 
 export type MoreSheetCompetitionId =
   (typeof MORE_SHEET_COMPETITION_IDS)[number];
@@ -143,6 +154,16 @@ export const MORE_SHEET_LEVEL1: MoreSheetLevel1Item[] = [
   { type: "link", href: "/affiliate-disclosure", labelKey: "affiliateDisclosure" },
 ];
 
+/** Honest domestic-league hub anchors from DomesticLeagueHubClient. */
+function domesticLeagueHubLinks(hubPath: string): NavLinkItem[] {
+  return [
+    { href: hubPath, labelKey: "overview" },
+    { href: `${hubPath}#league-next-fixture`, labelKey: "nextFixture" },
+    { href: `${hubPath}#league-latest-result`, labelKey: "latestResult" },
+    { href: `${hubPath}#league-table-snapshot`, labelKey: "tableSnapshot" },
+  ];
+}
+
 /** More bottom sheet — level 2 drill-down links */
 export const MORE_SHEET_SUBMENUS: Record<MoreSheetSubmenuId, NavLinkItem[]> = {
   language: [],
@@ -171,6 +192,9 @@ export const MORE_SHEET_SUBMENUS: Record<MoreSheetSubmenuId, NavLinkItem[]> = {
     { href: "/champions-league#ucl-results", labelKey: "results" },
     { href: "/champions-league#ucl-standings", labelKey: "standings" },
   ],
+  laliga: domesticLeagueHubLinks("/la-liga"),
+  seriea: domesticLeagueHubLinks("/serie-a"),
+  bundesliga: domesticLeagueHubLinks("/bundesliga"),
   facup: [
     { href: "/fa-cup", labelKey: "overview" },
     { href: "/fa-cup#facup-fixtures", labelKey: "fixtures" },
@@ -234,6 +258,9 @@ export const MORE_SHEET_SUBMENU_TITLE_KEYS: Record<MoreSheetSubmenuId, string> =
   wc26: "wc26",
   pl: "pl2627",
   ucl: "championsLeague",
+  laliga: "laLiga",
+  seriea: "serieA",
+  bundesliga: "bundesliga",
   facup: "faCup",
   unl: "nationsLeague",
   clubs: "clubs",
@@ -255,7 +282,7 @@ export const DESKTOP_PL_DROPDOWN: NavLinkItem[] = [
 ];
 
 export type DesktopCompetitionNavGroup = {
-  id: "pl" | "ucl" | "facup" | "unl";
+  id: "pl" | "ucl" | "laliga" | "seriea" | "bundesliga" | "facup" | "unl";
   labelKey: string;
   href: string;
   links: readonly NavLinkItem[];
@@ -279,6 +306,24 @@ export const DESKTOP_COMPETITIONS_NAV: readonly DesktopCompetitionNavGroup[] = [
       { href: "/champions-league#ucl-results", labelKey: "results" },
       { href: "/champions-league#ucl-standings", labelKey: "standings" },
     ],
+  },
+  {
+    id: "laliga",
+    labelKey: "laLiga",
+    href: "/la-liga",
+    links: domesticLeagueHubLinks("/la-liga"),
+  },
+  {
+    id: "seriea",
+    labelKey: "serieA",
+    href: "/serie-a",
+    links: domesticLeagueHubLinks("/serie-a"),
+  },
+  {
+    id: "bundesliga",
+    labelKey: "bundesliga",
+    href: "/bundesliga",
+    links: domesticLeagueHubLinks("/bundesliga"),
   },
   {
     id: "facup",
@@ -456,6 +501,12 @@ export function isDesktopCompetitionsActive(pathname: string): boolean {
     isDesktopPlActive(pathname) ||
     pathname === "/champions-league" ||
     pathname.startsWith("/champions-league/") ||
+    pathname === "/la-liga" ||
+    pathname.startsWith("/la-liga/") ||
+    pathname === "/serie-a" ||
+    pathname.startsWith("/serie-a/") ||
+    pathname === "/bundesliga" ||
+    pathname.startsWith("/bundesliga/") ||
     pathname === "/fa-cup" ||
     pathname.startsWith("/fa-cup/") ||
     pathname === "/nations-league" ||

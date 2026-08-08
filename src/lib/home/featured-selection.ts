@@ -14,6 +14,25 @@ export function isFeaturedMatchEligible(view: HomepageMatchView): boolean {
   return view.matchClass === "live" || view.matchClass === "upcoming";
 }
 
+/** Earliest Premier League fixture still scheduled after `nowMs` (by kickoffUtc). */
+export function selectNextPlUpcomingFixture(
+  plFixtures: readonly PlFixtureRow[],
+  nowMs: number = Date.now(),
+): PlFixtureRow | undefined {
+  const upcoming = plFixtures
+    .filter(
+      (f) =>
+        f.status === "UPCOMING" &&
+        Number.isFinite(new Date(f.kickoffUtc).getTime()) &&
+        new Date(f.kickoffUtc).getTime() >= nowMs,
+    )
+    .sort(
+      (a, b) =>
+        new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime(),
+    );
+  return upcoming[0];
+}
+
 export function selectPlFeaturedFixture(
   plFixtures: readonly PlFixtureRow[],
 ): PlFixtureRow | undefined {
@@ -26,16 +45,7 @@ export function selectPlFeaturedFixture(
     )[0];
   }
 
-  const upcoming = plFixtures
-    .filter(
-      (f) =>
-        f.status === "UPCOMING" && new Date(f.kickoffUtc).getTime() >= now,
-    )
-    .sort(
-      (a, b) =>
-        new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime(),
-    );
-  return upcoming[0];
+  return selectNextPlUpcomingFixture(plFixtures, now);
 }
 
 export type HomeFeaturedContent = {

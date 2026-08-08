@@ -112,6 +112,9 @@
     "laLiga": "La Liga",
     "serieA": "Serie A",
     "bundesliga": "Bundesliga",
+    "nextFixture": "Próximo partido",
+    "latestResult": "Último resultado",
+    "tableSnapshot": "Resumen de tabla",
     "sidebarLeagues": "Leagues",
     "sidebarProTitle": "GoalCurrent PRO",
     "sidebarProBody": "Advanced stats, alerts, and ad-free match centres — membership coming soon.",
@@ -349,7 +352,18 @@
     "heroHeadline3": "Cada momento.",
     "viewAllMatches": "Ver todos los partidos",
     "heroAria": "Hero de inicio",
-    "featuredHeroAria": "Partido destacado"
+    "featuredHeroAria": "Partido destacado",
+    "kickoffCountdown": {
+      "eyebrow": "Cuenta atras al inicio",
+      "untilKickoff": "Hasta el inicio",
+      "days": "Dias",
+      "hours": "Horas",
+      "minutes": "Min",
+      "viewMatch": "Ver centro del partido",
+      "seasonStartsSoon": "La Premier League empieza pronto",
+      "aria": "Cuenta atras {home} vs {away}: {days} dias, {hours} horas, {minutes} minutos",
+      "ariaEmpty": "Cuenta atras de Premier League no disponible"
+    }
   },
   "favourites": {
     "add": "Add {team} to favourites",

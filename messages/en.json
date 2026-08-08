@@ -108,11 +108,13 @@
     "groupC4": "Group C4",
     "groupD1": "Group D1",
     "groupD2": "Group D2",
-    "rounds": "Rounds",
     "competitions": "Competitions",
     "laLiga": "La Liga",
     "serieA": "Serie A",
     "bundesliga": "Bundesliga",
+    "nextFixture": "Next fixture",
+    "latestResult": "Latest result",
+    "tableSnapshot": "Table snapshot",
     "sidebarLeagues": "Leagues",
     "sidebarProTitle": "GoalCurrent PRO",
     "sidebarProBody": "Advanced stats, alerts, and ad-free match centres — membership coming soon.",
@@ -350,7 +352,18 @@
     "heroHeadline3": "Every Moment.",
     "viewAllMatches": "View all matches",
     "heroAria": "Home hero",
-    "featuredHeroAria": "Featured match hero"
+    "featuredHeroAria": "Featured match hero",
+    "kickoffCountdown": {
+      "eyebrow": "Countdown to kickoff",
+      "untilKickoff": "Until kickoff",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Mins",
+      "viewMatch": "View match centre",
+      "seasonStartsSoon": "Premier League season starts soon",
+      "aria": "Countdown to {home} vs {away}: {days} days, {hours} hours, {minutes} minutes",
+      "ariaEmpty": "Premier League kickoff countdown unavailable"
+    }
   },
   "favourites": {
     "add": "Add {team} to favourites",

@@ -23,10 +23,7 @@ function parseLeague(raw: string): UnlLeagueId | null {
     : null;
 }
 
-function parseGroup(
-  league: UnlLeagueId,
-  rawGroup: string,
-): UnlGroupId | null {
+function parseGroup(league: UnlLeagueId, rawGroup: string): UnlGroupId | null {
   const num = Number.parseInt(rawGroup.trim(), 10);
   const max = league === "d" ? 2 : 4;
   if (!Number.isFinite(num) || num < 1 || num > max) return null;
@@ -41,13 +38,13 @@ export function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { league: rawLeague, group: rawGroup } = await params;
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, league: rawLeague, group: rawGroup } = await params;
   const league = parseLeague(rawLeague);
   const groupId = league ? parseGroup(league, rawGroup) : null;
-  const label = groupId
-    ? `Group ${groupId.toUpperCase()}`
-    : "Group";
+  const label = groupId ? `Group ${groupId.toUpperCase()}` : "Group";
   return buildPageMetadata({
     title: `${UNL_DISPLAY_NAME} · ${label}`,
     description: `${label} table, fixtures and results for UEFA Nations League ${UNL_SEASON_LABEL}.`,
@@ -55,6 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       league && groupId
         ? `/nations-league/league/${league}/group/${groupId.slice(1)}`
         : "/nations-league",
+    locale,
   });
 }
 

@@ -10,6 +10,7 @@ import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
 import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
 import HomeHero from "@/components/home/v5/HomeHero";
 import HomeChampionSnippet from "@/components/home/v5/HomeChampionSnippet";
+import HomePlKickoffCountdown from "@/components/home/v5/HomePlKickoffCountdown";
 import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import styles from "@/components/home/home-v5.module.css";
 
@@ -38,7 +39,7 @@ const HomeTeamsLeagues = dynamic(
 
 export default function HomeClient() {
   const fixtures = useEffectiveFixtures();
-  const { data: plData } = useLiveFixtures();
+  const { data: plData, isLoading: plLoading } = useLiveFixtures();
   const plFixtures = plData?.fixtures ?? [];
 
   const { featuredMatch } = selectHomeFeaturedContent(
@@ -56,6 +57,10 @@ export default function HomeClient() {
     <div className={styles.root} data-gc-home-v5>
       <main className={styles.main}>
         <HomeChampionSnippet />
+        <HomePlKickoffCountdown
+          plFixtures={plFixtures}
+          loading={plLoading && !plData}
+        />
         <HomeHero
           featuredMatch={featuredMatch}
           wc26Views={heroWc26Views}

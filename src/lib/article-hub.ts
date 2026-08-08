@@ -19,6 +19,8 @@ export const ARTICLE_CARD_IMAGES: Record<string, string> = {
     "/images/news/morocco-knock-out-netherlands-on-penalties/hero.svg",
   "world-cup-2026-june-30-recap":
     "/images/news/world-cup-2026-june-30-recap/hero.svg",
+  "premier-league-2026-27-two-weeks-out":
+    "/images/news/premier-league-2026-27-two-weeks-out/hero.svg",
   "premier-league-2026-27-august-countdown":
     "/images/news/premier-league-2026-27-august-countdown/hero.svg",
   "world-cup-2026-july-1-recap":

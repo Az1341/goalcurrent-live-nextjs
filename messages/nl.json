@@ -112,6 +112,9 @@
     "laLiga": "La Liga",
     "serieA": "Serie A",
     "bundesliga": "Bundesliga",
+    "nextFixture": "Volgende wedstrijd",
+    "latestResult": "Laatste uitslag",
+    "tableSnapshot": "Standoverzicht",
     "sidebarLeagues": "Leagues",
     "sidebarProTitle": "GoalCurrent PRO",
     "sidebarProBody": "Advanced stats, alerts, and ad-free match centres — membership coming soon.",
@@ -349,7 +352,18 @@
     "heroHeadline3": "Elk moment.",
     "viewAllMatches": "Alle wedstrijden",
     "heroAria": "Home hero",
-    "featuredHeroAria": "Uitgelichte wedstrijd"
+    "featuredHeroAria": "Uitgelichte wedstrijd",
+    "kickoffCountdown": {
+      "eyebrow": "Aftellen tot aftrap",
+      "untilKickoff": "Tot aftrap",
+      "days": "Dagen",
+      "hours": "Uren",
+      "minutes": "Min",
+      "viewMatch": "Naar match centre",
+      "seasonStartsSoon": "Premier League-seizoen begint binnenkort",
+      "aria": "Aftellen {home} vs {away}: {days} dagen, {hours} uur, {minutes} minuten",
+      "ariaEmpty": "Premier League-aftelling niet beschikbaar"
+    }
   },
   "favourites": {
     "add": "Add {team} to favourites",

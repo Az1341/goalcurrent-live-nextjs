@@ -5,11 +5,21 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 
 const section = getWc26Section("groups")!;
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Groups — World Cup 2026 Archive",
-  description: section.description,
-  path: section.href,
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Groups — World Cup 2026 Archive",
+    description: section.description,
+    path: section.href,
+    locale,
+  });
+}
 export default function GroupsHubPage() {
   return <GroupsHubContent />;
 }

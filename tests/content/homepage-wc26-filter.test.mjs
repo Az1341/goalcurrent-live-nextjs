@@ -69,6 +69,17 @@ describe("homepage WC26 hard gate", async () => {
     if (merged.length > 0) {
       assert.equal(filter.isWorldCup2026HomepageNewsItem(merged[0]), false);
     }
+    assert.ok(
+      merged[0]?.link.includes("premier-league-2026-27-two-weeks-out"),
+      "7 August PL preview must pin as homepage Latest News featured item",
+    );
+    assert.equal(
+      hub.isWorldCup2026EditorialLink(
+        "/articles/premier-league-2026-27-august-countdown",
+      ),
+      false,
+      "1 July PL countdown page must remain a valid non-WC26 article",
+    );
   });
 
   it("mergeWc26NewsFeed still includes WC26 GoalCurrent articles", () => {

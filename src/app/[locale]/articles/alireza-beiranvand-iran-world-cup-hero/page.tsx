@@ -11,15 +11,25 @@ import { buildArticleMetadata } from "@/lib/page-metadata";
 const article = BEIRANVAND_FEATURE;
 const seo = articleSeoFromSlug("alireza-beiranvand-iran-world-cup-hero")!;
 
-export const metadata: Metadata = buildArticleMetadata({
-  title: article.title,
-  description: article.description,
-  path: article.path,
-  keywords: article.keywords,
-  publishedTime: article.publishedAt,
-  modifiedTime: article.publishedAt,
-  authors: [article.author],
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildArticleMetadata({
+    title: article.title,
+    description: article.description,
+    path: article.path,
+    keywords: article.keywords,
+    publishedTime: article.publishedAt,
+    modifiedTime: article.publishedAt,
+    authors: [article.author],
+    locale,
+  });
+}
 
 export default function BeiranvandFeaturePage() {
   return (

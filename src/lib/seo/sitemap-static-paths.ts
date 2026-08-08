@@ -17,6 +17,7 @@ export const NOINDEX_STUB_PATHS = [
   "/transfers/rumours",
   "/transfers/completed",
   "/transfers/free-agents",
+  "/favourites",
   "/favourites/clubs",
   "/favourites/players",
   "/worldcup2026/players",
@@ -27,7 +28,6 @@ export const NOINDEX_STUB_PATHS = [
 export const SITEMAP_STATIC_PATHS = [
   "/",
   "/live",
-  "/favourites",
   "/news",
   "/news/world-cup",
   "/news/premier-league",

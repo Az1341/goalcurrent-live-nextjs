@@ -8,18 +8,29 @@ import { UCL_HUB_PATH } from "@/lib/ucl/constants";
 
 const ucl = getCompetition("ucl");
 
-export const metadata: Metadata = {
-  ...buildPageMetadata({
-    title: ucl.metadata.title,
-    description: ucl.metadata.description,
-    path: UCL_HUB_PATH,
-  }),
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: { index: false, follow: false },
-  },
+type PageProps = {
+  params: Promise<{ locale: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    ...buildPageMetadata({
+      title: ucl.metadata.title,
+      description: ucl.metadata.description,
+      path: UCL_HUB_PATH,
+      locale,
+    }),
+
+    robots: {
+      index: false,
+      follow: false,
+      googleBot: { index: false, follow: false },
+    },
+  };
+}
 
 export default function ChampionsLeagueHubPage() {
   const jsonLd = {

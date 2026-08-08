@@ -10,11 +10,21 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME, SITE_URL } from "@/lib/site-url";
 import styles from "@/components/info/info-pages.module.css";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Contact Us",
-  description: `Contact ${SITE_NAME}. Get in touch with Ahmad Zafarani (Ashna4All) for questions, feedback or partnership enquiries.`,
-  path: "/contact",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Contact Us",
+    description: `Contact ${SITE_NAME}. Get in touch with Ahmad Zafarani (Ashna4All) for questions, feedback or partnership enquiries.`,
+    path: "/contact",
+    locale,
+  });
+}
 
 export default async function ContactPage() {
   const t = await getTranslations("nav");
@@ -29,9 +39,14 @@ export default async function ContactPage() {
           </p>
 
           <div className={styles.contactOptions}>
-            <a className={styles.contactOption} href="mailto:info@goalcurrent.live">
+            <a
+              className={styles.contactOption}
+              href="mailto:info@goalcurrent.live"
+            >
               <div className={styles.contactOptionTitle}>Email Us</div>
-              <div className={styles.contactOptionSub}>info@goalcurrent.live</div>
+              <div className={styles.contactOptionSub}>
+                info@goalcurrent.live
+              </div>
             </a>
             {FOOTER_SOCIAL.map((social) => (
               <a
@@ -73,9 +88,9 @@ export default async function ContactPage() {
         <article className={styles.card}>
           <h2>Editorial Corrections</h2>
           <p>
-            Spotted a score error, wrong kick-off time, or outdated squad detail?
-            Select <strong>Score Error / Bug Report</strong> in the form above or
-            email us with the match and correction details.
+            Spotted a score error, wrong kick-off time, or outdated squad
+            detail? Select <strong>Score Error / Bug Report</strong> in the form
+            above or email us with the match and correction details.
           </p>
         </article>
 
@@ -106,12 +121,14 @@ export default async function ContactPage() {
             <br />
             Created by Ahmad Zafarani (Ashna4All)
             <br />
-            Email: <a href="mailto:info@goalcurrent.live">info@goalcurrent.live</a>
+            Email:{" "}
+            <a href="mailto:info@goalcurrent.live">info@goalcurrent.live</a>
             <br />
             Website: <a href={SITE_URL}>goalcurrent.live</a>
             <br />
             <br />
-            <strong>Response time:</strong> We aim to respond within 24–48 hours.
+            <strong>Response time:</strong> We aim to respond within 24–48
+            hours.
           </div>
           <div className={styles.socialList}>
             <SocialLinks

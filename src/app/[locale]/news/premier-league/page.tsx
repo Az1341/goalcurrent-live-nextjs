@@ -6,13 +6,23 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Premier League News | GoalCurrent.live",
-  description:
-    "Latest Premier League news from BBC Sport and ESPN on GoalCurrent.live.",
-  path: "/news/premier-league/",
-  absoluteTitle: true,
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Premier League News | GoalCurrent.live",
+    description:
+      "Latest Premier League news from BBC Sport and ESPN on GoalCurrent.live.",
+    path: "/news/premier-league/",
+    absoluteTitle: true,
+    locale,
+  });
+}
 
 export default async function PremierLeagueNewsPage() {
   const { articles, sources } = await fetchNewsFeed("pl");

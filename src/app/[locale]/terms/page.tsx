@@ -4,11 +4,21 @@ import styles from "@/components/info/info-pages.module.css";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME } from "@/lib/site-url";
 
-export const metadata: Metadata = buildPageMetadata({
-  title: "Terms & Conditions",
-  description: `Terms and Conditions for using ${SITE_NAME}.`,
-  path: "/terms",
-});
+type PageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale } = await params;
+  return buildPageMetadata({
+    title: "Terms & Conditions",
+    description: `Terms and Conditions for using ${SITE_NAME}.`,
+    path: "/terms",
+    locale,
+  });
+}
 
 export default function TermsPage() {
   return (
@@ -22,13 +32,14 @@ export default function TermsPage() {
           <span className={styles.clauseNum}>1</span> About This Website
         </h2>
         <p>
-          {SITE_NAME} is an independent football fan site providing news, scores,
-          fixtures, and statistics. It is owned and operated by A. Zafarani
-          (Ashna4All), based in England, United Kingdom.
+          {SITE_NAME} is an independent football fan site providing news,
+          scores, fixtures, and statistics. It is owned and operated by A.
+          Zafarani (Ashna4All), based in England, United Kingdom.
         </p>
         <p>
           We are <strong>not affiliated</strong> with FIFA, UEFA, the Premier
-          League, or any official football organisation, club, or governing body.
+          League, or any official football organisation, club, or governing
+          body.
         </p>
       </section>
 
@@ -37,9 +48,9 @@ export default function TermsPage() {
           <span className={styles.clauseNum}>2</span> Acceptance of Terms
         </h2>
         <p>
-          By accessing or using {SITE_NAME}, you agree to be bound by these Terms
-          & Conditions. If you do not agree with any part of these terms, please
-          stop using the site immediately.
+          By accessing or using {SITE_NAME}, you agree to be bound by these
+          Terms & Conditions. If you do not agree with any part of these terms,
+          please stop using the site immediately.
         </p>
       </section>
 
@@ -48,15 +59,15 @@ export default function TermsPage() {
           <span className={styles.clauseNum}>3</span> Content & Accuracy
         </h2>
         <p>
-          We aim to provide accurate and up-to-date football information including
-          scores, fixtures, tables, news, and squad data. However, we make no
-          guarantees regarding the accuracy, completeness, or timeliness of any
-          content published on this site.
+          We aim to provide accurate and up-to-date football information
+          including scores, fixtures, tables, news, and squad data. However, we
+          make no guarantees regarding the accuracy, completeness, or timeliness
+          of any content published on this site.
         </p>
         <div className={styles.warning}>
           Always verify important information (such as match kick-off times or
-          team selections) with official sources before making decisions based on
-          it.
+          team selections) with official sources before making decisions based
+          on it.
         </div>
       </section>
 
@@ -67,24 +78,25 @@ export default function TermsPage() {
         <p>
           All original content, design, text, and code on {SITE_NAME} is{" "}
           <strong>© 2026 Ashna4All (A. Zafarani)</strong>. You may not copy,
-          reproduce, redistribute, or republish any original content without prior
-          written permission.
+          reproduce, redistribute, or republish any original content without
+          prior written permission.
         </p>
         <p>
-          Football data, club names, competition logos, and trademarks remain the
-          property of their respective owners and are referenced for informational
-          and fan purposes only.
+          Football data, club names, competition logos, and trademarks remain
+          the property of their respective owners and are referenced for
+          informational and fan purposes only.
         </p>
       </section>
 
       <section>
         <h2>
-          <span className={styles.clauseNum}>5</span> Affiliate Links & Advertising
+          <span className={styles.clauseNum}>5</span> Affiliate Links &
+          Advertising
         </h2>
         <p>
-          {SITE_NAME} participates in affiliate programmes. Some links on this site
-          are affiliate links — if you click them and make a purchase, we may earn
-          a commission. This does not affect the price you pay.
+          {SITE_NAME} participates in affiliate programmes. Some links on this
+          site are affiliate links — if you click them and make a purchase, we
+          may earn a commission. This does not affect the price you pay.
         </p>
         <p>
           All affiliate links and paid promotions are clearly labelled with{" "}
@@ -100,8 +112,8 @@ export default function TermsPage() {
         <p>
           We may link to third-party websites including news sources, official
           football sites, and affiliate partners for reference purposes. We are
-          not responsible for the content, accuracy, or privacy practices of those
-          sites.
+          not responsible for the content, accuracy, or privacy practices of
+          those sites.
         </p>
       </section>
 
@@ -111,7 +123,9 @@ export default function TermsPage() {
         </h2>
         <p>By using this site, you agree not to:</p>
         <ul>
-          <li>Attempt to hack, disrupt, or damage this website or its hosting</li>
+          <li>
+            Attempt to hack, disrupt, or damage this website or its hosting
+          </li>
           <li>Use the site for any unlawful or fraudulent purpose</li>
           <li>Scrape, copy, or reproduce content without permission</li>
           <li>Transmit any harmful or malicious code</li>
@@ -123,8 +137,8 @@ export default function TermsPage() {
           <span className={styles.clauseNum}>8</span> Limitation of Liability
         </h2>
         <p>
-          {SITE_NAME} and A. Zafarani (Ashna4All) accept no liability for any loss,
-          damage, or inconvenience caused by:
+          {SITE_NAME} and A. Zafarani (Ashna4All) accept no liability for any
+          loss, damage, or inconvenience caused by:
         </p>
         <ul>
           <li>Use of or inability to use this website</li>
@@ -140,8 +154,8 @@ export default function TermsPage() {
         </h2>
         <p>
           These Terms & Conditions are governed by the laws of{" "}
-          <strong>England and Wales</strong>. Any disputes shall be subject to the
-          exclusive jurisdiction of the courts of England and Wales.
+          <strong>England and Wales</strong>. Any disputes shall be subject to
+          the exclusive jurisdiction of the courts of England and Wales.
         </p>
       </section>
 
@@ -152,8 +166,8 @@ export default function TermsPage() {
         <p>
           We reserve the right to update these terms at any time without prior
           notice. The date at the top of this page shows the latest version.
-          Continued use of the site after any changes constitutes your acceptance
-          of the updated terms.
+          Continued use of the site after any changes constitutes your
+          acceptance of the updated terms.
         </p>
         <p>
           Questions? Contact us at:{" "}

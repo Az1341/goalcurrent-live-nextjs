@@ -24,16 +24,17 @@ export function generateStaticParams() {
   return UNL_LEAGUES.map((league) => ({ league }));
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { league: raw } = await params;
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { locale, league: raw } = await params;
   const league = parseLeague(raw);
   const label = league ? `League ${league.toUpperCase()}` : "League";
   return buildPageMetadata({
     title: `${UNL_DISPLAY_NAME} · ${label}`,
     description: `${label} groups and teams for UEFA Nations League ${UNL_SEASON_LABEL}.`,
-    path: league
-      ? `/nations-league/league/${league}`
-      : "/nations-league",
+    path: league ? `/nations-league/league/${league}` : "/nations-league",
+    locale,
   });
 }
 

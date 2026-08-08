@@ -1,0 +1,52 @@
+# Hourly content refresh via GitHub Actions (Vercel free cron is daily-only).
+# Calls the existing production endpoint; CRON_SECRET must be set as a repo secret.
+name: Refresh content (hourly)
+
+on:
+  schedule:
+    # Every hour at :00 UTC
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-content-cron
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Call refresh-content cron
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Trigger content refresh
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CRON_SECRET:-}" ]; then
+            echo "CRON_SECRET repository secret is not set."
+            exit 1
+          fi
+
+          HTTP_CODE=$(curl -sS -o /tmp/refresh-content-body.txt -w "%{http_code}" \
+            -X GET \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            -H "Accept: application/json" \
+            --connect-timeout 30 \
+            --max-time 120 \
+            "https://goalcurrent.live/api/cron/refresh-content")
+
+          echo "HTTP status: ${HTTP_CODE}"
+          echo "Response body:"
+          cat /tmp/refresh-content-body.txt || true
+          echo
+
+          case "${HTTP_CODE}" in
+            2*)
+              echo "Refresh succeeded."
+              ;;
+            *)
+              echo "Refresh failed with non-2xx status ${HTTP_CODE}."
+              exit 1
+              ;;
+          esac

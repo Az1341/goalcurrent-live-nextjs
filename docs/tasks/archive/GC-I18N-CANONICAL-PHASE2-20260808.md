@@ -86,11 +86,11 @@ export async function generateMetadata({
 | Field | Value |
 |---|---|
 | **Branch** | `fix/gc-i18n-canonical-phase2-20260808` |
-| **PR** | (filled after create) |
-| **Head SHA** | (filled after push) |
+| **PR** | https://github.com/Az1341/goalcurrent.live/pull/37 |
+| **Head SHA** | `5ba98bf93fed2343b8d2f4abf7884786dff054dc` |
 | **Lint** | 29 errors, 52 warnings — delta 0 vs baseline |
 | **Unit tests** | 342 pass, 0 fail |
-| **Vercel** | (filled from Deployments API; not crawled) |
+| **Vercel** | Ready (success) — https://goalcurrentlive-naxnpqi79-az-team-1.vercel.app (Deployments API; not crawled) |
 
 ---
 

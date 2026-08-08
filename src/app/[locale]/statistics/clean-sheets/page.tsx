@@ -16,7 +16,6 @@ export default function StatisticsCleanSheetsPage() {
       links={[
         { href: "/statistics/teams", label: "Team Stats" },
         { href: "/premier-league/statistics", label: "PL Statistics" },
-        { href: "/statistics/disciplinary", label: "Disciplinary" },
       ]}
     />
   );

@@ -18,7 +18,7 @@ export default function WorldCupPlayersPage() {
       description="Detailed World Cup 2026 player profiles are not published in this archive yet. Top scorers remain available from tournament statistics."
       links={[
         { href: "/worldcup2026/teams", label: "Teams" },
-        { href: "/statistics/top-scorers", label: "Top Scorers" },
+        { href: "/premier-league/statistics", label: "PL Statistics" },
         { href: "/worldcup2026", label: "World Cup 2026 Archive" },
       ]}
       backHref="/worldcup2026"

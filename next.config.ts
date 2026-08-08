@@ -40,6 +40,21 @@ const SITE_REDIRECTS: RouteRedirect[] = [
     permanent: true,
   },
   {
+    source: "/statistics/top-scorers",
+    destination: "/premier-league/statistics",
+    permanent: true,
+  },
+  {
+    source: "/statistics/assists",
+    destination: "/premier-league/statistics",
+    permanent: true,
+  },
+  {
+    source: "/statistics/disciplinary",
+    destination: "/premier-league/statistics",
+    permanent: true,
+  },
+  {
     source: "/:path*",
     has: [{ type: "host", value: "goalcurrent.online" }],
     destination: "https://goalcurrent.live/:path*",

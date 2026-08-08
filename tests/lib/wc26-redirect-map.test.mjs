@@ -27,6 +27,12 @@ test("evidence-backed WC26 / video redirects remain permanent singles", () => {
   );
 });
 
+test("statistics stub hubs redirect to premier-league statistics", () => {
+  assertRedirect("/statistics/top-scorers", "/premier-league/statistics");
+  assertRedirect("/statistics/assists", "/premier-league/statistics");
+  assertRedirect("/statistics/disciplinary", "/premier-league/statistics");
+});
+
 test("redirect map does not dump World Cup URLs to homepage", () => {
   assert.doesNotMatch(
     config,

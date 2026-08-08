@@ -14,8 +14,7 @@ export default function StatisticsPlayersPage() {
       emoji="👤"
       description="Player statistics hub is coming soon on GoalCurrent.live."
       links={[
-        { href: "/statistics/top-scorers", label: "Top Scorers" },
-        { href: "/statistics/assists", label: "Top Assists" },
+        { href: "/premier-league/statistics", label: "PL Statistics" },
         { href: "/premier-league/players", label: "PL Players" },
       ]}
     />

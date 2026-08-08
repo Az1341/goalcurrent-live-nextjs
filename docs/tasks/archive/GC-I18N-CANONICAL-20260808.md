@@ -140,10 +140,10 @@ export async function generateMetadata({
 |---|---|
 | **Branch** | `fix/gc-i18n-canonical-locale-20260808` |
 | **PR** | https://github.com/Az1341/goalcurrent.live/pull/36 |
-| **Head SHA** | `65b4432fb50961d98500220cbf356de7c92c4af5` |
+| **Head SHA** | `25927d6539c16211f0e1514d77cc50488bf661be` |
 | **Lint** | 29 errors, 52 warnings — delta 0 vs baseline |
 | **Unit tests** | 342 pass, 0 fail |
-| **Vercel** | See PR checks / GitHub Deployments API (URL not crawled) |
+| **Vercel** | Ready (success) — https://goalcurrentlive-gwabk4v92-az-team-1.vercel.app (from Deployments API; not crawled) |
 
 ---
 

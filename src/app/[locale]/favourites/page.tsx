@@ -11,12 +11,16 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
-  return buildPageMetadata({
-    title: "Favourites",
-    description: `Your saved teams, matches, national sides and competitions on ${SITE_NAME}.`,
-    path: "/favourites",
-    locale,
-  });
+  return {
+    ...buildPageMetadata({
+      title: "Favourites",
+      description: `Your saved teams, matches, national sides and competitions on ${SITE_NAME}.`,
+      path: "/favourites",
+      locale,
+    }),
+    // Personal/local-only surface — same robots pattern as coming-soon stubs
+    robots: { index: false, follow: true },
+  };
 }
 
 export default function FavouritesPage() {

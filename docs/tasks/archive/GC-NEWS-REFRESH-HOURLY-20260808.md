@@ -48,7 +48,7 @@ Verification: lint + unit tests + YAML syntax only - workflow was not manually t
 |---|---|
 | **Branch** | `chore/gc-news-refresh-hourly-20260808` |
 | **PR** | https://github.com/Az1341/goalcurrent.live/pull/39 |
-| **Head SHA** | `b7cd181ccfd306900a631f6a8e81a6aa3315fc08` |
+| **Head SHA** | `bea4bf1840b31dae98f39cfdb07996c7b28bdfc8` |
 | **Lint** | 29 errors, 52 warnings - delta 0 vs baseline |
 | **Unit tests** | 344 pass, 0 fail |
 

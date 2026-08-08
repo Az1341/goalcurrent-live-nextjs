@@ -60,11 +60,11 @@ Post-change grep of active source: only `next.config.ts`, `src/proxy.ts`, and th
 | Field | Value |
 |---|---|
 | **Branch** | `fix/gc-stats-redirect-20260808` |
-| **PR** | (filled after create) |
-| **Head SHA** | (filled after push) |
+| **PR** | https://github.com/Az1341/goalcurrent.live/pull/38 |
+| **Head SHA** | `2ead82dc58773c5f4dc8c74ba51b76ca14929b71` |
 | **Lint** | 29 errors, 52 warnings — delta 0 vs baseline |
 | **Unit tests** | 344 pass, 0 fail |
-| **Vercel** | (filled from Deployments API; not crawled) |
+| **Vercel** | Ready (success) — https://goalcurrentlive-28wf2v5uh-az-team-1.vercel.app (Deployments API; not crawled) |
 
 ---
 

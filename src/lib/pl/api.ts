@@ -342,7 +342,9 @@ function normalizeFixture(
   };
 }
 
-function ssotFixturesResponse(locale: string): PlFixturesApiResponse {
+export function ssotFixturesResponse(
+  locale = "en-GB",
+): PlFixturesApiResponse {
   return baseFixturesResponse("fallback", {
     configured: true,
     fixtures: getPlSsotFixtures(locale),

@@ -8,11 +8,16 @@ import {
 } from "@/lib/wc26-live";
 import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
 import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
+import type { PlFixturesApiResponse } from "@/lib/pl/types";
 import HomeHero from "@/components/home/v5/HomeHero";
 import HomeChampionSnippet from "@/components/home/v5/HomeChampionSnippet";
 import HomePlKickoffCountdown from "@/components/home/v5/HomePlKickoffCountdown";
 import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import styles from "@/components/home/home-v5.module.css";
+
+type HomeClientProps = {
+  initialPlData: PlFixturesApiResponse;
+};
 
 const HomeTodaysMatches = dynamic(
   () => import("@/components/home/v5/HomeTodaysMatches"),
@@ -37,9 +42,10 @@ const HomeTeamsLeagues = dynamic(
   { loading: () => <div className={`${styles.skeleton} animate-skeleton-shimmer`} /> },
 );
 
-export default function HomeClient() {
+export default function HomeClient({ initialPlData }: HomeClientProps) {
   const fixtures = useEffectiveFixtures();
-  const { data: plData, isLoading: plLoading } = useLiveFixtures();
+  const { data: plData, isLoading: plLoading } =
+    useLiveFixtures(initialPlData);
   const plFixtures = plData?.fixtures ?? [];
 
   const { featuredMatch } = selectHomeFeaturedContent(

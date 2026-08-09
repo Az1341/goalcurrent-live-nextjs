@@ -9,6 +9,7 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME } from "@/lib/site-url";
 import { normalizePageTitleText } from "@/lib/seo/canonical-titles";
 import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
+import { ssotFixturesResponse } from "@/lib/pl/api";
 
 type HomePageProps = {
   params: Promise<{ locale: string }>;
@@ -33,6 +34,7 @@ export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   const seoFixtures = getSeoEffectiveFixtures();
   const { wc26Selection } = selectHomeFeaturedContent(seoFixtures);
+  const initialPlData = ssotFixturesResponse();
 
   return (
     <>
@@ -50,7 +52,7 @@ export default async function HomePage({ params }: HomePageProps) {
           locale={locale}
         />
       ))}
-      <HomeClient />
+      <HomeClient initialPlData={initialPlData} />
     </>
   );
 }

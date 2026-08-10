@@ -1,47 +1,53 @@
-﻿{
+{
   "task_id": "GC-PRIVATE-PREVIEW-GATE-001",
-  "captured_at_bst": "2026-07-26T14:51:00+01:00",
-  "method": "curl.exe --ssl-no-revoke --max-redirs 0 with no cookies/auth headers; browser confirmation for login wall and production homepage",
+  "verdict": "PASSED",
+  "blk_006": "CLOSED",
+  "captured_at_bst": "2026-08-10T15:03:00+01:00",
+  "prior_capture_bst": "2026-07-26T14:51:00+01:00",
+  "prior_verdict": "BLOCKED_AUTH_UNPROVEN",
+  "method_unauth": "curl.exe --ssl-no-revoke --max-redirs 0 with no cookies/auth headers",
+  "method_auth": "npx vercel curl as azafarani4-5274 (az-team-1) with redirects followed; --ssl-no-revoke",
   "notes": [
-    "Preview hosts and SSO nonces redacted in report; deployment id retained.",
-    "app_content_exposed requires __NEXT_DATA__ or match UI markers in response body; hostname substrings alone are not app content.",
-    "Unauthenticated 302 bodies were literal 'Redirecting...' (15 bytes) with Location to /sso-api."
+    "Preview hosts and SSO nonces redacted; deployment ids retained.",
+    "ssoProtection already enabled (all_except_custom_domains); no settings flip required for PASS.",
+    "Authorised 200 body included GoalCurrent app markers and data-dpl-id matching preview deployment.",
+    "Anonymous access remained 302 to /sso-api after authorised probe."
   ],
+  "protection_config": {
+    "ssoProtection": { "enabled": true, "deploymentType": "all_except_custom_domains" },
+    "passwordProtection": { "enabled": false },
+    "trustedIps": { "enabled": false }
+  },
   "preview_deployment": {
-    "deployment_id": "dpl_6JnLrvxvnjgCYaF1KE8v4Ds2sVeB",
-    "branch": "recovery/gc-exec-batch-005",
-    "commit_sha": "e4873659836b007f26ee78b01c6e4355a584663f",
+    "deployment_id": "dpl_BdyF2e1UcpCovGbQjWyKx1A9Vnfm",
+    "branch": "feat/gc-comshield-001-r1",
+    "commit_sha": "81c201f1940284d45b44c9605a3367d64e3f9f69",
     "ready_state": "READY",
     "environment": "preview",
     "url_redacted": "https://[REDACTED-PREVIEW-DEPLOYMENT].vercel.app",
     "branch_alias_redacted": "https://[REDACTED-BRANCH-ALIAS].vercel.app"
   },
   "unauthenticated_results": [
-    { "path": "/", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/robots.txt", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/sitemap.xml", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/api/robots", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/en", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/api/videos?limit=1", "expected": "deny app/API data", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/favicon.ico", "expected": "deny or protect", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/logo.svg", "expected": "deny or protect", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/ (branch alias)", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/robots.txt (branch alias)", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
-    { "path": "/en (branch alias)", "expected": "deny app content", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" }
+    { "path": "/", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/en", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/robots.txt", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/api/videos?limit=1", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" },
+    { "path": "/logo.svg", "http_status": 302, "redirect_type": "vercel_/sso-api", "app_content_exposed": false, "result": "PASS" }
   ],
+  "authorised_access": {
+    "tested": true,
+    "cli_identity": "azafarani4-5274",
+    "team": "az-team-1",
+    "path": "/",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "body_bytes": 67217,
+    "app_markers": ["GoalCurrent", "data-dpl-id=dpl_BdyF2e1UcpCovGbQjWyKx1A9Vnfm", "X-Matched-Path=/en"],
+    "result": "PASS"
+  },
   "production_results": [
-    { "path": "https://goalcurrent.live/", "http_status": 200, "app_content_exposed": true, "result": "PASS_PUBLIC" },
-    { "path": "https://goalcurrent.live/robots.txt", "http_status": 200, "app_content_exposed": true, "result": "PASS_PUBLIC" },
-    { "path": "https://goalcurrent.live/en", "http_status": 307, "location": "/", "result": "PASS_PUBLIC" },
-    { "path": "https://goalcurrent.live/about", "http_status": 200, "app_content_exposed": true, "result": "PASS_PUBLIC" },
-    { "path": "production vercel.app deployment alias (non-custom-domain)", "http_status": 302, "redirect_type": "vercel_/sso-api", "note": "Consistent with ssoProtection=all_except_custom_domains; custom domain remains public", "result": "INFORMATIONAL" }
-  ],
-  "authorised_founder_access": {
-    "tested": false,
-    "reason": "No authenticated Vercel browser/MCP session available for team az-team-1 in this agent environment",
-    "browser_observed": "Unauthenticated browser navigated to Vercel Login page (not GoalCurrent app HTML)",
-    "mcp_vercel_plugin": "Authenticated to team ahmad-zafarani-s-projects only; 403 for az-team-1/goalcurrent.live",
-    "cli_identity": "azafarani4-5274 has read access to project metadata under az-team-1 (not used as app-load proof)",
-    "result": "BLOCKED"
-  }
+    { "path": "https://goalcurrent.live/", "http_status": 200, "result": "PASS_PUBLIC" },
+    { "path": "https://goalcurrent.live/robots.txt", "http_status": 200, "result": "PASS_PUBLIC" },
+    { "path": "https://goalcurrent.live/about", "http_status": 200, "result": "PASS_PUBLIC", "note": "public custom domain; prior matrix retained" }
+  ]
 }

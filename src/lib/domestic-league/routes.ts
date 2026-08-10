@@ -8,6 +8,7 @@ import type {
   DomesticLeagueFixturesResponse,
   DomesticLeagueStandingsResponse,
 } from "@/lib/domestic-league/types";
+import { captureRouteError } from "@/lib/log";
 
 function failureHeaders(servingStale: boolean): Record<string, string> {
   const headers: Record<string, string> = { "Cache-Control": "no-store" };
@@ -15,6 +16,14 @@ function failureHeaders(servingStale: boolean): Record<string, string> {
     headers[GC_STALE_RESPONSE_HEADER] = "1";
   }
   return headers;
+}
+
+/** Align domestic error tags with PL/UCL `api/...` route labels when possible. */
+function routeTagFromCacheKey(cacheKey: string): string {
+  if (cacheKey.startsWith("api/")) {
+    return cacheKey;
+  }
+  return `api/${cacheKey}`;
 }
 
 export function respondDomesticFixtures<T extends DomesticLeagueFixturesResponse>(
@@ -28,6 +37,9 @@ export function respondDomesticFixtures<T extends DomesticLeagueFixturesResponse
       headers: { "Cache-Control": cacheControl(body) },
     });
   }
+
+  // Match PL/UCL: surface provider/route failures to Sentry before stale fallback.
+  captureRouteError(routeTagFromCacheKey(cacheKey), body.error);
 
   const staleBody = getStaleApiCache<T>(cacheKey);
   if (staleBody) {
@@ -57,6 +69,8 @@ export function respondDomesticStandings<
       headers: { "Cache-Control": cacheControl(body) },
     });
   }
+
+  captureRouteError(routeTagFromCacheKey(cacheKey), body.error);
 
   const staleBody = getStaleApiCache<T>(cacheKey);
   if (staleBody) {

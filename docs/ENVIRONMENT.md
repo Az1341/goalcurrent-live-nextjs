@@ -18,6 +18,7 @@ Set on Vercel project **`goalcurrent.live`** (Production + Preview):
 |----------|-------|-------------|
 | `API_FOOTBALL_KEY` | Server only | api-sports.io key for live scores and match detail |
 | `YOUTUBE_API_KEY` | Server only | YouTube Data API v3 for video ingestion |
+| `CRON_SECRET` | Server only | Bearer token for `/api/cron/refresh-content` |
 
 ### Video feeds (`YOUTUBE_API_KEY`)
 
@@ -42,8 +43,6 @@ Invoke-RestMethod "https://goalcurrent.live/api/cron/refresh-content" `
 ```
 
 If you mirror the site on **Netlify**, set the same `YOUTUBE_API_KEY` in **Site configuration → Environment variables** (server-side, not `NEXT_PUBLIC_`).
-
-| `CRON_SECRET` | Server only | Bearer token for `/api/cron/refresh-content` |
 
 ## Optional variables
 

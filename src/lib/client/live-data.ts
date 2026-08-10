@@ -18,19 +18,24 @@ export const LIVE_API_PATHS = {
   unlFixtures: "/api/unl/fixtures",
   unlStandings: "/api/unl/standings",
   plTopScorers: "/api/pl/top-scorers",
+  communityShieldFixture: "/api/community-shield/fixture",
   wc26Match: (fixtureId: string) =>
     `/api/wc26/match/${encodeURIComponent(fixtureId)}`,
 } as const;
 
-type UseLiveApiOptions = {
+type UseLiveApiOptions<T = unknown> = {
   /** Poll interval in ms; omit for hub default (75s). Pass 30_000 for live match pages. */
   refreshInterval?: number;
-  /** Use LIVE_MATCH_FETCH_SWR_OPTIONS Ã¢â‚¬â€ no stale data flash on live/home match sections. */
+  /** Use LIVE_MATCH_FETCH_SWR_OPTIONS — no stale data flash on live/home match sections. */
   fresh?: boolean;
+  /** Server-seeded or parent-provided initial payload for SWR. */
+  fallbackData?: T;
 };
 
-/** Build SWR options for useLiveApi Ã¢â‚¬â€ pure helper for hook-stable single useSWR call. */
-export function buildUseLiveApiSwrOptions(options?: UseLiveApiOptions) {
+/** Build SWR options for useLiveApi — pure helper for hook-stable single useSWR call. */
+export function buildUseLiveApiSwrOptions<T = unknown>(
+  options?: UseLiveApiOptions<T>,
+) {
   const fresh = Boolean(options?.fresh);
   const pollMs =
     options?.refreshInterval !== undefined
@@ -43,7 +48,7 @@ export function buildUseLiveApiSwrOptions(options?: UseLiveApiOptions) {
     return {
       revalidateOnMount: true as const,
       revalidateOnFocus: false as const,
-      fallbackData: undefined,
+      fallbackData: options?.fallbackData,
       keepPreviousData: true as const,
       refreshInterval: () => visibilityAwareRefreshInterval(pollMs),
       dedupingInterval: pollMs,
@@ -56,14 +61,15 @@ export function buildUseLiveApiSwrOptions(options?: UseLiveApiOptions) {
     dedupingInterval: pollMs > 0 ? pollMs : LIVE_POLL_HUB_MS,
     revalidateOnFocus: false as const,
     revalidateOnReconnect: true as const,
+    fallbackData: options?.fallbackData,
   };
 }
 
 export function useLiveApi<T = unknown>(
   path: string | null,
-  options?: UseLiveApiOptions,
+  options?: UseLiveApiOptions<T>,
 ) {
-  // Single unconditional useSWR call Ã¢â‚¬â€ options vary; Hook order does not.
+  // Single unconditional useSWR call — options vary; Hook order does not.
   return useSWR<T>(path, fetcher, buildUseLiveApiSwrOptions(options));
 }
 

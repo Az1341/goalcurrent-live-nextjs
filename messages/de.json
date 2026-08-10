@@ -451,5 +451,19 @@
     "neutralPageTitle": "Live and upcoming",
     "neutralPageIntro": "Next announced fixtures across Premier League, Champions League, FA Cup and Nations League.",
     "archiveHubLink": "World Cup 2026 Archive"
+  },
+  "communityShield": {
+    "eyebrow": "FA Community Shield 2026",
+    "title": "Community Shield",
+    "subtitle": "Manchester City vs Arsenal im Principality Stadium, Cardiff.",
+    "metaTitle": "FA Community Shield 2026",
+    "metaDescription": "FA Community Shield 2026 — Manchester City vs Arsenal. Anstoss TBC. Auf {site}.",
+    "matchAria": "Community-Shield-Spiel",
+    "venueTba": "Stadion TBC",
+    "matchDate": "Sonntag, 16. August 2026",
+    "vs": "vs",
+    "scoreAria": "Spielergebnis",
+    "kickoffTbc": "Anstoss TBC",
+    "unavailable": "Spieldetails sind noch nicht verfugbar."
   }
 }

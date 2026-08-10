@@ -214,8 +214,21 @@ export async function proxy(request: NextRequest) {
     LOCALE_PUBLIC_ASSET.exec(pathname) ?? LOCALE_PUBLIC_FILE.exec(pathname);
   if (localePublic) {
     const url = request.nextUrl.clone();
-    url.pathname = pathname.replace(/^\/(en|fa|ar|fr|de|nl|es|pt|it)/, "") || "/";
+    url.pathname = pathname.replace(/^\/(en|es|it|de|fr|nl)/, "") || "/";
     return NextResponse.rewrite(url);
+  }
+
+  // Pastel design preview must not be reachable on production hosts
+  const pastelPath =
+    pathname === "/preview-pastel" ||
+    /^\/(en|es|it|de|fr|nl)\/preview-pastel\/?$/.test(pathname);
+  if (pastelPath && process.env.VERCEL_ENV === "production") {
+    return applySecurityHeaders(
+      new NextResponse("Not Found", {
+        status: 404,
+        headers: { "Content-Type": "text/plain; charset=utf-8" },
+      }),
+    );
   }
 
   // Root /public assets must bypass i18n (otherwise /logo.svg → /en/logo.svg → 404 HTML)

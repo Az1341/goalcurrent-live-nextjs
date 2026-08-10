@@ -194,3 +194,19 @@ test("RSR-003: this suite only imports the shared auth utility module", async ()
   assert.doesNotMatch(raw, /api\/unl\//);
   assert.match(raw, /src\/lib\/server\/cache\.ts/);
 });
+
+/** GC-HARDEN-BATCHA — smoke: debug routes stay closed without DEBUG_SECRET. */
+test("BATCHA smoke: missing DEBUG_SECRET never authorizes either probe header", async () => {
+  const { authorizeDebugAccess } = await import(cacheMod);
+  for (const nodeEnv of ["development", "production", "test"]) {
+    assert.equal(
+      authorizeDebugAccess({
+        debugSecret: undefined,
+        nodeEnv,
+        authorizationHeader: "Bearer anything",
+        debugSecretHeader: "anything",
+      }),
+      false,
+    );
+  }
+});

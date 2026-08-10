@@ -126,7 +126,7 @@ const nextConfig: NextConfig = {
       },
       {
         source:
-          "/:locale(ar|de|en|es|fa|fr|it|nl|pt)/:path(live|news|articles|news/world-cup)",
+          "/:locale(de|en|es|fr|it|nl)/:path(live|news|articles|news/world-cup)",
         headers: [
           {
             key: "Cache-Control",
@@ -143,7 +143,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/:locale(ar|de|en|es|fa|fr|it|nl|pt)",
+        source: "/:locale(de|en|es|fr|it|nl)",
         headers: [
           {
             key: "Cache-Control",
@@ -210,6 +210,10 @@ const nextConfig: NextConfig = {
       {
         source: "/:path*",
         headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           {

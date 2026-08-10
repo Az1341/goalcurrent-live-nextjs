@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import PastelMatchCenter from "@/components/pastel/PastelMatchCenter";
+import { isPastelPreviewAllowed } from "@/lib/pastel/preview-gate";
 
 export const metadata: Metadata = {
   title: "Pastel Pulse Match Center Preview",
@@ -16,5 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default function PreviewPastelPage() {
+  if (!isPastelPreviewAllowed()) {
+    notFound();
+  }
+
   return <PastelMatchCenter />;
 }

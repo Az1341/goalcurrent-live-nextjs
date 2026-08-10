@@ -1,0 +1,28 @@
+{
+  "source": "FA Community Shield 2026 — manual SSOT (kick-off TBC per public sources as of 2026-08-09)",
+  "sourceUrl": "https://www.arsenal.com/",
+  "competition": "FA Community Shield",
+  "season": 2026,
+  "count": 1,
+  "fixtures": [
+    {
+      "fixtureId": 880160001,
+      "kickoffUtc": null,
+      "matchweek": null,
+      "round": "Final",
+      "venue": "Principality Stadium, Cardiff",
+      "homeTeamId": 50,
+      "homeTeamName": "Manchester City",
+      "homeTeamLogo": "https://media.api-sports.io/football/teams/50.png",
+      "awayTeamId": 42,
+      "awayTeamName": "Arsenal",
+      "awayTeamLogo": "https://media.api-sports.io/football/teams/42.png",
+      "status": "UPCOMING",
+      "statusShort": "TBC",
+      "elapsed": null,
+      "homeScore": null,
+      "awayScore": null,
+      "broadcaster": null
+    }
+  ]
+}

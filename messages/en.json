@@ -451,5 +451,19 @@
     "notificationsBlocked": "Notifications blocked in browser settings",
     "signInError": "Sign-in failed. Try again.",
     "loading": "Loading…"
+  },
+  "communityShield": {
+    "eyebrow": "FA Community Shield 2026",
+    "title": "Community Shield",
+    "subtitle": "Manchester City vs Arsenal at Principality Stadium, Cardiff.",
+    "metaTitle": "FA Community Shield 2026",
+    "metaDescription": "FA Community Shield 2026 — Manchester City vs Arsenal. Kick-off TBC. Fixtures and updates on {site}.",
+    "matchAria": "Community Shield match",
+    "venueTba": "Venue TBC",
+    "matchDate": "Sunday 16 August 2026",
+    "vs": "vs",
+    "scoreAria": "Match score",
+    "kickoffTbc": "Kick-off TBC",
+    "unavailable": "Fixture details are not available yet."
   }
 }

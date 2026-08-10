@@ -1,0 +1,92 @@
+.root {
+  max-width: var(--gc-content-max, 1100px);
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gc-brand-from, #c8102e);
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--gc-text-primary);
+}
+
+.subtitle {
+  margin: 0 0 24px;
+  color: var(--gc-text-secondary, #555);
+  font-size: 0.95rem;
+}
+
+.card {
+  border: 1px solid var(--gc-border, #e5e5e5);
+  border-radius: 12px;
+  background: var(--gc-card, #fff);
+  padding: 20px 16px;
+  box-shadow: var(--gc-shadow, 0 1px 2px rgba(0, 0, 0, 0.04));
+}
+
+.meta {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  color: var(--gc-text-secondary, #555);
+}
+
+.teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.team {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  min-width: 0;
+}
+
+.teamName {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--gc-text-primary);
+  word-break: break-word;
+}
+
+.vs {
+  flex: 0 0 auto;
+  font-weight: 800;
+  color: var(--gc-brand-from, #c8102e);
+}
+
+.kickoff {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gc-text-primary);
+}
+
+.score {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--gc-text-secondary, #555);
+}

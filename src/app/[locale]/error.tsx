@@ -1,5 +1,6 @@
 "use client";
 
+import * as Sentry from "@sentry/nextjs";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useEffect } from "react";
@@ -14,7 +15,7 @@ export default function Error({ error, reset }: ErrorPageProps) {
   const t = useTranslations("errors.generic");
 
   useEffect(() => {
-    console.error(error);
+    Sentry.captureException(error);
   }, [error]);
 
   return (

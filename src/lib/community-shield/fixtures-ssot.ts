@@ -1,6 +1,6 @@
 /**
  * FA Community Shield 2026 fixture SSOT.
- * Manual static JSON — kick-off TBC; no API-Football dependency for this trial.
+ * Static JSON seeded from the confirmed API-Football fixture record.
  */
 
 import fixturesPayload from "@/data/community-shield/fixtures-2026.json";
@@ -8,8 +8,7 @@ import type { CommunityShieldFixtureRow } from "@/lib/community-shield/types";
 
 export {
   isCommunityShieldFixtureId,
-  COMMUNITY_SHIELD_FIXTURE_ID_MAX,
-  COMMUNITY_SHIELD_FIXTURE_ID_MIN,
+  COMMUNITY_SHIELD_FIXTURE_ID,
 } from "@/lib/community-shield/constants";
 
 export function getCommunityShieldFixtures(): CommunityShieldFixtureRow[] {

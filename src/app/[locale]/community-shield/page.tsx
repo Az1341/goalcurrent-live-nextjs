@@ -30,11 +30,10 @@ export default async function CommunityShieldPage({ params }: PageProps) {
   const initialData = ssotCommunityShieldFixturesResponse();
   const fixture = initialData.fixtures[0] ?? null;
 
-  // Date-only startDate for TBC kick-off — do not invent a kick-off time.
   const jsonLd = fixture
     ? sportsEventSchema({
         name: `${fixture.homeTeamName} vs ${fixture.awayTeamName}`,
-        startDate: "2026-08-16",
+        startDate: fixture.kickoffUtc ?? "2026-08-16",
         path: COMMUNITY_SHIELD_PATH,
         homeTeamName: fixture.homeTeamName,
         awayTeamName: fixture.awayTeamName,
@@ -43,7 +42,7 @@ export default async function CommunityShieldPage({ params }: PageProps) {
         country: "GB",
         competition: "FA Community Shield",
         locale,
-        description: `FA Community Shield 2026 — ${fixture.homeTeamName} vs ${fixture.awayTeamName} at Principality Stadium, Cardiff. Kick-off TBC.`,
+        description: `FA Community Shield 2026 — ${fixture.homeTeamName} vs ${fixture.awayTeamName} at Principality Stadium, Cardiff. Kick-off 15:00 BST (14:00 UTC).`,
       })
     : null;
 

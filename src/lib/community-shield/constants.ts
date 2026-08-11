@@ -4,13 +4,13 @@ export const COMMUNITY_SHIELD_COMPETITION = "FA Community Shield";
 export const COMMUNITY_SHIELD_SEASON = 2026;
 export const COMMUNITY_SHIELD_PATH = "/community-shield";
 
-/** Outside PL SSOT range (926270001–926270380) and WC26 string fixture IDs. */
-export const COMMUNITY_SHIELD_FIXTURE_ID_MIN = 880_160_001;
-export const COMMUNITY_SHIELD_FIXTURE_ID_MAX = 880_160_099;
+/**
+ * Real API-Football fixture id for Arsenal vs Manchester City,
+ * FA Community Shield, Principality Stadium, 2026-08-16 14:00 UTC.
+ * Confirmed via API-Sports-backed listing (league 528 / fixture 1582365).
+ */
+export const COMMUNITY_SHIELD_FIXTURE_ID = 1_582_365;
 
 export function isCommunityShieldFixtureId(fixtureId: number): boolean {
-  return (
-    fixtureId >= COMMUNITY_SHIELD_FIXTURE_ID_MIN &&
-    fixtureId <= COMMUNITY_SHIELD_FIXTURE_ID_MAX
-  );
+  return fixtureId === COMMUNITY_SHIELD_FIXTURE_ID;
 }

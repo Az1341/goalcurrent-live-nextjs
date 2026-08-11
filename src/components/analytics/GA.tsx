@@ -11,6 +11,7 @@ import {
   shouldEnableAnalytics,
 } from "@/lib/analytics";
 import { attachServiceWorkerControllerReload } from "@/lib/pwa/sw-controller-reload";
+import { attachServiceWorkerForegroundUpdate } from "@/lib/pwa/sw-foreground-update";
 import AnalyticsRouteListener from "@/components/analytics/AnalyticsRouteListener";
 
 const CONSENT_EVENT = "gc:cookie-consent-change";
@@ -61,6 +62,12 @@ function AnalyticsScripts() {
       });
       navigator.serviceWorker
         .register("/sw.js", { scope: "/" })
+        .then((registration) => {
+          attachServiceWorkerForegroundUpdate(registration, {
+            document,
+            window,
+          });
+        })
         .catch(() => {});
     }
   }, [enabled]);

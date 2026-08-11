@@ -40,7 +40,7 @@ test("DESKTOP_COMPETITIONS_NAV includes domestic leagues with honest hub anchors
 
   assert.deepEqual(
     DESKTOP_COMPETITIONS_NAV.map((group) => group.id),
-    ["pl", "ucl", "laliga", "seriea", "bundesliga", "facup", "unl"],
+    ["pl", "ucl", "laliga", "seriea", "bundesliga", "facup", "comshield", "unl"],
   );
   assert.deepEqual([...MORE_SHEET_COMPETITION_IDS], [
     "pl",
@@ -51,6 +51,17 @@ test("DESKTOP_COMPETITIONS_NAV includes domestic leagues with honest hub anchors
     "facup",
     "unl",
   ]);
+
+  const comshield = DESKTOP_COMPETITIONS_NAV.find(
+    (group) => group.id === "comshield",
+  );
+  assert.ok(comshield);
+  assert.equal(comshield.href, "/community-shield");
+  assert.deepEqual(
+    comshield.links.map((link) => link.href),
+    ["/community-shield"],
+  );
+  assert.equal(isDesktopCompetitionsActive("/community-shield"), true);
 
   const domestic = [
     { id: "laliga", hub: "/la-liga" },

@@ -139,3 +139,14 @@ test("DESKTOP_PRIMARY_NAV uses locked GC-NAV-20260806-170000 order", async () =>
     assert.notEqual(item.href, "/premier-league");
   }
 });
+test("MOBILE_BOTTOM_TABS unchanged - CS held until 5-tab redesign merges", async () => {
+  const { MOBILE_BOTTOM_TABS } = await import(navMod);
+  assert.deepEqual(
+    MOBILE_BOTTOM_TABS.map((tab) => tab.id),
+    ["home", "live", "favourites", "pl", "articles"],
+  );
+  assert.equal(
+    MOBILE_BOTTOM_TABS.some((tab) => tab.href.includes("community-shield")),
+    false,
+  );
+});

@@ -52,7 +52,7 @@ export type MoreSheetCompetitionId =
   (typeof MORE_SHEET_COMPETITION_IDS)[number];
 
 export function isMoreSheetCompetitionId(
-  id: MoreSheetSubmenuId,
+  id: string,
 ): id is MoreSheetCompetitionId {
   return (MORE_SHEET_COMPETITION_IDS as readonly string[]).includes(id);
 }
@@ -282,10 +282,12 @@ export const DESKTOP_PL_DROPDOWN: NavLinkItem[] = [
 ];
 
 export type DesktopCompetitionNavGroup = {
-  id: "pl" | "ucl" | "laliga" | "seriea" | "bundesliga" | "facup" | "unl";
+  id: "pl" | "ucl" | "laliga" | "seriea" | "bundesliga" | "facup" | "comshield" | "unl";
   labelKey: string;
   href: string;
   links: readonly NavLinkItem[];
+  /** When true, shown in desktop Competitions only — excluded from More-sheet. */
+  desktopOnly?: boolean;
 };
 
 /** Desktop competitions menu — each competition has its own submenu */
@@ -335,6 +337,13 @@ export const DESKTOP_COMPETITIONS_NAV: readonly DesktopCompetitionNavGroup[] = [
       { href: "/fa-cup#facup-results", labelKey: "results" },
       { href: "/fa-cup#facup-rounds", labelKey: "rounds" },
     ],
+  },
+  {
+    id: "comshield",
+    labelKey: "communityShield",
+    href: "/community-shield",
+    links: [{ href: "/community-shield", labelKey: "overview" }],
+    desktopOnly: true,
   },
   {
     id: "unl",
@@ -509,6 +518,8 @@ export function isDesktopCompetitionsActive(pathname: string): boolean {
     pathname.startsWith("/bundesliga/") ||
     pathname === "/fa-cup" ||
     pathname.startsWith("/fa-cup/") ||
+    pathname === "/community-shield" ||
+    pathname.startsWith("/community-shield/") ||
     pathname === "/nations-league" ||
     pathname.startsWith("/nations-league/")
   );

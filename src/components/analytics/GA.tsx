@@ -10,6 +10,7 @@ import {
   GA_MEASUREMENT_ID,
   shouldEnableAnalytics,
 } from "@/lib/analytics";
+import { attachServiceWorkerControllerReload } from "@/lib/pwa/sw-controller-reload";
 import AnalyticsRouteListener from "@/components/analytics/AnalyticsRouteListener";
 
 const CONSENT_EVENT = "gc:cookie-consent-change";
@@ -53,6 +54,11 @@ function AnalyticsScripts() {
       }
 
       window.__gc_sw_registered = true;
+      // Reload once when a new SW takes control (skipWaiting + clients.claim).
+      // Listener stays for the page lifetime; __gc_sw_registered prevents doubles.
+      attachServiceWorkerControllerReload(navigator.serviceWorker, () => {
+        window.location.reload();
+      });
       navigator.serviceWorker
         .register("/sw.js", { scope: "/" })
         .catch(() => {});

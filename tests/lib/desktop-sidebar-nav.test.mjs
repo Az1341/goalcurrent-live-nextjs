@@ -62,6 +62,7 @@ test("DESKTOP_COMPETITIONS_NAV includes domestic leagues with honest hub anchors
     ["/community-shield"],
   );
   assert.equal(isDesktopCompetitionsActive("/community-shield"), true);
+  assert.equal(comshield.desktopOnly, true);
 
   const domestic = [
     { id: "laliga", hub: "/la-liga" },
@@ -140,7 +141,7 @@ test("DESKTOP_PRIMARY_NAV uses locked GC-NAV-20260806-170000 order", async () =>
   }
 });
 test("MOBILE_BOTTOM_TABS unchanged - CS held until 5-tab redesign merges", async () => {
-  const { MOBILE_BOTTOM_TABS } = await import(navMod);
+  const { MOBILE_BOTTOM_TABS, DESKTOP_COMPETITIONS_NAV } = await import(navMod);
   assert.deepEqual(
     MOBILE_BOTTOM_TABS.map((tab) => tab.id),
     ["home", "live", "favourites", "pl", "articles"],
@@ -149,4 +150,26 @@ test("MOBILE_BOTTOM_TABS unchanged - CS held until 5-tab redesign merges", async
     MOBILE_BOTTOM_TABS.some((tab) => tab.href.includes("community-shield")),
     false,
   );
+
+  // More-sheet Competitions panel shares DESKTOP_COMPETITIONS_NAV but must
+  // exclude desktopOnly entries (same filter as MoreBottomSheet.tsx).
+  const moreSheetCompetitions = DESKTOP_COMPETITIONS_NAV.filter(
+    (group) => !group.desktopOnly,
+  );
+  assert.deepEqual(
+    moreSheetCompetitions.map((group) => group.id),
+    ["pl", "ucl", "laliga", "seriea", "bundesliga", "facup", "unl"],
+  );
+  assert.equal(moreSheetCompetitions.length, 7);
+  assert.equal(
+    moreSheetCompetitions.some((group) => group.id === "comshield"),
+    false,
+  );
+
+  const comshield = DESKTOP_COMPETITIONS_NAV.find(
+    (group) => group.id === "comshield",
+  );
+  assert.ok(comshield);
+  assert.equal(comshield.desktopOnly, true);
+  assert.equal(DESKTOP_COMPETITIONS_NAV.length, 8);
 });

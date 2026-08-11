@@ -300,13 +300,17 @@ export default function MoreBottomSheet({
               </ul>
             ) : activeSubmenu === "competitions" ? (
               <nav className={styles.sheetList} aria-label={t("competitions")}>
-                {DESKTOP_COMPETITIONS_NAV.map((group) => (
+                {DESKTOP_COMPETITIONS_NAV.filter((g) => !g.desktopOnly).map((group) => (
                   <button
                     key={group.id}
                     type="button"
                     className={styles.sheetRow}
                     aria-haspopup="menu"
-                    onClick={() => setSubmenu(group.id)}
+                    onClick={() => {
+                      if (isMoreSheetCompetitionId(group.id)) {
+                        setSubmenu(group.id);
+                      }
+                    }}
                   >
                     <span>{t(group.labelKey)}</span>
                     <span className={styles.chevron} aria-hidden="true">

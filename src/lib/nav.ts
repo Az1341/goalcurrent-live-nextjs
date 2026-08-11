@@ -52,7 +52,7 @@ export type MoreSheetCompetitionId =
   (typeof MORE_SHEET_COMPETITION_IDS)[number];
 
 export function isMoreSheetCompetitionId(
-  id: MoreSheetSubmenuId,
+  id: string,
 ): id is MoreSheetCompetitionId {
   return (MORE_SHEET_COMPETITION_IDS as readonly string[]).includes(id);
 }
@@ -286,6 +286,8 @@ export type DesktopCompetitionNavGroup = {
   labelKey: string;
   href: string;
   links: readonly NavLinkItem[];
+  /** When true, shown in desktop Competitions only — excluded from More-sheet. */
+  desktopOnly?: boolean;
 };
 
 /** Desktop competitions menu — each competition has its own submenu */
@@ -341,6 +343,7 @@ export const DESKTOP_COMPETITIONS_NAV: readonly DesktopCompetitionNavGroup[] = [
     labelKey: "communityShield",
     href: "/community-shield",
     links: [{ href: "/community-shield", labelKey: "overview" }],
+    desktopOnly: true,
   },
   {
     id: "unl",

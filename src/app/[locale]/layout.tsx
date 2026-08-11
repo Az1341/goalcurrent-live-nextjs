@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { GA } from "@/components/analytics/GA";
+import { ServiceWorkerBootstrap } from "@/components/pwa/ServiceWorkerBootstrap";
 import { Clarity } from "@/components/analytics/Clarity";
 import Layout from "@/components/layout/Layout";
 import { FirebaseRoot } from "@/components/firebase/FirebaseRoot";
@@ -137,6 +138,7 @@ export default async function LocaleLayout({
             <Layout>{children}</Layout>
             <FinalWinnerCelebration />
             <FinalLineupVerifier />
+            <ServiceWorkerBootstrap />
             <GA />
             {isFirebaseConfigured() ? <FirebaseRoot /> : <OneSignalInit />}
           </NextIntlClientProvider>

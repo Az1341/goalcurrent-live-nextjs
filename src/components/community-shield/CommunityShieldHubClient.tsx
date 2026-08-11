@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { PlTeamBadge } from "@/components/pl/PlShared";
 import { useCommunityShieldFixture } from "@/lib/client/useCommunityShieldFixture";
 import type { CommunityShieldFixturesApiResponse } from "@/lib/community-shield/types";
@@ -12,6 +12,7 @@ type Props = {
 
 export default function CommunityShieldHubClient({ initialData }: Props) {
   const t = useTranslations("communityShield");
+  const locale = useLocale();
   const { data } = useCommunityShieldFixture(initialData);
   const fixture = data?.fixtures?.[0] ?? null;
 
@@ -58,7 +59,15 @@ export default function CommunityShieldHubClient({ initialData }: Props) {
           ) : null}
           <p className={styles.kickoff}>
             {fixture.kickoffUtc
-              ? new Date(fixture.kickoffUtc).toLocaleString()
+              ? new Date(fixture.kickoffUtc).toLocaleString(locale, {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  timeZoneName: "short",
+                })
               : t("kickoffTbc")}
           </p>
         </article>

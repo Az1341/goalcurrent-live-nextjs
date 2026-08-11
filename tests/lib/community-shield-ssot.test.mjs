@@ -10,37 +10,60 @@ const {
   getCommunityShieldFixture,
   getCommunityShieldFixtures,
   isCommunityShieldFixtureId,
+  COMMUNITY_SHIELD_FIXTURE_ID,
 } = await import(
   pathToFileURL(join(root, "src/lib/community-shield/fixtures-ssot.ts")).href
 );
 
-const COMMUNITY_SHIELD_FIXTURE_ID_MIN = 880_160_001;
 const PL_RANGE = [926_270_001, 926_270_380];
+const KICKOFF_UTC = "2026-08-16T14:00:00.000Z";
 
-test("SSOT reader returns the single Community Shield fixture", () => {
+test("SSOT reader returns the confirmed Community Shield fixture", () => {
   const fixtures = getCommunityShieldFixtures();
   assert.equal(fixtures.length, 1);
   const fixture = getCommunityShieldFixture();
   assert.ok(fixture);
-  assert.equal(fixture.homeTeamName, "Manchester City");
-  assert.equal(fixture.homeTeamId, 50);
-  assert.equal(fixture.awayTeamName, "Arsenal");
-  assert.equal(fixture.awayTeamId, 42);
+  assert.equal(fixture.homeTeamName, "Arsenal");
+  assert.equal(fixture.homeTeamId, 42);
+  assert.equal(fixture.awayTeamName, "Manchester City");
+  assert.equal(fixture.awayTeamId, 50);
   assert.equal(fixture.venue, "Principality Stadium, Cardiff");
   assert.equal(fixture.status, "UPCOMING");
-  assert.equal(fixture.fixtureId, COMMUNITY_SHIELD_FIXTURE_ID_MIN);
+  assert.equal(fixture.statusShort, "NS");
+  assert.equal(fixture.fixtureId, COMMUNITY_SHIELD_FIXTURE_ID);
+  assert.equal(fixture.fixtureId, 1_582_365);
   assert.equal(isCommunityShieldFixtureId(fixture.fixtureId), true);
+  assert.equal(isCommunityShieldFixtureId(880_160_001), false);
   assert.equal(
     fixture.fixtureId >= PL_RANGE[0] && fixture.fixtureId <= PL_RANGE[1],
     false,
   );
 });
 
-test("TBC kickoff is null and does not invent a time", () => {
+test("kickoffUtc is the confirmed 14:00 UTC / 15:00 BST instant", () => {
   const fixture = getCommunityShieldFixture();
-  assert.equal(fixture.kickoffUtc, null);
+  assert.equal(fixture.kickoffUtc, KICKOFF_UTC);
   assert.equal(fixture.homeScore, null);
   assert.equal(fixture.awayScore, null);
+  assert.notEqual(fixture.kickoffUtc, null);
+});
+
+test("device-timezone override: London shows 15:00, New York 10:00, Tokyo 23:00", () => {
+  const instant = new Date(KICKOFF_UTC);
+  const hourIn = (timeZone) =>
+    Number(
+      new Intl.DateTimeFormat("en-GB", {
+        timeZone,
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+        .formatToParts(instant)
+        .find((p) => p.type === "hour")?.value,
+    );
+  assert.equal(hourIn("Europe/London"), 15);
+  assert.equal(hourIn("America/New_York"), 10);
+  assert.equal(hourIn("Asia/Tokyo"), 23);
 });
 
 test("hub page SSR-seeds via ssotCommunityShieldFixturesResponse and SWR fallbackData", () => {
@@ -62,6 +85,7 @@ test("hub page SSR-seeds via ssotCommunityShieldFixturesResponse and SWR fallbac
   assert.match(client, /useCommunityShieldFixture\(\s*initialData\s*\)/);
   assert.match(client, /useTranslations\(\s*["']communityShield["']\s*\)/);
   assert.match(client, /kickoffTbc/);
+  assert.match(client, /toLocaleString\(locale/);
   assert.match(hook, /fallbackData:\s*initialData/);
 });
 
@@ -73,6 +97,11 @@ test("translations exist in all 6 locales and are not English-only hardcoded in 
     assert.ok(messages.communityShield, `missing communityShield in ${locale}`);
     assert.ok(messages.communityShield.kickoffTbc);
     assert.ok(messages.communityShield.title);
+    assert.doesNotMatch(
+      messages.communityShield.metaDescription,
+      /\bTBC\b/i,
+      `${locale} metaDescription still says TBC`,
+    );
   }
   const client = readFileSync(
     join(root, "src/components/community-shield/CommunityShieldHubClient.tsx"),

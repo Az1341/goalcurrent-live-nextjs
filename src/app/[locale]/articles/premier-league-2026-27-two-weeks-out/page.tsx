@@ -2,21 +2,24 @@ import type { Metadata } from "next";
 import ArticleBanner from "@/components/articles/ArticleBanner";
 import Link from "next/link";
 import ArticleAuthorLine, { ArticleCopyrightNotice } from "@/components/articles/ArticleAuthorLine";
-import { StaticArticleSeo, staticArticleMetadata } from "@/components/seo/StaticArticleSeo";
+import { StaticArticleSeo } from "@/components/seo/StaticArticleSeo";
 import {
   plSeasonCountdownDisplayDate,
   plSeasonCountdownHeadline,
 } from "@/lib/content/pl-season-countdown-article";
+import { buildStaticArticleMetadata } from "@/lib/seo/article-seo";
 import PremierLeagueTwoWeeksOutBody from "./PremierLeagueTwoWeeksOutBody";
 import styles from "../article.module.css";
 
 const SLUG = "premier-league-2026-27-two-weeks-out";
 const HERO_IMAGE = "/images/news/premier-league-2026-27-two-weeks-out/hero.svg";
 
-/** Refresh daily so countdown headline/date stay current without a redeploy. */
+/** Refresh hourly so countdown headline/date/metadata stay current. */
 export const revalidate = 3600;
 
-export const metadata: Metadata = staticArticleMetadata(SLUG);
+export async function generateMetadata(): Promise<Metadata> {
+  return buildStaticArticleMetadata(SLUG);
+}
 
 export default function ArticlePremierLeagueTwoWeeksOut() {
   const headline = plSeasonCountdownHeadline();

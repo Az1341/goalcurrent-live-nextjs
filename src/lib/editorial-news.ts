@@ -30,8 +30,11 @@ export function sortPartnerNewsFeed(articles: readonly NewsArticle[]): NewsArtic
  * (deduped). WC26 editorial + partner items are excluded — WC26 lives on
  * /worldcup2026 only. Does not affect mergeWc26NewsFeed / mergeEditorialFirst.
  */
-export function mergeHomepageNewsFeed(articles: readonly NewsArticle[]): NewsArticle[] {
-  const nonWc26Editorial = getArticleIndexNewsArticles().filter(
+export function mergeHomepageNewsFeed(
+  articles: readonly NewsArticle[],
+  nowMs: number = Date.now(),
+): NewsArticle[] {
+  const nonWc26Editorial = getArticleIndexNewsArticles(nowMs).filter(
     (item) => !isWorldCup2026EditorialLink(item.link),
   );
   const [latestEditorial] = nonWc26Editorial;

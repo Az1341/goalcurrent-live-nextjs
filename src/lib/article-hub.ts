@@ -77,14 +77,19 @@ function newsTagFromIndexCategory(category: string): NewsArticle["tag"] {
   return "FEATURE";
 }
 
-function articleIndexEntryToNewsArticle(entry: ArticleIndexEntry): NewsArticle {
+function articleIndexEntryToNewsArticle(
+  entry: ArticleIndexEntry,
+  nowMs: number = Date.now(),
+): NewsArticle {
   const isRollingCountdown = entry.slug === PL_SEASON_COUNTDOWN_ARTICLE_SLUG;
   const rollingDate = isRollingCountdown
-    ? rollingPlSeasonCountdownPublishIso()
+    ? rollingPlSeasonCountdownPublishIso(nowMs)
     : null;
 
   return {
-    title: isRollingCountdown ? plSeasonCountdownHeadline() : entry.title,
+    title: isRollingCountdown
+      ? plSeasonCountdownHeadline(nowMs)
+      : entry.title,
     link: entry.href ?? articleHref(entry.slug),
     excerpt: entry.excerpt,
     date: rollingDate ?? toIsoDate(entry.date),
@@ -155,9 +160,13 @@ export function isWorldCup2026EditorialLink(link: string, slug?: string): boolea
 }
 
 /** All GoalCurrent articles from ARTICLE_INDEX as news cards, newest first. */
-export function getArticleIndexNewsArticles(): NewsArticle[] {
+export function getArticleIndexNewsArticles(
+  nowMs: number = Date.now(),
+): NewsArticle[] {
   return sortNewsByDateDesc(
-    [...ARTICLE_INDEX].map((entry) => articleIndexEntryToNewsArticle(entry)),
+    [...ARTICLE_INDEX].map((entry) =>
+      articleIndexEntryToNewsArticle(entry, nowMs),
+    ),
   );
 }
 

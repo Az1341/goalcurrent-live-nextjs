@@ -40,13 +40,16 @@ export function isPlSeasonCountdownRolling(nowMs: number = Date.now()): boolean 
 
 /**
  * Daily publish stamp for news cards (London calendar day @ 09:00Z).
+ * Clamped to `nowMs` so morning requests never get a future dateTime.
  * Returns null after PL kickoff — callers keep the static ARTICLE_INDEX date.
  */
 export function rollingPlSeasonCountdownPublishIso(
   nowMs: number = Date.now(),
 ): string | null {
   if (!isPlSeasonCountdownRolling(nowMs)) return null;
-  return `${londonYmd(nowMs)}T09:00:00.000Z`;
+  const dayStampMs = Date.parse(`${londonYmd(nowMs)}T09:00:00.000Z`);
+  if (!Number.isFinite(dayStampMs)) return null;
+  return new Date(Math.min(dayStampMs, nowMs)).toISOString();
 }
 
 /** Dynamic headline so "Two Weeks" does not go stale on the homepage. */

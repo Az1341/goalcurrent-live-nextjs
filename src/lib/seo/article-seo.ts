@@ -6,6 +6,12 @@ import {
 } from "@/data/articles";
 import { getEditorialArticleByPath } from "@/data/editorial";
 import { ARTICLE_CARD_IMAGES } from "@/lib/article-hub";
+import {
+  PL_SEASON_COUNTDOWN_ARTICLE_SLUG,
+  PL_SEASON_COUNTDOWN_ORIGINAL_PUBLISH_ISO,
+  plSeasonCountdownHeadline,
+  rollingPlSeasonCountdownPublishIso,
+} from "@/lib/content/pl-season-countdown-article";
 import type { ArticleSchemaInput } from "@/lib/seo/schema";
 import type { BreadcrumbItem } from "@/lib/seo/breadcrumbs";
 import type { Metadata } from "next";
@@ -39,12 +45,20 @@ export function articleSeoFromSlug(slug: string): ArticleSchemaInput | null {
 
   const indexEntry = ARTICLE_INDEX.find((entry) => entry.slug === slug);
   if (indexEntry) {
+    const isRollingCountdown = slug === PL_SEASON_COUNTDOWN_ARTICLE_SLUG;
+    const rollingModified = isRollingCountdown
+      ? rollingPlSeasonCountdownPublishIso()
+      : null;
     return {
       path: articleHref(slug),
-      headline: indexEntry.title,
+      headline: isRollingCountdown
+        ? plSeasonCountdownHeadline()
+        : indexEntry.title,
       description: indexEntry.excerpt,
-      datePublished: indexEntry.date,
-      dateModified: indexEntry.date,
+      datePublished: isRollingCountdown
+        ? PL_SEASON_COUNTDOWN_ORIGINAL_PUBLISH_ISO
+        : indexEntry.date,
+      dateModified: rollingModified ?? indexEntry.date,
       author: indexEntry.author ?? EDITORIAL_AUTHOR,
       image: articleSchemaImage(slug),
     };

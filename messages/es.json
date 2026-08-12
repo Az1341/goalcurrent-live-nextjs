@@ -364,6 +364,15 @@
       "seasonStartsSoon": "La Premier League empieza pronto",
       "aria": "Cuenta atras {home} vs {away}: {days} dias, {hours} horas, {minutes} minutos",
       "ariaEmpty": "Cuenta atras de Premier League no disponible"
+    },
+    "communityShieldCountdown": {
+      "eyebrow": "Apertura de temporada",
+      "untilKickoff": "Hasta el inicio",
+      "days": "Días",
+      "hours": "Horas",
+      "minutes": "Min",
+      "viewMatch": "Ver Community Shield",
+      "aria": "Cuenta atrás para {home} vs {away}: {days} días, {hours} horas, {minutes} minutos"
     }
   },
   "favourites": {

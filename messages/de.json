@@ -364,6 +364,15 @@
       "seasonStartsSoon": "Die Premier-League-Saison beginnt bald",
       "aria": "Countdown {home} gegen {away}: {days} Tage, {hours} Stunden, {minutes} Minuten",
       "ariaEmpty": "Premier-League-Countdown nicht verfugbar"
+    },
+    "communityShieldCountdown": {
+      "eyebrow": "Saisonauftakt",
+      "untilKickoff": "Bis Anpfiff",
+      "days": "Tage",
+      "hours": "Std.",
+      "minutes": "Min.",
+      "viewMatch": "Community Shield ansehen",
+      "aria": "Countdown zu {home} vs {away}: {days} Tage, {hours} Stunden, {minutes} Minuten"
     }
   },
   "favourites": {

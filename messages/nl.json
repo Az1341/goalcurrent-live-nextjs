@@ -364,6 +364,15 @@
       "seasonStartsSoon": "Premier League-seizoen begint binnenkort",
       "aria": "Aftellen {home} vs {away}: {days} dagen, {hours} uur, {minutes} minuten",
       "ariaEmpty": "Premier League-aftelling niet beschikbaar"
+    },
+    "communityShieldCountdown": {
+      "eyebrow": "Seizoensopener",
+      "untilKickoff": "Tot aftrap",
+      "days": "Dagen",
+      "hours": "Uren",
+      "minutes": "Min",
+      "viewMatch": "Bekijk Community Shield",
+      "aria": "Aftelling naar {home} vs {away}: {days} dagen, {hours} uur, {minutes} minuten"
     }
   },
   "favourites": {

@@ -364,6 +364,15 @@
       "seasonStartsSoon": "La saison de Premier League commence bientot",
       "aria": "Compte a rebours {home} vs {away}: {days} jours, {hours} heures, {minutes} minutes",
       "ariaEmpty": "Compte a rebours Premier League indisponible"
+    },
+    "communityShieldCountdown": {
+      "eyebrow": "Ouverture de saison",
+      "untilKickoff": "Avant le coup d'envoi",
+      "days": "Jours",
+      "hours": "Heures",
+      "minutes": "Min",
+      "viewMatch": "Voir le Community Shield",
+      "aria": "Compte à rebours {home} vs {away} : {days} jours, {hours} heures, {minutes} minutes"
     }
   },
   "favourites": {

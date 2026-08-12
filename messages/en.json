@@ -364,6 +364,15 @@
       "seasonStartsSoon": "Premier League season starts soon",
       "aria": "Countdown to {home} vs {away}: {days} days, {hours} hours, {minutes} minutes",
       "ariaEmpty": "Premier League kickoff countdown unavailable"
+    },
+    "communityShieldCountdown": {
+      "eyebrow": "Season opener",
+      "untilKickoff": "Until kickoff",
+      "days": "Days",
+      "hours": "Hours",
+      "minutes": "Mins",
+      "viewMatch": "View Community Shield",
+      "aria": "Countdown to {home} vs {away}: {days} days, {hours} hours, {minutes} minutes"
     }
   },
   "favourites": {

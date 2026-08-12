@@ -1,6 +1,6 @@
 // GoalCurrent.live — Service Worker (PWA app shell)
 // Bump CACHE_VERSION when changing cache strategy so activate purges stale shells.
-const CACHE_VERSION = "9";
+const CACHE_VERSION = "10";
 const STATIC_CACHE = `goalcurrent-online-static-v${CACHE_VERSION}`;
 const SHELL_CACHE = `goalcurrent-online-shell-v${CACHE_VERSION}`;
 const API_CACHE = "goalcurrent-online-api-v1";

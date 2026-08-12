@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
+import type { Instrumentation } from "next";
 import type { LOCALES } from "@/i18n/locales";
 
 /** Supported locales for telemetry tracking (6 approved languages). */
@@ -50,39 +51,46 @@ function initializeLogging(runtime: "nodejs" | "edge") {
 
 /**
  * Enhanced error handler with locale-aware logging.
+ * Next.js passes a plain request descriptor ({ path, method, headers }), not a Fetch Request.
  */
-export const onRequestError = (error: Error, request: Request) => {
-  // Log error with request context
-  const url = new URL(request.url);
-  const locale = extractLocaleFromPath(url.pathname);
+export const onRequestError: Instrumentation.onRequestError = (
+  error,
+  request,
+  errorContext,
+) => {
+  const path = request.path;
+  const locale = extractLocaleFromPath(path);
+  const message = error instanceof Error ? error.message : String(error);
+  const stack = error instanceof Error ? error.stack : undefined;
 
   console.error("Request error", {
-    error: error.message,
-    stack: error.stack,
+    error: message,
+    stack,
     locale,
     method: request.method,
-    path: url.pathname,
-    url: url.href,
+    path,
   });
 
-  // Forward to Sentry for alerting
-  const requestInfo = {
-    method: request.method,
-    path: url.pathname,
-    url: request.url,
-    headers: Object.fromEntries(request.headers.entries()),
-  };
-  return Sentry.captureRequestError(error, requestInfo, {
-    routerKind: "app",
-    routePath: url.pathname,
-    routeType: "render",
-  });
+  // Forward to Sentry for alerting — same shape Sentry.captureRequestError expects.
+  Sentry.captureRequestError(
+    error,
+    {
+      path: request.path,
+      method: request.method,
+      headers: { ...request.headers },
+    },
+    {
+      routerKind: errorContext.routerKind,
+      routePath: errorContext.routePath || request.path,
+      routeType: errorContext.routeType,
+    },
+  );
 };
 
 /**
  * Extract locale from request path (e.g., /en/page, /es/page).
  */
-function extractLocaleFromPath(pathname: string): string | null {
+export function extractLocaleFromPath(pathname: string): string | null {
   const match = pathname.match(/^\/([a-z]{2})(?:\/|$)/);
   return match ? match[1] : null;
 }

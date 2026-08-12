@@ -72,7 +72,7 @@ export const onRequestError: Instrumentation.onRequestError = (
   });
 
   // Forward to Sentry for alerting — same shape Sentry.captureRequestError expects.
-  Sentry.captureRequestError(
+  return Sentry.captureRequestError(
     error,
     {
       path: request.path,

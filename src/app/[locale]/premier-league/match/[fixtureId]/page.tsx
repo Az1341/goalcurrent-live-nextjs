@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import MatchSeo from "@/components/seo/MatchSeo";
 import PlMatchClient from "@/components/pl/PlMatchClient";
-import { fetchPlMatchDetail } from "@/lib/pl/match-detail";
+import { getCachedPlMatchDetail } from "@/lib/pl/match-detail";
 import { buildMatchMetadata } from "@/lib/page-metadata";
 import {
   buildLiveBlogUpdates,
@@ -38,7 +38,7 @@ export async function generateMetadata({
     return { title: "Match not found" };
   }
 
-  const detail = await fetchPlMatchDetail(fixtureId);
+  const detail = await getCachedPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
 
   if (!fixture) {
@@ -66,7 +66,7 @@ export default async function PremierLeagueMatchPage({
   const { locale, fixtureId: rawFixtureId } = await params;
   void locale;
   const fixtureId = parseFixtureId(rawFixtureId) ?? 0;
-  const detail = await fetchPlMatchDetail(fixtureId);
+  const detail = await getCachedPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
   const path = `/premier-league/match/${fixtureId}`;
 

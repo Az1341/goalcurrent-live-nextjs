@@ -5,6 +5,11 @@ import {
   type ArticleIndexEntry,
 } from "@/data/articles";
 import { EDITORIAL_ARTICLES } from "@/data/editorial";
+import {
+  PL_SEASON_COUNTDOWN_ARTICLE_SLUG,
+  plSeasonCountdownHeadline,
+  rollingPlSeasonCountdownPublishIso,
+} from "@/lib/content/pl-season-countdown-article";
 import { EDITORIAL_SOURCE_LABEL } from "@/lib/seo/constants";
 import { toIsoDate } from "@/lib/seo/dates";
 import type { NewsArticle } from "@/types/news";
@@ -73,11 +78,16 @@ function newsTagFromIndexCategory(category: string): NewsArticle["tag"] {
 }
 
 function articleIndexEntryToNewsArticle(entry: ArticleIndexEntry): NewsArticle {
+  const isRollingCountdown = entry.slug === PL_SEASON_COUNTDOWN_ARTICLE_SLUG;
+  const rollingDate = isRollingCountdown
+    ? rollingPlSeasonCountdownPublishIso()
+    : null;
+
   return {
-    title: entry.title,
+    title: isRollingCountdown ? plSeasonCountdownHeadline() : entry.title,
     link: entry.href ?? articleHref(entry.slug),
     excerpt: entry.excerpt,
-    date: toIsoDate(entry.date),
+    date: rollingDate ?? toIsoDate(entry.date),
     source: EDITORIAL_SOURCE_LABEL,
     tag: newsTagFromIndexCategory(entry.category),
     image: getArticleCardImage(entry.slug),

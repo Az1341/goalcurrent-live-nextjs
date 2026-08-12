@@ -1,6 +1,17 @@
+import { daysUntilPlSeasonKickoff } from "@/lib/content/pl-season-countdown-article";
 import styles from "../article.module.css";
 
 export default function PremierLeagueTwoWeeksOutBody() {
+  const days = daysUntilPlSeasonKickoff();
+  const timing =
+    days <= 0
+      ? "kicks off today"
+      : days === 1
+        ? "kicks off tomorrow"
+        : days === 14
+          ? "kicks off in exactly two weeks"
+          : `kicks off in ${days} days`;
+
   return (
     <article className={styles.bodyCard}>
       <p>
@@ -9,8 +20,8 @@ export default function PremierLeagueTwoWeeksOutBody() {
         it in the 106th minute to give Spain their second world title. Lionel
         Messi&apos;s last World Cup ended in defeat, England claimed bronze with a
         6-4 thriller over France, and now attention across English football has
-        fully turned to domestic business. The Premier League 2026/27 season
-        kicks off in exactly two weeks.
+        fully turned to domestic business. The Premier League 2026/27 season{" "}
+        {timing}.
       </p>
 
       <h2>This Weekend: The Community Shield</h2>

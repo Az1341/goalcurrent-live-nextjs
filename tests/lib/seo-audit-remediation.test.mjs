@@ -53,12 +53,16 @@ test("locale route loading boundary does not emit literal Loading text", () => {
   assert.doesNotMatch(loading, />\s*Loading(?:…|\.\.\.)\s*</);
 });
 
-test("legacy WC26 match path permanently redirects to canonical match route", () => {
+test("legacy WC26 match path permanently redirects and team links use canonical match route", () => {
   const redirectPage = read("src/app/[locale]/worldcup2026/match/[fixtureId]/page.tsx");
+  const teamProfile = read("src/components/team-profile/Wc26TeamProfileClient.tsx");
   const helper = read("src/lib/wc26-match.ts");
   const nextConfig = read("next.config.ts");
   assert.match(helper, /return `\/match\/\$\{encodeURIComponent\(fixtureId\)\}`/);
   assert.match(redirectPage, /permanentRedirect\(matchHref\(fixtureId\)\)/);
+  assert.match(teamProfile, /href=\{matchHref\(latest\.id\)\}/);
+  assert.match(teamProfile, /href=\{matchHref\(next\.id\)\}/);
+  assert.doesNotMatch(teamProfile, /href=\{`\/worldcup2026\/match\//);
   assert.match(nextConfig, /source:\s*["']\/worldcup2026\/match\/:fixtureId["']/);
   assert.match(nextConfig, /destination:\s*["']\/match\/:fixtureId["']/);
   assert.match(nextConfig, /permanent:\s*true/);

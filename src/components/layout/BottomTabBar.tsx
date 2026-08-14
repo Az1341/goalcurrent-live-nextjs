@@ -1,10 +1,10 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { usePathname, useRouter } from "@/i18n/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import NavLink from "@/components/nav/NavLink";
-import { useCallback, useRef, useState, type MouseEvent } from "react";
+import { useRef, useState } from "react";
 import { FAVOURITES_HREF } from "@/lib/nav";
 import styles from "./BottomTabBar.module.css";
 
@@ -33,20 +33,11 @@ function MoreIcon() {
 
 export default function BottomTabBar() {
   const pathname = usePathname();
-  const router = useRouter();
   const t = useTranslations("nav");
   const [moreOpen, setMoreOpen] = useState(false);
   const [competitionsOpen, setCompetitionsOpen] = useState(false);
   const moreTriggerRef = useRef<HTMLButtonElement>(null);
   const competitionsTriggerRef = useRef<HTMLButtonElement>(null);
-
-  const handleNavigate = useCallback(
-    (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-      event.preventDefault();
-      router.push(href);
-    },
-    [router],
-  );
 
   const isHome = pathname === "/";
   const isLive = pathname.startsWith("/live");
@@ -66,12 +57,12 @@ export default function BottomTabBar() {
   return (
     <>
       <nav className={styles.bar} aria-label="Mobile bottom navigation" data-gc-chrome="mobile-tab-bar">
-        <NavLink href="/" className={`${styles.tabLink} ${isHome ? styles.tabLinkActive : ""}`} aria-current={isHome ? "page" : undefined} onClick={handleNavigate("/")}>
+        <NavLink href="/" className={`${styles.tabLink} ${isHome ? styles.tabLinkActive : ""}`} aria-current={isHome ? "page" : undefined}>
           <span className={styles.iconWrap}><HomeIcon /></span>
           <span className={styles.tabLabel}>{t("home")}</span>
         </NavLink>
 
-        <NavLink href="/live" className={`${styles.tabLink} ${isLive ? styles.tabLinkActive : ""}`} aria-current={isLive ? "page" : undefined} onClick={handleNavigate("/live")}>
+        <NavLink href="/live" className={`${styles.tabLink} ${isLive ? styles.tabLinkActive : ""}`} aria-current={isLive ? "page" : undefined}>
           <span className={styles.iconWrap}><LiveIcon /></span>
           <span className={styles.tabLabel}>{t("scores")}</span>
         </NavLink>
@@ -89,7 +80,7 @@ export default function BottomTabBar() {
           <span className={styles.tabLabel}>{t("competitions")}</span>
         </button>
 
-        <NavLink href={FAVOURITES_HREF} className={`${styles.tabLink} ${isFavourite ? styles.tabLinkActive : ""}`} aria-current={isFavourite ? "page" : undefined} onClick={handleNavigate(FAVOURITES_HREF)}>
+        <NavLink href={FAVOURITES_HREF} className={`${styles.tabLink} ${isFavourite ? styles.tabLinkActive : ""}`} aria-current={isFavourite ? "page" : undefined}>
           <span className={styles.iconWrap}><FavouriteIcon /></span>
           <span className={styles.tabLabel}>{t("favourites")}</span>
         </NavLink>

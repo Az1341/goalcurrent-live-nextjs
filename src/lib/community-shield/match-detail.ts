@@ -12,6 +12,15 @@ import type {
   MatchStatisticPair,
 } from "@/types/match-detail";
 
+export type CommunityShieldRecentMeeting = {
+  fixtureId: number;
+  kickoffUtc: string;
+  homeTeamName: string;
+  awayTeamName: string;
+  homeScore: number | null;
+  awayScore: number | null;
+};
+
 export type CommunityShieldMatchDetail = {
   fixtureId: number;
   configured: boolean;
@@ -26,6 +35,7 @@ export type CommunityShieldMatchDetail = {
   events: MatchEventItem[];
   lineups: { home: MatchLineupSide | null; away: MatchLineupSide | null };
   statistics: MatchStatisticPair[];
+  recentMeetings: CommunityShieldRecentMeeting[];
   fetchedAt: string;
   error?: string;
 };
@@ -33,6 +43,7 @@ export type CommunityShieldMatchDetail = {
 type ApiFixture = {
   fixture: {
     id: number;
+    date: string;
     referee: string | null;
     status: { short: string; elapsed: number | null };
     venue?: { name?: string | null; city?: string | null } | null;
@@ -118,6 +129,18 @@ function mapStatistics(rows: ApiStats[], home: string, away: string): MatchStati
   })).filter((row) => row.home != null || row.away != null);
 }
 
+function mapRecentMeeting(row: ApiFixture): CommunityShieldRecentMeeting {
+  const finished = mapStatus(row.fixture.status.short) === "FT";
+  return {
+    fixtureId: row.fixture.id,
+    kickoffUtc: new Date(row.fixture.date).toISOString(),
+    homeTeamName: row.teams.home.name,
+    awayTeamName: row.teams.away.name,
+    homeScore: finished ? row.goals.home : null,
+    awayScore: finished ? row.goals.away : null,
+  };
+}
+
 function empty(error?: string): CommunityShieldMatchDetail {
   return {
     fixtureId: COMMUNITY_SHIELD_FIXTURE_ID,
@@ -133,6 +156,7 @@ function empty(error?: string): CommunityShieldMatchDetail {
     events: [],
     lineups: { home: null, away: null },
     statistics: [],
+    recentMeetings: [],
     fetchedAt: new Date().toISOString(),
     error,
   };
@@ -145,7 +169,10 @@ export async function fetchCommunityShieldMatchDetail(
 
   const fixtureResult = await apiFootballFetch<ApiFixture[]>(`/fixtures?id=${fixtureId}`);
   if (!fixtureResult.ok) {
-    return { ...empty(fixtureResult.kind === "unconfigured" ? undefined : fixtureResult.message), configured: fixtureResult.kind !== "unconfigured" };
+    return {
+      ...empty(fixtureResult.kind === "unconfigured" ? undefined : fixtureResult.message),
+      configured: fixtureResult.kind !== "unconfigured",
+    };
   }
 
   const raw = fixtureResult.data[0];
@@ -153,14 +180,16 @@ export async function fetchCommunityShieldMatchDetail(
     return { ...empty("Fixture identity check failed."), configured: true };
   }
 
-  const [eventsResult, lineupsResult, statsResult] = await Promise.all([
+  const homeId = raw.teams.home.id;
+  const awayId = raw.teams.away.id;
+
+  const [eventsResult, lineupsResult, statsResult, h2hResult] = await Promise.all([
     apiFootballFetch<ApiEvent[]>(`/fixtures/events?fixture=${fixtureId}`),
     apiFootballFetch<ApiLineup[]>(`/fixtures/lineups?fixture=${fixtureId}`),
     apiFootballFetch<ApiStats[]>(`/fixtures/statistics?fixture=${fixtureId}`),
+    apiFootballFetch<ApiFixture[]>(`/fixtures/headtohead?h2h=${homeId}-${awayId}&last=5`),
   ]);
 
-  const homeId = raw.teams.home.id;
-  const awayId = raw.teams.away.id;
   const lineupRows = lineupsResult.ok ? lineupsResult.data : [];
   const homeLineup = lineupRows.find((row) => row.team.id === homeId);
   const awayLineup = lineupRows.find((row) => row.team.id === awayId);
@@ -171,7 +200,7 @@ export async function fetchCommunityShieldMatchDetail(
   return {
     fixtureId,
     configured: true,
-    apiAvailable: eventsResult.ok || lineupsResult.ok || statsResult.ok,
+    apiAvailable: eventsResult.ok || lineupsResult.ok || statsResult.ok || h2hResult.ok,
     status,
     statusShort: raw.fixture.status.short,
     elapsed: raw.fixture.status.elapsed,
@@ -197,6 +226,11 @@ export async function fetchCommunityShieldMatchDetail(
     statistics: statsResult.ok
       ? mapStatistics(statsResult.data, raw.teams.home.name, raw.teams.away.name)
       : [],
+    recentMeetings: h2hResult.ok
+      ? h2hResult.data
+          .filter((meeting) => meeting.fixture.id !== fixtureId)
+          .map(mapRecentMeeting)
+      : [],
     fetchedAt: new Date().toISOString(),
   };
 }
@@ -204,6 +238,6 @@ export async function fetchCommunityShieldMatchDetail(
 export function communityShieldMatchCacheControl(body: CommunityShieldMatchDetail): string {
   if (!body.configured) return "no-store";
   if (body.status === "LIVE") return "s-maxage=20, stale-while-revalidate=10";
-  if (body.status === "UPCOMING") return "s-maxage=120, stale-while-revalidate=30";
+  if (body.status === "UPCOMING") return "s-maxage=300, stale-while-revalidate=60";
   return "s-maxage=3600, stale-while-revalidate=300";
 }

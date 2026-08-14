@@ -25,9 +25,6 @@ export default function MasterFooter() {
           <Link href="/" className={styles.footerBrand}>
             Goal<span>Current</span>.live
           </Link>
-          <p className={styles.footerTagline}>
-            {tLayout("tagline")}
-          </p>
           <div className={styles.footerSocial} aria-label={tLayout("socialAria")}>
             <SocialLinks
               linkClassName={styles.footerSocialIcon}

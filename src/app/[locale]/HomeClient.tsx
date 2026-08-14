@@ -43,10 +43,10 @@ export default function HomeClient() {
           loading={plLoading && !plData}
         />
         <HomeHero featuredMatch={undefined} wc26Views={[]} plFixtures={plFixtures} />
+        <HomeEcosystemPromo />
         <HomeTodaysMatches plFixtures={plFixtures} />
         <HomeCommunityShieldNews />
         <HomeLatestNews />
-        <HomeEcosystemPromo />
         <HomeTrendingClips />
         <HomeTeamsLeagues plFixtures={plFixtures} />
       </main>

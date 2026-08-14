@@ -1,17 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
 import dynamic from "next/dynamic";
-import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
-import { selectHomepageFixtures } from "@/lib/wc26-live";
-import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
 import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
 import HomeHero from "@/components/home/v5/HomeHero";
-import HomeChampionSnippet from "@/components/home/v5/HomeChampionSnippet";
 import HomePlKickoffCountdown from "@/components/home/v5/HomePlKickoffCountdown";
 import HomeCommunityShieldNews from "@/components/home/v5/HomeCommunityShieldNews";
 import HomeEcosystemPromo from "@/components/home/v5/HomeEcosystemPromo";
-import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import styles from "@/components/home/home-v5.module.css";
 
 const HomeTodaysMatches = dynamic(
@@ -38,37 +32,23 @@ const HomeTeamsLeagues = dynamic(
 );
 
 export default function HomeClient() {
-  const fixtures = useEffectiveFixtures();
   const { data: plData, isLoading: plLoading } = useLiveFixtures();
   const plFixtures = plData?.fixtures ?? [];
-
-  const { featuredMatch } = selectHomeFeaturedContent(fixtures, plFixtures);
-
-  const archiveComplete = isWc26TournamentComplete();
-  const heroWc26Views = useMemo(
-    () => (archiveComplete ? [] : selectHomepageFixtures(fixtures, [], 3)),
-    [fixtures, archiveComplete],
-  );
 
   return (
     <div className={styles.root} data-gc-home-v5>
       <main className={styles.main}>
-        <HomeChampionSnippet />
         <HomePlKickoffCountdown
           plFixtures={plFixtures}
           loading={plLoading && !plData}
         />
-        <HomeHero
-          featuredMatch={featuredMatch}
-          wc26Views={heroWc26Views}
-          plFixtures={plFixtures}
-        />
-        <HomeTodaysMatches fixtures={fixtures} plFixtures={plFixtures} />
+        <HomeHero featuredMatch={undefined} wc26Views={[]} plFixtures={plFixtures} />
+        <HomeTodaysMatches plFixtures={plFixtures} />
         <HomeCommunityShieldNews />
         <HomeLatestNews />
         <HomeEcosystemPromo />
         <HomeTrendingClips />
-        <HomeTeamsLeagues fixtures={fixtures} plFixtures={plFixtures} />
+        <HomeTeamsLeagues plFixtures={plFixtures} />
       </main>
     </div>
   );

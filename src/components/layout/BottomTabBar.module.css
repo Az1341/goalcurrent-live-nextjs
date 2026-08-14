@@ -5,7 +5,7 @@
   bottom: 0;
   z-index: 500;
   display: none;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: stretch;
   background: #fff;
   border-top: 1px solid rgba(200, 16, 46, 0.14);
@@ -20,7 +20,7 @@
   align-items: center;
   justify-content: center;
   gap: 2px;
-  min-height: 58px;
+  min-height: 60px;
   padding: 6px 2px 8px;
   border: none;
   background: transparent;

@@ -50,11 +50,18 @@ test("live upcoming competition list includes Community Shield and sorts by kick
   assert.match(cards, /communityShield:\s*communityShield\?\.fixtures/);
 });
 
-test("mobile bottom nav has direct Competitions access and Community Shield is in the sheet", () => {
+test("mobile competitions opens from both visible header tab and bottom tab", () => {
+  const header = read("src/components/layout/HeaderCompetitionsDropdown.tsx");
   const bottom = read("src/components/layout/BottomTabBar.tsx");
   const sheet = read("src/components/layout/MobileCompetitionsSheet.tsx");
   const nav = read("src/lib/nav.ts");
 
+  assert.match(header, /max-width:\s*833px/);
+  assert.match(header, /gc:mobile-competitions-open/);
+  assert.match(header, /dispatchEvent/);
+  assert.match(bottom, /gc:mobile-competitions-open/);
+  assert.match(bottom, /addEventListener/);
+  assert.match(bottom, /setCompetitionsOpen\(true\)/);
   assert.match(bottom, /MobileCompetitionsSheet/);
   assert.match(bottom, /gc-mobile-competitions-sheet/);
   assert.match(sheet, /DESKTOP_COMPETITIONS_NAV\.map/);
@@ -62,8 +69,16 @@ test("mobile bottom nav has direct Competitions access and Community Shield is i
   assert.match(nav, /href:\s*["']\/community-shield["']/);
 });
 
-test("owned house ad uses UTM-only attribution and no identifier parameters", () => {
+test("owned house ad is immediately after primary hero and uses UTM-only attribution", () => {
+  const home = read("src/app/[locale]/HomeClient.tsx");
   const promo = read("src/components/home/v5/HomeEcosystemPromo.tsx");
+  const heroIndex = home.indexOf("<HomeHero");
+  const promoIndex = home.indexOf("<HomeEcosystemPromo");
+  const matchesIndex = home.indexOf("<HomeTodaysMatches");
+
+  assert.ok(heroIndex >= 0 && promoIndex > heroIndex && matchesIndex > promoIndex);
+  assert.match(promo, /OWNED ADVERTISEMENT/);
+  assert.match(promo, /data-gc-owned-ad=/);
   assert.match(promo, /utm_source=goalcurrent/);
   assert.match(promo, /utm_medium=owned/);
   assert.match(promo, /utm_campaign=ashna4all_ecosystem/);

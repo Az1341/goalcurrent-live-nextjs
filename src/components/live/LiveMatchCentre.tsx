@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
+import LiveScoreAdUnit from "@/components/ads/LiveScoreAdUnit";
 import LiveMatchCard from "@/components/live/LiveMatchCard";
 import PlLivePanel from "@/components/live/PlLivePanel";
 import UnlLivePanel from "@/components/live/UnlLivePanel";
@@ -87,6 +88,7 @@ function LiveSection({
     () => groupFixturesByCompetition(fixtures),
     [fixtures],
   );
+  let liveAdIndex = 0;
 
   return (
     <section
@@ -115,13 +117,15 @@ function LiveSection({
             <div key={group.label} className={styles.competitionBlock}>
               <div className={styles.competitionHeader}>{group.label}</div>
               <ul className={styles.fixtureList}>
-                {group.fixtures.map((fixture) => (
-                  <LiveMatchCard
-                    key={fixture.id}
-                    fixture={fixture}
-                    fixtures={allFixtures}
-                  />
-                ))}
+                {group.fixtures.map((fixture) => {
+                  const adIndex = liveAdIndex++;
+                  return (
+                    <Fragment key={fixture.id}>
+                      <LiveMatchCard fixture={fixture} fixtures={allFixtures} />
+                      {tone === "live" ? <LiveScoreAdUnit index={adIndex} /> : null}
+                    </Fragment>
+                  );
+                })}
               </ul>
             </div>
           ))}
@@ -162,7 +166,6 @@ export default function LiveMatchCentre() {
     buckets.completed.length === 0;
   const showSyncDegraded = syncStatus === "degraded" && !archiveComplete;
 
-  // After WC26 ends, Live is an upcoming-competitions centre — not WC archive results.
   if (archiveComplete) {
     return (
       <main className={styles.content}>

@@ -1,0 +1,9 @@
+.desktopCompetitionOnly {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .desktopCompetitionOnly {
+    display: none;
+  }
+}

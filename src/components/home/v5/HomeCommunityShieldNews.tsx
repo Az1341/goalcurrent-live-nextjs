@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "../home-v5.module.css";
 
 const HIDE_AFTER_MS = new Date("2026-08-16T18:00:00.000Z").getTime();
@@ -24,11 +24,7 @@ const STORIES = [
 ] as const;
 
 export default function HomeCommunityShieldNews() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    setVisible(Date.now() < HIDE_AFTER_MS);
-  }, []);
+  const [visible] = useState(() => Date.now() < HIDE_AFTER_MS);
 
   if (!visible) return null;
 

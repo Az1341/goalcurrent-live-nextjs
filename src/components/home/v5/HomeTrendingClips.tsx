@@ -10,10 +10,17 @@ import { shouldUseUnoptimizedImage } from "@/lib/images";
 import type { VideosApiResponse, YouTubeVideo } from "@/types/video";
 import styles from "../home-v5.module.css";
 
-const WC26_VIDEO_PATTERN = /\b(?:fifa\s+)?world\s+cup\s+2026\b|\b2026\s+(?:fifa\s+)?world\s+cup\b|\bwc26\b/i;
+const WC26_VIDEO_TERMS = [
+  "world cup 2026",
+  "2026 world cup",
+  "fifa world cup 2026",
+  "2026 fifa world cup",
+  "wc26",
+] as const;
 
 function isWc26Video(video: YouTubeVideo): boolean {
-  return WC26_VIDEO_PATTERN.test(`${video.title} ${video.description}`);
+  const haystack = `${video.title} ${video.description}`.toLowerCase();
+  return WC26_VIDEO_TERMS.some((term) => haystack.includes(term));
 }
 
 function dedupeVideos(videos: readonly YouTubeVideo[]): YouTubeVideo[] {

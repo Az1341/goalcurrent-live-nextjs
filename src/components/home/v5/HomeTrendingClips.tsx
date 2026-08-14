@@ -10,10 +10,17 @@ import { shouldUseUnoptimizedImage } from "@/lib/images";
 import type { VideosApiResponse, YouTubeVideo } from "@/types/video";
 import styles from "../home-v5.module.css";
 
+const WC26_VIDEO_PATTERN = /\b(?:fifa\s+)?world\s+cup\s+2026\b|\b2026\s+(?:fifa\s+)?world\s+cup\b|\bwc26\b/i;
+
+function isWc26Video(video: YouTubeVideo): boolean {
+  return WC26_VIDEO_PATTERN.test(`${video.title} ${video.description}`);
+}
+
 function dedupeVideos(videos: readonly YouTubeVideo[]): YouTubeVideo[] {
   const seen = new Set<string>();
   const unique: YouTubeVideo[] = [];
   for (const video of videos) {
+    if (isWc26Video(video)) continue;
     const key = video.videoId || video.url;
     if (seen.has(key)) continue;
     seen.add(key);
@@ -47,9 +54,7 @@ export default function HomeTrendingClips() {
     );
   }
 
-  if (!videos.length) {
-    return null;
-  }
+  if (!videos.length) return null;
 
   return (
     <section className={styles.section} aria-labelledby="home-clips-heading">
@@ -79,9 +84,7 @@ export default function HomeTrendingClips() {
                 unoptimized={shouldUseUnoptimizedImage(video.thumbnail)}
                 className={styles.clipThumbImage}
               />
-              <span className={styles.clipPlay} aria-hidden="true">
-                ▶
-              </span>
+              <span className={styles.clipPlay} aria-hidden="true">▶</span>
             </div>
             <p className={styles.clipTitle}>{video.title}</p>
             <p className={styles.clipViews}>{video.channelTitle}</p>

@@ -189,7 +189,7 @@ export default function CommunityShieldHubClient({ initialData }: Props) {
               <ol className={styles.eventsList}>
                 {detail.events.map((event, index) => (
                   <li key={`${event.minute}-${event.playerName}-${index}`}>
-                    <strong>{event.minute ?? "–"}'</strong>
+                    <strong>{`${event.minute ?? "–"}'`}</strong>
                     <span>{event.teamName}</span>
                     <span>{event.playerName} · {event.detail}</span>
                   </li>

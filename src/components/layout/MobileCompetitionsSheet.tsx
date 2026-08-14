@@ -48,6 +48,7 @@ export default function MobileCompetitionsSheet({ open, onClose, returnFocusRef 
     <>
       <div className={`${styles.moreOverlay} ${styles.moreOverlayOpen}`} onClick={onClose} aria-hidden="true" />
       <div
+        id="gc-mobile-competitions-sheet"
         ref={dialogRef}
         className={`${styles.sheet} ${styles.sheetOpen}`}
         role="dialog"

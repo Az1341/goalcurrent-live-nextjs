@@ -16,6 +16,10 @@ import AuthMenu from "@/components/firebase/AuthMenu";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import styles from "./master-chrome.module.css";
 import responsiveStyles from "./MasterHeaderResponsive.module.css";
+import sepanaiStyles from "./SepanaiAttribution.module.css";
+
+const SEPANAI_HEADER_HREF =
+  "https://www.sepanai.com/?utm_source=goalcurrent&utm_medium=referral&utm_campaign=powered_by&utm_content=header";
 
 function openSubscribeDialog() {
   trackSubscriptionStart({
@@ -131,6 +135,19 @@ export default function MasterHeader() {
           </nav>
 
           <div className={styles.headerActions}>
+            <a
+              href={SEPANAI_HEADER_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={sepanaiStyles.headerLink}
+              aria-label="Powered by SEPANAI.COM"
+            >
+              <img src="/sepanai-mark.svg" alt="" className={sepanaiStyles.mark} />
+              <span className={sepanaiStyles.copy}>
+                <span className={sepanaiStyles.powered}>Powered by</span>
+                <span className={sepanaiStyles.name}>SEPANAI.COM</span>
+              </span>
+            </a>
             <ThemeToggle />
             <HeaderLocaleDropdown />
             <AuthMenu />

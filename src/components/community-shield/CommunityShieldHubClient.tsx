@@ -44,7 +44,10 @@ export default function CommunityShieldHubClient({ initialData }: Props) {
   const { data: detail } = useSWR<CommunityShieldMatchDetail>(
     `/api/community-shield/match/${COMMUNITY_SHIELD_FIXTURE_ID}`,
     fetcher,
-    { refreshInterval: 30_000, revalidateOnFocus: true },
+    {
+      refreshInterval: (latest) => (latest?.status === "LIVE" ? 20_000 : 300_000),
+      revalidateOnFocus: true,
+    },
   );
 
   const status = detail?.status ?? fixture?.status ?? "UPCOMING";
@@ -99,6 +102,40 @@ export default function CommunityShieldHubClient({ initialData }: Props) {
                 : t("kickoffTbc")}
             </p>
           </article>
+
+          <section className={styles.detailSection} aria-labelledby="community-shield-h2h">
+            <div className={styles.sectionHeader}>
+              <div>
+                <p className={styles.sectionEyebrow}>Pre-match stats</p>
+                <h2 id="community-shield-h2h">Recent meetings</h2>
+              </div>
+              <span className={styles.availability}>
+                {detail?.recentMeetings.length ? "Last meetings" : "Loading history"}
+              </span>
+            </div>
+            {detail?.recentMeetings.length ? (
+              <div className={styles.statsList}>
+                {detail.recentMeetings.map((meeting) => (
+                  <div key={meeting.fixtureId} className={styles.statRow}>
+                    <strong>{meeting.homeScore ?? "–"}</strong>
+                    <span>
+                      {meeting.homeTeamName} vs {meeting.awayTeamName}
+                      <small className={styles.detailMeta}>
+                        {new Date(meeting.kickoffUtc).toLocaleDateString(locale, {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
+                      </small>
+                    </span>
+                    <strong>{meeting.awayScore ?? "–"}</strong>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className={styles.pending}>Recent Arsenal–Manchester City meetings will appear here when the data provider responds.</p>
+            )}
+          </section>
 
           <section className={styles.detailSection} aria-labelledby="community-shield-lineups">
             <div className={styles.sectionHeader}>

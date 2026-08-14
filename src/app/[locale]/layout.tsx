@@ -36,18 +36,19 @@ const inter = Inter({
   adjustFontFallback: true,
 });
 
+const ROOT_DESCRIPTION = `${SITE_NAME} — live football scores, fixtures, results, standings and news from major leagues and competitions.`;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   ...deployRobotsMetadata(),
   title: {
     template: `%s - ${SITE_NAME}`,
-    default: `${SITE_NAME} - FIFA World Cup 2026 | Live Scores, News & Teams`,
+    default: `${SITE_NAME} | Live Football Scores, Fixtures and News`,
   },
-  description: `${SITE_NAME} - live scores, fixtures, groups, teams and standings for FIFA World Cup 2026.`,
+  description: ROOT_DESCRIPTION,
   openGraph: {
-    title: `${SITE_NAME} - FIFA World Cup 2026`,
-    description:
-      "Live scores, fixtures, groups, teams and standings for FIFA World Cup 2026.",
+    title: `${SITE_NAME} | Live Football Scores, Fixtures and News`,
+    description: ROOT_DESCRIPTION,
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",
@@ -62,9 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: DEFAULT_TWITTER_CARD,
-    title: `${SITE_NAME} - FIFA World Cup 2026`,
-    description:
-      "Live scores, fixtures, groups, teams and standings for FIFA World Cup 2026.",
+    title: `${SITE_NAME} | Live Football Scores, Fixtures and News`,
+    description: ROOT_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE.url],
   },
   manifest: "/manifest.json",
@@ -93,7 +93,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#8B0000",
+  themeColor: BRAND_THEME_COLOR,
 };
 
 export function generateStaticParams() {

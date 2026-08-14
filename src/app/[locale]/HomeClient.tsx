@@ -3,14 +3,14 @@
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
-import {
-  selectHomepageFixtures,
-} from "@/lib/wc26-live";
+import { selectHomepageFixtures } from "@/lib/wc26-live";
 import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
 import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
 import HomeHero from "@/components/home/v5/HomeHero";
 import HomeChampionSnippet from "@/components/home/v5/HomeChampionSnippet";
 import HomePlKickoffCountdown from "@/components/home/v5/HomePlKickoffCountdown";
+import HomeCommunityShieldNews from "@/components/home/v5/HomeCommunityShieldNews";
+import HomeEcosystemPromo from "@/components/home/v5/HomeEcosystemPromo";
 import { isWc26TournamentComplete } from "@/lib/wc26/archive";
 import styles from "@/components/home/home-v5.module.css";
 
@@ -42,10 +42,7 @@ export default function HomeClient() {
   const { data: plData, isLoading: plLoading } = useLiveFixtures();
   const plFixtures = plData?.fixtures ?? [];
 
-  const { featuredMatch } = selectHomeFeaturedContent(
-    fixtures,
-    plFixtures,
-  );
+  const { featuredMatch } = selectHomeFeaturedContent(fixtures, plFixtures);
 
   const archiveComplete = isWc26TournamentComplete();
   const heroWc26Views = useMemo(
@@ -67,7 +64,9 @@ export default function HomeClient() {
           plFixtures={plFixtures}
         />
         <HomeTodaysMatches fixtures={fixtures} plFixtures={plFixtures} />
+        <HomeCommunityShieldNews />
         <HomeLatestNews />
+        <HomeEcosystemPromo />
         <HomeTrendingClips />
         <HomeTeamsLeagues fixtures={fixtures} plFixtures={plFixtures} />
       </main>

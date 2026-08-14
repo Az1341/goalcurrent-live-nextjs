@@ -50,7 +50,7 @@ export default function HeaderCompetitionsDropdown({
   }, []);
 
   const handleToggle = useCallback(() => {
-    if (window.matchMedia("(max-width: 833px)").matches) {
+    if (window.matchMedia("(max-width: 768px)").matches) {
       closeMenu();
       window.dispatchEvent(new CustomEvent(MOBILE_COMPETITIONS_EVENT));
       return;

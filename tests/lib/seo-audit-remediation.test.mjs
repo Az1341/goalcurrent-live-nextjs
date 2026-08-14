@@ -34,7 +34,7 @@ test("homepage source surfaces exclude WC26 archive content and clips", () => {
   assert.match(client, /wc26Views=\{\[\]\}/);
   assert.doesNotMatch(leagues, /worldcup2026|World Cup 2026/i);
   assert.doesNotMatch(today, /Wc26MatchCard|World Cup 2026|wc26Today/);
-  assert.match(clips, /WC26_VIDEO_PATTERN/);
+  assert.match(clips, /WC26_VIDEO_TERMS/);
   assert.match(clips, /if \(isWc26Video\(video\)\) continue/);
 });
 

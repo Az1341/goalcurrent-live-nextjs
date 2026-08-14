@@ -2,13 +2,10 @@ export const revalidate = 30;
 
 import HomeClient from "@/app/[locale]/HomeClient";
 import type { Metadata } from "next";
-import HomeFeaturedMatchJsonLd from "@/components/seo/HomeFeaturedMatchJsonLd";
-import { getSeoEffectiveFixtures } from "@/lib/wc26/seo-fixtures";
 import { HOME_HERO_BG } from "@/lib/critical-assets";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { SITE_NAME } from "@/lib/site-url";
 import { normalizePageTitleText } from "@/lib/seo/canonical-titles";
-import { selectHomeFeaturedContent } from "@/lib/home/featured-selection";
 
 type HomePageProps = {
   params: Promise<{ locale: string }>;
@@ -29,11 +26,7 @@ export async function generateMetadata({
   });
 }
 
-export default async function HomePage({ params }: HomePageProps) {
-  const { locale } = await params;
-  const seoFixtures = getSeoEffectiveFixtures();
-  const { wc26Selection } = selectHomeFeaturedContent(seoFixtures);
-
+export default function HomePage() {
   return (
     <>
       <link
@@ -43,13 +36,6 @@ export default async function HomePage({ params }: HomePageProps) {
         fetchPriority="high"
         media="(min-width: 768px)"
       />
-      {wc26Selection.fixtures.map((fixture) => (
-        <HomeFeaturedMatchJsonLd
-          key={fixture.id}
-          fixture={fixture}
-          locale={locale}
-        />
-      ))}
       <HomeClient />
     </>
   );

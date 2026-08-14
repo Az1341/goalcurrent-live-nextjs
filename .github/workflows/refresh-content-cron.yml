@@ -1,11 +1,12 @@
-# Hourly content refresh via GitHub Actions (Vercel free cron is daily-only).
-# Calls the existing production endpoint; CRON_SECRET must be set as a repo secret.
-name: Refresh content (hourly)
+# TEMPORARILY PAUSED: hourly GitHub Actions refresh requires the same CRON_SECRET
+# as the production GoalCurrent environment. The repository secret is currently
+# missing, which caused a failed workflow and notification every hour.
+#
+# Daily production refresh remains active through vercel.json at 06:00 UTC.
+# Restore the schedule below only after CRON_SECRET is securely synchronized.
+name: Refresh content (manual while hourly paused)
 
 on:
-  schedule:
-    # Every hour at :00 UTC
-    - cron: "0 * * * *"
   workflow_dispatch:
 
 concurrency:
@@ -24,7 +25,7 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${CRON_SECRET:-}" ]; then
-            echo "CRON_SECRET repository secret is not set."
+            echo "CRON_SECRET repository secret is not set. Hourly schedule remains paused."
             exit 1
           fi
 

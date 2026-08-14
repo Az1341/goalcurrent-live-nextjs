@@ -170,6 +170,7 @@ export function buildUpcomingCompetitionWindows(input: {
       input.communityShield
         .filter((row): row is typeof row & { kickoffUtc: string } => Boolean(row.kickoffUtc))
         .filter((row) => !["FT", "CANCELLED"].includes(row.status))
+        .filter((row) => new Date(row.kickoffUtc).getTime() > nowMs)
         .map((row) => ({
           id: `community-shield-${row.fixtureId}`,
           kickoffUtc: row.kickoffUtc,

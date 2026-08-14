@@ -1,10 +1,10 @@
 .card {
-  margin: 0;
-  border: 1px solid var(--gc-v5-border, #e5e5ea);
+  border: 2px solid #0f766e;
   border-radius: 18px;
-  background: var(--gc-v5-surface, #fff);
+  background: #062a35;
   padding: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 30px rgba(6, 42, 53, 0.2);
+  color: #ffffff;
 }
 
 .label {
@@ -12,13 +12,13 @@
   align-items: center;
   margin-bottom: 12px;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--gc-brand-from, #c8102e) 28%, transparent);
-  background: color-mix(in srgb, var(--gc-brand-from, #c8102e) 7%, #fff);
+  background: #66e9bd;
   padding: 5px 9px;
-  color: var(--gc-brand-from, #c8102e);
+  color: #062a35;
   font-size: 0.6875rem;
-  font-weight: 800;
-  letter-spacing: 0.055em;
+  font-weight: 900;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
 }
 
 .copy {
@@ -29,16 +29,35 @@
   margin-bottom: 14px;
 }
 
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.mark {
+  width: 26px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.brand {
+  color: #66e9bd;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
 .title {
-  margin: 0;
-  color: var(--gc-v5-text, #1d1d1f);
-  font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+  margin: 8px 0 0;
+  color: #ffffff;
+  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
   line-height: 1.2;
 }
 
 .text {
   margin: 6px 0 0;
-  color: var(--gc-v5-muted, #6e6e73);
+  color: #cbe7e6;
   font-size: 0.9rem;
   line-height: 1.45;
 }
@@ -46,11 +65,11 @@
 .cta {
   flex: 0 0 auto;
   border-radius: 10px;
-  background: var(--gc-brand-from, #c8102e);
-  color: #fff;
-  padding: 9px 12px;
+  background: #66e9bd;
+  color: #062a35;
+  padding: 10px 13px;
   font-size: 0.8125rem;
-  font-weight: 800;
+  font-weight: 900;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -59,15 +78,21 @@
   display: block;
   width: 100%;
   aspect-ratio: 16 / 9;
+  border: 1px solid rgba(102, 233, 189, 0.45);
   border-radius: 14px;
-  background: #111;
+  background: #000000;
   object-fit: contain;
 }
 
-.meta {
-  margin: 8px 0 0;
-  color: var(--gc-v5-muted, #6e6e73);
+.fallback {
+  margin: 10px 0 0;
+  color: #cbe7e6;
   font-size: 0.75rem;
+}
+
+.fallback a {
+  color: #66e9bd;
+  font-weight: 800;
 }
 
 @media (max-width: 640px) {

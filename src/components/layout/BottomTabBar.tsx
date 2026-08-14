@@ -4,12 +4,13 @@ import dynamic from "next/dynamic";
 import { usePathname } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import NavLink from "@/components/nav/NavLink";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FAVOURITES_HREF } from "@/lib/nav";
 import styles from "./BottomTabBar.module.css";
 
 const MoreBottomSheet = dynamic(() => import("./MoreBottomSheet"), { ssr: false });
 const MobileCompetitionsSheet = dynamic(() => import("./MobileCompetitionsSheet"), { ssr: false });
+const MOBILE_COMPETITIONS_EVENT = "gc:mobile-competitions-open";
 
 function HomeIcon() {
   return <svg className={styles.icon} viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3 3 10.5V21h6v-6h6v6h6V10.5L12 3Z" /></svg>;
@@ -38,6 +39,15 @@ export default function BottomTabBar() {
   const [competitionsOpen, setCompetitionsOpen] = useState(false);
   const moreTriggerRef = useRef<HTMLButtonElement>(null);
   const competitionsTriggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const openCompetitions = () => {
+      setMoreOpen(false);
+      setCompetitionsOpen(true);
+    };
+    window.addEventListener(MOBILE_COMPETITIONS_EVENT, openCompetitions);
+    return () => window.removeEventListener(MOBILE_COMPETITIONS_EVENT, openCompetitions);
+  }, []);
 
   const isHome = pathname === "/";
   const isLive = pathname.startsWith("/live");

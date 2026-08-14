@@ -5,11 +5,11 @@ const SEPANAI_HREF =
 
 export default function HomeEcosystemPromo() {
   return (
-    <aside className={styles.section} aria-label="Ashna4all ecosystem promotion">
+    <aside className={styles.section} aria-label="Ashna4all ecosystem advertisement">
       <div className={styles.sectionHeader}>
         <div>
-          <span className={styles.newsTag}>From the Ashna4all ecosystem</span>
-          <h2 className={styles.sectionTitle}>Built beyond football</h2>
+          <span className={styles.newsTag}>OWNED ADVERTISEMENT · ASHNA4ALL ECOSYSTEM</span>
+          <h2 className={styles.sectionTitle}>More from the people behind GoalCurrent</h2>
         </div>
       </div>
       <a
@@ -17,13 +17,14 @@ export default function HomeEcosystemPromo() {
         target="_blank"
         rel="noopener noreferrer sponsored"
         className={styles.newsSecondaryRow}
+        data-gc-owned-ad="sepanai-ecosystem"
       >
         <div className={styles.newsSecondaryBody}>
           <span className={styles.newsTag}>SEPANAI.COM</span>
           <p className={styles.newsSecondaryHeadline}>
-            Discover the wider Ashna4all product ecosystem — including SEPANAI.COM, SocialMedia and FAMVI.
+            Discover SEPANAI.COM, SocialMedia and FAMVI — products from the wider Ashna4all ecosystem.
           </p>
-          <p className={styles.newsMeta}>Owned promotion · no behavioural targeting</p>
+          <p className={styles.newsMeta}>Visit SEPANAI.COM → · contextual house ad · no behavioural targeting</p>
         </div>
       </a>
     </aside>

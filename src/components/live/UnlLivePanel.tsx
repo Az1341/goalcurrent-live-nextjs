@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
+import LiveScoreAdUnit from "@/components/ads/LiveScoreAdUnit";
 import { KickoffTime } from "@/components/KickoffTime";
 import { Link } from "@/i18n/navigation";
 import { useLiveUnlFixtures } from "@/lib/client/useLiveUnlFixtures";
@@ -65,8 +66,11 @@ function Bucket({
         {title}
       </h3>
       <ul className={styles.list}>
-        {rows.map((row) => (
-          <FixtureRow key={row.fixtureId} row={row} />
+        {rows.map((row, index) => (
+          <Fragment key={row.fixtureId}>
+            <FixtureRow row={row} />
+            {live ? <LiveScoreAdUnit index={index + 1} /> : null}
+          </Fragment>
         ))}
       </ul>
     </div>

@@ -22,17 +22,20 @@ test("site-wide fallback social image is not WC26-branded", () => {
   assert.match(constants, /icon-512\.png/);
 });
 
-test("homepage source surfaces exclude WC26 archive content", () => {
+test("homepage source surfaces exclude WC26 archive content and clips", () => {
   const page = read("src/app/[locale]/page.tsx");
   const client = read("src/app/[locale]/HomeClient.tsx");
   const leagues = read("src/components/home/v5/HomeTeamsLeagues.tsx");
   const today = read("src/components/home/v5/HomeTodaysMatches.tsx");
+  const clips = read("src/components/home/v5/HomeTrendingClips.tsx");
 
   assert.doesNotMatch(page, /HomeFeaturedMatchJsonLd|getSeoEffectiveFixtures|wc26Selection/);
   assert.doesNotMatch(client, /HomeChampionSnippet|selectHomepageFixtures|heroWc26Views/);
   assert.match(client, /wc26Views=\{\[\]\}/);
   assert.doesNotMatch(leagues, /worldcup2026|World Cup 2026/i);
   assert.doesNotMatch(today, /Wc26MatchCard|World Cup 2026|wc26Today/);
+  assert.match(clips, /WC26_VIDEO_PATTERN/);
+  assert.match(clips, /if \(isWc26Video\(video\)\) continue/);
 });
 
 test("global footer no longer renders stale WC26 tagline or X link", () => {

@@ -58,7 +58,7 @@ test("mobile competitions lives in bottom navigation and remains available in th
   const nav = read("src/lib/nav.ts");
 
   assert.match(header, /desktopCompetitionOnly/);
-  assert.match(responsive, /@media \(max-width: 833px\)/);
+  assert.match(responsive, /@media \(max-width: 768px\)/);
   assert.match(responsive, /display:\s*none/);
   assert.match(bottom, /MobileCompetitionsSheet/);
   assert.match(bottom, /gc-mobile-competitions-sheet/);

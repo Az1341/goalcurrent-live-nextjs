@@ -15,6 +15,7 @@ import { trackSubscriptionStart } from "@/lib/analytics";
 import AuthMenu from "@/components/firebase/AuthMenu";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import styles from "./master-chrome.module.css";
+import responsiveStyles from "./MasterHeaderResponsive.module.css";
 
 function openSubscribeDialog() {
   trackSubscriptionStart({
@@ -121,10 +122,12 @@ export default function MasterHeader() {
                 {t("archive")}
               </NavLink>
             </div>
-            <HeaderCompetitionsDropdown
-              label={t("competitions")}
-              isActive={isDesktopCompetitionsActive(pathname)}
-            />
+            <div className={responsiveStyles.desktopCompetitionOnly}>
+              <HeaderCompetitionsDropdown
+                label={t("competitions")}
+                isActive={isDesktopCompetitionsActive(pathname)}
+              />
+            </div>
           </nav>
 
           <div className={styles.headerActions}>

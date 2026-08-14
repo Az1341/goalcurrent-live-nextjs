@@ -2,18 +2,24 @@ import styles from "./HomeSepanaiVideoAd.module.css";
 
 const SEPANAI_VIDEO =
   "https://www.sepanai.com/media/SEPANAI.COM_Product_Update_SocialMedia_1308206_1036.mp4";
+const SEPANAI_POSTER =
+  "https://www.sepanai.com/media/product-update-1-poster.svg";
 const SEPANAI_CTA =
-  "https://www.sepanai.com/?utm_source=goalcurrent&utm_medium=owned&utm_campaign=ashna4all_ecosystem&utm_content=home_video_ad";
+  "https://www.sepanai.com/?utm_source=goalcurrent&utm_medium=advertising&utm_campaign=sepanai_video&utm_content=home_video_ad";
 
 export default function HomeSepanaiVideoAd() {
   return (
-    <aside className={styles.card} aria-label="SEPANAI.COM owned video advertisement">
-      <div className={styles.label}>OWNED ADVERTISEMENT · SEPANAI.COM</div>
+    <aside className={styles.card} aria-label="Advertisement from SEPANAI.COM">
+      <div className={styles.label}>Advertisement</div>
       <div className={styles.copy}>
         <div>
+          <div className={styles.brandRow}>
+            <img src="/sepanai-mark.svg" alt="" className={styles.mark} />
+            <span className={styles.brand}>SEPANAI.COM</span>
+          </div>
           <h2 className={styles.title}>See what SEPANAI.COM is building</h2>
           <p className={styles.text}>
-            Watch the latest SEPANAI.COM product update from the Ashna4all ecosystem.
+            Watch the latest product update, including SocialMedia by SEPANAI.COM.
           </p>
         </div>
         <a
@@ -30,11 +36,14 @@ export default function HomeSepanaiVideoAd() {
         controls
         playsInline
         preload="metadata"
-        src={SEPANAI_VIDEO}
+        poster={SEPANAI_POSTER}
       >
+        <source src={SEPANAI_VIDEO} type="video/mp4" />
         Your browser does not support embedded video.
       </video>
-      <p className={styles.meta}>Owned promotion · no behavioural targeting</p>
+      <p className={styles.fallback}>
+        If playback is unavailable, <a href={SEPANAI_VIDEO}>open the video directly</a>.
+      </p>
     </aside>
   );
 }

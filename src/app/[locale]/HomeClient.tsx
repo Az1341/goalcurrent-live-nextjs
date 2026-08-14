@@ -6,6 +6,7 @@ import HomeHero from "@/components/home/v5/HomeHero";
 import HomePlKickoffCountdown from "@/components/home/v5/HomePlKickoffCountdown";
 import HomeCommunityShieldNews from "@/components/home/v5/HomeCommunityShieldNews";
 import HomeEcosystemPromo from "@/components/home/v5/HomeEcosystemPromo";
+import HomeSepanaiVideoAd from "@/components/home/v5/HomeSepanaiVideoAd";
 import styles from "@/components/home/home-v5.module.css";
 
 const HomeTodaysMatches = dynamic(
@@ -44,6 +45,7 @@ export default function HomeClient() {
         />
         <HomeHero featuredMatch={undefined} wc26Views={[]} plFixtures={plFixtures} />
         <HomeEcosystemPromo />
+        <HomeSepanaiVideoAd />
         <HomeTodaysMatches plFixtures={plFixtures} />
         <HomeCommunityShieldNews />
         <HomeLatestNews />

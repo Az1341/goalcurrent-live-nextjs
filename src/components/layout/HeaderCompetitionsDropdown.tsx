@@ -15,6 +15,7 @@ type HeaderCompetitionsDropdownProps = {
 };
 
 const PANEL_MIN_WIDTH = 280;
+const MOBILE_COMPETITIONS_EVENT = "gc:mobile-competitions-open";
 
 export default function HeaderCompetitionsDropdown({
   label,
@@ -47,6 +48,15 @@ export default function HeaderCompetitionsDropdown({
     setOpen(false);
     setPanelPos(null);
   }, []);
+
+  const handleToggle = useCallback(() => {
+    if (window.matchMedia("(max-width: 833px)").matches) {
+      closeMenu();
+      window.dispatchEvent(new CustomEvent(MOBILE_COMPETITIONS_EVENT));
+      return;
+    }
+    setOpen((value) => !value);
+  }, [closeMenu]);
 
   useLayoutEffect(() => {
     if (!open) return;
@@ -90,8 +100,8 @@ export default function HeaderCompetitionsDropdown({
         className={`${styles.navBtn} ${isActive || open ? styles.navBtnOpen : ""}`}
         aria-expanded={open}
         aria-haspopup="true"
-        aria-controls={panelId}
-        onClick={() => setOpen((value) => !value)}
+        aria-controls={`${panelId} gc-mobile-competitions-sheet`}
+        onClick={handleToggle}
       >
         {label}
         <span aria-hidden="true">{" \u25BE"}</span>

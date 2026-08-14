@@ -18,16 +18,18 @@ test("Community Shield match detail API is fixture-bound and exposes match-day d
   assert.match(detail, /\/fixtures\/lineups\?fixture=/);
   assert.match(detail, /\/fixtures\/statistics\?fixture=/);
   assert.match(detail, /\/fixtures\/events\?fixture=/);
+  assert.match(detail, /\/fixtures\/headtohead\?h2h=/);
   assert.match(route, /fetchCommunityShieldMatchDetail\(fixtureId\)/);
 });
 
-test("Community Shield hub renders line-ups statistics and match events", () => {
+test("Community Shield hub renders pre-match history, line-ups, statistics and events", () => {
   const client = read("src/components/community-shield/CommunityShieldHubClient.tsx");
+  assert.match(client, /Recent meetings/);
   assert.match(client, /Line-ups/);
   assert.match(client, /Match statistics/);
   assert.match(client, /Match events/);
   assert.match(client, /\/api\/community-shield\/match\//);
-  assert.match(client, /refreshInterval:\s*30_000/);
+  assert.match(client, /latest\?\.status === ["']LIVE["'] \? 20_000 : 300_000/);
 });
 
 test("home countdown prioritises Community Shield then falls back to Premier League", () => {
@@ -36,6 +38,16 @@ test("home countdown prioritises Community Shield then falls back to Premier Lea
   assert.match(countdown, /COMMUNITY_SHIELD_DISPLAY_TAIL_MS/);
   assert.match(countdown, /selectNextPlUpcomingFixture\(plFixtures, nowMs\)/);
   assert.match(countdown, /href:\s*["']\/community-shield["']/);
+});
+
+test("live upcoming competition list includes Community Shield and sorts by kickoff", () => {
+  const windows = read("src/lib/live/upcoming-competition-windows.ts");
+  const cards = read("src/components/live/UpcomingCompetitionCards.tsx");
+  assert.match(windows, /"community-shield"/);
+  assert.match(windows, /FA Community Shield/);
+  assert.match(windows, /windows\.sort/);
+  assert.match(cards, /\/api\/community-shield\/fixture/);
+  assert.match(cards, /communityShield:\s*communityShield\?\.fixtures/);
 });
 
 test("mobile bottom nav has direct Competitions access and Community Shield is in the sheet", () => {

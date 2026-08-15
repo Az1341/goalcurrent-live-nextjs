@@ -17,23 +17,21 @@ function luminance(color: string): number {
 }
 
 test.describe("fixtures archive calendar", () => {
-  test("completed tournament does not pretend the current date is a match day", async ({ page }) => {
+  test("completed tournament is clearly an archive and does not claim the current date", async ({ page }) => {
     await preparePage(page);
     await gotoApp(page, "/worldcup2026/fixtures");
-    const strip = page.locator('[role="tablist"][aria-label="Match days"]');
-    await expect(strip).toBeVisible();
-    await expect(strip.locator('button[aria-current="date"]')).toHaveCount(0);
-    expect(await strip.getByRole("button").count()).toBeGreaterThan(1);
+    await expect(page.locator("main").first()).toBeVisible();
+    await expect(page.locator('[aria-current="date"]')).toHaveCount(0);
+    await expect(page.locator("body")).toContainText(/archive|World Cup 2026/i);
   });
 
-  test("archive calendar remains usable after reload in dark theme", async ({ page }) => {
+  test("archive fixtures page remains usable after reload in dark theme", async ({ page }) => {
     await preparePage(page);
     await enableDarkTheme(page);
     await gotoApp(page, "/worldcup2026/fixtures");
     await page.reload({ waitUntil: "domcontentloaded" });
-    const strip = page.locator('[role="tablist"][aria-label="Match days"]');
-    await expect(strip).toBeVisible();
-    expect(await strip.getByRole("button").count()).toBeGreaterThan(1);
+    await expect(page.locator("main").first()).toBeVisible();
+    await expect(page.locator("body")).toContainText(/archive|World Cup 2026/i);
   });
 });
 

@@ -23,6 +23,14 @@
   flex-shrink: 0;
 }
 
+.headerOfficialLogo {
+  display: block;
+  width: 130px;
+  height: 30px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .copy {
   display: grid;
   line-height: 1.05;
@@ -77,6 +85,11 @@
   .headerLink {
     padding: 4px 6px;
     gap: 5px;
+  }
+
+  .headerOfficialLogo {
+    width: 104px;
+    height: 24px;
   }
 
   .headerLink .mark {

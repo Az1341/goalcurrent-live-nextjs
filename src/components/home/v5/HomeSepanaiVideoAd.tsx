@@ -35,7 +35,7 @@ export default function HomeSepanaiVideoAd() {
         className={styles.video}
         controls
         playsInline
-        preload="metadata"
+        preload="none"
         poster={SEPANAI_POSTER}
       >
         <source src={SEPANAI_VIDEO} type="video/mp4" />

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" fill="none" role="img" aria-label="SEPANAI.COM">
+  <g transform="translate(8, 10)">
+    <g stroke="#6EF2C5" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M50 4 L90 26 L90 74 L50 96 L10 74 L10 26 Z"/>
+      <path d="M28 34 H62 C74 34 74 50 62 50 H38 C26 50 26 66 38 66 H72"/>
+      <path d="M34 28 L66 72"/>
+    </g>
+    <g fill="#6EF2C5">
+      <circle cx="50" cy="10" r="5"/>
+      <circle cx="34" cy="28" r="4.5"/>
+      <circle cx="50" cy="50" r="5"/>
+      <circle cx="66" cy="72" r="4.5"/>
+      <circle cx="50" cy="90" r="5"/>
+    </g>
+  </g>
+  <text x="128" y="74" fill="#E2E3E0" font-family="Geist, Inter, Segoe UI, sans-serif" font-size="42" font-weight="600" letter-spacing="0.04em">SEPANAI.COM</text>
+</svg>

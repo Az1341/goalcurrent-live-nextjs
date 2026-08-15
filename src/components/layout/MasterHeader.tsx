@@ -132,11 +132,15 @@ export default function MasterHeader() {
               className={sepanaiStyles.headerLink}
               aria-label="Powered by SEPANAI.COM"
             >
-              <img src="/sepanai-mark.svg" alt="" className={sepanaiStyles.mark} />
-              <span className={sepanaiStyles.copy}>
-                <span className={sepanaiStyles.powered}>Powered by</span>
-                <span className={sepanaiStyles.name}>SEPANAI.COM</span>
-              </span>
+              <span className={sepanaiStyles.powered}>Powered by</span>
+              <img
+                src="/sepanai-logo-official.svg"
+                alt="SEPANAI.COM"
+                width={130}
+                height={30}
+                className={sepanaiStyles.headerOfficialLogo}
+                decoding="async"
+              />
             </a>
             <ThemeToggle />
             <HeaderLocaleDropdown />

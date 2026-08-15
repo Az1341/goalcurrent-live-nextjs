@@ -9,7 +9,7 @@ test.describe("Mobile critical football journeys", () => {
     await preparePage(page);
   });
 
-  test("homepage through tabs, competitions, standings, more, and home return", async ({
+  test("homepage through tabs, competitions, Community Shield, more, and home return", async ({
     page,
   }) => {
     const consoleErrors: string[] = [];
@@ -36,12 +36,11 @@ test.describe("Mobile critical football journeys", () => {
     await mobileNav.getByRole("button", { name: /Competitions/i }).click();
     const competitionSheet = page.locator("#gc-mobile-competitions-sheet");
     await expect(competitionSheet).toBeVisible({ timeout: 10_000 });
-    await expect(competitionSheet.locator('a[href="/community-shield"]')).toBeVisible();
-
-    await gotoApp(page, "/worldcup2026/standings");
-    await waitForShell(page);
-    await expect(page.locator("main").first()).toBeVisible();
-    await expect(page.locator("main")).toContainText(/Pts|Points|GD|Group/i);
+    const communityShieldLink = competitionSheet.locator('a[href="/community-shield"]');
+    await expect(communityShieldLink).toBeVisible();
+    await communityShieldLink.click();
+    await expect(page).toHaveURL(/\/community-shield\/?$/);
+    await expect(page.locator("main").first()).toBeVisible({ timeout: 15_000 });
 
     await gotoApp(page, "/");
     await waitForShell(page);

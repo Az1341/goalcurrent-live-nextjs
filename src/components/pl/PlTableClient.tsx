@@ -19,6 +19,10 @@ import styles from "./PlTable.module.css";
 
 type ViewState = "loading" | "error" | "ready";
 
+type PlTableClientProps = {
+  initialData?: PlStandingsApiResponse;
+};
+
 function formatGoalDiff(value: number): string {
   if (value > 0) return `+${value}`;
   return String(value);
@@ -96,16 +100,17 @@ function StandingRow({
   );
 }
 
-export default function PlTableClient() {
-  const [view, setView] = useState<ViewState>("loading");
-  const [data, setData] = useState<PlStandingsApiResponse | null>(null);
+export default function PlTableClient({ initialData }: PlTableClientProps) {
+  const initialHasRows = Boolean(initialData?.standings?.length);
+  const [view, setView] = useState<ViewState>(initialHasRows ? "ready" : "loading");
+  const [data, setData] = useState<PlStandingsApiResponse | null>(initialData ?? null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
 
     async function loadStandings() {
-      setView("loading");
+      if (!initialHasRows) setView("loading");
       setErrorMessage(null);
 
       try {
@@ -158,10 +163,19 @@ export default function PlTableClient() {
         }
 
         if (cancelled) return;
-        setData(body);
-        setView("ready");
+        if (body.standings.length) {
+          setData(body);
+          setView("ready");
+        } else if (!initialHasRows) {
+          setData(body);
+          setView("ready");
+        }
       } catch (error) {
         if (cancelled) return;
+        if (initialHasRows) {
+          setView("ready");
+          return;
+        }
         setData(null);
         setErrorMessage(
           error instanceof Error ? error.message : "Unknown error",
@@ -174,7 +188,7 @@ export default function PlTableClient() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [initialHasRows]);
 
   const displayStandings = useMemo(
     () => (data?.standings ? resolveDisplayStandings(data.standings) : []),

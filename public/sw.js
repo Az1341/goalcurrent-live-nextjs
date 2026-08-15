@@ -1,6 +1,6 @@
 // GoalCurrent.live — Service Worker (PWA app shell)
 // CACHE_VERSION must change whenever shell/product chrome changes.
-const CACHE_VERSION = "12";
+const CACHE_VERSION = "13";
 const STATIC_CACHE = `goalcurrent-online-static-v${CACHE_VERSION}`;
 const SHELL_CACHE = `goalcurrent-online-shell-v${CACHE_VERSION}`;
 const API_CACHE = `goalcurrent-online-api-v${CACHE_VERSION}`;

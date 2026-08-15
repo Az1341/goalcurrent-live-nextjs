@@ -22,6 +22,7 @@ const LOCALE_PUBLIC_ASSET =
   /^\/(en|es|it|de|fr|nl)\/(flags|images|icons)(\/.*)?$/;
 const LOCALE_PUBLIC_FILE =
   /^\/(en|es|it|de|fr|nl)\/(logo\.svg|favicon\.ico|favicon\.svg|sw\.js|firebase-messaging-sw\.js|OneSignalSDKWorker\.js|OneSignalSDKUpdaterWorker\.js|manifest\.json)$/;
+const ROOT_PUBLIC_FILE = /^\/[^/]+\.[A-Za-z0-9]+$/;
 
 const PUBLIC_STATIC_FILES = new Set([
   "/logo.svg",
@@ -35,7 +36,7 @@ const PUBLIC_STATIC_FILES = new Set([
 ]);
 
 function isRootPublicStaticPath(pathname: string): boolean {
-  if (PUBLIC_STATIC_FILES.has(pathname)) {
+  if (PUBLIC_STATIC_FILES.has(pathname) || ROOT_PUBLIC_FILE.test(pathname)) {
     return true;
   }
   return (
@@ -162,14 +163,12 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = "/api/robots";
     const response = NextResponse.rewrite(url);
-    // robots rewrite skips the HTML security-header path — still attach noindex on preview.
     if (shouldNoIndexDeploy()) {
       response.headers.set("X-Robots-Tag", PREVIEW_X_ROBOTS_TAG);
     }
     return response;
   }
 
-  // Client navigations sometimes request /{locale}/_next/* — rewrite to /_next/*
   const localeAsset = LOCALE_NEXT_ASSET.exec(pathname);
   if (localeAsset) {
     const url = request.nextUrl.clone();
@@ -177,7 +176,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // Locale-prefixed API calls (e.g. mistaken /es/api/*) → /api/*
   const localeApi = LOCALE_API.exec(pathname);
   if (localeApi) {
     const url = request.nextUrl.clone();
@@ -185,7 +183,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // API routes must bypass i18n (otherwise /api/pl/fixtures → /en/api/pl/fixtures → 404)
   if (pathname.startsWith("/api/")) {
     const ip = clientIpFromRequest(request);
     const rateLimit = await checkRateLimitAsync(ip, pathname);
@@ -209,7 +206,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Locale-prefixed /public assets (flags, images, icons, logo)
   const localePublic =
     LOCALE_PUBLIC_ASSET.exec(pathname) ?? LOCALE_PUBLIC_FILE.exec(pathname);
   if (localePublic) {
@@ -218,7 +214,6 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // Pastel design preview must not be reachable on production hosts
   const pastelPath =
     pathname === "/preview-pastel" ||
     /^\/(en|es|it|de|fr|nl)\/preview-pastel\/?$/.test(pathname);
@@ -231,7 +226,8 @@ export async function proxy(request: NextRequest) {
     );
   }
 
-  // Root /public assets must bypass i18n (otherwise /logo.svg → /en/logo.svg → 404 HTML)
+  // Every root-level file with an extension belongs to /public. Bypass i18n so
+  // brand assets (e.g. sepanai-mark.svg) are not rewritten to /en/*.svg.
   if (isRootPublicStaticPath(pathname)) {
     return NextResponse.next();
   }

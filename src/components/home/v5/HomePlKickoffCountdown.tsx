@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PlTeamLogo } from "@/components/pl/PlShared";
+import { FavouriteMatchButton } from "@/components/FavouriteButton";
 import {
   useLocalizedKickoffLabel,
   useIsClientMounted,
@@ -102,6 +103,11 @@ export default function HomePlKickoffCountdown({
 
   const remainingMs = Math.max(0, new Date(fixture.kickoffUtc).getTime() - nowMs);
   const parts = splitCountdownParts(remainingMs);
+  const isCommunityShield = fixture.competition === COMMUNITY_SHIELD_COMPETITION;
+  const favouriteMatchId = isCommunityShield
+    ? `cs:${fixture.fixtureId}`
+    : `pl:${fixture.fixtureId}`;
+  const favouriteLabel = `${fixture.homeTeamName} vs ${fixture.awayTeamName}`;
 
   return (
     <section
@@ -117,9 +123,15 @@ export default function HomePlKickoffCountdown({
     >
       <div className={styles.kickoffCountdownHeader}>
         <span className={styles.kickoffCountdownEyebrow}>
-          {fixture.competition === COMMUNITY_SHIELD_COMPETITION ? "Season curtain-raiser" : t("eyebrow")}
+          {isCommunityShield ? "Season curtain-raiser" : t("eyebrow")}
         </span>
-        <span className={styles.kickoffCountdownComp}>{fixture.competition}</span>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: 10 }}>
+          <span className={styles.kickoffCountdownComp}>{fixture.competition}</span>
+          <FavouriteMatchButton
+            matchId={favouriteMatchId}
+            label={favouriteLabel}
+          />
+        </span>
       </div>
 
       <div className={styles.kickoffCountdownBody}>
@@ -163,7 +175,7 @@ export default function HomePlKickoffCountdown({
       </div>
 
       <Link href={fixture.href} className={styles.kickoffCountdownLink}>
-        {fixture.competition === COMMUNITY_SHIELD_COMPETITION ? "Open match centre" : t("viewMatch")}
+        {isCommunityShield ? "Open match centre" : t("viewMatch")}
       </Link>
     </section>
   );

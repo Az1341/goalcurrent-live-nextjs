@@ -78,7 +78,8 @@ async function assertArchiveContract(page: Page): Promise<void> {
 
 async function assertMatchContract(page: Page): Promise<void> {
   await expect(page.locator("main")).toBeVisible();
-  await expect(page.getByRole("heading", { level: 1 }).first()).toBeVisible();
+  await expect(page.locator("#match-header-title")).toBeVisible({ timeout: 20_000 });
+  await expect(page.locator("#match-timeline-heading")).toBeAttached({ timeout: 20_000 });
   await expectNoDocumentOverflow(page);
 }
 

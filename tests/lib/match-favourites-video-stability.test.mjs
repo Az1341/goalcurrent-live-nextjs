@@ -15,6 +15,13 @@ test("homepage match cards expose a real favourite star control", () => {
   assert.match(cards, /HomeMatchFavourite\.module\.css/);
 });
 
+test("featured Community Shield countdown card exposes a favourite star", () => {
+  const countdown = read("src/components/home/v5/HomePlKickoffCountdown.tsx");
+  assert.match(countdown, /FavouriteMatchButton/);
+  assert.match(countdown, /`cs:\$\{fixture\.fixtureId\}`/);
+  assert.match(countdown, /favouriteLabel/);
+});
+
 test("homepage SEPANAI promotion cannot mount or autoplay embedded video on page load", () => {
   const video = read("src/components/home/v5/HomeSepanaiVideoAd.tsx");
   assert.doesNotMatch(video, /<video\b/i);

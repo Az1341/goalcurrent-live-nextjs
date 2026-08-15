@@ -1,6 +1,17 @@
 import styles from "./HomeEcosystemPromo.module.css";
 
-const CAMPAIGNS = [
+type Campaign = {
+  id: "sepanai" | "socialmedia" | "famvi";
+  brand: string;
+  headline: string;
+  body: string;
+  href: string;
+  className: string;
+  logo?: string;
+  logoAlt?: string;
+};
+
+const CAMPAIGNS: Campaign[] = [
   {
     id: "sepanai",
     brand: "SEPANAI.COM",
@@ -29,7 +40,7 @@ const CAMPAIGNS = [
     logoAlt: "FAMVI",
     className: styles.famvi,
   },
-] as const;
+];
 
 export default function HomeEcosystemPromo() {
   return (
@@ -53,7 +64,7 @@ export default function HomeEcosystemPromo() {
               {campaign.logo ? (
                 <img
                   src={campaign.logo}
-                  alt={campaign.logoAlt}
+                  alt={campaign.logoAlt ?? campaign.brand}
                   className={campaign.id === "famvi" ? styles.famviLogo : styles.sepanaiLogo}
                   loading="lazy"
                   decoding="async"

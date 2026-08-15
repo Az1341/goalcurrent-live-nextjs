@@ -98,25 +98,30 @@ test("SEPANAI and FAMVI advertising always carries official brand marks", () => 
   assert.match(video, /\/sepanai-mark\.svg/);
 });
 
-test("SEPANAI video source is permitted by CSP and has MP4 type", () => {
+test("SEPANAI video source is permitted by CSP and waits for user playback", () => {
   const video = read("src/components/home/v5/HomeSepanaiVideoAd.tsx");
   const csp = read("src/lib/security/csp.ts");
 
   assert.match(video, /SEPANAI\.COM_Product_Update_SocialMedia_1308206_1036\.mp4/);
   assert.match(video, /type=["']video\/mp4["']/);
+  assert.match(video, /preload=["']none["']/);
+  assert.doesNotMatch(video, /autoPlay|autoplay/);
   assert.match(csp, /MEDIA_SRC/);
   assert.match(csp, /https:\/\/www\.sepanai\.com/);
   assert.match(csp, /joinDirective\(["']media-src["'], MEDIA_SRC\)/);
 });
 
-test("header and footer expose clickable Powered by SEPANAI.COM attribution", () => {
+test("header uses canonical SEPANAI.COM logo while footer attribution remains unchanged", () => {
   const header = read("src/components/layout/MasterHeader.tsx");
   const footer = read("src/components/layout/MasterFooter.tsx");
 
-  for (const source of [header, footer]) {
-    assert.match(source, /Powered by/);
-    assert.match(source, /SEPANAI\.COM/);
-    assert.match(source, /sepanai-mark\.svg/);
-    assert.match(source, /https:\/\/www\.sepanai\.com/);
-  }
+  assert.match(header, /Powered by/);
+  assert.match(header, /SEPANAI\.COM/);
+  assert.match(header, /sepanai-logo-official\.svg/);
+  assert.match(header, /https:\/\/www\.sepanai\.com/);
+
+  assert.match(footer, /Powered by/);
+  assert.match(footer, /SEPANAI\.COM/);
+  assert.match(footer, /sepanai-mark\.svg/);
+  assert.match(footer, /https:\/\/www\.sepanai\.com/);
 });

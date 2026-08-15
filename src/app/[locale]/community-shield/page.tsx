@@ -47,9 +47,9 @@ export default async function CommunityShieldPage({ params }: PageProps) {
     : null;
 
   return (
-    <>
+    <main>
       {jsonLd ? <JsonLd data={jsonLd} /> : null}
       <CommunityShieldHubClient initialData={initialData} />
-    </>
+    </main>
   );
 }

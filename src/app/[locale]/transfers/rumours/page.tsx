@@ -1,25 +1,16 @@
 import type { Metadata } from "next";
-import { buildComingSoonMetadata, ComingSoonPage } from "@/lib/coming-soon-page";
+import TransferNewsHub from "@/components/transfers/TransferNewsHub";
+import { buildPageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = buildComingSoonMetadata({
+export const revalidate = 900;
+
+export const metadata: Metadata = buildPageMetadata({
   title: "Transfer Rumours",
+  description: "Current football transfer rumours, talks and reported targets on GoalCurrent.live.",
   path: "/transfers/rumours",
+  locale: "en",
 });
 
 export default function TransferRumoursPage() {
-  return (
-    <ComingSoonPage
-      title="Transfer Rumours"
-      path="/transfers/rumours"
-      emoji="💬"
-      description="Transfer rumours and speculation are coming soon on GoalCurrent.live."
-      links={[
-        { href: "/transfers", label: "Latest Transfers" },
-        { href: "/news/transfers", label: "Transfer News" },
-        { href: "/premier-league/transfers", label: "PL Transfers" },
-      ]}
-      backHref="/transfers"
-      backLabel="← Latest Transfers"
-    />
-  );
+  return <TransferNewsHub view="rumours" />;
 }

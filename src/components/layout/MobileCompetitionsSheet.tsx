@@ -44,6 +44,10 @@ export default function MobileCompetitionsSheet({ open, onClose, returnFocusRef 
 
   if (!open) return null;
 
+  const currentCompetitions = DESKTOP_COMPETITIONS_NAV.filter(
+    (competition) => competition.id !== "comshield",
+  );
+
   return (
     <>
       <div className={`${styles.moreOverlay} ${styles.moreOverlayOpen}`} onClick={onClose} aria-hidden="true" />
@@ -71,7 +75,15 @@ export default function MobileCompetitionsSheet({ open, onClose, returnFocusRef 
           </button>
         </div>
         <nav className={styles.sheetList} aria-label={t("competitions")}>
-          {DESKTOP_COMPETITIONS_NAV.map((competition) => (
+          <NavLink
+            href="/community-shield"
+            className={styles.sheetLink}
+            onClick={onClose}
+            data-gc-mobile-community-shield="true"
+          >
+            {t("communityShield")}
+          </NavLink>
+          {currentCompetitions.map((competition) => (
             <NavLink
               key={competition.id}
               href={competition.href}

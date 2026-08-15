@@ -11,8 +11,8 @@ type Campaign = {
   body: string;
   href: string;
   className: string;
-  logoSrc?: string;
-  logoAlt?: string;
+  logoSrc: string;
+  logoAlt: string;
 };
 
 const CAMPAIGNS: Campaign[] = [
@@ -33,6 +33,8 @@ const CAMPAIGNS: Campaign[] = [
     body: "AI-assisted social media workflows built for small businesses.",
     href: "https://socialmedia.sepanai.com/?utm_source=goalcurrent&utm_medium=live_score_ad&utm_campaign=socialmedia&utm_content=live_match",
     className: styles.socialmedia,
+    logoSrc: "/sepanai-mark.svg",
+    logoAlt: "SEPANAI.COM",
   },
   {
     id: "famvi",
@@ -60,17 +62,13 @@ export default function LiveScoreAdUnit({ index }: LiveScoreAdUnitProps) {
       >
         <span className={styles.adLabel}>Advertisement</span>
         <span className={styles.brandRow}>
-          {campaign.logoSrc ? (
-            <img
-              className={campaign.id === "famvi" ? styles.famviLogo : styles.sepanaiLogo}
-              src={campaign.logoSrc}
-              alt={campaign.logoAlt ?? campaign.brand}
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <span className={styles.socialMark}>SM</span>
-          )}
+          <img
+            className={campaign.id === "famvi" ? styles.famviLogo : styles.sepanaiLogo}
+            src={campaign.logoSrc}
+            alt={campaign.logoAlt}
+            loading="lazy"
+            decoding="async"
+          />
           <span className={styles.brand}>{campaign.brand}</span>
         </span>
         <span className={styles.copy}>

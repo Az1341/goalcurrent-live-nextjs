@@ -93,12 +93,14 @@ export default function MasterHeader() {
             <div className={styles.desktopNavPrimary}>
               {DESKTOP_PRIMARY_NAV.map((item) => {
                 const active = isMainNavActive(pathname, item.href, item.exact);
+                const isFavourites = item.href === "/favourites";
                 return (
                   <NavLink
                     key={item.href}
                     href={item.href}
                     className={`${styles.navLink} ${active ? styles.navLinkActive : ""}`}
                   >
+                    {isFavourites ? <span aria-hidden="true">★ </span> : null}
                     {t(item.labelKey)}
                   </NavLink>
                 );

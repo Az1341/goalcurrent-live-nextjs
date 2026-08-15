@@ -27,7 +27,7 @@ const CAMPAIGNS: Campaign[] = [
     brand: "SocialMedia by SEPANAI.COM",
     headline: "Create. Plan. Publish.",
     body: "AI-assisted social media workflows for small businesses, built to turn ideas into consistent publishing.",
-    href: "https://socialmedia.sepanai.com/?utm_source=goalcurrent&utm_medium=advertising&utm_campaign=ashna4all_ecosystem&utm_content=home_socialmedia_display",
+    href: "/ecosystem/socialmedia?utm_source=goalcurrent&utm_medium=advertising&utm_campaign=ashna4all_ecosystem&utm_content=home_socialmedia_display",
     logo: "/sepanai-mark.svg",
     logoAlt: "SEPANAI.COM",
     className: styles.socialmedia,
@@ -56,7 +56,7 @@ export default function HomeEcosystemPromo() {
           <a
             key={campaign.id}
             href={campaign.href}
-            target="_blank"
+            target={campaign.id === "socialmedia" ? undefined : "_blank"}
             rel="noopener noreferrer sponsored"
             className={`${styles.card} ${campaign.className}`}
             data-gc-ad={campaign.id}

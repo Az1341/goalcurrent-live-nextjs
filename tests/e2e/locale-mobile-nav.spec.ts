@@ -51,7 +51,7 @@ test.describe("Mobile bottom navigation", () => {
     await preparePage(page);
   });
 
-  test("bottom tabs navigate to live and favourites", async ({ page }) => {
+  test("bottom tabs navigate to scores and favourites", async ({ page }) => {
     await gotoApp(page, "/");
 
     const mobileNav = page.getByRole("navigation", {
@@ -59,7 +59,7 @@ test.describe("Mobile bottom navigation", () => {
     });
     await expect(mobileNav).toBeVisible();
 
-    await mobileNav.getByRole("link", { name: /^Live$|En direct|En vivo/i }).click();
+    await mobileNav.getByRole("link", { name: /^Scores$/i }).click();
     await expect(page).toHaveURL(/\/live/);
     await waitForShell(page);
 
@@ -68,6 +68,16 @@ test.describe("Mobile bottom navigation", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: /Favourites|Favoris|Favoritos/i }),
     ).toBeVisible();
+  });
+
+  test("Competitions sheet opens from mobile tab bar", async ({ page }) => {
+    await gotoApp(page, "/");
+
+    const competitionsButton = page.getByRole("button", { name: /Competitions/i });
+    await expect(competitionsButton).toBeVisible();
+    await competitionsButton.click();
+    await expect(page.locator("#gc-mobile-competitions-sheet")).toBeVisible({ timeout: 10_000 });
+    await expect(page.locator('a[href="/community-shield"]').last()).toBeVisible();
   });
 
   test("More sheet opens from mobile tab bar", async ({ page }) => {

@@ -66,6 +66,29 @@ test.describe("scores page after WC26 archive", () => {
   });
 });
 
+test.describe("current data surfaces", () => {
+  test("transfers is a populated data surface rather than a coming-soon shell", async ({ page }) => {
+    await preparePage(page);
+    await gotoApp(page, "/transfers");
+    await expect(page.getByRole("heading", { level: 1, name: /Latest Transfers/i })).toBeVisible({ timeout: 20_000 });
+    await expect(page.locator("main")).not.toContainText(/coming soon/i);
+    await expect(page.locator("main")).toContainText(/Latest transfer coverage|No current transfer stories/i);
+  });
+
+  test("Premier League table keeps server fallback visible when browser refresh fails", async ({ page }) => {
+    await preparePage(page);
+    await page.route("**/api/pl/standings", (route) => route.fulfill({
+      status: 503,
+      contentType: "application/json",
+      body: JSON.stringify({ error: "unavailable" }),
+    }));
+    await gotoApp(page, "/premier-league/table");
+    await expect(page.getByRole("heading", { level: 1, name: /Premier League Table 2026\/27/i })).toBeVisible({ timeout: 20_000 });
+    await expect(page.locator("table tbody tr").first()).toBeVisible({ timeout: 20_000 });
+    await expect(page.locator("main")).not.toContainText(/Could not load table/i);
+  });
+});
+
 test.describe("match detail fallback", () => {
   test("match page renders header and content sections even without API data", async ({ page }) => {
     await preparePage(page);

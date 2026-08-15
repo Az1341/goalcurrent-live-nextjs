@@ -8,7 +8,7 @@ import {
   buildZeroStandingsFromTeams,
   resolveDisplayStandings,
 } from "@/lib/pl/standings-display";
-import type { PlFixtureRow } from "@/lib/pl/types";
+import type { PlFixtureRow, PlStandingsApiResponse } from "@/lib/pl/types";
 import { buildPageMetadata } from "@/lib/page-metadata";
 import { rankingListSchema } from "@/lib/seo/schema";
 import { SITE_NAME } from "@/lib/site-url";
@@ -54,12 +54,17 @@ export default async function PremierLeagueTablePage() {
   const body = await fetchPlStandings();
   let standings = resolveDisplayStandings(body.standings);
 
-  // Match PlTableClient preseason/fallback path using real SSOT club names.
   if (!standings.length) {
     standings = resolveDisplayStandings(
       buildZeroStandingsFromTeams(teamsFromFixtures(getPlSsotFixtures())),
     );
   }
+
+  const initialData: PlStandingsApiResponse = {
+    ...body,
+    standings,
+    error: standings.length ? undefined : body.error,
+  };
 
   const schema = rankingListSchema({
     path: "/premier-league/table",
@@ -80,7 +85,7 @@ export default async function PremierLeagueTablePage() {
   return (
     <>
       {schema ? <JsonLd data={schema} /> : null}
-      <PlTableClient />
+      <PlTableClient initialData={initialData} />
     </>
   );
 }

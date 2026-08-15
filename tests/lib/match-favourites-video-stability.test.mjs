@@ -22,3 +22,12 @@ test("homepage SEPANAI promotion cannot mount or autoplay embedded video on page
   assert.match(video, />\s*Watch video\s*</);
   assert.match(video, /homepage never loads or plays the video automatically/i);
 });
+
+test("GoalCurrent uses one founder-supplied SEPANAI artwork for all SEPANAI asset paths", () => {
+  const mark = read("public/sepanai-mark.svg");
+  const headerLogo = read("public/sepanai-logo-official.svg");
+  assert.equal(mark, headerLogo);
+  assert.match(mark, /viewBox="0 0 291\.000000 332\.000000"/);
+  assert.match(mark, /fill="#5EE8BB"/);
+  assert.match(mark, /Created by potrace 1\.16/);
+});

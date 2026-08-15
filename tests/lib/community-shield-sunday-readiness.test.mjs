@@ -98,17 +98,15 @@ test("SEPANAI and FAMVI advertising always carries official brand marks", () => 
   assert.match(video, /\/sepanai-mark\.svg/);
 });
 
-test("SEPANAI video is not mounted or fetched until the visitor explicitly requests it", () => {
+test("SEPANAI video is never mounted or fetched by the homepage before an explicit visitor action", () => {
   const video = read("src/components/home/v5/HomeSepanaiVideoAd.tsx");
   const csp = read("src/lib/security/csp.ts");
 
-  assert.match(video, /useState\(false\)/);
-  assert.match(video, /videoRequested\s*\?\s*\(/);
-  assert.match(video, /onClick=\{\(\) => setVideoRequested\(true\)\}/);
-  assert.match(video, /Load SEPANAI\.COM product update video/);
+  assert.doesNotMatch(video, /<video\b/i);
+  assert.doesNotMatch(video, /autoPlay|autoplay|videoRequested|SEPANAI_POSTER/);
   assert.match(video, /SEPANAI\.COM_Product_Update_SocialMedia_1308206_1036\.mp4/);
-  assert.match(video, /type=["']video\/mp4["']/);
-  assert.doesNotMatch(video, /autoPlay|autoplay/);
+  assert.match(video, />\s*Watch video\s*</);
+  assert.match(video, /homepage never loads or plays the video automatically/i);
   assert.match(csp, /MEDIA_SRC/);
   assert.match(csp, /https:\/\/www\.sepanai\.com/);
   assert.match(csp, /joinDirective\(["']media-src["'], MEDIA_SRC\)/);

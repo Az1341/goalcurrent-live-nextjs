@@ -1,0 +1,36 @@
+.cardShell {
+  position: relative;
+}
+
+.cardShell > a > div:first-child {
+  padding-right: 40px;
+}
+
+.star {
+  position: absolute !important;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  display: grid !important;
+  place-items: center;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 1px solid var(--border, #d8dbe2) !important;
+  border-radius: 999px !important;
+  background: var(--bg-surface, #fff) !important;
+  color: #d69e00 !important;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.12);
+  font-size: 1.2rem !important;
+  line-height: 1 !important;
+  cursor: pointer;
+}
+
+.star:hover,
+.star:focus-visible {
+  border-color: #d69e00 !important;
+  outline: 2px solid rgba(214, 158, 0, 0.2);
+  outline-offset: 2px;
+}

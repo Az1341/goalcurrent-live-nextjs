@@ -61,7 +61,8 @@ async function assertHomepageContract(page: Page, viewportWidth: number): Promis
   await expect(page.locator("body")).toContainText(/Your Family.?s Chief of Staff/i);
   await expect(page.locator('img[src="/sepanai-mark.svg"]').first()).toBeVisible();
   await expect(page.locator('img[src="/famvi-wordmark-inline.svg"]').first()).toBeVisible();
-  await expect(page.locator("video").first()).toBeVisible();
+  await expect(page.locator("video")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /Watch video/i })).toBeVisible();
   await expectNoDocumentOverflow(page);
 
   if (viewportWidth === 390) {

@@ -16,10 +16,12 @@ export default function SocialLinks({
   showLabel = false,
 }: SocialLinksProps) {
   const t = useTranslations("nav");
+  // Standing product rule: X/Twitter is excluded from public GoalCurrent social links.
+  const publicSocialLinks = FOOTER_SOCIAL.filter((social) => social.icon !== "twitter");
 
   return (
     <>
-      {FOOTER_SOCIAL.map((social) => (
+      {publicSocialLinks.map((social) => (
         <a
           key={social.href}
           href={social.href}

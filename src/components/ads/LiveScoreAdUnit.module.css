@@ -1,0 +1,150 @@
+.item {
+  list-style: none;
+  margin: 10px 0 12px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.14);
+}
+
+.link {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "label label label"
+    "brand copy cta";
+  align-items: center;
+  gap: 10px 14px;
+  padding: 12px 14px 14px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.adLabel {
+  grid-area: label;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #111827;
+  font-size: 0.65rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.brandRow {
+  grid-area: brand;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.brand {
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.copy {
+  grid-area: copy;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.headline {
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.body {
+  font-size: 0.76rem;
+  line-height: 1.35;
+  opacity: 0.86;
+}
+
+.cta {
+  grid-area: cta;
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #111827;
+  font-size: 0.74rem;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.sepanai {
+  border: 1px solid #66e9bd;
+  background: linear-gradient(120deg, #101b36 0%, #142a4f 55%, #173b46 100%);
+  color: #f8fffd;
+}
+
+.socialmedia {
+  border: 1px solid #ffb45b;
+  background: linear-gradient(120deg, #4b145f 0%, #742370 52%, #9b3d63 100%);
+  color: #fffaf4;
+}
+
+.famvi {
+  border: 1px solid #fdad09;
+  background: linear-gradient(120deg, #ecfbff 0%, #fff7df 100%);
+  color: #113847;
+}
+
+.sepanaiLogo {
+  width: 24px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.famviLogo {
+  width: 66px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.socialMark {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 9px;
+  background: #fff;
+  color: #6a1b66;
+  font-size: 0.72rem;
+  font-weight: 950;
+}
+
+@media (max-width: 640px) {
+  .item {
+    margin: 8px 0 10px;
+    border-radius: 14px;
+  }
+
+  .link {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "label label"
+      "brand cta"
+      "copy copy";
+    gap: 8px 10px;
+    padding: 11px 12px 12px;
+  }
+
+  .brand {
+    font-size: 0.72rem;
+    white-space: normal;
+  }
+
+  .headline {
+    font-size: 0.86rem;
+  }
+
+  .body {
+    font-size: 0.73rem;
+  }
+}

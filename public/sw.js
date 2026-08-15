@@ -1,50 +1,19 @@
 // GoalCurrent.live — Service Worker (PWA app shell)
-// Bump CACHE_VERSION when changing cache strategy so activate purges stale shells.
-const CACHE_VERSION = "9";
+// CACHE_VERSION must change whenever shell/product chrome changes.
+const CACHE_VERSION = "13";
 const STATIC_CACHE = `goalcurrent-online-static-v${CACHE_VERSION}`;
 const SHELL_CACHE = `goalcurrent-online-shell-v${CACHE_VERSION}`;
-const API_CACHE = "goalcurrent-online-api-v1";
+const API_CACHE = `goalcurrent-online-api-v${CACHE_VERSION}`;
 
 const LOCALES = ["en", "es", "it", "de", "fr", "nl"];
-const RTL_LOCALES = new Set([]);
 
 const OFFLINE_COPY = {
-  en: {
-    title: "GoalCurrent",
-    description:
-      "You are offline. Check your connection to see live World Cup scores.",
-    tryAgain: "Try again",
-  },
-  fr: {
-    title: "GoalCurrent",
-    description:
-      "Vous êtes hors ligne. Vérifiez votre connexion pour voir les scores en direct de la Coupe du monde.",
-    tryAgain: "Réessayer",
-  },
-  de: {
-    title: "GoalCurrent",
-    description:
-      "Sie sind offline. Prüfen Sie Ihre Verbindung, um Live-Ergebnisse der WM zu sehen.",
-    tryAgain: "Erneut versuchen",
-  },
-  nl: {
-    title: "GoalCurrent",
-    description:
-      "Je bent offline. Controleer je verbinding om live WK-scores te bekijken.",
-    tryAgain: "Opnieuw proberen",
-  },
-  es: {
-    title: "GoalCurrent",
-    description:
-      "Estás sin conexión. Comprueba tu conexión para ver los resultados en vivo del Mundial.",
-    tryAgain: "Reintentar",
-  },
-  it: {
-    title: "GoalCurrent",
-    description:
-      "Sei offline. Controlla la connessione per vedere i risultati live del Mondiale.",
-    tryAgain: "Riprova",
-  },
+  en: "You are offline. Check your connection to see current live football scores.",
+  fr: "Vous êtes hors ligne. Vérifiez votre connexion pour voir les scores de football en direct.",
+  de: "Sie sind offline. Prüfen Sie Ihre Verbindung, um aktuelle Live-Fußballergebnisse zu sehen.",
+  nl: "Je bent offline. Controleer je verbinding om actuele live voetbalscores te bekijken.",
+  es: "Estás sin conexión. Comprueba tu conexión para ver los resultados actuales de fútbol en directo.",
+  it: "Sei offline. Controlla la connessione per vedere i risultati di calcio live aggiornati.",
 };
 
 const STATIC_ASSETS = [
@@ -53,9 +22,9 @@ const STATIC_ASSETS = [
   "/icons/icon-512.png",
   "/icons/apple-touch-icon.png",
   "/logo.svg",
+  "/sepanai-mark.svg",
+  "/famvi-wordmark-inline.svg",
 ];
-
-const SHELL_URLS = ["/"];
 
 function isLocalDevHost(hostname) {
   return hostname === "localhost" || hostname.endsWith(".localhost");
@@ -63,139 +32,104 @@ function isLocalDevHost(hostname) {
 
 function localeFromPathname(pathname) {
   const segment = pathname.split("/").filter(Boolean)[0];
-  return LOCALES.includes(segment) && segment !== "en" ? segment : "en";
+  return LOCALES.includes(segment) ? segment : "en";
 }
 
 function localeHomePath(locale) {
   return locale === "en" ? "/" : `/${locale}`;
 }
 
-function isAppShellPath(pathname) {
-  if (pathname === "/") return true;
-  const parts = pathname.split("/").filter(Boolean);
-  return parts.length === 1 && LOCALES.includes(parts[0]);
-}
-
 function offlineHtmlForRequest(request) {
   const url = new URL(request.url);
   const locale = localeFromPathname(url.pathname);
-  const copy = OFFLINE_COPY[locale] || OFFLINE_COPY.en;
-  const dir = RTL_LOCALES.has(locale) ? "rtl" : "ltr";
+  const description = OFFLINE_COPY[locale] || OFFLINE_COPY.en;
   const home = localeHomePath(locale);
 
-  return `<!DOCTYPE html>
-<html lang="${locale}" dir="${dir}">
-<head><meta charset="UTF-8"><title>${copy.title} — Offline</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#5c0a1a">
-<style>
-  body{margin:0;background:#5c0a1a;color:#fff;font-family:sans-serif;
-    display:flex;flex-direction:column;align-items:center;
-    justify-content:center;min-height:100vh;text-align:center;padding:20px}
-  h1{color:#f5c6ce;font-size:2rem}
-  p{color:#f0d4d8;max-width:300px}
-  a{color:#f5c6ce;text-decoration:none;margin-top:20px;display:inline-block}
-</style></head>
-<body>
-  <h1>${copy.title}</h1>
-  <p>${copy.description}</p>
-  <a href="${home}">${copy.tryAgain}</a>
-</body></html>`;
+  return `<!doctype html><html lang="${locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#5c0a1a"><title>GoalCurrent — Offline</title><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#fff;color:#1d1d1f;font-family:system-ui,sans-serif;padding:24px;text-align:center}.card{max-width:420px}h1{margin:0 0 12px}p{line-height:1.5;color:#5f6368}a{display:inline-block;margin-top:12px;color:#c8102e;font-weight:700}</style></head><body><div class="card"><h1>GoalCurrent</h1><p>${description}</p><a href="${home}">Try again</a></div></body></html>`;
 }
 
-async function cacheNextStaticAssetsFromHtml(response) {
-  try {
-    const text = await response.text();
-    const matches = text.match(/\/_next\/static\/[^"'\s)]+/g) || [];
-    const urls = [...new Set(matches)];
-    if (urls.length === 0) return;
-
-    const staticCache = await caches.open(STATIC_CACHE);
-    await Promise.allSettled(
-      urls.map((path) =>
-        staticCache.add(new URL(path, self.location.origin).href).catch(() => {
-          /* chunk may 404 on partial deploy */
-        }),
-      ),
-    );
-  } catch {
-    /* ignore parse failures */
-  }
-}
-
-async function staleWhileRevalidateShell(request) {
-  const shellCache = await caches.open(SHELL_CACHE);
-  const cached = await shellCache.match(request);
-
-  const refresh = fetch(request)
-    .then(async (response) => {
-      if (!response.ok) return response;
-      await shellCache.put(request, response.clone());
-      void cacheNextStaticAssetsFromHtml(response.clone());
-      return response;
-    })
-    .catch(() => null);
-
-  if (cached) {
-    void refresh;
-    return cached;
-  }
-
-  const fresh = await refresh;
-  if (fresh) return fresh;
-
-  const rootFallback = await shellCache.match("/");
-  if (rootFallback) return rootFallback;
-
-  return new Response(offlineHtmlForRequest(request), {
-    status: 200,
-    headers: { "Content-Type": "text/html; charset=utf-8" },
-  });
-}
-
-async function staleWhileRevalidateAsset(request, cacheName) {
+async function cacheResponse(cacheName, request, response) {
+  if (!response || !response.ok) return;
   const cache = await caches.open(cacheName);
-  const cached = await cache.match(request);
+  await cache.put(request, response.clone());
+}
 
+async function networkFirstNavigation(request) {
+  try {
+    const response = await fetch(request, { cache: "no-store" });
+    if (response.ok) await cacheResponse(SHELL_CACHE, request, response);
+    return response;
+  } catch {
+    const cache = await caches.open(SHELL_CACHE);
+    const exact = await cache.match(request);
+    if (exact) return exact;
+    const locale = localeFromPathname(new URL(request.url).pathname);
+    const home = await cache.match(localeHomePath(locale));
+    if (home) return home;
+    const root = await cache.match("/");
+    if (root) return root;
+    return new Response(offlineHtmlForRequest(request), {
+      status: 200,
+      headers: { "Content-Type": "text/html; charset=utf-8" },
+    });
+  }
+}
+
+async function staleWhileRevalidateAsset(request) {
+  const cache = await caches.open(STATIC_CACHE);
+  const cached = await cache.match(request);
   const refresh = fetch(request)
     .then(async (response) => {
-      if (response.ok) {
-        await cache.put(request, response.clone());
-      }
+      if (response.ok) await cache.put(request, response.clone());
       return response;
     })
     .catch(() => null);
-
   if (cached) {
     void refresh;
     return cached;
   }
+  return (await refresh) || new Response("Offline", { status: 503 });
+}
 
-  const fresh = await refresh;
-  if (fresh) return fresh;
-  return new Response("Offline", { status: 503 });
+async function cacheFirstAsset(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    if (response.ok) await cacheResponse(STATIC_CACHE, request, response);
+    return response;
+  } catch {
+    return new Response("Offline — asset not cached", { status: 503 });
+  }
+}
+
+async function networkFirstApi(request, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(request, { signal: controller.signal });
+    clearTimeout(timer);
+    if (response.ok) await cacheResponse(API_CACHE, request, response);
+    return response;
+  } catch {
+    clearTimeout(timer);
+    const cache = await caches.open(API_CACHE);
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    return new Response(JSON.stringify({ error: "offline" }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const staticCache = await caches.open(STATIC_CACHE);
-      await Promise.allSettled(
-        STATIC_ASSETS.map((url) =>
-          staticCache.add(url).catch(() => {
-            /* optional asset */
-          }),
-        ),
-      );
-
+      await Promise.allSettled(STATIC_ASSETS.map((url) => staticCache.add(url)));
       const shellCache = await caches.open(SHELL_CACHE);
-      await Promise.allSettled(
-        SHELL_URLS.map((url) =>
-          shellCache.add(url).catch(() => {
-            /* shell may fail on first install offline */
-          }),
-        ),
-      );
+      await Promise.allSettled(["/"].map((url) => shellCache.add(url)));
     })(),
   );
   self.skipWaiting();
@@ -204,147 +138,50 @@ self.addEventListener("install", (event) => {
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
-      if (isLocalDevHost(self.location.hostname)) {
-        const cacheNames = await caches.keys();
-        await Promise.all(cacheNames.map((name) => caches.delete(name)));
-        await self.registration.unregister();
-        const clients = await self.clients.matchAll({ type: "window" });
-        await Promise.all(
-          clients.map((client) =>
-            "navigate" in client ? client.navigate(client.url) : undefined,
-          ),
-        );
-        return;
-      }
-
-      const activeCaches = new Set([STATIC_CACHE, SHELL_CACHE, API_CACHE]);
       const cacheNames = await caches.keys();
       await Promise.all(
         cacheNames
-          .filter(
-            (name) =>
-              name.startsWith("goalcurrent-online-") && !activeCaches.has(name),
-          )
+          .filter((name) => name.startsWith("goalcurrent-online-") && ![STATIC_CACHE, SHELL_CACHE, API_CACHE].includes(name))
           .map((name) => caches.delete(name)),
       );
+      if (isLocalDevHost(self.location.hostname)) {
+        await Promise.all((await caches.keys()).map((name) => caches.delete(name)));
+        await self.registration.unregister();
+        return;
+      }
       await self.clients.claim();
     })(),
   );
 });
 
-function isPublicStaticAsset(pathname) {
-  return (
-    pathname.startsWith("/flags/") ||
-    pathname.startsWith("/images/") ||
-    pathname.startsWith("/icons/") ||
-    pathname === "/logo.svg" ||
-    pathname === "/favicon.ico" ||
-    pathname === "/favicon.svg"
-  );
-}
-
 self.addEventListener("fetch", (event) => {
-  const url = new URL(event.request.url);
+  const request = event.request;
+  const url = new URL(request.url);
+  if (request.method !== "GET" || url.origin !== self.location.origin || isLocalDevHost(url.hostname)) return;
 
-  if (event.request.method !== "GET") return;
-  if (url.origin !== location.origin) return;
-  if (isLocalDevHost(url.hostname)) return;
-
-  // Never cache-intercept flags, photos, or logos — always load fresh from network.
-  if (isPublicStaticAsset(url.pathname)) {
-    return;
-  }
-
-  if (event.request.mode === "navigate") {
-    if (isAppShellPath(url.pathname)) {
-      event.respondWith(staleWhileRevalidateShell(event.request));
-    } else {
-      event.respondWith(
-        fetch(event.request).catch(async () => {
-          const shellCache = await caches.open(SHELL_CACHE);
-          return (
-            (await shellCache.match(event.request)) ||
-            (await shellCache.match("/")) ||
-            new Response(offlineHtmlForRequest(event.request), {
-              status: 200,
-              headers: { "Content-Type": "text/html; charset=utf-8" },
-            })
-          );
-        }),
-      );
-    }
+  if (request.mode === "navigate") {
+    event.respondWith(networkFirstNavigation(request));
     return;
   }
 
   if (url.pathname.startsWith("/api/")) {
-    event.respondWith(networkFirstWithTimeout(event.request, 5000));
-    return;
-  }
-
-  const accept = event.request.headers.get("accept") || "";
-  if (accept.includes("text/html")) {
-    event.respondWith(networkFirstHTML(event.request));
+    event.respondWith(networkFirstApi(request, 5000));
     return;
   }
 
   if (url.pathname.startsWith("/_next/")) {
-    event.respondWith(staleWhileRevalidateAsset(event.request, STATIC_CACHE));
+    event.respondWith(staleWhileRevalidateAsset(request));
     return;
   }
 
-  event.respondWith(cacheFirst(event.request));
+  if (
+    url.pathname.startsWith("/flags/") ||
+    url.pathname.startsWith("/images/") ||
+    url.pathname.startsWith("/icons/") ||
+    url.pathname.endsWith(".svg") ||
+    url.pathname === "/favicon.ico" ||
+    url.pathname === "/manifest.json"
+  ) {
+    event.respondWith(cacheFirstAsset(request));
+  }
 });
-
-async function cacheFirst(request) {
-  const cached = await caches.match(request);
-  if (cached) return cached;
-  try {
-    const response = await fetch(request);
-    if (response.ok) {
-      const cache = await caches.open(STATIC_CACHE);
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch {
-    return new Response("Offline — asset not cached", { status: 503 });
-  }
-}
-
-async function networkFirstHTML(request) {
-  try {
-    const response = await fetch(request);
-    if (response.ok) {
-      const cache = await caches.open(SHELL_CACHE);
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch {
-    const cached = await caches.match(request, { cacheName: SHELL_CACHE });
-    if (cached) return cached;
-    return new Response(offlineHtmlForRequest(request), {
-      status: 200,
-      headers: { "Content-Type": "text/html; charset=utf-8" },
-    });
-  }
-}
-
-async function networkFirstWithTimeout(request, timeout) {
-  try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeout);
-    const response = await fetch(request, { signal: controller.signal });
-    clearTimeout(timer);
-    if (response.ok) {
-      const cache = await caches.open(API_CACHE);
-      cache.put(request, response.clone());
-    }
-    return response;
-  } catch {
-    const cached = await caches.match(request, { cacheName: API_CACHE });
-    if (cached) return cached;
-    return new Response(JSON.stringify({ error: "offline" }), {
-      status: 503,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-}

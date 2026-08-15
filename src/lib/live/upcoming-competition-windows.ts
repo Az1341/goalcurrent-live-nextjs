@@ -3,7 +3,7 @@
  * first kickoff day + the next calendar day (local), per competition.
  */
 
-export type UpcomingCompKey = "pl" | "ucl" | "facup" | "unl";
+export type UpcomingCompKey = "community-shield" | "pl" | "ucl" | "facup" | "unl";
 
 export type UpcomingMatchLink = {
   id: string;
@@ -79,10 +79,7 @@ function windowForCompetition(
       const t = new Date(row.kickoffUtc).getTime();
       return Number.isFinite(t) && t >= nowMs - 3 * 60 * 60 * 1000;
     })
-    .sort(
-      (a, b) =>
-        new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime(),
-    );
+    .sort((a, b) => new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime());
 
   if (upcoming.length === 0) return null;
 
@@ -118,6 +115,14 @@ function windowForCompetition(
 }
 
 export function buildUpcomingCompetitionWindows(input: {
+  communityShield?: Array<{
+    fixtureId: number;
+    kickoffUtc: string | null;
+    homeTeamName: string;
+    awayTeamName: string;
+    venue?: string | null;
+    status: string;
+  }>;
   pl?: Array<{
     fixtureId: number;
     kickoffUtc: string;
@@ -156,6 +161,29 @@ export function buildUpcomingCompetitionWindows(input: {
 }): UpcomingCompetitionWindow[] {
   const nowMs = (input.now ?? new Date()).getTime();
   const windows: UpcomingCompetitionWindow[] = [];
+
+  if (input.communityShield?.length) {
+    const w = windowForCompetition(
+      "community-shield",
+      "FA Community Shield",
+      "/community-shield",
+      input.communityShield
+        .filter((row): row is typeof row & { kickoffUtc: string } => Boolean(row.kickoffUtc))
+        .filter((row) => !["FT", "CANCELLED"].includes(row.status))
+        .filter((row) => new Date(row.kickoffUtc).getTime() > nowMs)
+        .map((row) => ({
+          id: `community-shield-${row.fixtureId}`,
+          kickoffUtc: row.kickoffUtc,
+          homeName: row.homeTeamName,
+          awayName: row.awayTeamName,
+          href: "/community-shield",
+          meta: "Season curtain-raiser",
+          venueLabel: row.venue ?? undefined,
+        })),
+      nowMs,
+    );
+    if (w) windows.push(w);
+  }
 
   if (input.pl?.length) {
     const w = windowForCompetition(
@@ -198,9 +226,7 @@ export function buildUpcomingCompetitionWindows(input: {
       "FA Cup",
       "/fa-cup",
       input.facup
-        .filter((row): row is typeof row & { kickoffUtc: string } =>
-          Boolean(row.kickoffUtc),
-        )
+        .filter((row): row is typeof row & { kickoffUtc: string } => Boolean(row.kickoffUtc))
         .map((row) => ({
           id: `facup-${row.fixtureId}`,
           kickoffUtc: row.kickoffUtc,

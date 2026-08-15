@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import { Fragment, useMemo } from "react";
+import LiveScoreAdUnit from "@/components/ads/LiveScoreAdUnit";
 import { KickoffTime } from "@/components/KickoffTime";
 import { Link } from "@/i18n/navigation";
 import { useLiveFixtures } from "@/lib/client/useLiveFixtures";
@@ -44,20 +45,23 @@ export default function PlLivePanel() {
         )}
       </h2>
       <ul className={styles.list}>
-        {live.map((row) => (
-          <li key={row.fixtureId}>
-            <Link
-              href={`/premier-league/match/${row.fixtureId}`}
-              className={styles.row}
-            >
-              <span>
-                {row.homeTeamName} vs {row.awayTeamName}
-              </span>
-              <span className={styles.score}>
-                {row.homeScore ?? 0}–{row.awayScore ?? 0}
-              </span>
-            </Link>
-          </li>
+        {live.map((row, index) => (
+          <Fragment key={row.fixtureId}>
+            <li>
+              <Link
+                href={`/premier-league/match/${row.fixtureId}`}
+                className={styles.row}
+              >
+                <span>
+                  {row.homeTeamName} vs {row.awayTeamName}
+                </span>
+                <span className={styles.score}>
+                  {row.homeScore ?? 0}–{row.awayScore ?? 0}
+                </span>
+              </Link>
+            </li>
+            <LiveScoreAdUnit index={index} />
+          </Fragment>
         ))}
         {live.length === 0
           ? upcoming.map((row) => (

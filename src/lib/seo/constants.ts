@@ -1,12 +1,16 @@
 import { absoluteUrl } from "@/lib/site-url";
 
 export const DEFAULT_OG_IMAGE_ALT =
-  "GoalCurrent FIFA World Cup 2026 on desktop";
+  "GoalCurrent.live — live football scores, fixtures, results and news";
 
+/**
+ * Generic GoalCurrent brand image. Do not use competition-specific artwork here:
+ * this is the site-wide fallback inherited by the homepage and generic pages.
+ */
 export const DEFAULT_OG_IMAGE = {
-  url: "/icons/screenshot-desktop.png",
-  width: 1280,
-  height: 720,
+  url: "/icons/icon-512.png",
+  width: 512,
+  height: 512,
   alt: DEFAULT_OG_IMAGE_ALT,
 } as const;
 

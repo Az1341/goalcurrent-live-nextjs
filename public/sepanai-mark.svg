@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 148" fill="none" role="img" aria-label="SEPANAI mark">
+  <g stroke="#66E9BD" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M60 8 L104 34 L104 114 L60 140 L16 114 L16 34 Z"/>
+    <path d="M36 48 H78 C90 48 90 68 78 68 H46 C34 68 34 90 46 90 H84"/>
+    <path d="M40 42 L80 106"/>
+  </g>
+  <g fill="#66E9BD">
+    <circle cx="60" cy="18" r="6"/>
+    <circle cx="40" cy="42" r="5.5"/>
+    <circle cx="60" cy="74" r="6"/>
+    <circle cx="80" cy="106" r="5.5"/>
+    <circle cx="60" cy="130" r="6"/>
+  </g>
+</svg>

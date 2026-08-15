@@ -15,6 +15,11 @@ import { trackSubscriptionStart } from "@/lib/analytics";
 import AuthMenu from "@/components/firebase/AuthMenu";
 import ThemeToggle from "@/components/theme/ThemeToggle";
 import styles from "./master-chrome.module.css";
+import responsiveStyles from "./MasterHeaderResponsive.module.css";
+import sepanaiStyles from "./SepanaiAttribution.module.css";
+
+const SEPANAI_HEADER_HREF =
+  "https://www.sepanai.com/?utm_source=goalcurrent&utm_medium=referral&utm_campaign=powered_by&utm_content=header";
 
 function openSubscribeDialog() {
   trackSubscriptionStart({
@@ -110,24 +115,29 @@ export default function MasterHeader() {
               >
                 {t("fixtureCalendar")}
               </NavLink>
-              <NavLink
-                href="/worldcup2026"
-                className={`${styles.navLink} ${
-                  isMainNavActive(pathname, "/worldcup2026")
-                    ? styles.navLinkActive
-                    : ""
-                }`}
-              >
-                {t("archive")}
-              </NavLink>
             </div>
-            <HeaderCompetitionsDropdown
-              label={t("competitions")}
-              isActive={isDesktopCompetitionsActive(pathname)}
-            />
+            <div className={responsiveStyles.desktopCompetitionOnly}>
+              <HeaderCompetitionsDropdown
+                label={t("competitions")}
+                isActive={isDesktopCompetitionsActive(pathname)}
+              />
+            </div>
           </nav>
 
           <div className={styles.headerActions}>
+            <a
+              href={SEPANAI_HEADER_HREF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={sepanaiStyles.headerLink}
+              aria-label="Powered by SEPANAI.COM"
+            >
+              <img src="/sepanai-mark.svg" alt="" className={sepanaiStyles.mark} />
+              <span className={sepanaiStyles.copy}>
+                <span className={sepanaiStyles.powered}>Powered by</span>
+                <span className={sepanaiStyles.name}>SEPANAI.COM</span>
+              </span>
+            </a>
             <ThemeToggle />
             <HeaderLocaleDropdown />
             <AuthMenu />

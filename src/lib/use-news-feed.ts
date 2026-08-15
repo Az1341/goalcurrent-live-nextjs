@@ -7,7 +7,7 @@ import type { NewsApiResponse, NewsArticle } from "@/types/news";
 /** Canonical client news path — single SWR ownership (FE-009). */
 export const NEWS_API_PATH = "/api/news";
 
-const NEWS_REFRESH_MS = 3_600_000;
+const NEWS_REFRESH_MS = 900_000;
 const NEWS_DEDUP_MS = 60_000;
 
 export type NewsFeedSnapshot = {
@@ -32,6 +32,8 @@ type UseNewsFeedOptions = {
 /**
  * Client owner for `/api/news`.
  * Homepage should pass `excludeWc26: true`. Other surfaces keep the shared path.
+ * The browser checks every 15 minutes while visible; the CDN absorbs repeated
+ * visitor requests inside the same freshness window.
  */
 export function useNewsFeed(options?: UseNewsFeedOptions): NewsFeedSnapshot {
   const path = options?.excludeWc26
@@ -44,7 +46,8 @@ export function useNewsFeed(options?: UseNewsFeedOptions): NewsFeedSnapshot {
       fallbackData: options?.fallbackData,
       refreshInterval: () => visibilityAwareRefreshInterval(NEWS_REFRESH_MS),
       dedupingInterval: NEWS_DEDUP_MS,
-      revalidateOnFocus: false,
+      revalidateOnFocus: true,
+      focusThrottleInterval: NEWS_DEDUP_MS,
       revalidateOnReconnect: true,
     },
   );

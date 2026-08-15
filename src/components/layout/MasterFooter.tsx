@@ -10,6 +10,14 @@ import { SITE_NAME } from "@/lib/site-url";
 import GooglePlayBadge from "./GooglePlayBadge";
 import SocialLinks from "./SocialLinks";
 import styles from "./master-chrome.module.css";
+import sepanaiStyles from "./SepanaiAttribution.module.css";
+
+const SEPANAI_FOOTER_HREF =
+  "https://www.sepanai.com/?utm_source=goalcurrent&utm_medium=referral&utm_campaign=powered_by&utm_content=footer";
+
+const CURRENT_PLATFORM_LINKS = FOOTER_PLATFORM_LINKS.filter(
+  (link) => !link.href.startsWith("/worldcup2026"),
+);
 
 export default function MasterFooter() {
   const t = useTranslations("nav");
@@ -25,9 +33,19 @@ export default function MasterFooter() {
           <Link href="/" className={styles.footerBrand}>
             Goal<span>Current</span>.live
           </Link>
-          <p className={styles.footerTagline}>
-            {tLayout("tagline")}
-          </p>
+          <a
+            href={SEPANAI_FOOTER_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={sepanaiStyles.footerLink}
+            aria-label="Powered by SEPANAI.COM"
+          >
+            <img src="/sepanai-mark.svg" alt="" className={sepanaiStyles.mark} />
+            <span className={sepanaiStyles.copy}>
+              <span className={sepanaiStyles.powered}>Powered by</span>
+              <span className={sepanaiStyles.name}>SEPANAI.COM</span>
+            </span>
+          </a>
           <div className={styles.footerSocial} aria-label={tLayout("socialAria")}>
             <SocialLinks
               linkClassName={styles.footerSocialIcon}
@@ -39,7 +57,7 @@ export default function MasterFooter() {
         <nav className={styles.footerLinkCol} aria-label={tLayout("platform")}>
           <h3 className={styles.footerColTitle}>{tLayout("platform")}</h3>
           <ul className={styles.footerLinkList}>
-            {FOOTER_PLATFORM_LINKS.map((link) => (
+            {CURRENT_PLATFORM_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href}>{t(link.labelKey)}</Link>
               </li>

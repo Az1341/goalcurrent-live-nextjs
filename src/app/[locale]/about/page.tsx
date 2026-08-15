@@ -16,7 +16,7 @@ export async function generateMetadata({
   const { locale } = await params;
   return buildPageMetadata({
     title: "About Us",
-    description: `Learn about ${SITE_NAME}, created by Ahmad Zafarani (Ashna4All). Your go-to source for live Premier League and World Cup 2026 football scores.`,
+    description: `Learn about ${SITE_NAME}, a free football scores service for live scores, fixtures, results, standings and match coverage.`,
     path: "/about",
     locale,
   });
@@ -29,46 +29,30 @@ export default async function AboutPage() {
         <article className={styles.card}>
           <h1>About {SITE_NAME}</h1>
           <p className={styles.intro}>
-            Your go-to destination for live football scores, World Cup 2026
-            fixtures and Premier League updates — free, fast and built with
-            passion.
+            A free football scores service built to make live scores, fixtures,
+            results, standings and match information fast and easy to find.
           </p>
         </article>
 
         <article className={styles.card}>
-          <h2>Who We Are</h2>
+          <h2>What GoalCurrent Is</h2>
           <p>
-            {SITE_NAME} is a free live football scores website created and owned
-            by <strong>Ahmad Zafarani</strong>, operating under the brand{" "}
-            <strong>Ashna4All</strong>. We launched in 2026 with a simple
-            mission — to give football fans around the world instant access to
-            live scores, fixtures, standings and World Cup 2026 coverage,
-            completely free.
+            {SITE_NAME} is an independent football website created and owned by
+            <strong> Ahmad Zafarani</strong>, operating under the Ashna4All
+            brand. The product is designed around one priority: helping football
+            supporters reach accurate match information quickly without a paid
+            subscription.
           </p>
           <p>
-            Based in the United Kingdom, we cover the{" "}
-            <strong>Premier League</strong>, the{" "}
-            <strong>FIFA World Cup 2026</strong> and major international
-            football tournaments.
+            Current coverage includes the <strong>Premier League</strong>,
+            <strong> UEFA Champions League</strong>, <strong>FA Cup</strong>,
+            <strong> Community Shield</strong> and other supported domestic and
+            international competitions as reliable data becomes available.
           </p>
           <div className={styles.highlight}>
-            {SITE_NAME} is visited by football fans from the UK, USA, Canada,
-            Iran and across the world. All match times are shown in your local
-            device timezone automatically.
-          </div>
-          <div className={styles.stats}>
-            <div className={styles.stat}>
-              <div className={styles.statNum}>72</div>
-              <div className={styles.statLabel}>WC 2026 Fixtures</div>
-            </div>
-            <div className={styles.stat}>
-              <div className={styles.statNum}>20</div>
-              <div className={styles.statLabel}>PL Teams Covered</div>
-            </div>
-            <div className={styles.stat}>
-              <div className={styles.statNum}>48</div>
-              <div className={styles.statLabel}>World Cup Teams</div>
-            </div>
+            Match times are displayed in the viewer&apos;s local device timezone.
+            When provider data is unavailable, GoalCurrent shows a clear pending
+            or unavailable state rather than inventing match information.
           </div>
         </article>
 
@@ -77,9 +61,7 @@ export default async function AboutPage() {
           <div className={styles.teamCard}>
             <div>
               <h3>Ahmad Zafarani</h3>
-              <p className={styles.teamCardMeta}>
-                Founder & Creator · Ashna4All
-              </p>
+              <p className={styles.teamCardMeta}>Founder & Creator · Ashna4All</p>
               <p className={styles.teamCardMeta}>
                 Email:{" "}
                 <a href="mailto:info@goalcurrent.live">info@goalcurrent.live</a>
@@ -87,15 +69,13 @@ export default async function AboutPage() {
             </div>
           </div>
           <p>
-            Ahmad is a passionate football fan and web developer who built{" "}
-            {SITE_NAME} to provide football fans with a fast, clean and
-            easy-to-use live scores experience. With a love for the Premier
-            League and huge excitement for the FIFA World Cup 2026, Ahmad built
-            this site to share that passion with fans worldwide.
+            GoalCurrent was built to provide a clean, mobile-friendly football
+            experience focused on the information supporters need most on
+            matchday.
           </p>
           <p>
-            Follow us on Instagram and Facebook for updates, matchday posts and
-            behind-the-scenes content from the {SITE_NAME} team.
+            Follow GoalCurrent on its active social channels for updates,
+            matchday posts and product news.
           </p>
           <div className={styles.socialList}>
             <SocialLinks
@@ -111,44 +91,53 @@ export default async function AboutPage() {
           <div className={styles.features}>
             <div className={styles.feature}>
               <strong>Live Scores</strong>
-              Real-time Premier League & World Cup scores updated every 60
-              seconds
+              Current match scores and status from supported football data feeds
             </div>
             <div className={styles.feature}>
-              <strong>Full Schedule</strong>
-              All 72 World Cup 2026 group stage fixtures with correct UK times
+              <strong>Fixtures & Results</strong>
+              Upcoming fixtures and completed results across supported competitions
             </div>
             <div className={styles.feature}>
-              <strong>Standings</strong>
-              PL table all 20 teams + WC 2026 all 12 official groups A–L
+              <strong>Tables & Standings</strong>
+              Competition standings where the underlying provider supports them
             </div>
             <div className={styles.feature}>
-              <strong>My Teams</strong>
-              Pick your favourite teams and get personalised score alerts
+              <strong>Favourites</strong>
+              Save the teams and football items that matter most to you
             </div>
             <div className={styles.feature}>
-              <strong>Global Times</strong>
+              <strong>Local Kick-off Times</strong>
               Match times shown in your own device timezone automatically
             </div>
             <div className={styles.feature}>
-              <strong>TV Listings</strong>
-              BBC, ITV, Fox, TSN broadcaster info for every World Cup match
+              <strong>News & Editorial</strong>
+              Football news, articles and match-focused editorial coverage
             </div>
           </div>
         </article>
 
         <article className={styles.card}>
+          <h2>Historical Coverage</h2>
+          <p>
+            GoalCurrent preserves selected completed-tournament coverage as a
+            historical archive. Archive pages are clearly identified as
+            historical content and are separate from current live football.
+          </p>
+        </article>
+
+        <article className={styles.card}>
           <h2>Data Sources</h2>
           <p>
-            {SITE_NAME} uses data from trusted third-party sports data providers
-            including ESPN, TheSportsDB and API-Football to deliver accurate
-            live scores. We make every effort to display accurate information
-            but cannot guarantee 100% accuracy of live data at all times.
+            {SITE_NAME} uses trusted third-party sports-data and editorial
+            providers to deliver fixtures, scores, standings and supporting
+            football information. We make every effort to display accurate and
+            timely information, but live provider data can occasionally be
+            delayed or unavailable.
           </p>
           <p>
-            World Cup 2026 fixture times are sourced from official FIFA
-            schedules and verified against Sky Sports and Squawka UK broadcaster
-            schedules.
+            Where a fact cannot be verified from an available source,
+            GoalCurrent omits it or marks it unavailable rather than presenting
+            an assumption as confirmed data.
           </p>
         </article>
 
@@ -160,17 +149,16 @@ export default async function AboutPage() {
             federation, broadcaster, or official organisation.
           </p>
           <p>
-            Affiliate partnerships and advertising support the site but do not
-            influence editorial coverage, fixture data, or standings
-            calculations.
+            Advertising and commercial partnerships support the site but do not
+            determine scores, fixtures, standings or editorial conclusions.
           </p>
         </article>
 
         <article className={styles.card}>
           <h2>Contact Us</h2>
           <p>
-            We love hearing from football fans! Whether you have a question,
-            suggestion or just want to chat about football:
+            Questions, corrections, advertising enquiries and product feedback
+            are welcome.
           </p>
           <div className={styles.highlight}>
             Email:{" "}

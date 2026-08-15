@@ -41,15 +41,19 @@ const rateLimitCounters = new LRUCache<string, RateLimitEntry>({
   ttlAutopurge: true,
 });
 
-function maxRequestsForPath(pathname: string): number {
-  if (
+function isUpstreamPath(pathname: string): boolean {
+  return (
     pathname.startsWith("/api/wc26/") ||
     pathname.startsWith("/api/pl/") ||
+    pathname.startsWith("/api/ucl/") ||
+    pathname.startsWith("/api/facup/") ||
+    pathname.startsWith("/api/unl/") ||
     pathname.startsWith("/api/debug/")
-  ) {
-    return UPSTREAM_MAX_REQUESTS;
-  }
-  return DEFAULT_MAX_REQUESTS;
+  );
+}
+
+function maxRequestsForPath(pathname: string): number {
+  return isUpstreamPath(pathname) ? UPSTREAM_MAX_REQUESTS : DEFAULT_MAX_REQUESTS;
 }
 
 export type RateLimitResult =
@@ -61,11 +65,16 @@ export function checkRateLimit(
   pathname: string,
 ): RateLimitResult {
   const now = Date.now();
+  const upstream = isUpstreamPath(pathname);
   const maxRequests = maxRequestsForPath(pathname);
-  const entry = rateLimitCounters.get(ip);
+  // Keep general and upstream traffic in separate buckets. A page that loads
+  // news/video/general APIs must not consume the stricter football-provider
+  // allowance before its fixture requests are made.
+  const counterKey = `${ip}:${upstream ? "upstream" : "general"}`;
+  const entry = rateLimitCounters.get(counterKey);
 
   if (!entry || now > entry.resetAt) {
-    rateLimitCounters.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+    rateLimitCounters.set(counterKey, { count: 1, resetAt: now + RATE_WINDOW_MS });
     return { allowed: true };
   }
 
@@ -75,7 +84,7 @@ export function checkRateLimit(
   }
 
   entry.count += 1;
-  rateLimitCounters.set(ip, entry);
+  rateLimitCounters.set(counterKey, entry);
   return { allowed: true };
 }
 

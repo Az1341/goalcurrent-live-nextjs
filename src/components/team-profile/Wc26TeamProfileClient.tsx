@@ -17,6 +17,7 @@ import {
   getWc26H2H,
 } from "@/lib/team-profile/fixture-utils";
 import { groupHref, WC26_HUB_HREF } from "@/lib/wc26-groups";
+import { matchHref } from "@/lib/wc26-match";
 import ProfileFormStrip from "./ProfileFormStrip";
 import ProfileGossipSection from "./ProfileGossipSection";
 import ProfileHistorySection from "./ProfileHistorySection";
@@ -98,7 +99,7 @@ export default function Wc26TeamProfileClient({ teamId }: { teamId: string }) {
             <span className={styles.matchTeams}>{getTeamById(latest.homeTeamId)?.name ?? latest.homeTeamId} vs {getTeamById(latest.awayTeamId)?.name ?? latest.awayTeamId}</span>
             <span className={styles.matchScore}>{latest.homeScore ?? 0} - {latest.awayScore ?? 0}</span>
             <span className={styles.matchMeta}>{formatKickoff(latest.kickoffUtc)}</span>
-            <Link href={`/worldcup2026/match/${latest.id}`}>View match</Link>
+            <Link href={matchHref(latest.id)}>View match</Link>
           </div>
         ) : <ProfileFallback message="No results available yet." />}
       </ProfileSection>
@@ -107,7 +108,7 @@ export default function Wc26TeamProfileClient({ teamId }: { teamId: string }) {
           <div className={styles.matchHighlight}>
             <span className={styles.matchTeams}>{getTeamById(next.homeTeamId)?.name ?? next.homeTeamId} vs {getTeamById(next.awayTeamId)?.name ?? next.awayTeamId}</span>
             <span className={styles.matchMeta}>{formatKickoff(next.kickoffUtc)}</span>
-            <Link href={`/worldcup2026/match/${next.id}`}>View match</Link>
+            <Link href={matchHref(next.id)}>View match</Link>
           </div>
         ) : <ProfileFallback message="No upcoming fixtures scheduled yet." />}
       </ProfileSection>

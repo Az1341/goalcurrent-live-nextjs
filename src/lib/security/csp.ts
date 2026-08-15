@@ -69,6 +69,8 @@ const FRAME_SRC = [
   "https://*.firebaseapp.com",
 ] as const;
 
+const MEDIA_SRC = ["blob:", "https://www.sepanai.com"] as const;
+
 function joinDirective(name: string, values: readonly string[]): string {
   return `${name} 'self' ${values.join(" ")}`.replace(/\s+/g, " ").trim();
 }
@@ -84,7 +86,7 @@ export function buildContentSecurityPolicy(): string {
     "font-src 'self' data:",
     joinDirective("connect-src", CONNECT_SRC),
     joinDirective("frame-src", FRAME_SRC),
-    "media-src 'self' blob:",
+    joinDirective("media-src", MEDIA_SRC),
     "worker-src 'self' blob: https://cdn.onesignal.com https://www.gstatic.com",
     "object-src 'none'",
     "base-uri 'self'",

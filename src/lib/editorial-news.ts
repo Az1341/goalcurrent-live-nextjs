@@ -26,28 +26,27 @@ export function sortPartnerNewsFeed(articles: readonly NewsArticle[]): NewsArtic
 }
 
 /**
- * Homepage: latest non-WC26 GoalCurrent article first, then partner RSS
- * (deduped). WC26 editorial + partner items are excluded — WC26 lives on
- * /worldcup2026 only. Does not affect mergeWc26NewsFeed / mergeEditorialFirst.
+ * Homepage current-news contract: combine non-WC26 GoalCurrent editorial with
+ * non-WC26 partner RSS, dedupe by canonical link, then rank every item by its
+ * real publish timestamp. No old GoalCurrent article is artificially pinned
+ * above newer reporting. WC26 remains isolated to its historical surfaces.
  */
 export function mergeHomepageNewsFeed(articles: readonly NewsArticle[]): NewsArticle[] {
-  const nonWc26Editorial = getArticleIndexNewsArticles().filter(
+  const editorial = getArticleIndexNewsArticles().filter(
     (item) => !isWorldCup2026EditorialLink(item.link),
   );
-  const [latestEditorial] = nonWc26Editorial;
-  const partnerOnly = excludeWorldCup2026NewsItems(articles);
+  const partner = excludeWorldCup2026NewsItems(articles).filter(
+    (item) => !isWorldCup2026HomepageNewsItem(item),
+  );
 
-  if (!latestEditorial) {
-    return sortNewsByDateDesc(partnerOnly);
+  const byLink = new Map<string, NewsArticle>();
+  for (const item of [...editorial, ...partner]) {
+    if (!byLink.has(item.link)) {
+      byLink.set(item.link, item);
+    }
   }
 
-  const pinnedLinks = new Set([latestEditorial.link]);
-  const rest = sortNewsByDateDesc(
-    partnerOnly.filter(
-      (item) => !pinnedLinks.has(item.link) && !isWorldCup2026HomepageNewsItem(item),
-    ),
-  );
-  return [latestEditorial, ...rest];
+  return sortNewsByDateDesc([...byLink.values()]);
 }
 
 /** GoalCurrent articles stay first; partner RSS follows, each block sorted by date. */

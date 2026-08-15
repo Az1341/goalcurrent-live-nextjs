@@ -3,6 +3,7 @@
 export const COMMUNITY_SHIELD_COMPETITION = "FA Community Shield";
 export const COMMUNITY_SHIELD_SEASON = 2026;
 export const COMMUNITY_SHIELD_PATH = "/community-shield";
+export const COMMUNITY_SHIELD_LEAGUE_ID = 528;
 
 /**
  * Real API-Football fixture id for Arsenal vs Manchester City,

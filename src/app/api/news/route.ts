@@ -6,6 +6,9 @@ import { excludeWorldCup2026NewsItems } from "@/lib/news-wc26-filter";
 import { newsCategoryQuerySchema } from "@/lib/validation/schemas";
 import type { NewsApiResponse } from "@/types/news";
 
+const NEWS_S_MAXAGE_SECONDS = 900;
+const NEWS_STALE_WHILE_REVALIDATE_SECONDS = 300;
+
 export async function GET(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const parsed = parseSearchParams(searchParams, newsCategoryQuerySchema);
@@ -30,7 +33,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     };
     return NextResponse.json(response, {
       headers: {
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
+        "Cache-Control": `public, s-maxage=${NEWS_S_MAXAGE_SECONDS}, stale-while-revalidate=${NEWS_STALE_WHILE_REVALIDATE_SECONDS}`,
       },
     });
   } catch (error) {

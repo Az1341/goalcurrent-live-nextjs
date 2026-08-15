@@ -14,7 +14,7 @@ test.describe("Homepage", () => {
     );
     await expect(page.getByRole("navigation", { name: "Main navigation" })).toBeVisible();
     await expect(
-      page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Live", exact: true }),
+      page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Scores", exact: true }),
     ).toBeVisible();
     await expect(page.locator('img[src="/logo.svg"]')).toBeVisible();
     await expect(

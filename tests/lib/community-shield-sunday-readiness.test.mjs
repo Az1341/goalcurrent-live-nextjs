@@ -50,12 +50,11 @@ test("live upcoming competition list includes Community Shield and sorts by kick
   assert.match(cards, /communityShield:\s*communityShield\?\.fixtures/);
 });
 
-test("mobile competitions lives in bottom navigation and remains available in the sheet", () => {
+test("mobile competitions lives in bottom navigation and pins Community Shield in the sheet", () => {
   const header = read("src/components/layout/MasterHeader.tsx");
   const responsive = read("src/components/layout/MasterHeaderResponsive.module.css");
   const bottom = read("src/components/layout/BottomTabBar.tsx");
   const sheet = read("src/components/layout/MobileCompetitionsSheet.tsx");
-  const nav = read("src/lib/nav.ts");
 
   assert.match(header, /desktopCompetitionOnly/);
   assert.match(responsive, /@media \(max-width: 768px\)/);
@@ -63,9 +62,9 @@ test("mobile competitions lives in bottom navigation and remains available in th
   assert.match(bottom, /MobileCompetitionsSheet/);
   assert.match(bottom, /gc-mobile-competitions-sheet/);
   assert.match(bottom, /setCompetitionsOpen\(true\)/);
-  assert.match(sheet, /DESKTOP_COMPETITIONS_NAV\.map/);
-  assert.match(nav, /id:\s*["']comshield["']/);
-  assert.match(nav, /href:\s*["']\/community-shield["']/);
+  assert.match(sheet, /href=["']\/community-shield["']/);
+  assert.match(sheet, /data-gc-mobile-community-shield=["']true["']/);
+  assert.match(sheet, /t\(["']communityShield["']\)/);
 });
 
 test("homepage ads are visibly labelled, directly after hero and use non-PII attribution", () => {
@@ -85,6 +84,18 @@ test("homepage ads are visibly labelled, directly after hero and use non-PII att
   assert.match(promo, /utm_source=goalcurrent/);
   assert.match(video, /utm_source=goalcurrent/);
   assert.doesNotMatch(promo + video, /[?&](email|user_id|uid|phone|device_id)=/i);
+});
+
+test("SEPANAI and FAMVI advertising always carries official brand marks", () => {
+  const promo = read("src/components/home/v5/HomeEcosystemPromo.tsx");
+  const liveAd = read("src/components/ads/LiveScoreAdUnit.tsx");
+  const video = read("src/components/home/v5/HomeSepanaiVideoAd.tsx");
+
+  assert.ok((promo.match(/\/sepanai-mark\.svg/g) ?? []).length >= 2);
+  assert.match(promo, /\/famvi-wordmark-inline\.svg/);
+  assert.ok((liveAd.match(/\/sepanai-mark\.svg/g) ?? []).length >= 2);
+  assert.match(liveAd, /\/famvi-wordmark-inline\.svg/);
+  assert.match(video, /\/sepanai-mark\.svg/);
 });
 
 test("SEPANAI video source is permitted by CSP and has MP4 type", () => {

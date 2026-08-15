@@ -15,6 +15,10 @@ import sepanaiStyles from "./SepanaiAttribution.module.css";
 const SEPANAI_FOOTER_HREF =
   "https://www.sepanai.com/?utm_source=goalcurrent&utm_medium=referral&utm_campaign=powered_by&utm_content=footer";
 
+const CURRENT_PLATFORM_LINKS = FOOTER_PLATFORM_LINKS.filter(
+  (link) => !link.href.startsWith("/worldcup2026"),
+);
+
 export default function MasterFooter() {
   const t = useTranslations("nav");
   const tLayout = useTranslations("layout.footer");
@@ -53,7 +57,7 @@ export default function MasterFooter() {
         <nav className={styles.footerLinkCol} aria-label={tLayout("platform")}>
           <h3 className={styles.footerColTitle}>{tLayout("platform")}</h3>
           <ul className={styles.footerLinkList}>
-            {FOOTER_PLATFORM_LINKS.map((link) => (
+            {CURRENT_PLATFORM_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href}>{t(link.labelKey)}</Link>
               </li>

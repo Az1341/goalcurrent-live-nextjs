@@ -12,6 +12,7 @@ const transferPages = [
   ["src/app/[locale]/transfers/rumours/page.tsx", "rumours"],
   ["src/app/[locale]/transfers/completed/page.tsx", "completed"],
   ["src/app/[locale]/transfers/free-agents/page.tsx", "free-agents"],
+  ["src/app/[locale]/news/transfers/page.tsx", "latest"],
 ];
 
 test("public transfer routes use real cached data instead of coming-soon shells", () => {

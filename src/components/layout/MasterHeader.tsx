@@ -115,16 +115,6 @@ export default function MasterHeader() {
               >
                 {t("fixtureCalendar")}
               </NavLink>
-              <NavLink
-                href="/worldcup2026"
-                className={`${styles.navLink} ${
-                  isMainNavActive(pathname, "/worldcup2026")
-                    ? styles.navLinkActive
-                    : ""
-                }`}
-              >
-                {t("archive")}
-              </NavLink>
             </div>
             <div className={responsiveStyles.desktopCompetitionOnly}>
               <HeaderCompetitionsDropdown

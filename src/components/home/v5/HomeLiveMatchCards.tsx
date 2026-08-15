@@ -8,9 +8,11 @@ import type { HomepageMatchView } from "@/lib/wc26-live";
 import type { PlFixtureRow } from "@/lib/pl/types";
 import TeamFlag from "@/components/TeamFlag";
 import { PlTeamBadge } from "@/components/pl/PlShared";
+import { FavouriteMatchButton } from "@/components/FavouriteButton";
 import { matchHref } from "@/lib/wc26-match";
 import { isLocalToday } from "@/lib/date-utils";
 import styles from "../home-v5.module.css";
+import favouriteStyles from "./HomeMatchFavourite.module.css";
 
 function Wc26StatusPill({ match }: { match: HomepageMatchView }) {
   const kickoffTime = useLocalizedKickoffTime(match.kickoffUtc);
@@ -70,30 +72,38 @@ function Wc26MatchCard({
   const homeScore = hasScore ? (match.score?.home ?? 0) : "–";
   const awayScore = hasScore ? (match.score?.away ?? 0) : "–";
   const cardClass = compact ? styles.todayMatchCard : styles.liveCard;
+  const label = `${match.homeName} vs ${match.awayName}`;
 
   return (
-    <Link href={matchHref(match.fixtureId)} className={cardClass}>
-      <div className={styles.liveCardTop}>
-        <span className={styles.liveCardComp}>World Cup 2026</span>
-        <Wc26StatusPill match={match} />
-      </div>
-      <div className={styles.liveCardTeams}>
-        <div className={styles.liveCardTeamRow}>
-          <div className={styles.liveCardTeamLeft}>
-            <TeamFlag teamId={match.homeTeamId} teamName={match.homeName} size={32} />
-            <span className={styles.liveCardTeamName}>{match.homeName}</span>
-          </div>
-          <span className={styles.liveCardScore}>{homeScore}</span>
+    <div className={favouriteStyles.cardShell}>
+      <Link href={matchHref(match.fixtureId)} className={cardClass}>
+        <div className={styles.liveCardTop}>
+          <span className={styles.liveCardComp}>World Cup 2026</span>
+          <Wc26StatusPill match={match} />
         </div>
-        <div className={styles.liveCardTeamRow}>
-          <div className={styles.liveCardTeamLeft}>
-            <TeamFlag teamId={match.awayTeamId} teamName={match.awayName} size={32} />
-            <span className={styles.liveCardTeamName}>{match.awayName}</span>
+        <div className={styles.liveCardTeams}>
+          <div className={styles.liveCardTeamRow}>
+            <div className={styles.liveCardTeamLeft}>
+              <TeamFlag teamId={match.homeTeamId} teamName={match.homeName} size={32} />
+              <span className={styles.liveCardTeamName}>{match.homeName}</span>
+            </div>
+            <span className={styles.liveCardScore}>{homeScore}</span>
           </div>
-          <span className={styles.liveCardScore}>{awayScore}</span>
+          <div className={styles.liveCardTeamRow}>
+            <div className={styles.liveCardTeamLeft}>
+              <TeamFlag teamId={match.awayTeamId} teamName={match.awayName} size={32} />
+              <span className={styles.liveCardTeamName}>{match.awayName}</span>
+            </div>
+            <span className={styles.liveCardScore}>{awayScore}</span>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+      <FavouriteMatchButton
+        matchId={match.fixtureId}
+        label={label}
+        className={favouriteStyles.star}
+      />
+    </div>
   );
 }
 
@@ -111,41 +121,49 @@ function PlMatchCard({
   const homeScore = hasScore ? (fixture.homeScore ?? 0) : "–";
   const awayScore = hasScore ? (fixture.awayScore ?? 0) : "–";
   const cardClass = compact ? styles.todayMatchCard : styles.liveCard;
+  const label = `${fixture.homeTeamName} vs ${fixture.awayTeamName}`;
 
   return (
-    <Link
-      href={`/premier-league/match/${fixture.fixtureId}`}
-      className={cardClass}
-    >
-      <div className={styles.liveCardTop}>
-        <span className={styles.liveCardComp}>Premier League 26/27</span>
-        <PlStatusPill fixture={fixture} />
-      </div>
-      <div className={styles.liveCardTeams}>
-        <div className={styles.liveCardTeamRow}>
-          <div className={styles.liveCardTeamLeft}>
-            <PlTeamBadge
-              name={fixture.homeTeamName}
-              logo={fixture.homeTeamLogo}
-              size={32}
-            />
-            <span className={styles.liveCardTeamName}>{fixture.homeTeamName}</span>
-          </div>
-          <span className={styles.liveCardScore}>{homeScore}</span>
+    <div className={favouriteStyles.cardShell}>
+      <Link
+        href={`/premier-league/match/${fixture.fixtureId}`}
+        className={cardClass}
+      >
+        <div className={styles.liveCardTop}>
+          <span className={styles.liveCardComp}>Premier League 26/27</span>
+          <PlStatusPill fixture={fixture} />
         </div>
-        <div className={styles.liveCardTeamRow}>
-          <div className={styles.liveCardTeamLeft}>
-            <PlTeamBadge
-              name={fixture.awayTeamName}
-              logo={fixture.awayTeamLogo}
-              size={32}
-            />
-            <span className={styles.liveCardTeamName}>{fixture.awayTeamName}</span>
+        <div className={styles.liveCardTeams}>
+          <div className={styles.liveCardTeamRow}>
+            <div className={styles.liveCardTeamLeft}>
+              <PlTeamBadge
+                name={fixture.homeTeamName}
+                logo={fixture.homeTeamLogo}
+                size={32}
+              />
+              <span className={styles.liveCardTeamName}>{fixture.homeTeamName}</span>
+            </div>
+            <span className={styles.liveCardScore}>{homeScore}</span>
           </div>
-          <span className={styles.liveCardScore}>{awayScore}</span>
+          <div className={styles.liveCardTeamRow}>
+            <div className={styles.liveCardTeamLeft}>
+              <PlTeamBadge
+                name={fixture.awayTeamName}
+                logo={fixture.awayTeamLogo}
+                size={32}
+              />
+              <span className={styles.liveCardTeamName}>{fixture.awayTeamName}</span>
+            </div>
+            <span className={styles.liveCardScore}>{awayScore}</span>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+      <FavouriteMatchButton
+        matchId={`pl:${fixture.fixtureId}`}
+        label={label}
+        className={favouriteStyles.star}
+      />
+    </div>
   );
 }
 

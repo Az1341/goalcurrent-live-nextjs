@@ -68,6 +68,7 @@ export default function FavouriteFixtureCard({
   onRemove: () => void;
 }) {
   const score = scoreLabel(fixture);
+  const detailsHref = fixture.source === "cs" ? "/community-shield" : fixture.href;
   return (
     <article className={styles.matchCard}>
       <div className={styles.matchTop}>
@@ -99,7 +100,7 @@ export default function FavouriteFixtureCard({
         </div>
       </div>
       <div className={styles.actions}>
-        <Link href={fixture.href} className={styles.primaryAction}>
+        <Link href={detailsHref} className={styles.primaryAction}>
           Match details
         </Link>
         <button type="button" className={styles.secondaryAction} onClick={onRemove}>

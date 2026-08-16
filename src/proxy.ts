@@ -11,6 +11,10 @@ import {
   PREVIEW_X_ROBOTS_TAG,
   shouldNoIndexDeploy,
 } from "@/lib/seo/deploy-robots";
+import {
+  canonicalHostRedirectUrl,
+  removedLocaleRedirectPath,
+} from "@/lib/seo/canonical-host";
 
 const LEGACY_GROUP_PATH = /^\/worldcup2026\/groups\/group-([a-l])$/i;
 const LOCALE_PREFIX = /^\/(en|es|it|de|fr|nl)(\/|$)/;
@@ -105,9 +109,21 @@ function applyLegacyRedirects(request: NextRequest): NextResponse | null {
   return null;
 }
 
-/** Next.js 16 proxy — locale routing, legacy redirects, CSP. */
+/** Next.js 16 proxy — canonical host, locale routing, legacy redirects, CSP. */
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const canonicalHost = canonicalHostRedirectUrl(request.nextUrl);
+  if (canonicalHost) {
+    return applySecurityHeaders(NextResponse.redirect(canonicalHost, 308));
+  }
+
+  const removedLocalePath = removedLocaleRedirectPath(pathname);
+  if (removedLocalePath) {
+    const url = request.nextUrl.clone();
+    url.pathname = removedLocalePath;
+    return applySecurityHeaders(NextResponse.redirect(url, 308));
+  }
 
   if (pathname === "/.well-known/assetlinks.json") {
     const url = request.nextUrl.clone();

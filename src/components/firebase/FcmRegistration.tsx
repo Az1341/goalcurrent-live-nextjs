@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocale } from "next-intl";
 import { useFirebaseAuth } from "@/contexts/FirebaseAuthContext";
+import { readFavourites } from "@/lib/favourites";
 import {
   isFirebaseMessagingConfigured,
 } from "@/lib/firebase/config";
@@ -12,20 +13,49 @@ import {
   requestFcmToken,
 } from "@/lib/firebase/client";
 
-const STORAGE_KEY = "gc:fcm-token-registered";
+export const FCM_TOKEN_STORAGE_KEY = "gc:fcm-token-registered";
+const FCM_TEAM_KEYS_STORAGE_KEY = "gc:fcm-team-keys";
 
-async function syncFcmToken(token: string, locale: string, idToken?: string) {
+function readStoredTeamKeys(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(FCM_TEAM_KEYS_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((item): item is string => typeof item === "string");
+  } catch {
+    return [];
+  }
+}
+
+async function syncFcmToken(
+  token: string,
+  locale: string,
+  idToken?: string,
+  teamKeys: string[] = [],
+  previousTeamKeys: string[] = [],
+): Promise<boolean> {
   try {
     const response = await fetch("/api/firebase/fcm-token", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, locale, idToken }),
+      body: JSON.stringify({
+        token,
+        locale,
+        idToken,
+        teamKeys,
+        previousTeamKeys,
+      }),
     });
     if (!response.ok) {
       console.warn("[FCM] token sync skipped:", response.status);
+      return false;
     }
+    return true;
   } catch (error) {
     console.warn("[FCM] token sync failed", error);
+    return false;
   }
 }
 
@@ -72,9 +102,23 @@ export function FcmRegistration() {
     const idToken = auth?.currentUser
       ? await auth.currentUser.getIdToken()
       : undefined;
+    const teamKeys = readFavourites().teamNotifications;
+    const previousTeamKeys = readStoredTeamKeys();
 
-    await syncFcmToken(token, locale, idToken);
-    window.localStorage.setItem(STORAGE_KEY, token);
+    const synced = await syncFcmToken(
+      token,
+      locale,
+      idToken,
+      teamKeys,
+      previousTeamKeys,
+    );
+    if (!synced) return;
+
+    window.localStorage.setItem(FCM_TOKEN_STORAGE_KEY, token);
+    window.localStorage.setItem(
+      FCM_TEAM_KEYS_STORAGE_KEY,
+      JSON.stringify(teamKeys),
+    );
     window.AndroidBridge?.onFcmToken?.(token);
   }, [locale]);
 
@@ -83,7 +127,7 @@ export function FcmRegistration() {
       return;
     }
 
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = window.localStorage.getItem(FCM_TOKEN_STORAGE_KEY);
     if (permission === "granted" && stored) {
       void register();
       return;
@@ -99,7 +143,11 @@ export function FcmRegistration() {
       void register();
     };
     window.addEventListener("gc:firebase-enable-push", handler);
-    return () => window.removeEventListener("gc:firebase-enable-push", handler);
+    window.addEventListener("gc:favourites-change", handler);
+    return () => {
+      window.removeEventListener("gc:firebase-enable-push", handler);
+      window.removeEventListener("gc:favourites-change", handler);
+    };
   }, [register]);
 
   return null;

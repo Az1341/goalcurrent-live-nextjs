@@ -10,8 +10,12 @@ const source = readFileSync(
   "utf8",
 );
 
-test("service worker bootstrap never forces a page reload", () => {
+test("retired app shell never forces a page reload or re-registers stale caching", () => {
   assert.doesNotMatch(source, /window\.location\.reload\s*\(/);
   assert.doesNotMatch(source, /attachServiceWorkerControllerReload/);
-  assert.match(source, /navigator\.serviceWorker\s*\.register\(/);
+  assert.doesNotMatch(source, /navigator\.serviceWorker\s*\.register\(/);
+  assert.match(source, /navigator\.serviceWorker\.getRegistrations\(\)/);
+  assert.match(source, /registration\.unregister\(\)/);
+  assert.match(source, /goalcurrent-online-/);
+  assert.match(source, /caches\.delete\(name\)/);
 });

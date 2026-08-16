@@ -40,6 +40,12 @@ test("robots and sitemap advertise only the canonical apex origin", async ({ req
   expect(sitemapBody).not.toContain("/fa/");
 });
 
+test("invalid Premier League match URLs return a real 404", async ({ request }) => {
+  const response = await request.get("/premier-league/match/not-a-fixture");
+  expect(response.status()).toBe(404);
+  expect(await response.text()).toMatch(/noindex/i);
+});
+
 test("World Cup video page does not fall back to cross-sport content", async ({ page }) => {
   const response = await page.goto("/videos/world-cup", { waitUntil: "domcontentloaded" });
   expect(response?.status()).toBe(200);

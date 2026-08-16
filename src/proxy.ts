@@ -24,6 +24,8 @@ const LOCALE_PUBLIC_ASSET = /^\/(en|es|it|de|fr|nl)\/(flags|images|icons)(\/.*)?
 const LOCALE_PUBLIC_FILE = /^\/(en|es|it|de|fr|nl)\/(logo\.svg|favicon\.ico|favicon\.svg|sw\.js|firebase-messaging-sw\.js|OneSignalSDKWorker\.js|OneSignalSDKUpdaterWorker\.js|manifest\.json)$/;
 const ROOT_PUBLIC_FILE = /^\/[^/]+\.[A-Za-z0-9]+$/;
 const PL_MATCH_PATH = /^\/(?:(?:en|es|it|de|fr|nl)\/)?premier-league\/match\/([^/]+)\/?$/;
+const LEGACY_ANDROID_TWA_WC26_PATH = /^\/(?:(?:en|es|it|de|fr|nl)\/)?worldcup2026\/?$/i;
+const ANDROID_TWA_COOKIE = "gc_android_twa_current";
 
 const PUBLIC_STATIC_FILES = new Set([
   "/logo.svg",
@@ -86,6 +88,39 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
   return response;
 }
 
+function legacyAndroidTwaRedirect(request: NextRequest): NextResponse | null {
+  const { pathname } = request.nextUrl;
+  if (!LEGACY_ANDROID_TWA_WC26_PATH.test(pathname)) return null;
+
+  const referrer = request.headers.get("referer") ?? "";
+  const launchedByGoalCurrentApp = referrer.startsWith(
+    "android-app://com.goalcurrent.app",
+  );
+  const knownGoalCurrentApp =
+    request.cookies.get(ANDROID_TWA_COOKIE)?.value === "1";
+
+  if (!launchedByGoalCurrentApp && !knownGoalCurrentApp) return null;
+
+  const url = request.nextUrl.clone();
+  url.pathname = "/";
+  url.search = "";
+
+  const response = applySecurityHeaders(NextResponse.redirect(url, 307));
+  response.headers.set("Cache-Control", "no-store");
+
+  if (launchedByGoalCurrentApp) {
+    response.cookies.set(ANDROID_TWA_COOKIE, "1", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: true,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  }
+
+  return response;
+}
+
 function localePrefixFromPath(pathname: string): string {
   const match = LOCALE_PREFIX.exec(pathname);
   if (!match) return "";
@@ -122,6 +157,11 @@ function applyLegacyRedirects(request: NextRequest): NextResponse | null {
 /** Next.js 16 proxy — canonical host, locale routing, legacy redirects, CSP. */
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const androidTwaRedirect = legacyAndroidTwaRedirect(request);
+  if (androidTwaRedirect) {
+    return androidTwaRedirect;
+  }
 
   const canonicalHost = canonicalHostRedirectUrl(request.nextUrl);
   if (canonicalHost) {

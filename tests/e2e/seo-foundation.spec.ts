@@ -43,7 +43,8 @@ test("robots and sitemap advertise only the canonical apex origin", async ({ req
 test("invalid Premier League match URLs return a real 404", async ({ request }) => {
   const response = await request.get("/premier-league/match/not-a-fixture");
   expect(response.status()).toBe(404);
-  expect(await response.text()).toMatch(/noindex/i);
+  expect(response.headers()["x-robots-tag"]).toMatch(/noindex/i);
+  expect(await response.text()).toBe("Not Found");
 });
 
 test("World Cup video page does not fall back to cross-sport content", async ({ page }) => {

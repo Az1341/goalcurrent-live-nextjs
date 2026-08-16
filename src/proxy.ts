@@ -11,6 +11,10 @@ import {
   PREVIEW_X_ROBOTS_TAG,
   shouldNoIndexDeploy,
 } from "@/lib/seo/deploy-robots";
+import {
+  canonicalHostRedirectUrl,
+  removedLocaleRedirectPath,
+} from "@/lib/seo/canonical-host";
 
 const LEGACY_GROUP_PATH = /^\/worldcup2026\/groups\/group-([a-l])$/i;
 const LOCALE_PREFIX = /^\/(en|es|it|de|fr|nl)(\/|$)/;
@@ -19,6 +23,7 @@ const LOCALE_API = /^\/(en|es|it|de|fr|nl)\/api\/(.+)$/;
 const LOCALE_PUBLIC_ASSET = /^\/(en|es|it|de|fr|nl)\/(flags|images|icons)(\/.*)?$/;
 const LOCALE_PUBLIC_FILE = /^\/(en|es|it|de|fr|nl)\/(logo\.svg|favicon\.ico|favicon\.svg|sw\.js|firebase-messaging-sw\.js|OneSignalSDKWorker\.js|OneSignalSDKUpdaterWorker\.js|manifest\.json)$/;
 const ROOT_PUBLIC_FILE = /^\/[^/]+\.[A-Za-z0-9]+$/;
+const PL_MATCH_PATH = /^\/(?:(?:en|es|it|de|fr|nl)\/)?premier-league\/match\/([^/]+)\/?$/;
 
 const PUBLIC_STATIC_FILES = new Set([
   "/logo.svg",
@@ -40,6 +45,15 @@ function isRootPublicStaticPath(pathname: string): boolean {
     pathname.startsWith("/images/") ||
     pathname.startsWith("/icons/")
   );
+}
+
+function malformedPremierLeagueMatchPath(pathname: string): boolean {
+  const match = PL_MATCH_PATH.exec(pathname);
+  if (!match) return false;
+  const fixtureId = match[1] ?? "";
+  if (!/^\d+$/.test(fixtureId)) return true;
+  const parsed = Number(fixtureId);
+  return !Number.isSafeInteger(parsed) || parsed <= 0;
 }
 
 const handleI18n = createIntlMiddleware(routing);
@@ -105,9 +119,32 @@ function applyLegacyRedirects(request: NextRequest): NextResponse | null {
   return null;
 }
 
-/** Next.js 16 proxy — locale routing, legacy redirects, CSP. */
+/** Next.js 16 proxy — canonical host, locale routing, legacy redirects, CSP. */
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  const canonicalHost = canonicalHostRedirectUrl(request.nextUrl);
+  if (canonicalHost) {
+    return applySecurityHeaders(NextResponse.redirect(canonicalHost, 308));
+  }
+
+  const removedLocalePath = removedLocaleRedirectPath(pathname);
+  if (removedLocalePath) {
+    const url = request.nextUrl.clone();
+    url.pathname = removedLocalePath;
+    return applySecurityHeaders(NextResponse.redirect(url, 308));
+  }
+
+  if (malformedPremierLeagueMatchPath(pathname)) {
+    const response = new NextResponse("Not Found", {
+      status: 404,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    });
+    return applySecurityHeaders(response);
+  }
 
   if (pathname === "/.well-known/assetlinks.json") {
     const url = request.nextUrl.clone();

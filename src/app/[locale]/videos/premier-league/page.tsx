@@ -31,9 +31,9 @@ export default async function PremierLeagueVideosPage() {
     <VideoCategoryFeed
       heading="Premier League"
       headingAccent="Videos"
-      intro="Premier League 2026/27 highlights from YouTube — refreshed hourly."
-      videos={withVideoFallback(videos, 12)}
-      emptyMessage="No PL videos available right now."
+      intro="Premier League 2026/27 football highlights from YouTube — refreshed hourly."
+      videos={withVideoFallback(videos, 12, "pl")}
+      emptyMessage="No Premier League football videos available right now."
     />
   );
 }

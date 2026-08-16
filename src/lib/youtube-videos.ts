@@ -1,4 +1,5 @@
 import type { VideosApiResponse, YouTubeVideo } from "@/types/video";
+import { filterRelevantFootballVideos } from "@/lib/video-relevance";
 
 export type VideoFeedCategory = "pl" | "wc" | "all";
 
@@ -6,11 +7,11 @@ const YT_BASE = "https://www.googleapis.com/youtube/v3";
 const FIFA_CHANNEL = "UCpcTrCXblq78GZrTUTLWeBw";
 
 const DEFAULT_SEARCH_QUERY = "FIFA World Cup 2026 match preview";
-const FALLBACK_SEARCH_QUERY = "FIFA World Cup 2026 preview";
+const FALLBACK_SEARCH_QUERY = "FIFA World Cup 2026 football preview";
 
 const CATEGORY_QUERIES: Record<Exclude<VideoFeedCategory, "all">, string> = {
-  pl: "Premier League 2026 highlights",
-  wc: "World Cup 2026 highlights",
+  pl: "Premier League 2026 football highlights",
+  wc: "FIFA World Cup 2026 football highlights",
 };
 
 type YouTubeSearchItem = {
@@ -69,9 +70,6 @@ function formatItems(items: YouTubeSearchItem[]): YouTubeVideo[] {
 
 async function ytFetch(path: string, apiKey: string): Promise<unknown> {
   const url = `${YT_BASE}${path}`;
-  const safePath = path.replace(/key=[^&]+/i, "key=***");
-  console.log("[YouTube] Fetch:", safePath);
-
   const response = await fetch(url, {
     signal: AbortSignal.timeout(8000),
     next: { revalidate: 3600 },
@@ -83,9 +81,7 @@ async function ytFetch(path: string, apiKey: string): Promise<unknown> {
     throw new Error(`YouTube API ${response.status}: ${body.slice(0, 200)}`);
   }
 
-  const data = await response.json();
-  console.log("[YouTube] Response:", JSON.stringify(data).slice(0, 800));
-  return data;
+  return response.json();
 }
 
 async function searchVideos(
@@ -107,51 +103,83 @@ async function searchVideos(
     params.set("channelId", channelId);
   }
 
-  console.log("[YouTube] Query:", query, {
-    channelId: channelId ?? "(any)",
-    maxResults,
-  });
-
   const data = (await ytFetch(`/search?${params.toString()}`, apiKey)) as {
     items?: YouTubeSearchItem[];
-    error?: { message?: string; code?: number; errors?: unknown[] };
-    pageInfo?: { totalResults?: number };
   };
 
-  const items = data.items ?? [];
-  console.log("[YouTube] Search result:", {
-    itemCount: items.length,
-    totalResults: data.pageInfo?.totalResults,
-    apiError: data.error?.message,
-  });
-
-  return formatItems(items);
+  return formatItems(data.items ?? []);
 }
 
 async function fetchDefaultVideos(
   apiKey: string,
   maxResults: number,
 ): Promise<YouTubeVideo[]> {
-  const channelResults = await searchVideos(
-    apiKey,
-    DEFAULT_SEARCH_QUERY,
-    Math.max(maxResults * 2, 8),
-    FIFA_CHANNEL,
+  const channelResults = filterRelevantFootballVideos(
+    await searchVideos(
+      apiKey,
+      DEFAULT_SEARCH_QUERY,
+      Math.max(maxResults * 2, 8),
+      FIFA_CHANNEL,
+    ),
+    "all",
   );
 
   if (channelResults.length > 0) {
-    console.log("[YouTube] Using FIFA channel results:", channelResults.length);
     return channelResults.slice(0, maxResults);
   }
 
-  console.log("[YouTube] FIFA channel empty — trying fallback query");
-  const fallback = await searchVideos(
-    apiKey,
-    FALLBACK_SEARCH_QUERY,
-    maxResults,
-  );
-  console.log("[YouTube] Fallback query returned:", fallback.length);
-  return fallback.slice(0, maxResults);
+  return filterRelevantFootballVideos(
+    await searchVideos(apiKey, FALLBACK_SEARCH_QUERY, Math.max(maxResults * 2, 8)),
+    "all",
+  ).slice(0, maxResults);
+}
+
+async function fetchCategoryVideos(
+  apiKey: string,
+  category: Exclude<VideoFeedCategory, "all">,
+  maxResults: number,
+): Promise<YouTubeVideo[]> {
+  // World Cup is ambiguous across sports. Prefer FIFA's official channel first,
+  // then use a guarded broad search only if it cannot fill the requested feed.
+  if (category === "wc") {
+    const official = filterRelevantFootballVideos(
+      await searchVideos(
+        apiKey,
+        CATEGORY_QUERIES.wc,
+        Math.max(maxResults * 2, 12),
+        FIFA_CHANNEL,
+      ),
+      "wc",
+    );
+
+    if (official.length >= maxResults) {
+      return official.slice(0, maxResults);
+    }
+
+    const broad = filterRelevantFootballVideos(
+      await searchVideos(
+        apiKey,
+        CATEGORY_QUERIES.wc,
+        Math.max(maxResults * 3, 18),
+      ),
+      "wc",
+    );
+
+    const combined = new Map<string, YouTubeVideo>();
+    for (const video of [...official, ...broad]) {
+      combined.set(video.videoId, video);
+    }
+    return [...combined.values()].slice(0, maxResults);
+  }
+
+  return filterRelevantFootballVideos(
+    await searchVideos(
+      apiKey,
+      CATEGORY_QUERIES[category],
+      Math.max(maxResults * 2, 12),
+    ),
+    category,
+  ).slice(0, maxResults);
 }
 
 export function parseVideoFeedCategory(
@@ -169,43 +197,36 @@ export function parseVideoFeedCategory(
   return "all";
 }
 
+/**
+ * Search-list calls consume significant YouTube quota and had begun returning
+ * 429s in production. Live search is therefore opt-in; safe curated football
+ * fallbacks remain available when this flag is off.
+ */
+export function isYouTubeLiveSearchEnabled(
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  return env.YOUTUBE_LIVE_SEARCH_ENABLED?.trim().toLowerCase() === "true";
+}
+
 export async function fetchYouTubeVideos(
   category: VideoFeedCategory = "all",
   maxResults = category === "all" ? 4 : 12,
 ): Promise<VideosApiResponse> {
-  const rawKey = process.env.YOUTUBE_API_KEY;
-  const apiKey = rawKey?.trim();
+  if (!isYouTubeLiveSearchEnabled()) {
+    return emptyResponse("Live YouTube search disabled");
+  }
 
-  console.log("[YouTube] fetchYouTubeVideos called", {
-    category,
-    maxResults,
-    apiKeyPresent: Boolean(apiKey),
-    apiKeyLength: apiKey?.length ?? 0,
-  });
+  const apiKey = process.env.YOUTUBE_API_KEY?.trim();
 
   if (!apiKey) {
-    console.warn("[YouTube] YOUTUBE_API_KEY missing or empty after trim");
     return emptyResponse("YOUTUBE_API_KEY not configured");
   }
 
   try {
-    let videos: YouTubeVideo[];
-
-    if (category === "all") {
-      videos = await fetchDefaultVideos(apiKey, maxResults);
-    } else {
-      videos = await searchVideos(
-        apiKey,
-        CATEGORY_QUERIES[category],
-        maxResults,
-      );
-    }
-
-    console.log("[YouTube] fetchYouTubeVideos done", {
-      category,
-      count: videos.length,
-      titles: videos.slice(0, 3).map((v) => v.title),
-    });
+    const videos =
+      category === "all"
+        ? await fetchDefaultVideos(apiKey, maxResults)
+        : await fetchCategoryVideos(apiKey, category, maxResults);
 
     return {
       videos,

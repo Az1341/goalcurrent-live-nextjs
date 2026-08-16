@@ -3,7 +3,7 @@
  * Excludes noindex coming-soon stubs (see NOINDEX_STUB_PATHS).
  */
 
-/** robots:noindex stubs â€” built for nav but omitted from sitemap until content ships. */
+/** robots:noindex stubs — built for nav but omitted from sitemap until content ships. */
 export const NOINDEX_STUB_PATHS = [
   "/statistics/clean-sheets",
   "/statistics/live",
@@ -19,9 +19,12 @@ export const NOINDEX_STUB_PATHS = [
   "/favourites/players",
   "/worldcup2026/players",
   "/news/transfers",
+  "/champions-league",
+  "/fa-cup",
+  "/nations-league",
 ] as const;
 
-/** Indexable static routes (exclude redirect sources such as /video/*). */
+/** Indexable static routes (exclude redirect sources and noindex hubs). */
 export const SITEMAP_STATIC_PATHS = [
   "/",
   "/live",
@@ -52,10 +55,7 @@ export const SITEMAP_STATIC_PATHS = [
   "/premier-league/statistics",
   "/premier-league/transfers",
   "/fixture",
-  "/champions-league",
-  "/fa-cup",
   "/community-shield",
-  "/nations-league",
   "/videos",
   "/videos/premier-league",
   "/videos/world-cup",

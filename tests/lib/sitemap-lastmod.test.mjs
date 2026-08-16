@@ -24,3 +24,11 @@ test("sitemap paths remain unique at the logical-page level", () => {
   const paths = specs.map((item) => item.path);
   assert.equal(new Set(paths).size, paths.length);
 });
+
+test("noindex competition hubs are excluded from the sitemap", () => {
+  const paths = new Set(collectSitemapPathSpecs().map((item) => item.path));
+
+  for (const path of ["/champions-league", "/fa-cup", "/nations-league"]) {
+    assert.equal(paths.has(path), false, `${path} must stay out of sitemap while noindex`);
+  }
+});

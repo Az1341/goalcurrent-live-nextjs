@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import MatchSeo from "@/components/seo/MatchSeo";
 import PlMatchClient from "@/components/pl/PlMatchClient";
 import { fetchPlMatchDetail } from "@/lib/pl/match-detail";
@@ -35,19 +36,17 @@ export async function generateMetadata({
   const { locale, fixtureId: rawFixtureId } = await params;
   const fixtureId = parseFixtureId(rawFixtureId);
   if (fixtureId === null) {
-    return { title: "Match not found" };
+    return { title: "Match not found", robots: { index: false, follow: false } };
   }
 
   const detail = await fetchPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
 
   if (!fixture) {
-    return buildMatchMetadata({
-      title: "Premier League Match",
-      description: `Premier League match centre on ${SITE_NAME}.`,
-      path: `/premier-league/match/${fixtureId}`,
-      locale,
-    });
+    return {
+      title: "Match not found",
+      robots: { index: false, follow: false },
+    };
   }
 
   const title = `${fixture.homeTeamName} vs ${fixture.awayTeamName}`;
@@ -65,63 +64,68 @@ export default async function PremierLeagueMatchPage({
 }: PlMatchPageProps) {
   const { locale, fixtureId: rawFixtureId } = await params;
   void locale;
-  const fixtureId = parseFixtureId(rawFixtureId) ?? 0;
+  const fixtureId = parseFixtureId(rawFixtureId);
+  if (fixtureId === null) {
+    notFound();
+  }
+
   const detail = await fetchPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
+  if (!fixture) {
+    notFound();
+  }
+
   const path = `/premier-league/match/${fixtureId}`;
 
-  const liveBlog =
-    fixture && isLiveBlogEligibleStatus(fixture.status)
-      ? (() => {
-          const liveBlogUpdate = buildLiveBlogUpdates(
-            detail.events,
-            fixture.kickoffUtc,
-          );
-          if (liveBlogUpdate.length === 0) return null;
-          const isFinished = fixture.status.trim().toUpperCase() === "FT";
-          return {
-            path,
-            headline: `${fixture.homeTeamName} vs ${fixture.awayTeamName} — live updates`,
-            coverageStartTime: fixture.kickoffUtc,
-            ...(isFinished
-              ? {
-                  coverageEndTime: coverageEndTimeForFinishedMatch(
-                    fixture.kickoffUtc,
-                  ),
-                }
-              : {}),
-            liveBlogUpdate,
-          };
-        })()
-      : null;
+  const liveBlog = isLiveBlogEligibleStatus(fixture.status)
+    ? (() => {
+        const liveBlogUpdate = buildLiveBlogUpdates(
+          detail.events,
+          fixture.kickoffUtc,
+        );
+        if (liveBlogUpdate.length === 0) return null;
+        const isFinished = fixture.status.trim().toUpperCase() === "FT";
+        return {
+          path,
+          headline: `${fixture.homeTeamName} vs ${fixture.awayTeamName} — live updates`,
+          coverageStartTime: fixture.kickoffUtc,
+          ...(isFinished
+            ? {
+                coverageEndTime: coverageEndTimeForFinishedMatch(
+                  fixture.kickoffUtc,
+                ),
+              }
+            : {}),
+          liveBlogUpdate,
+        };
+      })()
+    : null;
 
   return (
     <>
-      {fixture ? (
-        <MatchSeo
-          event={{
+      <MatchSeo
+        event={{
+          name: `${fixture.homeTeamName} vs ${fixture.awayTeamName}`,
+          startDate: fixture.kickoffUtc,
+          path,
+          homeTeamName: fixture.homeTeamName,
+          awayTeamName: fixture.awayTeamName,
+          venueName: fixture.venue ?? undefined,
+          competition: "Premier League",
+          organizerUrl: "https://www.premierleague.com",
+          eventStatus: plEventStatus(fixture.status),
+          description: `Premier League — ${fixture.homeTeamName} vs ${fixture.awayTeamName}. Live match centre on ${SITE_NAME}.`,
+        }}
+        liveBlog={liveBlog}
+        breadcrumbs={[
+          { name: "Premier League", path: "/premier-league" },
+          { name: "Fixtures", path: "/premier-league/fixtures" },
+          {
             name: `${fixture.homeTeamName} vs ${fixture.awayTeamName}`,
-            startDate: fixture.kickoffUtc,
             path,
-            homeTeamName: fixture.homeTeamName,
-            awayTeamName: fixture.awayTeamName,
-            venueName: fixture.venue ?? undefined,
-            competition: "Premier League",
-            organizerUrl: "https://www.premierleague.com",
-            eventStatus: plEventStatus(fixture.status),
-            description: `Premier League — ${fixture.homeTeamName} vs ${fixture.awayTeamName}. Live match centre on ${SITE_NAME}.`,
-          }}
-          liveBlog={liveBlog}
-          breadcrumbs={[
-            { name: "Premier League", path: "/premier-league" },
-            { name: "Fixtures", path: "/premier-league/fixtures" },
-            {
-              name: `${fixture.homeTeamName} vs ${fixture.awayTeamName}`,
-              path,
-            },
-          ]}
-        />
-      ) : null}
+          },
+        ]}
+      />
       <PlMatchClient fixtureId={fixtureId} />
     </>
   );

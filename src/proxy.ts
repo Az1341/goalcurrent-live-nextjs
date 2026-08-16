@@ -23,6 +23,7 @@ const LOCALE_API = /^\/(en|es|it|de|fr|nl)\/api\/(.+)$/;
 const LOCALE_PUBLIC_ASSET = /^\/(en|es|it|de|fr|nl)\/(flags|images|icons)(\/.*)?$/;
 const LOCALE_PUBLIC_FILE = /^\/(en|es|it|de|fr|nl)\/(logo\.svg|favicon\.ico|favicon\.svg|sw\.js|firebase-messaging-sw\.js|OneSignalSDKWorker\.js|OneSignalSDKUpdaterWorker\.js|manifest\.json)$/;
 const ROOT_PUBLIC_FILE = /^\/[^/]+\.[A-Za-z0-9]+$/;
+const PL_MATCH_PATH = /^\/(?:en|es|it|de|fr|nl\/)?premier-league\/match\/([^/]+)\/?$/;
 
 const PUBLIC_STATIC_FILES = new Set([
   "/logo.svg",
@@ -44,6 +45,15 @@ function isRootPublicStaticPath(pathname: string): boolean {
     pathname.startsWith("/images/") ||
     pathname.startsWith("/icons/")
   );
+}
+
+function malformedPremierLeagueMatchPath(pathname: string): boolean {
+  const match = PL_MATCH_PATH.exec(pathname);
+  if (!match) return false;
+  const fixtureId = match[1] ?? "";
+  if (!/^\d+$/.test(fixtureId)) return true;
+  const parsed = Number(fixtureId);
+  return !Number.isSafeInteger(parsed) || parsed <= 0;
 }
 
 const handleI18n = createIntlMiddleware(routing);
@@ -123,6 +133,17 @@ export async function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.pathname = removedLocalePath;
     return applySecurityHeaders(NextResponse.redirect(url, 308));
+  }
+
+  if (malformedPremierLeagueMatchPath(pathname)) {
+    const response = new NextResponse("Not Found", {
+      status: 404,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    });
+    return applySecurityHeaders(response);
   }
 
   if (pathname === "/.well-known/assetlinks.json") {

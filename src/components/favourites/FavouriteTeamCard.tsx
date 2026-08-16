@@ -50,6 +50,8 @@ export default function FavouriteTeamCard({
   onToggleAlert: () => void;
   onRemove: () => void;
 }) {
+  const nextHref =
+    nextFixture?.source === "cs" ? "/community-shield" : nextFixture?.href;
   return (
     <article className={styles.teamCard}>
       <div className={styles.teamCardHeader}>
@@ -84,8 +86,8 @@ export default function FavouriteTeamCard({
             View team
           </Link>
         ) : null}
-        {nextFixture ? (
-          <Link href={nextFixture.href} className={styles.secondaryAction}>
+        {nextHref ? (
+          <Link href={nextHref} className={styles.secondaryAction}>
             View match
           </Link>
         ) : null}

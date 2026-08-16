@@ -8,10 +8,11 @@ test("Premier League hub exposes an apex canonical and stays indexable", async (
     "href",
     "https://goalcurrent.live/premier-league",
   );
-  await expect(page.locator('meta[name="robots"]')).not.toHaveAttribute(
-    "content",
-    /noindex/i,
-  );
+
+  const robots = page.locator('meta[name="robots"]');
+  if ((await robots.count()) > 0) {
+    await expect(robots).not.toHaveAttribute("content", /noindex/i);
+  }
 });
 
 test("retired Arabic and Persian locale URLs permanently consolidate to English", async ({ page }) => {

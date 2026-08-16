@@ -22,12 +22,14 @@ test("Community Shield match detail API is fixture-bound and exposes match-day d
   assert.match(route, /fetchCommunityShieldMatchDetail\(fixtureId\)/);
 });
 
-test("Community Shield hub renders pre-match history, line-ups, statistics and events", () => {
+test("Community Shield hub renders pre-match history, line-ups, statistics and events through the shared dashboard", () => {
   const client = read("src/components/community-shield/CommunityShieldHubClient.tsx");
+  const dashboard = read("src/components/match/LiveMatchDashboard.tsx");
+  assert.match(client, /LiveMatchDashboard/);
   assert.match(client, /Recent meetings/);
-  assert.match(client, /Line-ups/);
-  assert.match(client, /Match statistics/);
-  assert.match(client, /Match events/);
+  assert.match(dashboard, /Line-ups/);
+  assert.match(dashboard, /Key stats/);
+  assert.match(dashboard, /Match events/);
   assert.match(client, /\/api\/community-shield\/match\//);
   assert.match(client, /latest\?\.status === ["']LIVE["'] \? 20_000 : 300_000/);
 });

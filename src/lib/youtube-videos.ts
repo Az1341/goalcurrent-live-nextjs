@@ -197,10 +197,25 @@ export function parseVideoFeedCategory(
   return "all";
 }
 
+/**
+ * Search-list calls consume significant YouTube quota and had begun returning
+ * 429s in production. Live search is therefore opt-in; safe curated football
+ * fallbacks remain available when this flag is off.
+ */
+export function isYouTubeLiveSearchEnabled(
+  env: Record<string, string | undefined> = process.env,
+): boolean {
+  return env.YOUTUBE_LIVE_SEARCH_ENABLED?.trim().toLowerCase() === "true";
+}
+
 export async function fetchYouTubeVideos(
   category: VideoFeedCategory = "all",
   maxResults = category === "all" ? 4 : 12,
 ): Promise<VideosApiResponse> {
+  if (!isYouTubeLiveSearchEnabled()) {
+    return emptyResponse("Live YouTube search disabled");
+  }
+
   const apiKey = process.env.YOUTUBE_API_KEY?.trim();
 
   if (!apiKey) {

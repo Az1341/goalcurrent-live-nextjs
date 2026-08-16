@@ -46,12 +46,15 @@ test("Android/PWA cleanup cannot revive a World Cup-era app shell", () => {
   const nav = read("src/lib/nav.ts");
   const ribbon = read("src/components/layout/LiveRibbon.tsx");
 
-  assert.match(sw, /CLEANUP_VERSION = "15"/);
-  assert.match(sw, /goalcurrent-online-/);
+  assert.match(sw, /CLEANUP_VERSION = "16"/);
+  assert.match(sw, /cacheNames\.map\(\(name\) => caches\.delete\(name\)\)/);
+  assert.match(sw, /self\.registration\.unregister\(\)/);
   assert.doesNotMatch(sw, /addEventListener\("fetch"/);
   assert.match(sw, /client\.navigate/);
 
+  assert.match(bootstrap, /registration\.update\(\)/);
   assert.match(bootstrap, /registration\.unregister\(\)/);
+  assert.match(bootstrap, /cacheNames\.map\(\(name\) => caches\.delete\(name\)\)/);
   assert.doesNotMatch(bootstrap, /\.register\("\/sw\.js"/);
 
   assert.match(home, /wc26Views=\{\[\]\}/);

@@ -15,7 +15,8 @@ test("retired app shell never forces a page reload or re-registers stale caching
   assert.doesNotMatch(source, /attachServiceWorkerControllerReload/);
   assert.doesNotMatch(source, /navigator\.serviceWorker\s*\.register\(/);
   assert.match(source, /navigator\.serviceWorker\.getRegistrations\(\)/);
+  assert.match(source, /registration\.update\(\)/);
   assert.match(source, /registration\.unregister\(\)/);
-  assert.match(source, /goalcurrent-online-/);
-  assert.match(source, /caches\.delete\(name\)/);
+  assert.match(source, /cacheNames\.map\(\(name\) => caches\.delete\(name\)\)/);
+  assert.match(source, /window\.location\.replace\("\/"\)/);
 });

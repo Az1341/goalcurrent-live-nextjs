@@ -16,8 +16,10 @@ type PlMatchPageProps = {
 };
 
 function parseFixtureId(raw: string): number | null {
-  const id = Number.parseInt(decodeURIComponent(raw), 10);
-  if (!Number.isFinite(id) || id <= 0) return null;
+  const decoded = decodeURIComponent(raw);
+  if (!/^\d+$/.test(decoded)) return null;
+  const id = Number(decoded);
+  if (!Number.isSafeInteger(id) || id <= 0) return null;
   return id;
 }
 

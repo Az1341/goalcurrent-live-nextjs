@@ -43,10 +43,19 @@ export async function generateMetadata({
   const fixture = detail.fixture;
 
   if (!fixture) {
-    return {
-      title: "Match not found",
-      robots: { index: false, follow: false },
-    };
+    if (detail.configured) {
+      return {
+        title: "Match not found",
+        robots: { index: false, follow: false },
+      };
+    }
+
+    return buildMatchMetadata({
+      title: "Premier League Match",
+      description: `Premier League match centre on ${SITE_NAME}.`,
+      path: `/premier-league/match/${fixtureId}`,
+      locale,
+    });
   }
 
   const title = `${fixture.homeTeamName} vs ${fixture.awayTeamName}`;
@@ -71,8 +80,12 @@ export default async function PremierLeagueMatchPage({
 
   const detail = await fetchPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
+
   if (!fixture) {
-    notFound();
+    if (detail.configured) {
+      notFound();
+    }
+    return <PlMatchClient fixtureId={fixtureId} />;
   }
 
   const path = `/premier-league/match/${fixtureId}`;

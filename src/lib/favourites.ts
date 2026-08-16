@@ -96,6 +96,33 @@ function writeFavourites(state: FavouritesState): void {
   }
 }
 
+export function reconcileFavouriteMatchAliases(
+  plFixtureIds: readonly number[],
+  unlFixtureIds: readonly number[],
+): void {
+  if (typeof window === "undefined") return;
+  const state = readFavourites();
+  const plIds = new Set(plFixtureIds);
+  const unlIds = new Set(unlFixtureIds);
+  const canonicalMatches = state.matches.map((matchId) => {
+    const canonical = canonicalizeFavouriteMatchId(matchId);
+    if (canonical.includes(":")) return canonical;
+    if (!/^\d+$/.test(canonical)) return canonical;
+    const numericId = Number.parseInt(canonical, 10);
+    if (plIds.has(numericId)) return `pl:${numericId}`;
+    if (unlIds.has(numericId)) return `unl:${numericId}`;
+    if (numericId === 1582365) return `cs:${numericId}`;
+    return canonical;
+  });
+  const deduped = [...new Set(canonicalMatches)];
+  if (
+    deduped.length !== state.matches.length ||
+    deduped.some((value, index) => value !== state.matches[index])
+  ) {
+    writeFavourites({ ...state, matches: deduped });
+  }
+}
+
 export function isTeamFavourited(teamId: string): boolean {
   return readFavourites().teams.includes(canonicalizeFavouriteTeamKey(teamId));
 }

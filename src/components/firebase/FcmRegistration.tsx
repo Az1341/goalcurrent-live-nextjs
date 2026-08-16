@@ -73,80 +73,84 @@ export function FcmRegistration() {
     }
   }, []);
 
-  const register = useCallback(async () => {
-    if (!isFirebaseMessagingConfigured() || typeof window === "undefined") {
-      return;
-    }
+  const register = useCallback(
+    async (requestPermission: boolean) => {
+      if (!isFirebaseMessagingConfigured() || typeof window === "undefined") {
+        return;
+      }
 
-    if (!("Notification" in window)) {
-      return;
-    }
+      if (!("Notification" in window)) {
+        return;
+      }
 
-    const nextPermission = await Notification.requestPermission();
-    setPermission(nextPermission);
-    if (nextPermission !== "granted") {
-      return;
-    }
+      let nextPermission = Notification.permission;
+      if (nextPermission !== "granted" && requestPermission) {
+        nextPermission = await Notification.requestPermission();
+        setPermission(nextPermission);
+      }
+      if (nextPermission !== "granted") {
+        return;
+      }
 
-    const registration = await registerFcmServiceWorker();
-    if (!registration) {
-      return;
-    }
+      const registration = await registerFcmServiceWorker();
+      if (!registration) {
+        return;
+      }
 
-    const token = await requestFcmToken(registration);
-    if (!token) {
-      return;
-    }
+      const token = await requestFcmToken(registration);
+      if (!token) {
+        return;
+      }
 
-    const auth = getFirebaseAuth();
-    const idToken = auth?.currentUser
-      ? await auth.currentUser.getIdToken()
-      : undefined;
-    const teamKeys = readFavourites().teamNotifications;
-    const previousTeamKeys = readStoredTeamKeys();
+      const auth = getFirebaseAuth();
+      const idToken = auth?.currentUser
+        ? await auth.currentUser.getIdToken()
+        : undefined;
+      const teamKeys = readFavourites().teamNotifications;
+      const previousTeamKeys = readStoredTeamKeys();
 
-    const synced = await syncFcmToken(
-      token,
-      locale,
-      idToken,
-      teamKeys,
-      previousTeamKeys,
-    );
-    if (!synced) return;
+      const synced = await syncFcmToken(
+        token,
+        locale,
+        idToken,
+        teamKeys,
+        previousTeamKeys,
+      );
+      if (!synced) return;
 
-    window.localStorage.setItem(FCM_TOKEN_STORAGE_KEY, token);
-    window.localStorage.setItem(
-      FCM_TEAM_KEYS_STORAGE_KEY,
-      JSON.stringify(teamKeys),
-    );
-    window.AndroidBridge?.onFcmToken?.(token);
-  }, [locale]);
+      window.localStorage.setItem(FCM_TOKEN_STORAGE_KEY, token);
+      window.localStorage.setItem(
+        FCM_TEAM_KEYS_STORAGE_KEY,
+        JSON.stringify(teamKeys),
+      );
+      window.AndroidBridge?.onFcmToken?.(token);
+    },
+    [locale],
+  );
 
   useEffect(() => {
     if (!isFirebaseMessagingConfigured()) {
       return;
     }
-
-    const stored = window.localStorage.getItem(FCM_TOKEN_STORAGE_KEY);
-    if (permission === "granted" && stored) {
-      void register();
-      return;
-    }
-
     if (permission === "granted") {
-      void register();
+      void register(false);
     }
   }, [permission, user, register]);
 
   useEffect(() => {
-    const handler = () => {
-      void register();
+    const explicitHandler = () => {
+      void register(true);
     };
-    window.addEventListener("gc:firebase-enable-push", handler);
-    window.addEventListener("gc:favourites-change", handler);
+    const reconcileHandler = () => {
+      if ("Notification" in window && Notification.permission === "granted") {
+        void register(false);
+      }
+    };
+    window.addEventListener("gc:firebase-enable-push", explicitHandler);
+    window.addEventListener("gc:favourites-change", reconcileHandler);
     return () => {
-      window.removeEventListener("gc:firebase-enable-push", handler);
-      window.removeEventListener("gc:favourites-change", handler);
+      window.removeEventListener("gc:firebase-enable-push", explicitHandler);
+      window.removeEventListener("gc:favourites-change", reconcileHandler);
     };
   }, [register]);
 

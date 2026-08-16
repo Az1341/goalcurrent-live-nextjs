@@ -1,5 +1,5 @@
 import { PL_CLUBS_2026 } from "@/data/pl-clubs";
-import { getTeamById } from "@/data/wc26";
+import { WC26_TEAMS, getFixtureById, getTeamById } from "@/data/wc26";
 import { getUnlGroups } from "@/lib/unl/groups-ssot";
 
 export type FavouriteTeamKind = "club" | "national";
@@ -89,7 +89,7 @@ export function parseFavouriteMatchId(input: string): ResolvedFavouriteMatch {
         source: "cs",
         fixtureId,
         competition: "FA Community Shield",
-        href: `/community-shield/match/${fixtureId}`,
+        href: "/community-shield",
       };
     }
     if (prefix === "unl") {
@@ -103,12 +103,13 @@ export function parseFavouriteMatchId(input: string): ResolvedFavouriteMatch {
     }
   }
 
+  const wc26Fixture = getFixtureById(key);
   return {
     key,
-    source: getTeamById(key) ? "unknown" : "wc26",
+    source: wc26Fixture ? "wc26" : "unknown",
     fixtureId: key,
-    competition: "World Cup 2026",
-    href: `/worldcup2026/match/${key}`,
+    competition: wc26Fixture ? "World Cup 2026" : "Saved match",
+    href: wc26Fixture ? `/worldcup2026/match/${key}` : null,
   };
 }
 
@@ -124,26 +125,39 @@ export function getFavouriteTeamCatalog(): FavouriteTeamEntity[] {
     aliases: [club.shortName],
   }));
 
-  const nationalByKey = new Map<string, FavouriteTeamEntity>();
+  const nationalByName = new Map<string, FavouriteTeamEntity>();
   for (const group of getUnlGroups()) {
     for (const team of group.teams) {
-      const key = canonicalUnlTeamKey(team.teamId);
-      if (!nationalByKey.has(key)) {
-        nationalByKey.set(key, {
-          key,
-          name: team.name,
-          kind: "national",
-          competition: "UEFA Nations League",
-          href: `/nations-league/league/${group.league}/group/${group.groupId.slice(1)}`,
-          logo: team.logo,
-          flagCode: team.flagCode,
-          aliases: [],
-        });
-      }
+      const entity: FavouriteTeamEntity = {
+        key: canonicalUnlTeamKey(team.teamId),
+        name: team.name,
+        kind: "national",
+        competition: "UEFA Nations League",
+        href: `/nations-league/league/${group.league}/group/${group.groupId.slice(1)}`,
+        logo: team.logo,
+        flagCode: team.flagCode,
+        aliases: [],
+      };
+      nationalByName.set(team.name.trim().toLowerCase(), entity);
     }
   }
 
-  return [...clubs, ...nationalByKey.values()].sort((a, b) =>
+  for (const team of WC26_TEAMS) {
+    const nameKey = team.name.trim().toLowerCase();
+    if (nationalByName.has(nameKey)) continue;
+    nationalByName.set(nameKey, {
+      key: team.id,
+      name: team.name,
+      kind: "national",
+      competition: "World Cup 2026",
+      href: `/worldcup2026/teams/${team.id}`,
+      logo: null,
+      flagCode: team.flagCode,
+      aliases: team.aliases,
+    });
+  }
+
+  return [...clubs, ...nationalByName.values()].sort((a, b) =>
     a.name.localeCompare(b.name),
   );
 }

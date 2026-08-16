@@ -23,7 +23,7 @@ const LOCALE_API = /^\/(en|es|it|de|fr|nl)\/api\/(.+)$/;
 const LOCALE_PUBLIC_ASSET = /^\/(en|es|it|de|fr|nl)\/(flags|images|icons)(\/.*)?$/;
 const LOCALE_PUBLIC_FILE = /^\/(en|es|it|de|fr|nl)\/(logo\.svg|favicon\.ico|favicon\.svg|sw\.js|firebase-messaging-sw\.js|OneSignalSDKWorker\.js|OneSignalSDKUpdaterWorker\.js|manifest\.json)$/;
 const ROOT_PUBLIC_FILE = /^\/[^/]+\.[A-Za-z0-9]+$/;
-const PL_MATCH_PATH = /^\/(?:en|es|it|de|fr|nl\/)?premier-league\/match\/([^/]+)\/?$/;
+const PL_MATCH_PATH = /^\/(?:(?:en|es|it|de|fr|nl)\/)?premier-league\/match\/([^/]+)\/?$/;
 
 const PUBLIC_STATIC_FILES = new Set([
   "/logo.svg",

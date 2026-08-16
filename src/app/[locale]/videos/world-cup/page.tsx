@@ -31,9 +31,9 @@ export default async function WorldCupVideosPage() {
     <VideoCategoryFeed
       heading="World Cup 2026"
       headingAccent="Videos"
-      intro="World Cup 2026 previews and highlights from YouTube — refreshed hourly."
-      videos={withVideoFallback(videos, 12)}
-      emptyMessage="No World Cup videos available right now."
+      intro="World Cup 2026 football previews and highlights from trusted YouTube results — refreshed hourly."
+      videos={withVideoFallback(videos, 12, "wc")}
+      emptyMessage="No World Cup football videos available right now."
     />
   );
 }

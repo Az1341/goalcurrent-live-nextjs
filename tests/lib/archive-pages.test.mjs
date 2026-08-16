@@ -32,6 +32,23 @@ test("archive hub page no longer mounts live scoreboard", () => {
   assert.match(hub, /getWc26ArchiveFinalSummary/);
 });
 
+test("legacy Android TWA launch exits the World Cup archive into current GoalCurrent", () => {
+  const hub = readFileSync(
+    join(root, "src/app/[locale]/worldcup2026/page.tsx"),
+    "utf8",
+  );
+  const guard = readFileSync(
+    join(root, "src/components/android/AndroidTwaLaunchGuard.tsx"),
+    "utf8",
+  );
+
+  assert.match(hub, /AndroidTwaLaunchGuard/);
+  assert.match(guard, /android-app:\/\/com\.goalcurrent\.app/);
+  assert.match(guard, /display-mode: standalone/);
+  assert.match(guard, /Android/i);
+  assert.match(guard, /window\.location\.replace\("\/"\)/);
+});
+
 test("bracket polling supports archiveMode", () => {
   const src = readFileSync(
     join(root, "src/components/wc26/bracket/BracketLivePolling.tsx"),

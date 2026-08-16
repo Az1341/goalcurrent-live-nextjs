@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import AndroidTwaLaunchGuard from "@/components/android/AndroidTwaLaunchGuard";
 import JsonLdScript from "@/components/seo/JsonLdScript";
 import TeamFlag from "@/components/TeamFlag";
 import Wc26Breadcrumb from "@/components/wc26/Wc26Breadcrumb";
@@ -34,7 +35,7 @@ export async function generateMetadata({
 }
 
 export default function WorldCupArchiveHubPage() {
-  const hosts = WC26_TOURNAMENT.hosts.join(" \u00b7 ");
+  const hosts = WC26_TOURNAMENT.hosts.join(" · ");
   const finalSummary = getWc26ArchiveFinalSummary();
   const scoreLine = finalSummary ? formatArchiveScoreLine(finalSummary) : null;
 
@@ -62,6 +63,7 @@ export default function WorldCupArchiveHubPage() {
 
   return (
     <>
+      <AndroidTwaLaunchGuard />
       <JsonLdScript data={jsonLd} />
       <main className={styles.wc26Content}>
         <Wc26Breadcrumb items={[{ label: WC26_ARCHIVE_LABEL }]} />

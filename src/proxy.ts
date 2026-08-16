@@ -93,13 +93,22 @@ function legacyAndroidTwaRedirect(request: NextRequest): NextResponse | null {
   if (!LEGACY_ANDROID_TWA_WC26_PATH.test(pathname)) return null;
 
   const referrer = request.headers.get("referer") ?? "";
-  const launchedByGoalCurrentApp = referrer.startsWith(
-    "android-app://com.goalcurrent.app",
-  );
+  const userAgent = request.headers.get("user-agent") ?? "";
+  const requestedWith = request.headers.get("x-requested-with") ?? "";
+  const launchedByGoalCurrentApp =
+    referrer.startsWith("android-app://com.goalcurrent.app") ||
+    requestedWith === "com.goalcurrent.app";
   const knownGoalCurrentApp =
     request.cookies.get(ANDROID_TWA_COOKIE)?.value === "1";
+  const isAndroidNavigation = /Android/i.test(userAgent);
 
-  if (!launchedByGoalCurrentApp && !knownGoalCurrentApp) return null;
+  // The currently published Android TWA has /worldcup2026 baked in as its old
+  // launch URL. Intercept that exact archive-hub route before HTML renders so
+  // the installed app mirrors the current mobile website without a flash/loop.
+  // WC26 sub-routes remain untouched and desktop/iOS web visitors retain archive access.
+  if (!launchedByGoalCurrentApp && !knownGoalCurrentApp && !isAndroidNavigation) {
+    return null;
+  }
 
   const url = request.nextUrl.clone();
   url.pathname = "/";
@@ -108,7 +117,7 @@ function legacyAndroidTwaRedirect(request: NextRequest): NextResponse | null {
   const response = applySecurityHeaders(NextResponse.redirect(url, 307));
   response.headers.set("Cache-Control", "no-store");
 
-  if (launchedByGoalCurrentApp) {
+  if (launchedByGoalCurrentApp || isAndroidNavigation) {
     response.cookies.set(ANDROID_TWA_COOKIE, "1", {
       httpOnly: true,
       sameSite: "lax",

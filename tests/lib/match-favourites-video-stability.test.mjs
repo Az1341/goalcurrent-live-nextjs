@@ -38,3 +38,25 @@ test("GoalCurrent uses one founder-supplied SEPANAI artwork for all SEPANAI asse
   assert.match(mark, /fill="#5EE8BB"/);
   assert.match(mark, /Created by potrace 1\.16/);
 });
+
+test("installed Android/PWA home cannot revive the World Cup-era cached shell", () => {
+  const sw = read("public/sw.js");
+  const home = read("src/app/[locale]/HomeClient.tsx");
+  const nav = read("src/lib/nav.ts");
+
+  assert.match(sw, /CACHE_VERSION = "14"/);
+  assert.match(sw, /networkOnlyNavigation/);
+  assert.doesNotMatch(sw, /SHELL_CACHE/);
+  assert.match(sw, /staleGoalCurrentCaches/);
+  assert.match(sw, /client\.navigate\("\/"\)/);
+
+  assert.match(home, /wc26Views=\{\[\]\}/);
+
+  const mobileTabs = nav.slice(
+    nav.indexOf("export const MOBILE_BOTTOM_TABS"),
+    nav.indexOf("export const MORE_SHEET_LEVEL1"),
+  );
+  assert.doesNotMatch(mobileTabs, /worldcup2026|wc26/i);
+  assert.match(mobileTabs, /premier-league/);
+  assert.match(mobileTabs, /favourites/);
+});

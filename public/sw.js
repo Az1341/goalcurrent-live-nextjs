@@ -1,8 +1,7 @@
-// GoalCurrent.live — Service Worker (PWA app shell)
+// GoalCurrent.live — Service Worker (PWA/TWA freshness layer)
 // CACHE_VERSION must change whenever shell/product chrome changes.
-const CACHE_VERSION = "13";
+const CACHE_VERSION = "14";
 const STATIC_CACHE = `goalcurrent-online-static-v${CACHE_VERSION}`;
-const SHELL_CACHE = `goalcurrent-online-shell-v${CACHE_VERSION}`;
 const API_CACHE = `goalcurrent-online-api-v${CACHE_VERSION}`;
 
 const LOCALES = ["en", "es", "it", "de", "fr", "nl"];
@@ -54,20 +53,12 @@ async function cacheResponse(cacheName, request, response) {
   await cache.put(request, response.clone());
 }
 
-async function networkFirstNavigation(request) {
+// Navigations are intentionally network-only. The installed Android TWA must
+// mirror the current responsive website and must never revive an old WC26 HTML shell.
+async function networkOnlyNavigation(request) {
   try {
-    const response = await fetch(request, { cache: "no-store" });
-    if (response.ok) await cacheResponse(SHELL_CACHE, request, response);
-    return response;
+    return await fetch(request, { cache: "no-store" });
   } catch {
-    const cache = await caches.open(SHELL_CACHE);
-    const exact = await cache.match(request);
-    if (exact) return exact;
-    const locale = localeFromPathname(new URL(request.url).pathname);
-    const home = await cache.match(localeHomePath(locale));
-    if (home) return home;
-    const root = await cache.match("/");
-    if (root) return root;
     return new Response(offlineHtmlForRequest(request), {
       status: 200,
       headers: { "Content-Type": "text/html; charset=utf-8" },
@@ -107,7 +98,7 @@ async function networkFirstApi(request, timeoutMs) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(request, { signal: controller.signal });
+    const response = await fetch(request, { signal: controller.signal, cache: "no-store" });
     clearTimeout(timer);
     if (response.ok) await cacheResponse(API_CACHE, request, response);
     return response;
@@ -128,8 +119,6 @@ self.addEventListener("install", (event) => {
     (async () => {
       const staticCache = await caches.open(STATIC_CACHE);
       await Promise.allSettled(STATIC_ASSETS.map((url) => staticCache.add(url)));
-      const shellCache = await caches.open(SHELL_CACHE);
-      await Promise.allSettled(["/"].map((url) => shellCache.add(url)));
     })(),
   );
   self.skipWaiting();
@@ -139,17 +128,40 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     (async () => {
       const cacheNames = await caches.keys();
-      await Promise.all(
-        cacheNames
-          .filter((name) => name.startsWith("goalcurrent-online-") && ![STATIC_CACHE, SHELL_CACHE, API_CACHE].includes(name))
-          .map((name) => caches.delete(name)),
+      const currentCaches = new Set([STATIC_CACHE, API_CACHE]);
+      const staleGoalCurrentCaches = cacheNames.filter(
+        (name) => name.startsWith("goalcurrent-online-") && !currentCaches.has(name),
       );
+
+      await Promise.all(staleGoalCurrentCaches.map((name) => caches.delete(name)));
+
       if (isLocalDevHost(self.location.hostname)) {
         await Promise.all((await caches.keys()).map((name) => caches.delete(name)));
         await self.registration.unregister();
         return;
       }
+
       await self.clients.claim();
+
+      // One-time migration from the World Cup-era cached app shell. Existing
+      // installed-app home/archive windows are refreshed once after stale caches
+      // are removed, then all later navigations remain network-backed.
+      if (staleGoalCurrentCaches.length > 0) {
+        const windows = await self.clients.matchAll({
+          type: "window",
+          includeUncontrolled: true,
+        });
+        await Promise.all(
+          windows.map((client) => {
+            const url = new URL(client.url);
+            if (url.origin !== self.location.origin) return undefined;
+            const isHome = url.pathname === "/" || /^\/(?:en|es|it|de|fr|nl)\/?$/.test(url.pathname);
+            const isLegacyWc26 = /^\/(?:en|es|it|de|fr|nl\/)?worldcup2026\/?$/i.test(url.pathname);
+            if (!isHome && !isLegacyWc26) return undefined;
+            return client.navigate("/");
+          }),
+        );
+      }
     })(),
   );
 });
@@ -160,7 +172,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET" || url.origin !== self.location.origin || isLocalDevHost(url.hostname)) return;
 
   if (request.mode === "navigate") {
-    event.respondWith(networkFirstNavigation(request));
+    event.respondWith(networkOnlyNavigation(request));
     return;
   }
 

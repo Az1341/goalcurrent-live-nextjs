@@ -39,16 +39,20 @@ test("GoalCurrent uses one founder-supplied SEPANAI artwork for all SEPANAI asse
   assert.match(mark, /Created by potrace 1\.16/);
 });
 
-test("installed Android/PWA home cannot revive the World Cup-era cached shell", () => {
+test("Android/PWA cleanup cannot revive a World Cup-era app shell", () => {
   const sw = read("public/sw.js");
+  const bootstrap = read("src/components/pwa/ServiceWorkerBootstrap.tsx");
   const home = read("src/app/[locale]/HomeClient.tsx");
   const nav = read("src/lib/nav.ts");
+  const ribbon = read("src/components/layout/LiveRibbon.tsx");
 
-  assert.match(sw, /CACHE_VERSION = "14"/);
-  assert.match(sw, /networkOnlyNavigation/);
-  assert.doesNotMatch(sw, /SHELL_CACHE/);
-  assert.match(sw, /staleGoalCurrentCaches/);
-  assert.match(sw, /client\.navigate\("\/"\)/);
+  assert.match(sw, /CLEANUP_VERSION = "15"/);
+  assert.match(sw, /goalcurrent-online-/);
+  assert.doesNotMatch(sw, /addEventListener\("fetch"/);
+  assert.match(sw, /client\.navigate/);
+
+  assert.match(bootstrap, /registration\.unregister\(\)/);
+  assert.doesNotMatch(bootstrap, /\.register\("\/sw\.js"/);
 
   assert.match(home, /wc26Views=\{\[\]\}/);
 
@@ -59,4 +63,8 @@ test("installed Android/PWA home cannot revive the World Cup-era cached shell", 
   assert.doesNotMatch(mobileTabs, /worldcup2026|wc26/i);
   assert.match(mobileTabs, /premier-league/);
   assert.match(mobileTabs, /favourites/);
+
+  assert.match(ribbon, /useLiveFixtures/);
+  assert.match(ribbon, /premier-league\/fixtures/);
+  assert.doesNotMatch(ribbon, /wc26|worldcup2026|useEffectiveFixtures/i);
 });

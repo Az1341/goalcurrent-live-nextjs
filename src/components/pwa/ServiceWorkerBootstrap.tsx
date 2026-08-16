@@ -1,35 +1,57 @@
 "use client";
 
 import { useEffect } from "react";
-import { attachServiceWorkerForegroundUpdate } from "@/lib/pwa/sw-foreground-update";
+
+const GOALCURRENT_CACHE_PREFIX = "goalcurrent-online-";
+
+function isGoalCurrentAppShellRegistration(registration: ServiceWorkerRegistration) {
+  const workers = [
+    registration.active,
+    registration.waiting,
+    registration.installing,
+  ].filter(Boolean) as ServiceWorker[];
+
+  return workers.some((worker) => {
+    try {
+      return new URL(worker.scriptURL).pathname === "/sw.js";
+    } catch {
+      return false;
+    }
+  });
+}
 
 /**
- * Registers the app-shell service worker independently of analytics consent.
- *
- * A service-worker update must never forcibly reload the page while a visitor
- * is using GoalCurrent. The newly activated worker can control subsequent
- * requests and the latest application shell will be picked up naturally on
- * the next navigation or user-initiated refresh.
+ * Retires the old GoalCurrent app-shell service worker after the v15 cleanup
+ * worker has removed stale WC26 caches. The Android TWA then behaves as a thin
+ * shell over the current responsive website instead of maintaining a separate
+ * cached application experience.
  */
 export function ServiceWorkerBootstrap() {
   useEffect(() => {
-    if (!("serviceWorker" in navigator)) {
-      return;
-    }
-    if (window.__gc_sw_registered) {
-      return;
-    }
+    if (!("serviceWorker" in navigator)) return;
 
-    window.__gc_sw_registered = true;
-    navigator.serviceWorker
-      .register("/sw.js", { scope: "/" })
-      .then((registration) => {
-        attachServiceWorkerForegroundUpdate(registration, {
-          document,
-          window,
-        });
-      })
-      .catch(() => {});
+    const retireLegacyAppShell = async () => {
+      try {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(
+          registrations
+            .filter(isGoalCurrentAppShellRegistration)
+            .map((registration) => registration.unregister()),
+        );
+      } catch {}
+
+      try {
+        if (!("caches" in window)) return;
+        const cacheNames = await caches.keys();
+        await Promise.all(
+          cacheNames
+            .filter((name) => name.startsWith(GOALCURRENT_CACHE_PREFIX))
+            .map((name) => caches.delete(name)),
+        );
+      } catch {}
+    };
+
+    void retireLegacyAppShell();
   }, []);
 
   return null;

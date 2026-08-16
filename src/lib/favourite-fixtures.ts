@@ -180,7 +180,7 @@ export function getNextFavouriteTeamFixture(
 
   if (team.kind === "club") {
     const names = [team.name, ...team.aliases];
-    const candidates = plFixtures
+    const plCandidates = plFixtures
       .filter((fixture) => {
         if (!isUpcomingStatus(fixture.status)) return false;
         const kickoff = new Date(fixture.kickoffUtc).getTime();
@@ -190,11 +190,25 @@ export function getNextFavouriteTeamFixture(
           teamNameMatches(fixture.awayTeamName, names)
         );
       })
-      .sort(
-        (a, b) =>
-          new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime(),
-      );
-    return candidates[0] ? fromPl(candidates[0]) : null;
+      .map(fromPl);
+
+    const shieldCandidates = communityShieldFixtures
+      .filter((fixture) => {
+        if (!isUpcomingStatus(fixture.status)) return false;
+        const kickoff = new Date(fixture.kickoffUtc).getTime();
+        if (!Number.isFinite(kickoff) || kickoff <= nowMs) return false;
+        return (
+          teamNameMatches(fixture.homeTeamName, names) ||
+          teamNameMatches(fixture.awayTeamName, names)
+        );
+      })
+      .map(fromCommunityShield);
+
+    const candidates = [...shieldCandidates, ...plCandidates].sort(
+      (a, b) =>
+        new Date(a.kickoffUtc).getTime() - new Date(b.kickoffUtc).getTime(),
+    );
+    return candidates[0] ?? null;
   }
 
   const unlId = team.key.startsWith("national:unl:")

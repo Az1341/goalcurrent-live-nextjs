@@ -96,7 +96,7 @@ export function buildDueFavouriteTeamAlerts(
   for (const fixture of communityShieldFixtures) {
     if (!isDue(fixture.kickoffUtc, fixture.status, nowMs)) continue;
     const fixtureKey = `cs:${fixture.fixtureId}`;
-    const href = `/community-shield/match/${fixture.fixtureId}`;
+    const href = "/community-shield";
     for (const teamName of [fixture.homeTeamName, fixture.awayTeamName]) {
       const teamKey = clubKeyForTeamName(teamName);
       if (!teamKey) continue;

@@ -62,7 +62,8 @@ const PREMIER_LEAGUE_FALLBACK_ITEMS: readonly YouTubeVideo[] = [
   },
 ];
 
-const GENERAL_FALLBACK_ITEMS: readonly YouTubeVideo[] = [
+/** Shared fallback contract consumed by the content-cache layer. */
+export const VIDEO_FALLBACK_ITEMS: readonly YouTubeVideo[] = [
   ...PREMIER_LEAGUE_FALLBACK_ITEMS,
   ...WORLD_CUP_FALLBACK_ITEMS,
 ];
@@ -70,7 +71,7 @@ const GENERAL_FALLBACK_ITEMS: readonly YouTubeVideo[] = [
 function fallbackItems(category: VideoFeedCategory): readonly YouTubeVideo[] {
   if (category === "wc") return WORLD_CUP_FALLBACK_ITEMS;
   if (category === "pl") return PREMIER_LEAGUE_FALLBACK_ITEMS;
-  return GENERAL_FALLBACK_ITEMS;
+  return VIDEO_FALLBACK_ITEMS;
 }
 
 export function withVideoFallback(

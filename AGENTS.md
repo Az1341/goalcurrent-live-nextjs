@@ -199,10 +199,103 @@ Web Design Guidelines: PASS / N/A
 Composition Patterns: PASS / N/A
 Vercel Optimize: PASS / N/A
 Code Review & Quality: PASS / N/A
+Browser QA: PASS / PASS WITH NOTES / FAIL / N/A
 
 OVERALL:
 PASS / PASS WITH NOTES / FAIL
 ```
+
+Required completion language for user-facing web changes:
+
+`Browser QA Gate: PASS / PASS WITH NOTES / FAIL / N/A`
+
+## Browser QA
+
+Anthropic `webapp-testing` was audited and **rejected** for this repository (unrestricted `shell=True` helper, undeclared tool permissions, Unix/Claude path assumptions, Python Playwright instead of this repo's Node stack). Browser verification uses the native QA stack below.
+
+For user-facing web changes, verify behaviour in a **local development or isolated test environment**. Do not claim `UI VERIFIED` from TypeScript, lint, build, reading JSX, or visual assumption alone. Where technically possible, material UI changes need browser execution evidence.
+
+### Functional behaviour
+
+Verify:
+
+* page loads
+* primary interaction works
+* expected navigation works
+* forms behave correctly
+* errors render appropriately
+* loading state works where relevant
+
+### Browser health
+
+Check:
+
+* console errors
+* uncaught exceptions
+* failed relevant network requests
+* hydration failures
+* React errors
+
+### Responsive behaviour
+
+For changed UI, test representative viewport classes: mobile, tablet where materially relevant, and desktop. Do not require every possible viewport.
+
+### Accessibility
+
+Where relevant verify keyboard navigation, focus visibility, labels, semantic controls, dialog behaviour, and obvious contrast/accessibility regressions. `web-design-guidelines` remains the design/accessibility authority. Browser QA proves behaviour.
+
+### Evidence and screenshots
+
+Screenshots are QA evidence, not product assets. Capture only for visual regression, responsive verification, error-state verification, or Founder visual approval.
+
+Store temporary QA screenshots in `.qa-screenshots/` (gitignored) or the OS temp directory. Do not commit arbitrary screenshots. Do not capture secrets, tokens, sensitive user data, or credentials.
+
+### Production safety
+
+Default target: local development / isolated test environment.
+
+Do NOT submit real production forms, create production users, send production emails, publish social posts, make purchases, modify production Supabase data, or trigger external provider actions.
+
+Production may be inspected read-only only when a future task explicitly permits it. Do not run `lighthouse:home` against production unless a future task explicitly permits read-only production inspection.
+
+### Authenticated flows
+
+Do not bypass authentication or disable security controls for testing.
+
+If authenticated automation requires credentials not already available through an approved test mechanism, mark `AUTHENTICATED FLOW — NOT AUTOMATED` and report it. Never request or commit personal passwords or API keys into test code.
+
+### Regression scope
+
+Do not run the entire browser suite after every trivial change. Use risk-based scope:
+
+* Text-only static change → N/A or lightweight
+* Component/UI change → affected page/flow
+* Authentication change → auth flow + affected protected path
+* Shared navigation/layout → representative cross-page regression
+* GoalCurrent live-score shared component → representative affected live-score pages
+
+### Cross-skill routing
+
+```text
+DEFINE → spec-driven-development
+PLAN → planning-and-task-breakdown
+SOURCE → source-driven-development
+BUILD → incremental-implementation, vercel-react-best-practices, vercel-composition-patterns
+SECURITY → security-and-hardening
+DESIGN → web-design-guidelines
+VERIFY LOGIC → test-driven-development
+DEBUG → debugging-and-error-recovery
+VERIFY BROWSER → native Browser QA policy (`playwright.config.ts` / `tests/e2e`)
+REVIEW → code-review-and-quality
+OPTIMIZE → vercel-optimize where explicitly relevant
+```
+
+### Repository QA stack
+
+* `@playwright/test` via `playwright.config.ts`; E2E specs in `tests/e2e`
+* Accessibility: `@axe-core/playwright` and `eslint-plugin-jsx-a11y`
+* Mobile and visual projects exist; default Playwright target is localhost (`PLAYWRIGHT_BASE_URL`)
+* Existing Node unit tests under `tests/` remain the logic-verification authority
 
 ## Before commit / push — fundamental design check
 

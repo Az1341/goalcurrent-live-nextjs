@@ -18,6 +18,7 @@
 /playwright-report/
 /test-results/
 /blob-report/
+/.qa-screenshots/
 
 # next.js
 /.next/

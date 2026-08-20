@@ -31,6 +31,7 @@ const eslintConfig = defineConfig([
     "scripts/_*.py",
     "scripts/_fix_closure.py",
     "GC-SOT-*.md",
+    ".agents/**",
   ]),
 ]);
 

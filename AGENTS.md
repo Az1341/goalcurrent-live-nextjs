@@ -4,6 +4,35 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+## Agent Skills policy
+
+This repository uses project-scoped Agent Skills from `vercel-labs/agent-skills`.
+
+### Priority order
+1. Explicit current Cursor task
+2. Security/privacy/safety requirements
+3. Product architecture / ADR / Source of Truth
+4. Repository-specific rules
+5. Installed framework/version-specific documentation
+6. Approved Agent Skills
+7. Generic model knowledge
+
+### React / Next.js changes
+Use `vercel-react-best-practices` for relevant implementation and review.
+
+### Web UI changes
+Use `web-design-guidelines` for accessibility, interaction, forms, keyboard/focus, responsive behaviour, and user-facing UI quality.
+
+### Component architecture
+Use `vercel-composition-patterns` for reusable components, providers, context, compound components, prop/API design, and boolean-prop proliferation.
+
+### Vercel performance/cost investigations
+Use `vercel-optimize` only when the task concerns Vercel cost, caching, functions, route performance, deployment performance, or usage optimisation. It must NOT autonomously change production configuration.
+
+### Agent Skills Gate
+Apply only relevant skills. Do not require all four skills for every task.
+Completion rule: `Agent Skills Gate: PASS / PASS WITH NOTES / FAIL`
+
 ## Before commit / push — fundamental design check
 
 Run `npm run verify:design` and confirm in the browser:

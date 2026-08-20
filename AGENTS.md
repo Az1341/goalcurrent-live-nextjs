@@ -181,6 +181,10 @@ Priority:
 
 Do not make framework/API decisions solely from model memory when current authoritative documentation is available.
 
+## Database / Auth / RLS
+
+This repository is `SUPABASE NOT USED`. Do not install or apply `supabase` or `supabase-postgres-best-practices`. For this repository, Supabase Architecture, Postgres Best Practices, RLS Gate, Migration Safety, and Auth Safety are `N/A`.
+
 ### Agent Skills Gate
 
 Apply only relevant skills. `N/A` is valid. Do not create compliance theatre.
@@ -200,6 +204,11 @@ Composition Patterns: PASS / N/A
 Vercel Optimize: PASS / N/A
 Code Review & Quality: PASS / N/A
 Browser QA: PASS / PASS WITH NOTES / FAIL / N/A
+Supabase Architecture: N/A
+Postgres Best Practices: N/A
+RLS Gate: N/A
+Migration Safety: N/A
+Auth Safety: N/A
 
 OVERALL:
 PASS / PASS WITH NOTES / FAIL

@@ -17,9 +17,28 @@ test("Community Shield and Premier League match centres use the shared live dash
   assert.match(pl, /LiveMatchDashboard/);
   assert.match(pl, /favouriteMatchId=\{`pl:\$\{fixture\.fixtureId\}`\}/);
   assert.match(dashboard, /data-gc-live-match-dashboard/);
-  assert.match(dashboard, /Match events/);
+  assert.match(dashboard, /Event Timeline/);
   assert.match(dashboard, /Tactical view/);
-  assert.match(dashboard, /Key stats/);
+  assert.match(dashboard, /Match Stats/);
+});
+
+test("Stitch match centre keeps the three-panel desktop composition", () => {
+  const dashboard = read("src/components/match/LiveMatchDashboard.tsx");
+  const css = read("src/components/match/LiveMatchDashboard.module.css");
+
+  assert.match(dashboard, /leftPanel/);
+  assert.match(dashboard, /centerStage/);
+  assert.match(dashboard, /rightRail/);
+  assert.match(css, /grid-template-columns:\s*300px minmax\(0, 1fr\) 320px/);
+  assert.match(css, /backdrop-filter:\s*blur\(14px\)/);
+});
+
+test("Premier League match page contains only the live Stitch match centre after loading", () => {
+  const pl = read("src/components/pl/PlMatchClient.tsx");
+  assert.doesNotMatch(pl, /Head to head/);
+  assert.doesNotMatch(pl, /League table snapshot/);
+  assert.doesNotMatch(pl, /Add to Google Calendar/);
+  assert.match(pl, /LiveMatchDashboard/);
 });
 
 test("live dashboard never fabricates momentum or player coordinates", () => {

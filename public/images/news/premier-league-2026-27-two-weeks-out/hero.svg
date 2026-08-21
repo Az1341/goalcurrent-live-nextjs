@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="heroTitle heroDesc">
-  <title id="heroTitle">Premier League 2026-27 two weeks to kick-off editorial graphic</title>
+  <title id="heroTitle">Premier League 2026-27 season countdown editorial graphic</title>
   <desc id="heroDesc">Original GoalCurrent.live graphic for the Premier League 2026-27 season return after Spain World Cup triumph</desc>
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -22,9 +22,9 @@
     <text x="0" y="8" text-anchor="middle" fill="#f5d76e" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700">PL</text>
   </g>
   <text x="72" y="120" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="0.08em">PREMIER LEAGUE &#183; PREVIEW</text>
-  <text x="72" y="210" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">Two Weeks to</text>
+  <text x="72" y="210" fill="#ffffff" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">Countdown to</text>
   <text x="72" y="280" fill="#f5d76e" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">Kick-Off 26/27</text>
   <text x="72" y="360" fill="rgba(255,255,255,0.82)" font-family="Segoe UI, Arial, sans-serif" font-size="26">Arsenal open &#183; Community Shield in Cardiff</text>
   <rect x="72" y="420" width="500" height="4" fill="#f5d76e" opacity="0.8"/>
-  <text x="72" y="470" fill="rgba(255,255,255,0.7)" font-family="Segoe UI, Arial, sans-serif" font-size="20">GoalCurrent.live editorial &#183; 7 August 2026</text>
+  <text x="72" y="470" fill="rgba(255,255,255,0.7)" font-family="Segoe UI, Arial, sans-serif" font-size="20">GoalCurrent.live editorial &#183; updated daily</text>
 </svg>

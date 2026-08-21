@@ -61,8 +61,17 @@ test.describe("scores page after WC26 archive", () => {
   test("shows competition-neutral live and upcoming centre", async ({ page }) => {
     await preparePage(page);
     await gotoApp(page, "/live");
-    await expect(page.getByRole("heading", { name: /Live and upcoming/i })).toBeVisible({ timeout: 15_000 });
-    await expect(page.locator('main a[href="/community-shield"]').first()).toBeVisible({ timeout: 15_000 });
+
+    const liveTitle = page.getByRole("heading", { level: 1, name: /Live and upcoming/i });
+    await expect(liveTitle).toBeVisible({ timeout: 15_000 });
+    await expect(page.getByRole("heading", { level: 1, name: /World Cup 2026/i })).toHaveCount(0);
+
+    const upcomingHeading = page.getByRole("heading", { name: /Upcoming competitions/i });
+    await expect(upcomingHeading).toBeVisible({ timeout: 15_000 });
+
+    const emptyState = page.getByText(/No announced competition fixtures yet/i);
+    const currentHubs = page.locator("main a[href='/premier-league/fixtures'], main a[href='/champions-league'], main a[href='/fa-cup'], main a[href='/nations-league#unl-fixtures'], main a[href='/community-shield']");
+    await expect(emptyState.or(currentHubs.first())).toBeVisible({ timeout: 15_000 });
   });
 });
 

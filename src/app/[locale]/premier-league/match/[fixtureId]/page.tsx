@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import MatchSeo from "@/components/seo/MatchSeo";
 import PlMatchClient from "@/components/pl/PlMatchClient";
-import { fetchPlMatchDetail } from "@/lib/pl/match-detail";
+import { getCachedPlMatchDetail } from "@/lib/pl/match-detail-cache";
 import { buildMatchMetadata } from "@/lib/page-metadata";
 import {
   buildLiveBlogUpdates,
@@ -23,6 +23,13 @@ function parseFixtureId(raw: string): number | null {
   return id;
 }
 
+function isDefinitiveMatchMiss(error: string | undefined): boolean {
+  return Boolean(
+    error?.includes("Fixture not found") ||
+      error?.includes("not a Premier League"),
+  );
+}
+
 function plEventStatus(status: string): string {
   const normalized = status.trim().toUpperCase();
   if (normalized === "LIVE") return "https://schema.org/EventInProgress";
@@ -41,11 +48,11 @@ export async function generateMetadata({
     return { title: "Match not found", robots: { index: false, follow: false } };
   }
 
-  const detail = await fetchPlMatchDetail(fixtureId);
+  const detail = await getCachedPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
 
   if (!fixture) {
-    if (detail.configured) {
+    if (isDefinitiveMatchMiss(detail.error)) {
       return {
         title: "Match not found",
         robots: { index: false, follow: false },
@@ -80,11 +87,11 @@ export default async function PremierLeagueMatchPage({
     notFound();
   }
 
-  const detail = await fetchPlMatchDetail(fixtureId);
+  const detail = await getCachedPlMatchDetail(fixtureId);
   const fixture = detail.fixture;
 
   if (!fixture) {
-    if (detail.configured) {
+    if (isDefinitiveMatchMiss(detail.error)) {
       notFound();
     }
     return <PlMatchClient fixtureId={fixtureId} />;

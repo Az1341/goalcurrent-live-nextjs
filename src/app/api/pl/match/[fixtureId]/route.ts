@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { respondError } from "@/lib/api/response";
+import { GC_STALE_RESPONSE_HEADER } from "@/lib/api-football/cache";
 import { captureRouteError } from "@/lib/log";
 import {
-  fetchPlMatchDetail,
+  getCachedPlMatchDetail,
   plMatchCacheControl,
 } from "@/lib/pl/match-detail";
 import { fixtureIdParamSchema } from "@/lib/validation/schemas";
@@ -36,21 +37,28 @@ export async function GET(
   }
 
   try {
-    const body = await fetchPlMatchDetail(
+    const body = await getCachedPlMatchDetail(
       fixtureId,
       resolveRequestLocale(request),
     );
 
+    const headers: Record<string, string> = {
+      "Cache-Control": body.fixture
+        ? plMatchCacheControl(body)
+        : "no-store",
+    };
+    if (body.stale) {
+      headers[GC_STALE_RESPONSE_HEADER] = "1";
+    }
+
     if (!body.fixture) {
       return NextResponse.json(body, {
         status: body.error?.includes("not found") ? 404 : 200,
-        headers: { "Cache-Control": "no-store" },
+        headers,
       });
     }
 
-    return NextResponse.json(body, {
-      headers: { "Cache-Control": plMatchCacheControl(body) },
-    });
+    return NextResponse.json(body, { headers });
   } catch (error) {
     captureRouteError("api/pl/match", error);
     return NextResponse.json(

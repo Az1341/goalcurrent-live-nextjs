@@ -31,8 +31,11 @@ export function sortPartnerNewsFeed(articles: readonly NewsArticle[]): NewsArtic
  * real publish timestamp. No old GoalCurrent article is artificially pinned
  * above newer reporting. WC26 remains isolated to its historical surfaces.
  */
-export function mergeHomepageNewsFeed(articles: readonly NewsArticle[]): NewsArticle[] {
-  const editorial = getArticleIndexNewsArticles().filter(
+export function mergeHomepageNewsFeed(
+  articles: readonly NewsArticle[],
+  nowMs: number = Date.now(),
+): NewsArticle[] {
+  const editorial = getArticleIndexNewsArticles(nowMs).filter(
     (item) => !isWorldCup2026EditorialLink(item.link),
   );
   const partner = excludeWorldCup2026NewsItems(articles).filter(

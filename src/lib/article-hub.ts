@@ -5,6 +5,11 @@ import {
   type ArticleIndexEntry,
 } from "@/data/articles";
 import { EDITORIAL_ARTICLES } from "@/data/editorial";
+import {
+  PL_SEASON_COUNTDOWN_ARTICLE_SLUG,
+  plSeasonCountdownHeadline,
+  rollingPlSeasonCountdownPublishIso,
+} from "@/lib/content/pl-season-countdown-article";
 import { EDITORIAL_SOURCE_LABEL } from "@/lib/seo/constants";
 import { toIsoDate } from "@/lib/seo/dates";
 import type { NewsArticle } from "@/types/news";
@@ -72,12 +77,22 @@ function newsTagFromIndexCategory(category: string): NewsArticle["tag"] {
   return "FEATURE";
 }
 
-function articleIndexEntryToNewsArticle(entry: ArticleIndexEntry): NewsArticle {
+function articleIndexEntryToNewsArticle(
+  entry: ArticleIndexEntry,
+  nowMs: number = Date.now(),
+): NewsArticle {
+  const isRollingCountdown = entry.slug === PL_SEASON_COUNTDOWN_ARTICLE_SLUG;
+  const rollingDate = isRollingCountdown
+    ? rollingPlSeasonCountdownPublishIso(nowMs)
+    : null;
+
   return {
-    title: entry.title,
+    title: isRollingCountdown
+      ? plSeasonCountdownHeadline(nowMs)
+      : entry.title,
     link: entry.href ?? articleHref(entry.slug),
     excerpt: entry.excerpt,
-    date: toIsoDate(entry.date),
+    date: rollingDate ?? toIsoDate(entry.date),
     source: EDITORIAL_SOURCE_LABEL,
     tag: newsTagFromIndexCategory(entry.category),
     image: getArticleCardImage(entry.slug),
@@ -145,9 +160,13 @@ export function isWorldCup2026EditorialLink(link: string, slug?: string): boolea
 }
 
 /** All GoalCurrent articles from ARTICLE_INDEX as news cards, newest first. */
-export function getArticleIndexNewsArticles(): NewsArticle[] {
+export function getArticleIndexNewsArticles(
+  nowMs: number = Date.now(),
+): NewsArticle[] {
   return sortNewsByDateDesc(
-    [...ARTICLE_INDEX].map((entry) => articleIndexEntryToNewsArticle(entry)),
+    [...ARTICLE_INDEX].map((entry) =>
+      articleIndexEntryToNewsArticle(entry, nowMs),
+    ),
   );
 }
 

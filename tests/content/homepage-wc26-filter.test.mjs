@@ -58,7 +58,10 @@ describe("homepage WC26 hard gate and freshness", async () => {
       },
     ];
 
-    const merged = editorial.mergeHomepageNewsFeed(partner);
+    // Use a post-kickoff nowMs so the PL countdown article uses its static
+    // "7 August 2026" date (rolling freshness stops after season opener).
+    const postKickoffMs = Date.parse("2026-08-22T12:00:00.000Z");
+    const merged = editorial.mergeHomepageNewsFeed(partner, postKickoffMs);
 
     assert.equal(
       merged.some((a) => a.link === "https://example.com/wc26-messi"),
@@ -77,7 +80,7 @@ describe("homepage WC26 hard gate and freshness", async () => {
     assert.equal(
       merged[0]?.link,
       "https://example.com/fresh-football-news",
-      "newer real partner reporting must outrank older GoalCurrent editorial",
+      "newer real partner reporting must outrank GoalCurrent editorial (static date, post-kickoff)",
     );
     assert.equal(
       hub.isWorldCup2026EditorialLink(

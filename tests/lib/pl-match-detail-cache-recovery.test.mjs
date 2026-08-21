@@ -68,6 +68,22 @@ test("plMatchDetailFreshTtlMs uses status-aware TTLs", async () => {
   );
 });
 
+test("stale retained match detail is never CDN cached", async () => {
+  const { plMatchDetailResponseCacheControl } = await import("@/lib/pl/match-detail-cache");
+  assert.equal(
+    plMatchDetailResponseCacheControl(matchPayload({ stale: true })),
+    "no-store",
+  );
+});
+
+test("fresh live match detail keeps the normal short CDN policy", async () => {
+  const { plMatchDetailResponseCacheControl } = await import("@/lib/pl/match-detail-cache");
+  assert.equal(
+    plMatchDetailResponseCacheControl(matchPayload()),
+    "s-maxage=30, stale-while-revalidate=15",
+  );
+});
+
 test("primePlMatchDetailCache makes a verified fixture available as a fresh hit", async () => {
   const { apiCache } = await import("@/lib/server/cache");
   const {

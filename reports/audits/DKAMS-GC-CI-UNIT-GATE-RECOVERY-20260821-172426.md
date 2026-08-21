@@ -21,7 +21,7 @@ Playwright remains a separate follow-up gate. Local post-fix e2e baseline: **82 
 
 ## 3. Ending branch SHA
 
-Recorded after commit on `fix/gc-ci-unit-esm-gate-20260821` (see section 19).
+`5126cb1673246841d91a743a36abc43b8e40aec3`
 
 ## 4. Exact pre-fix error for each of the 4 tests
 
@@ -179,7 +179,13 @@ Compared with the previous Issue #66 report (78/15 on that branch): this main-ba
 
 ## 17. GitHub Actions run URL/result
 
-Pending at first commit. Updated after the new PR's workflow run completes.
+https://github.com/Az1341/goalcurrent.live/actions/runs/32506038930
+
+- Overall workflow: **FAILURE** (expected — e2e job still red)
+- Quality job `Lint, types, i18n, unit tests`: **SUCCESS** — https://github.com/Az1341/goalcurrent.live/actions/runs/32506038930/job/96846300145
+- Playwright job `Playwright E2E + visual regression`: **FAILURE** — https://github.com/Az1341/goalcurrent.live/actions/runs/32506038930/job/96846676794
+
+This matches the intended next-stage split: the unit gate is restored; Playwright remains a separate recovery task.
 
 ## 18. Branch name
 
@@ -187,11 +193,11 @@ Pending at first commit. Updated after the new PR's workflow run completes.
 
 ## 19. Commit SHA
 
-Pending at report authoring; updated after git commit.
+`5126cb1673246841d91a743a36abc43b8e40aec3` (implementation + first evidence). This docs commit records PR and CI URLs.
 
 ## 20. PR number and URL
 
-Pending at report authoring; updated after `gh pr create`.
+PR **#68**: https://github.com/Az1341/goalcurrent.live/pull/68
 
 ## 21. Confirmation: PR #67 untouched
 

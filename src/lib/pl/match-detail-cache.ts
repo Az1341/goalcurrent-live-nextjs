@@ -1,5 +1,8 @@
 import { getStaleApiCache, setSuccessApiCache } from "@/lib/api-football/cache";
-import { fetchPlMatchDetail } from "@/lib/pl/match-detail";
+import {
+  fetchPlMatchDetail,
+  plMatchCacheControl,
+} from "@/lib/pl/match-detail";
 import type { PlMatchApiResponse } from "@/lib/pl/types";
 import { getCached } from "@/lib/server/cache";
 
@@ -18,6 +21,13 @@ export function plMatchDetailFreshTtlMs(body: PlMatchApiResponse): number {
   if (body.fixture?.status === "UPCOMING") return PL_MATCH_UPCOMING_TTL_MS;
   if (body.fixture?.status === "FT") return PL_MATCH_FINISHED_TTL_MS;
   return PL_MATCH_LIVE_TTL_MS;
+}
+
+export function plMatchDetailResponseCacheControl(
+  body: PlMatchApiResponse,
+): string {
+  if (body.stale || !body.fixture) return "no-store";
+  return plMatchCacheControl(body);
 }
 
 /** Prime both fresh and retained-success cache entries from a verified fixture payload. */

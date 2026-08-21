@@ -159,6 +159,11 @@
   font-size: .62rem;
 }
 
+.liveDotPartial {
+  color: #b45309;
+  background: #fef3c7;
+}
+
 .eventList,
 .playerList {
   list-style: none;

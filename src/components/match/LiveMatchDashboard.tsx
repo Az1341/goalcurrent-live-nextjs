@@ -2,6 +2,7 @@
 
 import { FavouriteMatchButton } from "@/components/FavouriteButton";
 import { PlTeamBadge } from "@/components/pl/PlShared";
+import { resolveLineupReadiness } from "@/lib/match-lineup-status";
 import type {
   MatchEventItem,
   MatchLineupSide,
@@ -198,9 +199,16 @@ export default function LiveMatchDashboard({
               <p className={styles.eyebrow}>Tactical view</p>
               <h2 id="live-lineups-heading">Line-ups</h2>
             </div>
-            <span className={styles.liveDot}>
-              {lineups.home || lineups.away ? "CONFIRMED" : "PENDING"}
-            </span>
+            {(() => {
+              const readiness = resolveLineupReadiness(lineups.home, lineups.away);
+              return (
+                <span
+                  className={`${styles.liveDot} ${readiness === "PARTIAL" ? styles.liveDotPartial : ""}`}
+                >
+                  {readiness}
+                </span>
+              );
+            })()}
           </div>
           <div className={styles.pitch} aria-label="Line-up tactical panel">
             <div className={styles.halfway} />

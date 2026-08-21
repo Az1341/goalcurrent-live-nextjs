@@ -222,7 +222,13 @@ function mapStatistics(
   }));
 }
 
-function resolveLineupSides(
+/**
+ * Maps raw API-Football lineup rows to home/away sides by team id, with a
+ * fallback for the exactly-two-rows case so a reversed provider row order
+ * (e.g. away team listed first) still resolves correctly. Exported for
+ * DKAMS-GC-PL-LINEUP-READINESS-20260821-192822 unit coverage.
+ */
+export function resolveLineupSides(
   rows: ApiLineupRow[],
   homeTeamId: number,
   awayTeamId: number,

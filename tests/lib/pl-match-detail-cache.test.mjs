@@ -1,20 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { dirname, join } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
-
-const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const matchDetailHref = pathToFileURL(join(root, "src/lib/pl/match-detail.ts")).href;
-const cacheHref = pathToFileURL(join(root, "src/lib/api-football/cache.ts")).href;
-const serverCacheHref = pathToFileURL(join(root, "src/lib/server/cache.ts")).href;
 
 async function clearCaches() {
-  const { apiCache } = await import(serverCacheHref);
+  const { apiCache } = await import("@/lib/server/cache");
   apiCache.clear();
 }
 
 test("plMatchDetailCacheKey is fixture-scoped", async () => {
-  const { plMatchDetailCacheKey } = await import(matchDetailHref);
+  const { plMatchDetailCacheKey } = await import("@/lib/pl/match-detail");
   assert.equal(plMatchDetailCacheKey(12345), "pl:match:12345");
 });
 
@@ -24,7 +17,7 @@ test("plMatchDetailFreshTtlMs uses shorter TTL for LIVE", async () => {
     PL_MATCH_LIVE_TTL_MS,
     PL_MATCH_UPCOMING_TTL_MS,
     PL_MATCH_FINISHED_TTL_MS,
-  } = await import(matchDetailHref);
+  } = await import("@/lib/pl/match-detail");
 
   assert.equal(
     plMatchDetailFreshTtlMs({ fixture: { status: "LIVE" } }),
@@ -42,11 +35,11 @@ test("plMatchDetailFreshTtlMs uses shorter TTL for LIVE", async () => {
 
 test("getCachedPlMatchDetail returns warm fresh cache without upstream", async () => {
   await clearCaches();
-  const { setSuccessApiCache } = await import(cacheHref);
+  const { setSuccessApiCache } = await import("@/lib/api-football/cache");
   const {
     getCachedPlMatchDetail,
     plMatchDetailCacheKey,
-  } = await import(matchDetailHref);
+  } = await import("@/lib/pl/match-detail");
 
   const payload = {
     configured: true,
@@ -79,12 +72,12 @@ test("getCachedPlMatchDetail returns warm fresh cache without upstream", async (
 
 test("getCachedPlMatchDetail serves stale success when upstream returns empty", async () => {
   await clearCaches();
-  const { setSuccessApiCache, getStaleApiCache } = await import(cacheHref);
-  const { getCached, apiCache } = await import(serverCacheHref);
+  const { setSuccessApiCache, getStaleApiCache } = await import("@/lib/api-football/cache");
+  const { getCached, apiCache } = await import("@/lib/server/cache");
   const {
     getCachedPlMatchDetail,
     plMatchDetailCacheKey,
-  } = await import(matchDetailHref);
+  } = await import("@/lib/pl/match-detail");
 
   const key = plMatchDetailCacheKey(999002);
   const stalePayload = {

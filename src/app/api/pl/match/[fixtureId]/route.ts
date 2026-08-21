@@ -2,8 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { respondError } from "@/lib/api/response";
 import { GC_STALE_RESPONSE_HEADER } from "@/lib/api-football/cache";
 import { captureRouteError } from "@/lib/log";
-import { getCachedPlMatchDetail } from "@/lib/pl/match-detail-cache";
-import { plMatchCacheControl } from "@/lib/pl/match-detail";
+import {
+  getCachedPlMatchDetail,
+  plMatchDetailResponseCacheControl,
+} from "@/lib/pl/match-detail-cache";
 import { fixtureIdParamSchema } from "@/lib/validation/schemas";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +43,7 @@ export async function GET(
     );
 
     const headers: Record<string, string> = {
-      "Cache-Control": body.fixture ? plMatchCacheControl(body) : "no-store",
+      "Cache-Control": plMatchDetailResponseCacheControl(body),
     };
     if (body.stale) headers[GC_STALE_RESPONSE_HEADER] = "1";
 

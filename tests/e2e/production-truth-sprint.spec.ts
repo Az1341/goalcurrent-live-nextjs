@@ -17,9 +17,19 @@ test.describe("Production truth remediation sprint", () => {
     await preparePage(page);
     await gotoApp(page, "/live");
     await expect(
-      page.getByRole("heading", { name: /Live and upcoming/i }),
+      page.getByRole("heading", { level: 1, name: /Live and upcoming/i }),
     ).toBeVisible();
-    await expect(page.locator('main a[href="/community-shield"]').first()).toBeVisible();
+    await expect(
+      page.getByRole("heading", { level: 1, name: /World Cup 2026 Archive/i }),
+    ).toHaveCount(0);
+    await expect(
+      page.getByText(
+        /Next announced fixtures across Premier League, Champions League, FA Cup and Nations League/i,
+      ),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /Upcoming competitions/i }),
+    ).toBeVisible();
   });
 
   test("Premier League hub renders meaningful SSR shell content", async ({ page }) => {

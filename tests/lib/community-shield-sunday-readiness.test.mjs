@@ -28,8 +28,8 @@ test("Community Shield hub renders pre-match history, line-ups, statistics and e
   assert.match(client, /LiveMatchDashboard/);
   assert.match(client, /Recent meetings/);
   assert.match(dashboard, /Line-ups/);
-  assert.match(dashboard, /Key stats/);
-  assert.match(dashboard, /Match events/);
+  assert.match(dashboard, /Match Stats/);
+  assert.match(dashboard, /Event Timeline/);
   assert.match(client, /\/api\/community-shield\/match\//);
   assert.match(client, /latest\?\.status === ["']LIVE["'] \? 20_000 : 300_000/);
 });

@@ -15,7 +15,7 @@
 
 ## Ending SHA
 
-Recorded after commit (see Git section below).
+`72ae89baabab106f29ca616241260429860589f0`
 
 ## Pre-fix three failures
 
@@ -102,13 +102,17 @@ No product change for FE-010.
 
 ## GitHub Actions
 
-Pending at first commit; updated after the new stacked PR run.
+https://github.com/Az1341/goalcurrent.live/actions/runs/32513770664
+
+- Overall: **SUCCESS**
+- Quality: **SUCCESS** — https://github.com/Az1341/goalcurrent.live/actions/runs/32513770664/job/96870647216
+- Playwright E2E + visual: **SUCCESS** — https://github.com/Az1341/goalcurrent.live/actions/runs/32513770664/job/96871070972
 
 ## Branch / commit / PR
 
 - Branch: `fix/gc-e2e-community-shield-recovery-20260821`
-- Implementation commit: pending
-- PR: pending
+- Implementation commit: `72ae89baabab106f29ca616241260429860589f0`
+- PR **#69**: https://github.com/Az1341/goalcurrent.live/pull/69
 
 ## PR #67 untouched
 

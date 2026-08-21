@@ -1,43 +1,44 @@
-# GoalCurrent.live — Readiness Score
+# GoalCurrent.live — Launch Readiness Source of Truth
 
-**Updated:** 2026-06-24 · **Branch:** `main` @ `bdae9c1` · **Tag:** `v1.0.0`  
-**Production:** https://goalcurrent.live
+**Updated:** 21 August 2026, 11:30 BST  
+**Production:** https://goalcurrent.live  
+**Production commit:** `475772a`  
+**Launch reliability candidate:** PR #65 — `fix/gc-launch-reliability-20260821`  
+**Release policy:** protected preview and explicit Founder Approval required before merge or production deployment.
 
-## Overall score: **88 / 100**
+## Current verdict
 
-| Category | Score | Weight | Notes |
-|----------|------:|--------|-------|
-| Build & deploy | 96 | 15% | Build passes · **306** static paths · `v1.0.0` tagged |
-| Runtime / uptime | 92 | 10% | 13/13 focus URLs **200** on production probe |
-| APIs & data | 91 | 15% | All 7 probed APIs **200** · top scorers **20 rows** |
-| SEO | 86 | 15% | Sitemap **200 URLs** · ~106 build paths not in sitemap |
-| Code quality | 90 | 10% | ESLint **0 errors** · **11 warnings** |
-| Performance | 78 | 10% | TTFB 90–457 ms on probe · no Lighthouse run |
-| Accessibility | 86 | 5% | Landmarks/ARIA on homepage · no axe audit |
-| Security | 90 | 5% | CSP via `proxy.ts` · Sentry · debug routes blocked in prod |
-| Content completeness | 74 | 10% | 21 coming-soon stubs (noindex) · ScoreBat needs token |
-| Monetisation | 80 | 5% | AdSense env-driven · 1 ad unit seen on match page |
+**AMBER — production is operational; the launch-reliability candidate is ready for Founder review but is not approved for production.**
 
-## Issue counts
+| Area | Status | Verified evidence |
+|---|---|---|
+| Production availability | PASS | Homepage and `/live` render current content; no framework error overlay |
+| Latest production deploy | PASS | Vercel deployment `dpl_Gr1jEdDaFZtQDHgJRoedeo6MPVia` READY on `475772a` |
+| Runtime errors | PASS | No grouped Vercel runtime-error clusters in the latest 24-hour query |
+| API-Football reliability | PENDING RELEASE | PR #65 adds fixture cache, singleflight dedupe, status-aware TTLs and stale-success fallback |
+| Health monitoring | PENDING RELEASE | PR #65 adds quota-free `/api/health`; external alerting is still not configured |
+| TypeScript | PASS | `npx tsc --noEmit` |
+| i18n | PASS | Message key parity OK |
+| Design fundamentals | PASS | `verify:design OK` |
+| Targeted reliability tests | PASS | 6/6 |
+| Changed-file lint | PASS | No errors |
+| Full-repository lint | BASELINE DEBT | 41 pre-existing errors outside PR #65 |
+| Protected preview | READY / ACCESS LIMITED | Vercel build READY; preview requires authenticated Vercel access and no temporary share URL was issued |
+| Production release | BLOCKED BY POLICY | Requires Ahmad's explicit Founder Approval after review |
 
-| Severity | Count |
-|----------|------:|
-| Critical | 0 |
-| High | 5 |
-| Medium | 12 |
-| Low | 9 |
-| **Total** | **26** |
+## Candidate acceptance criteria
 
-## Release gates
+- Concurrent identical Premier League match-detail loads do not multiply the upstream fan-out.
+- Successful fixture data is cached by fixture and status.
+- Provider failure may serve last-known successful data marked `stale: true` and `X-GC-Stale: 1`.
+- Stale responses use `Cache-Control: no-store`.
+- Invalid fixture IDs retain the strict not-found path.
+- `/api/health` makes no API-Football request and exposes no credentials.
+- No merge or production deployment occurs without Founder Approval.
 
-| Gate | Status |
-|------|--------|
-| Production build | ✅ Pass |
-| ESLint errors | ✅ 0 |
-| Sitemap live | ✅ 200 URLs |
-| robots.txt | ✅ Allow `/` · Disallow `/api/` |
-| Custom 404 | ✅ Production verified |
-| Redirects | ✅ `/video`, `/news/articles`, `/worldcup2026/match` → 308 |
-| Phase 4 hardening | ✅ Sentry, CSP, API safeguards, ads, trust UX |
-| Monitoring (UptimeRobot / Sentry alerts) | ☐ Manual |
-| AdSense + ScoreBat env on Vercel | ☐ Manual verify |
+## Open launch risks
+
+1. API-Football throttling remains present in production until PR #65 is approved and released.
+2. External synthetic uptime alerting is not yet configured.
+3. Full-repository lint debt must be handled as a separate controlled cleanup; it is not introduced by PR #65.
+4. The authenticated preview could not be independently opened through the connector, so final Founder visual review remains a release gate.

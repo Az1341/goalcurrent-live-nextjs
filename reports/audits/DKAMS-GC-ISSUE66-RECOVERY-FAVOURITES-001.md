@@ -41,7 +41,7 @@ Favourites persisted matches as `string[]` IDs only. `FavouriteMatchButton` alre
 
 ## 6. Ending branch SHA
 
-`ffb782ebe48a191fd70fb972fd5a1cea43daa3cd`
+`ffb782ebe48a191fd70fb972fd5a1cea43daa3cd` (implementation). Latest docs commit on branch after this report update.
 
 ## 7. Files changed
 
@@ -160,7 +160,7 @@ Product/test diff limited to favourites persistence, Favourites fallback renderi
 
 ## 17. PR number and URL
 
-Filled after `gh pr create`.
+PR **#67**: https://github.com/Az1341/goalcurrent.live/pull/67
 
 ## 18. Confirmation: MERGED = NO
 

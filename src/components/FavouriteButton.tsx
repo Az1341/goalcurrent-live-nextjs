@@ -72,7 +72,7 @@ export function FavouriteMatchButton({
       aria-label={active ? `Remove ${label} from favourites` : `Add ${label} to favourites`}
       title={active ? "Remove from favourites" : "Add to favourites"}
       onClick={() => {
-        const added = toggleFavouriteMatch(matchId);
+        const added = toggleFavouriteMatch(matchId, label);
         if (added) {
           trackFavouriteAdd({
             entity_type: "match",

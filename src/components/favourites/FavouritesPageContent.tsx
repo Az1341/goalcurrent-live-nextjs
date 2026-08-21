@@ -31,7 +31,7 @@ export default function FavouritesPageContent() {
   const t = useTranslations("favourites");
   const tCommon = useTranslations("common");
   const tStatus = useTranslations("match.status");
-  const { teams, matches, competitions } = useFavourites();
+  const { teams, matches, competitions, matchLabels } = useFavourites();
   const { tvRegion } = useWc26TvRegion();
   const effectiveFixtures = useEffectiveFixtures();
   const seoFixtures = getSeoEffectiveFixtures();
@@ -240,10 +240,12 @@ export default function FavouritesPageContent() {
                 );
               }
 
+              const savedLabel = matchLabels[matchId];
               return (
-                <li key={matchId} className={styles.favListItem}>
-                  <span className={styles.favListLabel}>{t("savedMatch", { matchId })}</span>
-                  <span className={styles.favListMeta}>{t("noLongerAvailable")}</span>
+                <li key={matchId} className={styles.favListItem} data-gc-fav-match={matchId}>
+                  <span className={styles.favListLabel} data-gc-fav-match-label>
+                    {savedLabel || t("noLongerAvailable")}
+                  </span>
                   <button
                     type="button"
                     className={styles.favRemoveBtn}

@@ -1144,6 +1144,8 @@ a.standingsHead:hover {
 .favListLabel {
   font-weight: var(--gc-weight-nav);
   color: var(--gc-text-primary);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .favListMeta {

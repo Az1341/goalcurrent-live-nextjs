@@ -41,7 +41,7 @@ Favourites persisted matches as `string[]` IDs only. `FavouriteMatchButton` alre
 
 ## 6. Ending branch SHA
 
-See Git section after commit (branch `fix/gc-issue-66-favourites-team-names-20260821`).
+`ffb782ebe48a191fd70fb972fd5a1cea43daa3cd`
 
 ## 7. Files changed
 
@@ -156,7 +156,7 @@ Product/test diff limited to favourites persistence, Favourites fallback renderi
 
 ## 16. Commit SHA
 
-Filled after git commit --trailer "Co-authored-by: Cursor <cursoragent@cursor.com>".
+`ffb782ebe48a191fd70fb972fd5a1cea43daa3cd`
 
 ## 17. PR number and URL
 

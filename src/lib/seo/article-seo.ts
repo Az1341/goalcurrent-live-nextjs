@@ -58,7 +58,9 @@ export function articleSeoFromSlug(slug: string): ArticleSchemaInput | null {
       datePublished: isRollingCountdown
         ? PL_SEASON_COUNTDOWN_ORIGINAL_PUBLISH_ISO
         : indexEntry.date,
-      dateModified: rollingModified ?? indexEntry.date,
+      dateModified: isRollingCountdown
+        ? rollingModified ?? PL_SEASON_COUNTDOWN_ORIGINAL_PUBLISH_ISO
+        : indexEntry.date,
       author: indexEntry.author ?? EDITORIAL_AUTHOR,
       image: articleSchemaImage(slug),
     };

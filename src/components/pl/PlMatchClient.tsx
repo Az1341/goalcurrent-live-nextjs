@@ -1,6 +1,7 @@
 "use client";
 
 import useSWR from "swr";
+import { Link } from "@/i18n/navigation";
 import { fetcher, LIVE_MATCH_SWR_OPTIONS } from "@/lib/client/fetcher";
 import type { PlMatchApiResponse } from "@/lib/pl/types";
 import LiveMatchDashboard from "@/components/match/LiveMatchDashboard";
@@ -61,6 +62,9 @@ export default function PlMatchClient({ fixtureId }: PlMatchClientProps) {
           title="Match not available"
           text={errorMessage ?? data?.error ?? "This match could not be loaded."}
         />
+        <p className={styles.backLinks}>
+          <Link href="/premier-league/fixtures">← Back to fixtures</Link>
+        </p>
       </main>
     );
   }

@@ -1,10 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { dirname, join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-import {
-  filterRelevantFootballVideos,
-  isRelevantFootballVideo,
-} from "../../src/lib/video-relevance.ts";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const { filterRelevantFootballVideos, isRelevantFootballVideo } = await import(
+  pathToFileURL(join(root, "src/lib/video-relevance.ts")).href
+);
 
 function video(overrides = {}) {
   return {

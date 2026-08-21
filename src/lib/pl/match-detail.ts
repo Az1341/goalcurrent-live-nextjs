@@ -11,6 +11,11 @@ import {
   isPlApiConfigured,
   plBaseEnvelope,
 } from "@/lib/pl/api-core";
+import {
+  getStaleApiCache,
+  setSuccessApiCache,
+} from "@/lib/api-football/cache";
+import { getCached } from "@/lib/server/cache";
 import { PL_LEAGUE_ID, PL_SEASON } from "@/lib/pl/constants";
 import { resolvePlBroadcasterFromLocale } from "@/lib/pl/pl-broadcasters";
 import type {
@@ -20,6 +25,26 @@ import type {
   PlMatchH2HRow,
   PlStandingRow,
 } from "@/lib/pl/types";
+
+/** Fresh TTL for live PL match detail (instance cache). */
+export const PL_MATCH_LIVE_TTL_MS = 30_000;
+/** Fresh TTL for upcoming PL match detail. */
+export const PL_MATCH_UPCOMING_TTL_MS = 300_000;
+/** Fresh TTL for finished PL match detail. */
+export const PL_MATCH_FINISHED_TTL_MS = 900_000;
+
+const plMatchDetailInflight = new Map<string, Promise<PlMatchApiResponse>>();
+
+export function plMatchDetailCacheKey(fixtureId: number): string {
+  return `pl:match:${fixtureId}`;
+}
+
+export function plMatchDetailFreshTtlMs(body: PlMatchApiResponse): number {
+  if (body.fixture?.status === "LIVE") return PL_MATCH_LIVE_TTL_MS;
+  if (body.fixture?.status === "UPCOMING") return PL_MATCH_UPCOMING_TTL_MS;
+  if (body.fixture?.status === "FT") return PL_MATCH_FINISHED_TTL_MS;
+  return PL_MATCH_LIVE_TTL_MS;
+}
 
 const PL_STAT_LABELS: Record<string, string> = {
   ball_possession: "Possession",
@@ -407,6 +432,7 @@ export async function fetchPlMatchDetail(
 
 export function plMatchCacheControl(body: PlMatchApiResponse): string {
   if (!body.configured) return "no-store";
+  if (body.stale) return "no-store";
   if (body.fixture?.status === "LIVE") {
     return "s-maxage=30, stale-while-revalidate=15";
   }
@@ -414,4 +440,55 @@ export function plMatchCacheControl(body: PlMatchApiResponse): string {
     return "s-maxage=300, stale-while-revalidate=60";
   }
   return "s-maxage=3600, stale-while-revalidate=300";
+}
+
+/**
+ * Cached PL match detail with singleflight de-dupe and stale-on-failure.
+ * Mirrors WC26/FA Cup house style (setSuccessApiCache / getStaleApiCache).
+ */
+export async function getCachedPlMatchDetail(
+  fixtureId: number,
+  locale = "en-GB",
+): Promise<PlMatchApiResponse> {
+  if (!Number.isFinite(fixtureId) || fixtureId <= 0) {
+    return emptyMatchResponse(fixtureId, "Invalid fixture id.");
+  }
+
+  const key = plMatchDetailCacheKey(fixtureId);
+  const fresh = getCached(key);
+  if (fresh) {
+    return fresh as PlMatchApiResponse;
+  }
+
+  const pending = plMatchDetailInflight.get(key);
+  if (pending) {
+    return pending;
+  }
+
+  const run = (async () => {
+    try {
+      const body = await fetchPlMatchDetail(fixtureId, locale);
+      if (body.fixture) {
+        setSuccessApiCache(key, body, plMatchDetailFreshTtlMs(body));
+        return body;
+      }
+
+      const stale = getStaleApiCache<PlMatchApiResponse>(key);
+      if (stale?.fixture) {
+        return {
+          ...stale,
+          stale: true,
+          error: body.error ?? stale.error,
+          fetchedAt: new Date().toISOString(),
+        };
+      }
+
+      return body;
+    } finally {
+      plMatchDetailInflight.delete(key);
+    }
+  })();
+
+  plMatchDetailInflight.set(key, run);
+  return run;
 }

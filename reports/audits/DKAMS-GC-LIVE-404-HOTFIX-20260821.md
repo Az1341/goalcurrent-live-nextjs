@@ -1,6 +1,6 @@
 # DKAMS-GC-LIVE-404-HOTFIX-20260821
 
-Status: IN PROGRESS
+Status: READY FOR CI
 
 Production symptom: valid Premier League fixture route `/premier-league/match/1557367` rendered GoalCurrent's 404 page while API-Football was rate-limited.
 

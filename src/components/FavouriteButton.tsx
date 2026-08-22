@@ -4,6 +4,10 @@ import {
   toggleFavouriteMatch,
   toggleFavouriteTeam,
 } from "@/lib/favourites";
+import {
+  canonicalizeFavouriteMatchId,
+  canonicalizeFavouriteTeamKey,
+} from "@/lib/favourite-entities";
 import { trackFavouriteAdd } from "@/lib/analytics";
 import { useFavourites } from "@/lib/use-favourites";
 import { useLocale } from "next-intl";
@@ -28,7 +32,8 @@ export function FavouriteTeamButton({
 }: FavouriteTeamButtonProps) {
   const locale = useLocale();
   const favourites = useFavourites();
-  const active = favourites.teams.includes(teamId);
+  const canonicalTeamId = canonicalizeFavouriteTeamKey(teamId);
+  const active = favourites.teams.includes(canonicalTeamId);
 
   return (
     <button
@@ -38,11 +43,11 @@ export function FavouriteTeamButton({
       aria-label={active ? `Remove ${teamName} from favourites` : `Add ${teamName} to favourites`}
       title={active ? "Remove from favourites" : "Add to favourites"}
       onClick={() => {
-        const added = toggleFavouriteTeam(teamId);
+        const added = toggleFavouriteTeam(canonicalTeamId);
         if (added) {
           trackFavouriteAdd({
             entity_type: "team",
-            entity_id: teamId,
+            entity_id: canonicalTeamId,
             entity_name: teamName.slice(0, 120),
             source_surface: "favourite_button",
             language: locale,
@@ -62,7 +67,8 @@ export function FavouriteMatchButton({
 }: FavouriteMatchButtonProps) {
   const locale = useLocale();
   const favourites = useFavourites();
-  const active = favourites.matches.includes(matchId);
+  const canonicalMatchId = canonicalizeFavouriteMatchId(matchId);
+  const active = favourites.matches.includes(canonicalMatchId);
 
   return (
     <button
@@ -72,11 +78,11 @@ export function FavouriteMatchButton({
       aria-label={active ? `Remove ${label} from favourites` : `Add ${label} to favourites`}
       title={active ? "Remove from favourites" : "Add to favourites"}
       onClick={() => {
-        const added = toggleFavouriteMatch(matchId);
+        const added = toggleFavouriteMatch(canonicalMatchId);
         if (added) {
           trackFavouriteAdd({
             entity_type: "match",
-            entity_id: matchId,
+            entity_id: canonicalMatchId,
             entity_name: label.slice(0, 120),
             source_surface: "favourite_button",
             language: locale,

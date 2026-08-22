@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import TeamSeo from "@/components/seo/TeamSeo";
+import TeamSupportBar from "@/components/favourites/TeamSupportBar";
 import PlClubProfileClient from "@/components/team-profile/PlClubProfileClient";
 import { getClubBySlug, getAllClubSlugs } from "@/data/pl-clubs";
+import { canonicalPlTeamKey } from "@/lib/favourite-entities";
 import { buildPlClubMetadata } from "@/lib/team-profile/metadata";
 import { clubHref } from "@/lib/team-profile/club-slug";
 import { absoluteUrl } from "@/lib/site-url";
@@ -42,6 +44,10 @@ export default async function ClubPage({ params }: PageProps) {
           { name: "Clubs", path: "/premier-league/clubs" },
           { name: data.name, path },
         ]}
+      />
+      <TeamSupportBar
+        teamKey={canonicalPlTeamKey(data.slug)}
+        teamName={data.name}
       />
       <PlClubProfileClient club={data} />
     </>

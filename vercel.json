@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/refresh-content",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/favourite-team-alerts",
+      "schedule": "0 * * * *"
     }
   ]
 }

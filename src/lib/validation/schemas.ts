@@ -69,12 +69,16 @@ export const wc26FixtureIdSchema = z
   .min(1)
   .regex(/^fixture-\d{3}$/i, "Expected fixture-NNN format.");
 
+const favouriteTeamKeySchema = z.string().trim().min(1).max(120);
+
 export const fcmTokenBodySchema = z.object({
   token: z.string().trim().min(1, "FCM token is required."),
   locale: z.enum(LOCALES).optional(),
   // Application layer requires a verified idToken (BE-007); optional here so
   // missing tokens return 401 via requireFcmIdToken rather than 400 Zod.
   idToken: z.string().trim().min(1).optional(),
+  teamKeys: z.array(favouriteTeamKeySchema).max(64).optional().default([]),
+  previousTeamKeys: z.array(favouriteTeamKeySchema).max(64).optional().default([]),
 });
 
 export type FcmTokenBody = z.infer<typeof fcmTokenBodySchema>;

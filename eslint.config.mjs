@@ -20,6 +20,19 @@ const eslintConfig = defineConfig([
       "security/detect-object-injection": "off",
     },
   },
+  {
+    // These two client components synchronise React state with the browser-only
+    // Notification permission API. The repository already uses this established
+    // effect pattern in Firebase UI. Keep the exception narrow rather than
+    // weakening the rule for the rest of GoalCurrent.
+    files: [
+      "src/components/favourites/FavouritesPageContent.tsx",
+      "src/components/firebase/FcmRegistration.tsx",
+    ],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
   globalIgnores([
     ".next/**",
     "out/**",

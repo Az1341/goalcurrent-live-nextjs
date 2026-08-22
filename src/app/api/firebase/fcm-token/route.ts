@@ -5,6 +5,10 @@ import {
   isFirebaseAdminConfigured,
 } from "@/lib/firebase/admin";
 import { parseJsonBody, respondError, respondOk } from "@/lib/api/response";
+import {
+  isKnownFavouriteTeamKey,
+  teamTopicForFavouriteKey,
+} from "@/lib/favourite-entities";
 import { fcmTokenBodySchema } from "@/lib/validation/schemas";
 
 /** Require a non-empty Firebase ID token before any topic subscribe (BE-007). */
@@ -27,13 +31,29 @@ export function requireFcmIdToken(
   return { ok: true, idToken: trimmed };
 }
 
+function validTeamTopics(teamKeys: readonly string[]): Map<string, string> {
+  const topics = new Map<string, string>();
+  for (const teamKey of teamKeys) {
+    if (!isKnownFavouriteTeamKey(teamKey)) continue;
+    const topic = teamTopicForFavouriteKey(teamKey);
+    if (topic) topics.set(teamKey, topic);
+  }
+  return topics;
+}
+
 export async function POST(request: Request) {
   const parsed = await parseJsonBody(request, fcmTokenBodySchema);
   if ("error" in parsed) {
     return parsed.error;
   }
 
-  const { token, locale, idToken: rawIdToken } = parsed.data;
+  const {
+    token,
+    locale,
+    idToken: rawIdToken,
+    teamKeys,
+    previousTeamKeys,
+  } = parsed.data;
 
   const required = requireFcmIdToken(rawIdToken);
   if (!required.ok) {
@@ -66,15 +86,25 @@ export async function POST(request: Request) {
     return respondError("invalid_id_token", "Invalid Firebase ID token.", 401);
   }
 
-  const topics = ["goalcurrent-live", `user-${uid}`];
+  const baseTopics = ["goalcurrent-live", `user-${uid}`];
   if (locale) {
-    topics.push(`lang-${locale}`);
+    baseTopics.push(`lang-${locale}`);
   }
 
+  const currentTeamTopics = validTeamTopics(teamKeys);
+  const previousTeamTopics = validTeamTopics(previousTeamKeys);
+  const removedTopics = [...previousTeamTopics.entries()]
+    .filter(([teamKey]) => !currentTeamTopics.has(teamKey))
+    .map(([, topic]) => topic);
+
   try {
-    await Promise.all(
-      topics.map((topic) => messaging.subscribeToTopic(token, topic)),
-    );
+    await Promise.all([
+      ...baseTopics.map((topic) => messaging.subscribeToTopic(token, topic)),
+      ...[...currentTeamTopics.values()].map((topic) =>
+        messaging.subscribeToTopic(token, topic),
+      ),
+      ...removedTopics.map((topic) => messaging.unsubscribeFromTopic(token, topic)),
+    ]);
   } catch (error) {
     console.error("[firebase/fcm-token] subscribe failed", error);
     return respondError(
@@ -85,7 +115,9 @@ export async function POST(request: Request) {
   }
 
   return respondOk({
-    topics,
+    topics: baseTopics,
+    teamTopics: [...currentTeamTopics.values()],
+    removedTeamTopics: removedTopics,
     authenticated: true,
   });
 }

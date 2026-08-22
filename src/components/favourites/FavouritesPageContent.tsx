@@ -31,7 +31,7 @@ export default function FavouritesPageContent() {
   const t = useTranslations("favourites");
   const tCommon = useTranslations("common");
   const tStatus = useTranslations("match.status");
-  const { teams, matches, competitions } = useFavourites();
+  const { teams, matches, competitions, matchLabels } = useFavourites();
   const { tvRegion } = useWc26TvRegion();
   const effectiveFixtures = useEffectiveFixtures();
   const seoFixtures = getSeoEffectiveFixtures();
@@ -141,7 +141,6 @@ export default function FavouritesPageContent() {
                       borderRadius: 12,
                       overflow: "hidden",
                     }}>
-                      {/* Status bar if live/ft */}
                       {statusLabel && (
                         <div style={{
                           background: isLive ? "#16a34a" : "#64748b",
@@ -159,7 +158,6 @@ export default function FavouritesPageContent() {
                           {elapsedLabel && <span style={{ marginLeft: 6, fontWeight: 800 }}>{elapsedLabel}</span>}
                         </div>
                       )}
-                      {/* Match teams row */}
                       <div style={{
                         display: "grid",
                         gridTemplateColumns: "1fr auto 1fr",
@@ -188,7 +186,6 @@ export default function FavouritesPageContent() {
                           <TeamFlag teamId={awayResolved.teamId} teamName={awayResolved.label} size={28} />
                         </div>
                       </div>
-                      {/* TV broadcast */}
                       <div style={{ padding: "0 16px 4px", fontSize: 12, color: "#64748b" }}>
                         <MatchTvBroadcast
                           tvRegion={tvRegion}
@@ -197,7 +194,6 @@ export default function FavouritesPageContent() {
                           className={styles.favListTv}
                         />
                       </div>
-                      {/* Actions */}
                       <div style={{
                         display: "flex",
                         gap: 8,
@@ -240,10 +236,12 @@ export default function FavouritesPageContent() {
                 );
               }
 
+              const savedLabel = matchLabels[matchId];
               return (
-                <li key={matchId} className={styles.favListItem}>
-                  <span className={styles.favListLabel}>{t("savedMatch", { matchId })}</span>
-                  <span className={styles.favListMeta}>{t("noLongerAvailable")}</span>
+                <li key={matchId} className={styles.favListItem} data-gc-fav-match={matchId}>
+                  <span className={styles.favListLabel} data-gc-fav-match-label>
+                    {savedLabel || t("noLongerAvailable")}
+                  </span>
                   <button
                     type="button"
                     className={styles.favRemoveBtn}

@@ -48,30 +48,13 @@ export async function generateMetadata({
     return { title: "Match not found", robots: { index: false, follow: false } };
   }
 
-  const detail = await getCachedPlMatchDetail(fixtureId);
-  const fixture = detail.fixture;
-
-  if (!fixture) {
-    if (isDefinitiveMatchMiss(detail.error)) {
-      return {
-        title: "Match not found",
-        robots: { index: false, follow: false },
-      };
-    }
-
-    return buildMatchMetadata({
-      title: "Premier League Match",
-      description: `Premier League match centre on ${SITE_NAME}.`,
-      path: `/premier-league/match/${fixtureId}`,
-      locale,
-    });
-  }
-
-  const title = `${fixture.homeTeamName} vs ${fixture.awayTeamName}`;
-
+  // Metadata must never spend live API-Football quota. The page render itself
+  // owns the single cached provider read required for match facts and JSON-LD.
+  // Using stable generic metadata here avoids a second server-render fetch on
+  // cold/serverless instances while preserving the exact canonical match URL.
   return buildMatchMetadata({
-    title,
-    description: `${title} — Premier League 2026/27 match centre with timeline, lineups, stats and H2H on ${SITE_NAME}.`,
+    title: "Premier League Match Centre",
+    description: `Premier League match centre with scores, lineups, stats and verified match updates on ${SITE_NAME}.`,
     path: `/premier-league/match/${fixtureId}`,
     locale,
   });

@@ -86,8 +86,12 @@ export function sortTimelineEvents(
   return [...events].sort(compareTimelineEvents);
 }
 
-function normalizeTeamKey(value: string): string {
-  return value.trim().toLowerCase().replace(/\s+/g, " ");
+function safeEventText(value: unknown): string {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function normalizeTeamKey(value: unknown): string {
+  return safeEventText(value).toLowerCase().replace(/\s+/g, " ");
 }
 
 export function resolveEventSide(
@@ -104,10 +108,10 @@ export function resolveEventSide(
 
   const homeKeys = [homeTeamName, lineupHomeName]
     .filter(Boolean)
-    .map((name) => normalizeTeamKey(name!));
+    .map((name) => normalizeTeamKey(name));
   const awayKeys = [awayTeamName, lineupAwayName]
     .filter(Boolean)
-    .map((name) => normalizeTeamKey(name!));
+    .map((name) => normalizeTeamKey(name));
 
   if (homeKeys.some((key) => key === eventKey || eventKey.includes(key) || key.includes(eventKey))) {
     return "home";
@@ -122,11 +126,15 @@ export function resolveEventSide(
 export function resolveTimelineEventDisplay(
   event: MatchEventItem,
 ): TimelineEventDisplay {
-  const type = event.type.toLowerCase();
-  const detail = event.detail.toLowerCase();
+  // API-Football has historically returned null text fields for some archived
+  // events despite the normalized application type being string-based. Keep
+  // the rendering boundary fail-safe so one malformed provider row cannot 500
+  // an otherwise valid match page or its JSON-LD/live-blog generation.
+  const type = safeEventText(event.type).toLowerCase();
+  const detail = safeEventText(event.detail).toLowerCase();
   const minute = formatEventMinute(event.minute, event.extra);
-  const playerName = event.playerName.trim() || null;
-  const teamName = event.teamName;
+  const playerName = safeEventText(event.playerName) || null;
+  const teamName = safeEventText(event.teamName);
   const sortMinute = event.minute ?? 0;
   const sortExtra = event.extra ?? 0;
 
@@ -258,7 +266,7 @@ export function resolveTimelineEventDisplay(
       minute,
       title: "Substitution",
       playerName,
-      assistLabel: event.assistName ? `Off: ${event.assistName}` : null,
+      assistLabel: safeEventText(event.assistName) ? `Off: ${safeEventText(event.assistName)}` : null,
       teamName,
       isGoal: false,
       isPeriod: false,
@@ -295,7 +303,7 @@ export function resolveTimelineEventDisplay(
       minute,
       title: "VAR review",
       playerName,
-      assistLabel: event.detail.trim() || null,
+      assistLabel: safeEventText(event.detail) || null,
       teamName,
       isGoal: false,
       isPeriod: false,
@@ -319,10 +327,11 @@ export function resolveTimelineEventDisplay(
     };
   }
 
+  const fallbackTitle = safeEventText(event.detail) || safeEventText(event.type) || "Event";
   return {
-    badge: badge("•", "#6b7280", event.type || "Event", "neutral"),
+    badge: badge("•", "#6b7280", safeEventText(event.type) || "Event", "neutral"),
     minute,
-    title: event.detail.trim() || event.type,
+    title: fallbackTitle,
     playerName,
     assistLabel: assistLabel(event.assistName),
     teamName,
@@ -334,10 +343,11 @@ export function resolveTimelineEventDisplay(
 }
 
 function assistLabel(assistName: string | null): string | null {
-  if (!assistName?.trim()) {
+  const normalized = safeEventText(assistName);
+  if (!normalized) {
     return null;
   }
-  return `🅰️ ${assistName.trim()}`;
+  return `🅰️ ${normalized}`;
 }
 
 function resolvePeriodBadge(

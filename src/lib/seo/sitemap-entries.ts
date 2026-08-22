@@ -148,24 +148,24 @@ export function collectSitemapPathSpecs(): SitemapPathSpec[] {
   return specs;
 }
 
-/** Expand each logical path into one sitemap row per locale with full hreflang + x-default. */
+/**
+ * One sitemap loc per logical page (default locale).
+ * hreflang + x-default stay on that loc so Google can discover translations
+ * without advertising non-self-canonical locale URLs as index targets.
+ */
 export function buildMultilingualSitemap(
   specs: SitemapPathSpec[],
 ): MetadataRoute.Sitemap {
   const entries: SitemapEntry[] = [];
 
   for (const spec of specs) {
-    const languages = buildHreflangAlternates(spec.path);
-
-    for (const locale of routing.locales) {
-      entries.push({
-        url: localizedUrl(spec.path, locale),
-        ...(spec.lastModified ? { lastModified: spec.lastModified } : {}),
-        changeFrequency: spec.changeFrequency,
-        priority: spec.priority,
-        alternates: { languages },
-      });
-    }
+    entries.push({
+      url: localizedUrl(spec.path, routing.defaultLocale),
+      ...(spec.lastModified ? { lastModified: spec.lastModified } : {}),
+      changeFrequency: spec.changeFrequency,
+      priority: spec.priority,
+      alternates: { languages: buildHreflangAlternates(spec.path) },
+    });
   }
 
   return dedupeByUrl(entries);

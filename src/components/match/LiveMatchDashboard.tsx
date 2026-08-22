@@ -2,6 +2,7 @@
 
 import { FavouriteMatchButton } from "@/components/FavouriteButton";
 import { PlTeamBadge } from "@/components/pl/PlShared";
+import { resolveLineupReadiness } from "@/lib/match-lineup-status";
 import type {
   MatchEventItem,
   MatchLineupSide,
@@ -111,7 +112,7 @@ export default function LiveMatchDashboard({
   const recentEvents = [...events]
     .sort((a, b) => (b.minute ?? -1) - (a.minute ?? -1))
     .slice(0, 16);
-  const lineupsConfirmed = Boolean(lineups.home?.startXI.length || lineups.away?.startXI.length);
+  const lineupReadiness = resolveLineupReadiness(lineups.home, lineups.away);
 
   return (
     <section
@@ -221,8 +222,11 @@ export default function LiveMatchDashboard({
                 <span className={styles.sectionKicker}>Tactical view</span>
                 <h2 id="live-lineups-heading">Line-ups</h2>
               </div>
-              <span className={`${styles.stateChip} ${lineupsConfirmed ? styles.stateChipGreen : ""}`}>
-                {lineupsConfirmed ? "CONFIRMED" : "PENDING"}
+              <span
+                className={`${styles.stateChip} ${lineupReadiness === "CONFIRMED" ? styles.stateChipGreen : ""}`}
+                data-lineup-readiness={lineupReadiness.toLowerCase()}
+              >
+                {lineupReadiness}
               </span>
             </div>
 

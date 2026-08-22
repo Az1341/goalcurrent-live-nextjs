@@ -21,7 +21,7 @@ test("archived provider event with null text cannot crash match rendering", () =
   assert.equal(display.title, "Event");
   assert.equal(display.playerName, null);
   assert.equal(display.teamName, "");
-  assert.equal(display.minute, "64");
+  assert.equal(display.minute, "64'");
 });
 
 test("null event team degrades to neutral rather than throwing", () => {

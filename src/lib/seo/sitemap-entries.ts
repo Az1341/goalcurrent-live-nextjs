@@ -149,9 +149,24 @@ export function collectSitemapPathSpecs(): SitemapPathSpec[] {
 }
 
 /**
- * One sitemap loc per logical page (default locale).
- * hreflang + x-default stay on that loc so Google can discover translations
- * without advertising non-self-canonical locale URLs as index targets.
+ * Match and article detail pages omit locale from metadata, so their HTML
+ * canonical is English. Other indexable families are self-canonical per locale.
+ */
+export function isEnglishCanonicalSitemapPath(path: string): boolean {
+  return path.startsWith("/match/") || path.startsWith("/articles/");
+}
+
+function localesForSitemapPath(path: string): readonly string[] {
+  if (isEnglishCanonicalSitemapPath(path)) {
+    return [routing.defaultLocale];
+  }
+  return routing.locales;
+}
+
+/**
+ * Self-canonical families emit one loc per locale.
+ * English-canonical match/article families emit the default-locale loc only.
+ * hreflang + x-default stay on every emitted entry.
  */
 export function buildMultilingualSitemap(
   specs: SitemapPathSpec[],
@@ -159,13 +174,17 @@ export function buildMultilingualSitemap(
   const entries: SitemapEntry[] = [];
 
   for (const spec of specs) {
-    entries.push({
-      url: localizedUrl(spec.path, routing.defaultLocale),
-      ...(spec.lastModified ? { lastModified: spec.lastModified } : {}),
-      changeFrequency: spec.changeFrequency,
-      priority: spec.priority,
-      alternates: { languages: buildHreflangAlternates(spec.path) },
-    });
+    const languages = buildHreflangAlternates(spec.path);
+
+    for (const locale of localesForSitemapPath(spec.path)) {
+      entries.push({
+        url: localizedUrl(spec.path, locale),
+        ...(spec.lastModified ? { lastModified: spec.lastModified } : {}),
+        changeFrequency: spec.changeFrequency,
+        priority: spec.priority,
+        alternates: { languages },
+      });
+    }
   }
 
   return dedupeByUrl(entries);

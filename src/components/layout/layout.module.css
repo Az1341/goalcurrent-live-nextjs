@@ -4,6 +4,27 @@
   flex-direction: column;
 }
 
+/* WCAG 2.4.1 — first focusable control; sits above modal z-index 1000 */
+.skipLink {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  z-index: 1100;
+  padding: 10px 16px;
+  background: var(--gc-brand-from);
+  color: var(--gc-brand-active);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 6px 0;
+}
+
+.skipLink:focus {
+  top: 0;
+  outline: 2px solid var(--gc-brand-active);
+  outline-offset: 2px;
+}
+
 .shellRow {
   display: flex;
   flex: 1;

@@ -122,6 +122,7 @@
     "sidebarProCta": "Coming soon"
   },
   "layout": {
+    "skipToContent": "Ga naar inhoud",
     "cookieConsent": {
       "ariaLabel": "Cookie-toestemming",
       "message": "We gebruiken cookies om content te personaliseren en verkeer te analyseren.",

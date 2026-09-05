@@ -4,9 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import TeamFlag from "@/components/TeamFlag";
 import { getTeamById } from "@/data/wc26";
-import { LIVE_API_PATHS, useLiveApi } from "@/lib/client/live-data";
-import { isWc26TournamentComplete } from "@/lib/wc26/archive";
-import { LIVE_POLL_MATCH_MS } from "@/lib/client/fetcher";
+import { buildConfirmedStaticApiMatches } from "@/lib/wc26/confirmed-results";
 import { matchHref } from "@/lib/wc26-match";
 import {
   resolveFinalWinner,
@@ -54,7 +52,6 @@ function buildPreview(side: "home" | "away"): Wc26ApiMatch {
     kickoffUtc: "2026-07-19T19:00:00.000Z",
     homeTeamId: "esp",
     awayTeamId: "arg",
-    apiFixtureId: 53452537,
   };
 }
 
@@ -98,24 +95,22 @@ function bannerHiddenKey(resultKey: string): string {
 }
 
 export default function FinalWinnerCelebration() {
-  const archiveComplete = isWc26TournamentComplete();
-  const livePath = archiveComplete ? null : LIVE_API_PATHS.wc26LiveScores;
-  const resultsPath = archiveComplete ? null : LIVE_API_PATHS.wc26Results;
-  const { data: liveData } = useLiveApi<Wc26ScoresApiResponse>(livePath, {
-    fresh: true,
-    refreshInterval: LIVE_POLL_MATCH_MS,
-  });
-  const { data: resultsData } = useLiveApi<Wc26ScoresApiResponse>(resultsPath, {
-    fresh: true,
-    refreshInterval: LIVE_POLL_MATCH_MS,
-  });
+  const archiveData = useMemo<Wc26ScoresApiResponse>(
+    () => ({
+      matches: buildConfirmedStaticApiMatches(),
+      fetchedAt: new Date().toISOString(),
+      configured: false,
+      phase: "archive-static",
+    }),
+    [],
+  );
   const previewMatch = useSyncExternalStore(
     () => () => {},
     () => readPreviewMatch(),
     () => null,
   );
 
-  const finalMatch = previewMatch ?? pickFinalMatch(liveData, resultsData);
+  const finalMatch = previewMatch ?? pickFinalMatch(archiveData);
   const result = useMemo(
     () => toCelebrationView(resolveFinalWinner(finalMatch)),
     [finalMatch],

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
+import { constants } from "node:fs";
 import test from "node:test";
 
 const read = (path) => readFile(new URL(`../../${path}`, import.meta.url), "utf8");
@@ -17,6 +18,21 @@ test("homepage current surfaces do not promote World Cup 2026", async () => {
   assert.doesNotMatch(header, /href="\/worldcup2026"/i);
   assert.match(footer, /CURRENT_PLATFORM_LINKS/);
   assert.match(footer, /!link\.href\.startsWith\("\/worldcup2026"\)/);
+});
+
+test("global layout cannot show WC26 celebrations outside the archive", async () => {
+  const layout = await read("src/app/[locale]/layout.tsx");
+
+  assert.doesNotMatch(layout, /FinalWinnerCelebration|components\/wc26/i);
+  await assert.rejects(
+    access(
+      new URL(
+        "../../src/components/wc26/FinalWinnerCelebration.tsx",
+        import.meta.url,
+      ),
+      constants.F_OK,
+    ),
+  );
 });
 
 test("About describes WC26 only as generic historical archive, not current coverage", async () => {

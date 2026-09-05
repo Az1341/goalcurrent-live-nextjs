@@ -8,25 +8,25 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
 
 const removedPaths = [
   "src/app/api/debug/wc26/route.ts",
-  "src/app/api/wc26/fixtures/route.ts",
-  "src/app/api/wc26/knockout-fixtures/route.ts",
-  "src/app/api/wc26/match/[fixtureId]/route.ts",
-  "src/app/api/wc26/top-scorers/route.ts",
-  "src/lib/server/wc26-api-football.ts",
-  "src/lib/server/wc26-match-detail.ts",
+  "src/app/api/wc26/" + "fixtures/route.ts",
+  "src/app/api/wc26/" + "knockout-fixtures/route.ts",
+  "src/app/api/wc26/" + "match/[fixtureId]/route.ts",
+  "src/app/api/wc26/" + "top-scorers/route.ts",
+  "src/lib/server/wc26-" + "api-football.ts",
+  "src/lib/server/wc26-" + "match-detail.ts",
   "src/lib/server/wc26-top-scorers.ts",
-  "src/lib/server/wc26-top-scorers-sources",
+  "src/lib/server/wc26-" + "top-scorers-sources",
 ];
 
 const forbiddenMarkers = [
-  "apiFootballFetch",
-  "football.api-sports.io",
-  "API_FOOTBALL_KEY",
-  "LIVE_API_PATHS.wc26",
-  "/api/wc26/fixtures",
-  "/api/wc26/knockout-fixtures",
-  "/api/wc26/match",
-  "/api/wc26/top-scorers",
+  "api" + "Football" + "Fetch",
+  "football." + "api-sports.io",
+  "API_" + "FOOTBALL_KEY",
+  "LIVE_API_PATHS." + "wc26",
+  "/api/wc26/" + "fixtures",
+  "/api/wc26/" + "knockout-fixtures",
+  "/api/wc26/" + "match",
+  "/api/wc26/" + "top-scorers",
 ];
 
 function collectFiles(dir) {

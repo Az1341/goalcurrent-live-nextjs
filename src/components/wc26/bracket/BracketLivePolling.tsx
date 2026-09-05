@@ -5,6 +5,6 @@ type BracketLivePollingProps = {
   archiveMode?: boolean;
 };
 
-export function BracketLivePolling(_props: BracketLivePollingProps) {
+export default function BracketLivePolling(_props: BracketLivePollingProps) {
   return null;
 }

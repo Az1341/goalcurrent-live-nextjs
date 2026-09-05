@@ -95,11 +95,11 @@ test("resolveBracketMatch uses confirmed pairings for known R32 slots", () => {
   assert.match(raw, /sideFromConfirmedTeam/);
 });
 
-test("API football maps penalty shootout scores into overlay", () => {
-  const raw = readFileSync(join(root, "src/lib/server/wc26-api-football.ts"), "utf8");
+test("WC26 confirmed results preserve penalty shootout data without provider overlay", () => {
+  const raw = readFileSync(join(root, "src/lib/wc26/confirmed-results.ts"), "utf8");
   assert.match(raw, /penaltiesHome/);
-  assert.match(raw, /score\?\.penalty/);
-  assert.match(raw, /homeTeamId && awayTeamId[\s\S]*findFixtureIdByKickoffUtc/);
+  assert.match(raw, /penaltiesAway/);
+  assert.match(raw, /buildConfirmedStaticApiMatches/);
 });
 
 test("confirmed knockout results include R32 matches 83 through 90", () => {

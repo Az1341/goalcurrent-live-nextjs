@@ -1,6 +1,10 @@
 "use client";
 
-/** WC26 is complete and archived; bracket live polling is retired. */
-export default function BracketLivePolling() {
+type BracketLivePollingProps = {
+  enabled?: boolean;
+  archiveMode?: boolean;
+};
+
+export function BracketLivePolling(_props: BracketLivePollingProps) {
   return null;
 }

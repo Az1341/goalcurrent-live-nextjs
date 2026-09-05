@@ -9,9 +9,6 @@ import {
 } from "@/lib/client/fetcher";
 
 export const LIVE_API_PATHS = {
-  wc26LiveScores: "/api/wc26/scores?live=true",
-  wc26Results: "/api/wc26/scores?results=wc",
-  wc26TopScorers: "/api/wc26/top-scorers",
   plFixtures: "/api/pl/fixtures",
   uclFixtures: "/api/ucl/fixtures",
   facupFixtures: "/api/facup/fixtures",
@@ -19,20 +16,18 @@ export const LIVE_API_PATHS = {
   unlStandings: "/api/unl/standings",
   plTopScorers: "/api/pl/top-scorers",
   communityShieldFixture: "/api/community-shield/fixture",
-  wc26Match: (fixtureId: string) =>
-    `/api/wc26/match/${encodeURIComponent(fixtureId)}`,
 } as const;
 
 type UseLiveApiOptions<T = unknown> = {
   /** Poll interval in ms; omit for hub default (75s). Pass 30_000 for live match pages. */
   refreshInterval?: number;
-  /** Use LIVE_MATCH_FETCH_SWR_OPTIONS — no stale data flash on live/home match sections. */
+  /** Use LIVE_MATCH_FETCH_SWR_OPTIONS - no stale data flash on live/home match sections. */
   fresh?: boolean;
   /** Server-seeded or parent-provided initial payload for SWR. */
   fallbackData?: T;
 };
 
-/** Build SWR options for useLiveApi — pure helper for hook-stable single useSWR call. */
+/** Build SWR options for useLiveApi - pure helper for hook-stable single useSWR call. */
 export function buildUseLiveApiSwrOptions<T = unknown>(
   options?: UseLiveApiOptions<T>,
 ) {
@@ -69,7 +64,7 @@ export function useLiveApi<T = unknown>(
   path: string | null,
   options?: UseLiveApiOptions<T>,
 ) {
-  // Single unconditional useSWR call — options vary; Hook order does not.
+  // Single unconditional useSWR call - options vary; Hook order does not.
   return useSWR<T>(path, fetcher, buildUseLiveApiSwrOptions(options));
 }
 

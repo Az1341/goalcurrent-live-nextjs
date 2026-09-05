@@ -69,8 +69,9 @@ test("round of 16 feeder slots name participants before knockout is played", () 
   assertPairing("fixture-082", { matchNumber: 82, homeTeamId: "bel", awayTeamId: "sen" });
 });
 
-test("live scores orient knockout goals without bracket template labels", () => {
-  const raw = readFileSync(join(root, "src/lib/server/wc26-api-football.ts"), "utf8");
-  assert.match(raw, /getConfirmedKnockoutPairingByFixtureId/);
-  assert.doesNotMatch(raw, /resolveFixtureParticipant/);
+test("retired WC26 provider wrapper is removed", () => {
+  assert.throws(
+    () => readFileSync(join(root, "src/lib/server", "wc26-" + "api-" + "football.ts"), "utf8"),
+    /ENOENT/,
+  );
 });

@@ -2,9 +2,6 @@
 
 import { useMemo, useState } from "react";
 import JsonLdScript from "@/components/seo/JsonLdScript";
-import ApiFootballStatusBanner from "@/components/system/ApiFootballStatusBanner";
-import Wc26ResultsSync from "@/components/wc26/Wc26ResultsSync";
-import { useLiveScores } from "@/lib/client/useLiveScores";
 import { useEffectiveFixtures } from "@/lib/use-effective-fixtures";
 import { isLiveMatchStatus, resolveFixtureParticipantLabel } from "@/lib/wc26-live";
 import dynamic from "next/dynamic";
@@ -14,9 +11,8 @@ const LiveMatchCentre = dynamic(
   { ssr: true, loading: () => null },
 );
 
-/** Client shell for /live — subscribes to unified WC26 live-scores SWR cache. */
+/** Client shell for /live. WC26 is archive-only; active live data belongs to current competitions. */
 export default function LivePageClient() {
-  const { data: liveScores, error } = useLiveScores();
   const fixtures = useEffectiveFixtures();
   const [coverageStartTime] = useState(() => new Date().toISOString());
 
@@ -47,20 +43,7 @@ export default function LivePageClient() {
 
   return (
     <>
-      <Wc26ResultsSync />
       <JsonLdScript data={jsonLd} />
-      {liveScores ? (
-        <ApiFootballStatusBanner
-          errorCode={liveScores.error}
-          message={liveScores.message}
-          fetchedAt={liveScores.stale ? liveScores.fetchedAt : undefined}
-        />
-      ) : null}
-      {error && !liveScores ? (
-        <p className="text-center text-gray-400 py-4" role="status">
-          Live API sync is limited — showing confirmed results and schedule.
-        </p>
-      ) : null}
       <LiveMatchCentre />
     </>
   );

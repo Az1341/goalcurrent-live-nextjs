@@ -3,7 +3,6 @@ import { validateGetQuery } from "@/lib/api/response";
 import { wc26ScoresQuerySchema } from "@/lib/validation/schemas";
 import { logInfo } from "@/lib/log";
 import { getCached, setCached } from "@/lib/server/cache";
-import { registerWc26ApiFixtureIds } from "@/lib/server/wc26-api-fixture-registry";
 import { buildConfirmedStaticApiMatches } from "@/lib/wc26/confirmed-results";
 import type { Wc26ScoresApiResponse } from "@/types/fixture-overlay";
 
@@ -27,13 +26,6 @@ function archiveResponse(): Wc26ScoresApiResponse {
   };
 }
 
-function jsonScores(body: Wc26ScoresApiResponse): NextResponse {
-  registerWc26ApiFixtureIds(body.matches);
-  return NextResponse.json(body, {
-    headers: { "Cache-Control": ARCHIVE_CACHE_CONTROL },
-  });
-}
-
 export async function GET(request: NextRequest): Promise<NextResponse> {
   const validated = validateGetQuery(request, wc26ScoresQuerySchema);
   if ("error" in validated) return validated.error;
@@ -42,11 +34,16 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   const cached = getCached(cacheKey);
   if (cached) {
     logInfo(ROUTE, "WC26 ARCHIVE CACHE HIT");
-    return jsonScores(cached as Wc26ScoresApiResponse);
+    return NextResponse.json(cached as Wc26ScoresApiResponse, {
+      headers: { "Cache-Control": ARCHIVE_CACHE_CONTROL },
+    });
   }
 
   logInfo(ROUTE, "WC26 ARCHIVE STATIC RESPONSE");
   const body = archiveResponse();
   setCached(cacheKey, body, ARCHIVE_CACHE_TTL_MS);
-  return jsonScores(body);
+
+  return NextResponse.json(body, {
+    headers: { "Cache-Control": ARCHIVE_CACHE_CONTROL },
+  });
 }

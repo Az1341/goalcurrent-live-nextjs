@@ -6,7 +6,7 @@ export type FixtureOverlayEntry = {
   readonly homeScore?: number;
   readonly awayScore?: number;
   readonly elapsed?: number | null;
-  /** api-sports fixture id from live feed — used for match detail lookups. */
+  /** Legacy provider fixture id retained only when old archive rows contain it. */
   readonly apiFixtureId?: number;
   /** Actual home/away from API — overrides knockout bracket labels when set. */
   readonly homeTeamId?: TeamId;
@@ -28,7 +28,7 @@ export type Wc26ApiMatch = {
   readonly homeScore: number | null;
   readonly awayScore: number | null;
   readonly kickoffUtc: string;
-  /** api-sports fixture id — present when row comes from the live API feed. */
+  /** Legacy provider fixture id retained only when old archive rows contain it. */
   readonly apiFixtureId?: number;
   readonly homeTeamId?: TeamId;
   readonly awayTeamId?: TeamId;
@@ -48,7 +48,7 @@ export type Wc26ScoresApiResponse = {
   readonly stale?: boolean;
 };
 
-/** Live fixture row returned by GET /api/wc26/fixtures?status=LIVE */
+/** Legacy live fixture row shape retained for archive UI compatibility. */
 export type Wc26LiveFixturePayload = {
   readonly fixtureId: string;
   readonly homeTeamId: string;

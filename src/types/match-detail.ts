@@ -1,4 +1,4 @@
-/** Normalised match detail payload from /api/wc26/match/[fixtureId]. */
+/** Normalised match detail payload retained for WC26 archive UI compatibility. */
 
 import type { ApiFootballErrorCode } from "@/lib/api-football/errors";
 

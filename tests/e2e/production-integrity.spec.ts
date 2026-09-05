@@ -101,11 +101,6 @@ test.describe("current data surfaces", () => {
 test.describe("match detail fallback", () => {
   test("match page renders header and content sections even without API data", async ({ page }) => {
     await preparePage(page);
-    await page.route("**/api/wc26/match/**", (route) => route.fulfill({
-      status: 503,
-      contentType: "application/json",
-      body: JSON.stringify({ error: "unavailable" }),
-    }));
     await gotoApp(page, `/match/${STABLE_MATCH_FIXTURE_ID}`);
     await expect(page.locator("#match-header-title")).toBeVisible({ timeout: 20_000 });
     await expect(page.locator("#match-timeline-heading")).toBeAttached({ timeout: 20_000 });

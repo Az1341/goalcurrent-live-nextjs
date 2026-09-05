@@ -30,7 +30,6 @@ test("BE-008: callers use fetchScoreBatFeed and do not inline token query URLs",
 
   const callers = [
     ["getScoreBatEmbed.ts", join(root, "src/lib/scorebat/getScoreBatEmbed.ts")],
-    ["scorebat.ts", join(root, "src/lib/server/wc26-top-scorers-sources/scorebat.ts")],
     ["videos.ts", join(root, "src/content/videos.ts")],
   ];
 

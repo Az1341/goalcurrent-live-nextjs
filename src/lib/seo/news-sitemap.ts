@@ -28,17 +28,19 @@ function isSubstantiveArticle(article: Article): boolean {
   return text.length >= MIN_CONTENT_LENGTH;
 }
 
-function expandForAllLocales(
+function expandForDefaultLocale(
   path: string,
   title: string,
   publicationDate: string,
 ): NewsSitemapEntry[] {
-  return routing.locales.map((locale) => ({
-    loc: localizedUrl(path, locale),
-    title,
-    publicationDate,
-    language: locale,
-  }));
+  return [
+    {
+      loc: localizedUrl(path, routing.defaultLocale),
+      title,
+      publicationDate,
+      language: routing.defaultLocale,
+    },
+  ];
 }
 
 function addLocalizedEntries(
@@ -47,12 +49,12 @@ function addLocalizedEntries(
   title: string,
   publicationDate: string,
 ): void {
-  for (const entry of expandForAllLocales(path, title, publicationDate)) {
+  for (const entry of expandForDefaultLocale(path, title, publicationDate)) {
     byLoc.set(entry.loc, entry);
   }
 }
 
-/** Article and news URLs eligible for Google News sitemap (all supported locales). */
+/** Article and news URLs eligible for Google News sitemap (default locale only). */
 export function getNewsSitemapEntries(): NewsSitemapEntry[] {
   const byLoc = new Map<string, NewsSitemapEntry>();
 

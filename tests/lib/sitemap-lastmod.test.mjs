@@ -1,7 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { dirname, join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { collectSitemapPathSpecs } from "../../src/lib/seo/sitemap-entries.ts";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const { collectSitemapPathSpecs } = await import(
+  pathToFileURL(join(root, "src/lib/seo/sitemap-entries.ts")).href
+);
 
 test("static and generated football pages do not receive synthetic lastmod timestamps", () => {
   const specs = collectSitemapPathSpecs();

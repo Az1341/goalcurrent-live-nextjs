@@ -1,7 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { dirname, join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-import { isYouTubeLiveSearchEnabled } from "../../src/lib/youtube-videos.ts";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const { isYouTubeLiveSearchEnabled } = await import(
+  pathToFileURL(join(root, "src/lib/youtube-videos.ts")).href
+);
 
 test("YouTube live search is disabled by default", () => {
   assert.equal(isYouTubeLiveSearchEnabled({}), false);

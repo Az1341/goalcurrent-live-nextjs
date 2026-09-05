@@ -1,10 +1,12 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { dirname, join } from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
-import {
-  canonicalHostRedirectUrl,
-  removedLocaleRedirectPath,
-} from "../../src/lib/seo/canonical-host.ts";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+const { canonicalHostRedirectUrl, removedLocaleRedirectPath } = await import(
+  pathToFileURL(join(root, "src/lib/seo/canonical-host.ts")).href
+);
 
 test("www GoalCurrent URLs consolidate to the canonical apex and preserve path/query", () => {
   const input = new URL("http://www.goalcurrent.live/premier-league/fixtures?week=1");

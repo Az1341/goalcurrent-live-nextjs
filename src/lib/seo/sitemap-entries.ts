@@ -148,7 +148,26 @@ export function collectSitemapPathSpecs(): SitemapPathSpec[] {
   return specs;
 }
 
-/** Expand each logical path into one sitemap row per locale with full hreflang + x-default. */
+/**
+ * Match and article detail pages omit locale from metadata, so their HTML
+ * canonical is English. Other indexable families are self-canonical per locale.
+ */
+export function isEnglishCanonicalSitemapPath(path: string): boolean {
+  return path.startsWith("/match/") || path.startsWith("/articles/");
+}
+
+function localesForSitemapPath(path: string): readonly string[] {
+  if (isEnglishCanonicalSitemapPath(path)) {
+    return [routing.defaultLocale];
+  }
+  return routing.locales;
+}
+
+/**
+ * Self-canonical families emit one loc per locale.
+ * English-canonical match/article families emit the default-locale loc only.
+ * hreflang + x-default stay on every emitted entry.
+ */
 export function buildMultilingualSitemap(
   specs: SitemapPathSpec[],
 ): MetadataRoute.Sitemap {
@@ -157,7 +176,7 @@ export function buildMultilingualSitemap(
   for (const spec of specs) {
     const languages = buildHreflangAlternates(spec.path);
 
-    for (const locale of routing.locales) {
+    for (const locale of localesForSitemapPath(spec.path)) {
       entries.push({
         url: localizedUrl(spec.path, locale),
         ...(spec.lastModified ? { lastModified: spec.lastModified } : {}),

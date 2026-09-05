@@ -59,7 +59,7 @@ export function getTournamentCompletionSummary(
 }
 
 /** Sum of all goals from fixtures that have home+away scores in the overlay.
- *  Works without API_FOOTBALL_KEY — uses live score overlay data. */
+ *  Works from archive overlay data only. */
 export function getTotalGoalsFromOverlay(
   fixtures: readonly (FixtureWithStatus & { homeScore?: number; awayScore?: number })[] = getEffectiveFixtures() as never,
 ): number {

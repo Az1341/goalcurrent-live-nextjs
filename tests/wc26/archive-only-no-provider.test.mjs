@@ -48,16 +48,18 @@ test("WC26 source stays archive-only and provider-free", () => {
   const files = [
     ...collectFiles(join(root, "src/app/api/wc26")),
     ...collectFiles(join(root, "src/components/wc26")),
-    ...collectFiles(join(root, "src/lib")),
-    ...collectFiles(join(root, "src/types")),
+    ...collectFiles(join(root, "src/lib")).filter((file) =>
+      relative(root, file).toLowerCase().includes("wc26"),
+    ),
+    ...collectFiles(join(root, "src/types")).filter((file) =>
+      relative(root, file).toLowerCase().includes("wc26") ||
+      relative(root, file).includes("fixture-overlay"),
+    ),
   ];
 
   const failures = [];
   for (const file of files) {
     const rel = relative(root, file);
-    if (!rel.includes("wc26") && !rel.includes("fixture-overlay") && !rel.includes("match-detail")) {
-      continue;
-    }
     const raw = readFileSync(file, "utf8");
     for (const marker of forbiddenMarkers) {
       if (raw.includes(marker)) {

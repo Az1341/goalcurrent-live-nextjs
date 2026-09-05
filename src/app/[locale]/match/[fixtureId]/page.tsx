@@ -15,12 +15,6 @@ import {
   buildStableMatchTitle,
 } from "@/lib/seo/canonical-titles";
 import { sportsEventStatus } from "@/lib/seo/sports-event-status";
-import {
-  buildLiveBlogUpdates,
-  coverageEndTimeForFinishedMatch,
-  isLiveBlogEligibleStatus,
-} from "@/lib/seo/live-blog-updates";
-import { fetchWc26MatchEvents } from "@/lib/server/wc26-match-detail";
 import { isCompletedMatchStatus } from "@/lib/wc26-tournament-stats";
 import { getScoreBatEmbedForFixture } from "@/lib/scorebat/getScoreBatEmbed";
 import { absoluteUrl, SITE_NAME } from "@/lib/site-url";
@@ -81,29 +75,6 @@ export default async function MatchPage({ params }: MatchPageProps) {
   const matchPath = matchHref(fixtureId);
   const status = String(effectiveFixture.status);
 
-  // Use events-only fetch (swallows API errors) so SSG of completed WC26
-  // matches cannot fail the production build on network/rate-limit faults.
-  let liveBlog = null;
-  if (isLiveBlogEligibleStatus(status)) {
-    const { events } = await fetchWc26MatchEvents(fixtureId);
-    const liveBlogUpdate = buildLiveBlogUpdates(events, fixture.kickoffUtc);
-    if (liveBlogUpdate.length > 0) {
-      liveBlog = {
-        path: matchPath,
-        headline: `${homeName} vs ${awayName} — live updates`,
-        coverageStartTime: fixture.kickoffUtc,
-        ...(isCompletedMatchStatus(status)
-          ? {
-              coverageEndTime: coverageEndTimeForFinishedMatch(
-                fixture.kickoffUtc,
-              ),
-            }
-          : {}),
-        liveBlogUpdate,
-      };
-    }
-  }
-
   return (
     <ErrorBoundary>
       <MatchSeo
@@ -119,10 +90,10 @@ export default async function MatchPage({ params }: MatchPageProps) {
           competition: "FIFA World Cup 2026",
           organizerUrl: "https://www.fifa.com/fifaplus/en/tournaments/mens/worldcup/canadamexicousa2026",
           eventStatus: sportsEventStatus(status),
-          description: `FIFA World Cup 2026 — ${homeName} vs ${awayName}. Live scores, lineups and statistics on ${SITE_NAME}.`,
+          description: `FIFA World Cup 2026 archive - ${homeName} vs ${awayName}. Final result, fixture details and historical match context on ${SITE_NAME}.`,
           image: absoluteUrl("/icons/screenshot-desktop.png"),
         }}
-        liveBlog={liveBlog}
+        liveBlog={null}
         breadcrumbs={[
           { name: "World Cup 2026", path: "/worldcup2026" },
           { name: "Fixtures", path: "/worldcup2026/fixtures" },
@@ -134,7 +105,7 @@ export default async function MatchPage({ params }: MatchPageProps) {
         competition="FIFA World Cup 2026"
         homeTeam={analyticsTeamLabel(homeName)}
         awayTeam={analyticsTeamLabel(awayName)}
-        matchStatus={String(effectiveFixture.status)}
+        matchStatus={isCompletedMatchStatus(status) ? status : String(effectiveFixture.status)}
       />
       <MatchPageClient fixtureId={fixtureId} scorebatHighlight={scorebatHighlight} />
     </ErrorBoundary>

@@ -49,11 +49,12 @@ test("legacy Android TWA launch exits the World Cup archive into current GoalCur
   assert.match(guard, /window\.location\.replace\("\/"\)/);
 });
 
-test("bracket polling supports archiveMode", () => {
+test("retired bracket polling is inert in archive mode", () => {
   const src = readFileSync(
     join(root, "src/components/wc26/bracket/BracketLivePolling.tsx"),
     "utf8",
   );
   assert.match(src, /archiveMode/);
-  assert.match(src, /allowNetwork/);
+  assert.match(src, /return null/);
+  assert.doesNotMatch(src, /fetch\(|useLiveApi|refreshInterval/);
 });

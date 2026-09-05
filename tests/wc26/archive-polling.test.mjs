@@ -19,13 +19,13 @@ test("WC26 archive pages do not mount the retired results sync", () => {
   }
 });
 
-test("FinalWinnerCelebration uses confirmed static archive data only", () => {
-  const raw = readFileSync(
-    join(root, "src/components/wc26/FinalWinnerCelebration.tsx"),
-    "utf8",
+test("retired WC26 celebration UI is removed", () => {
+  assert.equal(
+    existsSync(join(root, "src/components/wc26/FinalWinnerCelebration.tsx")),
+    false,
   );
-
-  assert.match(raw, /buildConfirmedStaticApiMatches/);
-  assert.doesNotMatch(raw, /LIVE_API_PATHS/);
-  assert.doesNotMatch(raw, /useLiveApi/);
+  assert.equal(
+    existsSync(join(root, "src/components/wc26/FinalWinnerCelebration.module.css")),
+    false,
+  );
 });

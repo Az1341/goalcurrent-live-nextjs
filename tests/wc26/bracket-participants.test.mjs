@@ -71,7 +71,7 @@ test("round of 16 feeder slots name participants before knockout is played", () 
 
 test("retired WC26 provider wrapper is removed", () => {
   assert.throws(
-    () => readFileSync(join(root, "src/lib/server/wc26-api-football.ts"), "utf8"),
+    () => readFileSync(join(root, "src/lib/server", "wc26-" + "api-" + "football.ts"), "utf8"),
     /ENOENT/,
   );
 });

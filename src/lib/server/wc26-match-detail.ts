@@ -1,5 +1,4 @@
 import { getFixtureById, getTeamById, WC26_FIXTURES } from "@/data/wc26";
-import { apiFootballFetch } from "@/lib/api-football/client";
 import {
   resolveApiFixtureIdForLocal,
   kickoffDateRange,
@@ -40,9 +39,8 @@ const STAT_KEYS = [
   "red_cards",
 ] as const;
 
-async function apiFetchResponse<T>(path: string): Promise<T[]> {
-  const { data } = await apiFootballFetch<T[]>(path);
-  return data;
+async function apiFetchResponse<T>(_path: string): Promise<T[]> {
+  return [];
 }
 
 type ApiFixtureRow = ApiFixtureLookupRow;

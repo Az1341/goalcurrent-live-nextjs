@@ -5,7 +5,6 @@
 
 import { PL_LEAGUE_ID, PL_SEASON } from "@/lib/pl/constants";
 import { isWc26TournamentComplete } from "@/lib/wc26/archive";
-import { WC26_API_LEAGUE_ID, WC26_API_SEASON } from "@/lib/server/wc26-api-fixture-id";
 import {
   FACUP_COMPETITION_TYPE,
   FACUP_DATASETS,
@@ -96,8 +95,8 @@ export const COMPETITIONS: Record<CompetitionKey, CompetitionConfig> = {
     slug: "worldcup2026",
     displayName: "FIFA World Cup 2026",
     shortName: "WC26",
-    providerLeagueId: WC26_API_LEAGUE_ID,
-    activeSeason: WC26_API_SEASON,
+    providerLeagueId: 1,
+    activeSeason: 2026,
     competitionType: "tournament",
     supportedSections: ["hub", "fixtures", "results", "standings", "match"],
     standingsSupported: true,

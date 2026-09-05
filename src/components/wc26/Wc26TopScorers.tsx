@@ -20,6 +20,10 @@ type Wc26TopScorersProps = {
   /** When set, use unified top scorers data from parent (e.g. group hub). */
   scorers?: readonly TopScorerRow[];
   loading?: boolean;
+  configured?: boolean;
+  matchesProcessed?: number;
+  matchesWithVerifiedEvents?: number;
+  fetchedAt?: string;
 };
 
 function ScorerTableRow({

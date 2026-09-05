@@ -18,7 +18,7 @@ export async function fetchApiFootballWc26TopScorers(): Promise<ApiFootballTopSc
 }
 
 /** Raw API-Football JSON is disabled for WC26 archive mode. */
-export async function fetchApiFootballRawJson(): Promise<unknown> {
+export async function fetchApiFootballRawJson(_path?: string): Promise<unknown> {
   return {
     errors: { wc26: "WC26 is archived; API-Football requests are disabled." },
     response: [],
